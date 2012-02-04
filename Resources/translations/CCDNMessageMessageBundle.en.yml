@@ -1,0 +1,36 @@
+sidebar.link.compose: Compose Message
+
+crumbs.message_index: 'Inbox'
+crumbs.compose_message: 'Compose New Message'
+crumbs.compose_reply: 'Compose Reply'
+crumbs.compose_forward: 'Forward Message'    
+
+title.message.index: 'Messages %folder_name%'
+title.message.show: 'Message: "%message_subject%"'
+title.message.compose: 'Compose Message'
+
+link.message.reply: 'Reply'
+link.message.forward: 'Forward'
+link.message.delete: 'Delete'
+link.message.mark_as_read: 'Mark as Read'
+link.message.mark_as_unread: 'Mark as Unread'
+link.message.move_to: 'Move to folder'
+
+message.table.head.from: From
+message.table.head.subject: Subject
+message.table.head.sent: Sent
+
+message.table.empty: You have no messages.
+
+flash.message.sent.success: 'Message sent.'
+
+form.label.message.to: 'To: '
+form.label.message.subject: 'Subject: '
+form.label.message.body: 'Message: '
+form.label.message.flagged: 'Flag as important: '
+form.button.message.send: 'Send Message'
+
+message.send.to: 'To: '
+message.sent.from: 'From: '
+message.subject: 'Subject: '
+message.sent.date: 'Sent On: '

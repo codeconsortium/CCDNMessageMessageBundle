@@ -1,0 +1,83 @@
+cc_message_index:
+    pattern:    /{_locale}/message
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folder_name: inbox, page: 0 }
+    requirements:
+        _locale: en
+    
+cc_message_folder_show:
+    pattern:    /{_locale}/message/folder/{folder_name}
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folder_name: inbox, page: 0 }
+    requirements:
+        _locale: en
+        folder_name: inbox|sent|drafts|junk|trash
+        
+cc_message_folder_show_paginated:
+    pattern:    /{_locale}/message/folder/{folder_name}/page/{page}
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folder_name: inbox, page: 0 }
+    requirements:
+        _locale: en
+        folder_name: inbox|sent|drafts|junk|trash
+
+cc_message_folder_show_by_id:
+    pattern:    /{_locale}/message/folder/{folder_id}
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en, page: 0 }
+    requirements:
+        _locale: en
+        
+cc_message_folder_show_by_id_paginated:
+    pattern:    /{_locale}/message/folder/{folder_id}/page/{page}
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en, page: 0 }
+    requirements:
+        _locale: en
+
+cc_message_message_compose_to:
+    pattern:    /{_locale}/message/compose/to/{user_id}
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, user_id: null }
+    requirements:
+        _locale: en
+        
+cc_message_message_compose:
+    pattern:    /{_locale}/message/compose
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, user_id: null }
+    requirements:
+        _locale: en
+
+cc_message_message_compose_reply:
+    pattern:    /{_locale}/message/{message_id}/reply
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:reply, _locale: en }
+    requirements:
+        _locale: en
+
+cc_message_message_compose_forward:
+    pattern:    /{_locale}/message/{message_id}/forward
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:forward, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_message_message_show_by_id:
+    pattern:    /{_locale}/message/{message_id}/show
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:showMessage, _locale: en }
+    requirements:
+        _locale: en
+
+cc_message_message_mark_as_read:
+    pattern:    /{_locale}/message/{message_id}/mark/as/read
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:markAsRead, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_message_message_mark_as_unread:
+    pattern:    /{_locale}/message/{message_id}/mark/as/unread
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:markAsUnread, _locale: en }
+    requirements:
+        _locale: en
+                
+cc_message_message_delete:
+    pattern:    /{_locale}/message/{message_id}/delete
+    defaults:   { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }
+    requirements:
+        _locale: en        
+         
+cc_message_action_bulk:
+    pattern:    /{_locale}/message/action/checked
+    defaults:   { _controller: CCDNMessageMessageBundle:Folder:bulk, _locale: en }

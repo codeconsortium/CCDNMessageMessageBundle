@@ -1,0 +1,139 @@
+{% extends 'CCDNCommonCommonBundle:Layout:layout_body_left.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('bundles/ccdncommoncrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncommonbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') }}{% endblock %}
+
+{% block sidebar %}
+{% if is_granted('ROLE_MODERATOR') %}
+<div class="common_box_5 bg_header_smoke">
+	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNCommonCommonBundle') }}</span></div>
+	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+	{% if is_granted('ROLE_ADMIN') %}
+	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+	{% endif %}
+</div>
+{% endif %}
+
+<div class="common_box_5 bg_header_smoke">
+	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></div>
+</div>
+{% endblock %}
+
+{% block body %}
+
+{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+{% include 'CCDNCommonCommonBundle:Flashes:flashes.html.twig' %}
+
+
+
+<div class="common_box_5 bg_header_smoke">
+	<div class="common_box_header">
+		<span class="heading_glow">{{ 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') }}</span>
+	</div>
+
+	<div class="row" style="background-color: #f6f6f6; width: 100%; height: 100%; clear: both; overflow: hidden;">
+		
+		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
+			<div style="margin: 0px 0px 0px 151px; overflow: hidden; border-left: 1px solid #eee;">
+				<div class="row">
+					
+					<div class="common_box_panel common_tool_strip h_align_centre">
+						<a class="button_link" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						<a class="button_link" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						<a class="button_link" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						<a class="button_link" href="{{ path('cc_message_message_mark_as_read', {'message_id': message.id }) }}">{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						<a class="button_link" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+					</div>
+
+					<div class="common_box_panel">
+						<div class="v_align_top">
+							<table class="common_list">
+								<thead>
+									<th style="width: 20%;"></th>
+									<th style="width: 80%;"></th>
+								</thead>
+								<tbody>
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+										<td>
+											{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
+										</td>
+										<td class="">
+											{{ message.getSendTo }}
+										</td>
+									</tr>
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+										<td>
+											{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
+										</td>
+										<td class="">
+											{% if message.getSentFrom %}
+											<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
+											{% else %}Guest{% endif %}
+										</td>
+									</tr>
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+										<td class="">
+											{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
+										</td>
+										<td class="">
+											{{ message.getSubject }}
+										</td>
+									</tr>
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+										<td class="">
+											{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}
+										</td>
+										<td class="">
+											{{ message.getSentDate|date("d/m/Y - H:i:s") }}
+										</td>
+									</tr>	
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
+										<td class="v_align_middle" colspan="2" style="overflow: hidden; padding: 10px; padding: 10px;">
+											<div style="width: 100%; height: 100%; padding-top: 20px;">
+												<div class="common_box_5 margin_10 padding_10 text_bubble" style="overflow: hidden; clear: both;">
+													<span class="common_body">
+													{{ BBCode(message.getBody | raw) | raw }}
+													</span>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+		<div style="display: block; width: 150px; height: 100%; float: left; margin: 0px -152px 0px 0px; overflow: hidden;">
+			<div style="display: block; height: 100%; margin: 0px; overflow: hidden;">
+				<div class="row">
+					<div class="common_box_panel">
+						<div class="v_align_top h_align_centre">
+							{% for row, folder in folders %}
+								<div class="common_box_panel common_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="common_box_panel common_tool_strip" style="clear: both;">
+	</div>
+</div>
+
+{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+{% endblock %}

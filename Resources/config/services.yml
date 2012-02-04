@@ -1,0 +1,43 @@
+parameters:
+    ccdn_message_message.folder.repository.class:       CCDNMessage\MessageBundle\Repository\FolderRepository    
+    ccdn_message_message.folder.manager.class:          CCDNMessage\MessageBundle\Entity\Manager\FolderManager
+
+    ccdn_message_message.message.repository.class:      CCDNMessage\MessageBundle\Repository\MessageRepository    
+    ccdn_message_message.message.manager.class:         CCDNMessage\MessageBundle\Entity\Manager\MessageManager
+
+    ccdn_message_message.message.form.type.class:       CCDNMessage\MessageBundle\Form\Type\MessageFormType
+    ccdn_message_message.message.form.handler.class:    CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+
+services:
+    message.repository:
+        class: %ccdn_message_message.message.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNMessage\MessageBundle\Entity\Message'
+    folder.repository:
+        class: %ccdn_message_message.folder.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments: 
+            - 'CCDNMessage\MessageBundle\Entity\Folder'
+  
+    message.manager:
+        class:  %ccdn_message_message.message.manager.class%
+        arguments:  [@doctrine, @service_container]
+    folder.manager:
+        class:  %ccdn_message_message.folder.manager.class%
+        arguments:  [@doctrine, @service_container]
+    
+    validator.send_to:
+        class: CCDNMessage\MessageBundle\Form\Validator\SendToValidator
+        arguments: [@doctrine, @service_container]
+        tags:
+            - { name: validator.constraint_validator, alias: send_to }
+        
+    message.form.type:
+        class:  %ccdn_message_message.message.form.type.class%
+        arguments:  [@doctrine]
+    message.form.handler:
+        class:  %ccdn_message_message.message.form.handler.class%
+        arguments:  [@form.factory, @service_container, @message.manager]        
