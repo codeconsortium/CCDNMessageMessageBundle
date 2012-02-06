@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Entity\Manager;
 
-use CCDNCommon\CommonBundle\Entity\Manager\EntityManagerInterface;
-use CCDNCommon\CommonBundle\Entity\Manager\BaseManager;
+use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
+use CCDNComponent\CommonBundle\Entity\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 

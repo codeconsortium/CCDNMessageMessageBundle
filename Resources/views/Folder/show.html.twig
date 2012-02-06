@@ -1,8 +1,8 @@
-{% extends 'CCDNCommonCommonBundle:Layout:layout_body_left.html.twig' %}
+{% extends 'CCDNComponentCommonBundle:Layout:layout_body_left.html.twig' %}
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncommoncrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -15,10 +15,10 @@
 {% block sidebar %}
 {% if is_granted('ROLE_MODERATOR') %}
 <div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNCommonCommonBundle') }}</span></div>
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 	{% if is_granted('ROLE_ADMIN') %}
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 	{% endif %}
 </div>
 {% endif %}
@@ -31,9 +31,9 @@
 
 {% block body %}
 
-{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
-{% include 'CCDNCommonCommonBundle:Flashes:flashes.html.twig' %}
+{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 	
 <div class="common_box_5 bg_header_smoke">
 	<div class="common_box_header">
@@ -83,14 +83,14 @@
 										</td>
 										<td class="">
 											{% if message.flagged %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_flag.png') }}" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" />
 											{% endif %}
 										</td>
 										<td class="">
 											{% if message.readIt %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_email_open.png') }}" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" />
 											{% else %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_email.png') }}" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" />
 											{% endif %}
 										</td>
 										<td class="">
@@ -171,6 +171,6 @@
 
 </div>
 
-{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
 {% endblock %}
