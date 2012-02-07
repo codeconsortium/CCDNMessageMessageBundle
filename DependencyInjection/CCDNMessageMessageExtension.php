@@ -28,6 +28,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class CCDNMessageMessageExtension extends Extension
 {
+	
+	
     /**
      * {@inheritDoc}
      */
@@ -38,5 +40,35 @@ class CCDNMessageMessageExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+
+		$container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
+		$container->setParameter('ccdn_message_message.user.profile_route', $config['user']['profile_route']);
+		
+		$this->getFolderSection($container, $config);
+		$this->getMessageSection($container, $config);
     }
+	
+	
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getFolderSection($container, $config)
+	{
+		$container->setParameter('ccdn_message_message.folder.messages_per_page', $config['folder']['messages_per_page']);
+	}
+
+	
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getMessageSection($container, $config)
+	{
+
+	}
+	
 }

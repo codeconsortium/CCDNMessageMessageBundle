@@ -225,7 +225,7 @@ class MessageController extends ContainerAware
 			->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email");
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_user_member.user.profile_route'),
+			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'folders' => $folders,
 			'message' => $message,
@@ -316,6 +316,6 @@ class MessageController extends ContainerAware
 	 */
 	protected function getEngine()
     {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
+        return $this->container->getParameter('ccdn_message_message.template.engine');
     }
 }

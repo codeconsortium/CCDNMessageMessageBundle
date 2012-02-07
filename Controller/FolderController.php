@@ -77,7 +77,7 @@ class FolderController extends ContainerAware
 			
 		$messages_paginated = $this->container->get('message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
-		$messages_per_page = $this->container->getParameter('ccdn_user_member.members_per_page');
+		$messages_per_page = $this->container->getParameter('ccdn_message_message.folder.messages_per_page');
 		$messages_paginated->setMaxPerPage($messages_per_page);
 		$messages_paginated->setCurrentPage($page, false, true);
 		
@@ -88,7 +88,7 @@ class FolderController extends ContainerAware
 				$this->container->get('router')->generate('cc_message_index'), "home");
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_user_member.user.profile_route'),
+			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'pager' => $messages_paginated,
 			'folders' => $folders,
@@ -172,7 +172,7 @@ class FolderController extends ContainerAware
 	 */
 	protected function getEngine()
     {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
+        return $this->container->getParameter('ccdn_message_message.template.engine');
     }
 
 }

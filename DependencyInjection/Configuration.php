@@ -15,6 +15,7 @@ namespace CCDNMessage\MessageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -26,6 +27,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+	
+	
     /**
      * {@inheritDoc}
      */
@@ -47,16 +50,51 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('template')
 					->children()
 						->scalarNode('engine')->defaultValue('twig')->end()
-						->scalarNode('theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+						->scalarNode('theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
 					->end()
 				->end()
-				->arrayNode('pagination')
+				->arrayNode('folder')
 					->children()
 						->scalarNode('messages_per_page')->defaultValue('40')->end()
 					->end()
 				->end()
 			->end();
-
+		
+		$this->addFolderSection($rootNode);
+		$this->addMessageSection($rootNode);
+		
         return $treeBuilder;
     }
+
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addFolderSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('folder')
+					->children()
+						->scalarNode('messages_per_page')->defaultValue('40')->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addMessageSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+			->end();
+	}
+	
 }
