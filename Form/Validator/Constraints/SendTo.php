@@ -17,9 +17,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
- */
-/**
- * 
+ *
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
