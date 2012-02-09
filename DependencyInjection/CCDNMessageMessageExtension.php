@@ -58,6 +58,7 @@ class CCDNMessageMessageExtension extends Extension
 	private function getFolderSection($container, $config)
 	{
 		$container->setParameter('ccdn_message_message.folder.messages_per_page', $config['folder']['messages_per_page']);
+		$container->setParameter('ccdn_message_message.folder.layout_templates.show', $config['folder']['layout_templates']['show']);
 	}
 
 	
@@ -68,7 +69,8 @@ class CCDNMessageMessageExtension extends Extension
 	 */
 	private function getMessageSection($container, $config)
 	{
-
+		$container->setParameter('ccdn_message_message.message.layout_templates.compose', $config['message']['layout_templates']['compose']);
+		$container->setParameter('ccdn_message_message.message.layout_templates.show', $config['message']['layout_templates']['show']);
 	}
 	
 }

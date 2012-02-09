@@ -216,9 +216,7 @@ class MessageController extends ContainerAware
 		}
 		
 		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
-		
-//		$this->container->get('folder.manager')->updateFolderCounterCaches($message->getFolder())->flushNow();
-		
+			
 		$crumb_trail = $this->container->get('crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), 
 				$this->container->get('router')->generate('cc_message_index'), "home")
@@ -252,8 +250,6 @@ class MessageController extends ContainerAware
 		
 		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
 		
-//		$this->container->get('folder.manager')->updateFolderCounterCaches($message->getFolder())->flushNow();
-		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}
 	
@@ -276,8 +272,6 @@ class MessageController extends ContainerAware
 		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
 		$this->container->get('message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
-
-//		$this->container->get('folder.manager')->updateFolderCounterCaches($message->getFolder())->flushNow();
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));		
 	}
@@ -302,8 +296,6 @@ class MessageController extends ContainerAware
 		$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());		        
 		
 		$this->container->get('message.manager')->delete($message, $folders)->flushNow()->updateAllFolderCachesForUser($user);
-		
-//		$this->container->get('folder.manager')->updateFolderCounterCaches($message->getFolder())->flushNow();
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}

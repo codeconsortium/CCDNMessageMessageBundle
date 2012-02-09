@@ -1,4 +1,4 @@
-{% extends 'CCDNComponentCommonBundle:Layout:layout_body_left.html.twig' %}
+{% extends param('ccdn_message_message.message.layout_templates.show') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -30,7 +30,6 @@
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
-
 
 
 <div class="common_box_5 bg_header_smoke">

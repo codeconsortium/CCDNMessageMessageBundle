@@ -79,6 +79,11 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('folder')
 					->children()
 						->scalarNode('messages_per_page')->defaultValue('40')->end()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
 					->end()
 				->end()
 			->end();
@@ -94,6 +99,16 @@ class Configuration implements ConfigurationInterface
 	{
 		$node
 			->children()
+				->arrayNode('message')
+					->children()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('compose')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
+					->end()
+				->end()
 			->end();
 	}
 	
