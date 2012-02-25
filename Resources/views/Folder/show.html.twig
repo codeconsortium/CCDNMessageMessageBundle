@@ -7,7 +7,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdnmessagemessage/js/jquery.message.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ccdncomponentcommon/js/jquery.checkboxes.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title %}{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}{% endblock %}
@@ -71,9 +71,9 @@
 									<th style="width: 18px; valign: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all" /></th>
 									<th style="width: 18px;"></th>
 									<th style="width: 18px;"></th>
-									<th style="width: 15%;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+									<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 									<th style="width: 40% auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
-									<th style="width: 35%;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+									<th style="width: 200px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 								</thead>
 								<tbody>
 								{% for row, message in messages %}
