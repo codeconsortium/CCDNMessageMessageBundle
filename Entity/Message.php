@@ -73,10 +73,6 @@ class Message
 	 */
 	protected $send_to;
 	
-	// this will contain an array used by the form.
-//	public function setSendTo($sendTo) { $this->send_to = $sendTo; }
-//	public function getSendTo()	{ return $this->send_to; }
-	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id", onDelete="SET NULL")

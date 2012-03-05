@@ -88,12 +88,10 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			
 			if ($recipient->getUsername() == $user->getUsername() && ! $senderAlreadyHasCC)
 			{
-//				$folderCachesToBeUpdated[] = $folders[1]; // 1 is inbox
 				$temp->setFolder($folders[1]);
 				$senderAlreadyHasCC = true;
 				$temp->setReadIt(true);
 			} else {
-//				$folderCachesToBeUpdated[] = $folders[0]; // 2 is sent box
 				$temp->setFolder($folders[0]);				
 			}
 			
@@ -107,12 +105,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		{
 			$this->updateAllFolderCachesForUser($user);		
 		}
-//		$folderManager = $this->container->get('folder.manager');
-//		foreach ($folderCachesToBeUpdated as $folder)
-//		{
-//			$folderManager->updateFolderCounterCaches($folder);			
-//		}
-//		$folderManager->flushNow();
 				
 		return $this;
 	}
@@ -129,9 +121,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		$message->setReadIt(true);
 		$this->persist($message)->flushNow();
 		
-//		$folderManager = $this->container->get('folder.manager');
-//		$folderManager->updateFolderCounterCaches($message->getFolder())->flushNow();
-		
 		return $this;
 	}
 	
@@ -147,9 +136,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		$message->setReadIt(false);
 		$this->persist($message)->flushNow();
 
-//		$folderManager = $this->container->get('folder.manager');
-//		$folderManager->updateFolderCounterCaches($message->getFolder())->flushNow();
-		
 		return $this;
 	}
 	
@@ -162,12 +148,9 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 	 */
 	public function delete($message, $folders)
 	{
-//		$folderCachesToBeUpdated = array();
 		
 		if ($message->getFolder()->getName() == 'trash')
 		{
-//			$folderCachesToBeUpdated[] = $message->getFolder();
-			
 			$this->remove($message);
 		} else {
 			foreach($folders as $folder)
@@ -176,8 +159,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 				{
 					$message->setFolder($folder);
 					
-//					$folderCachesToBeUpdated[] = $folder;
-					
 					break;
 				}
 			}
@@ -185,15 +166,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$this->persist($message);
 		}
 
-//		$this->flushNow();
-			
-//		$folderManager = $this->container->get('folder.manager');
-//		foreach ($folderCachesToBeUpdated as $folder)
-//		{
-//			$folderManager->updateFolderCounterCaches($folder);			
-//		}
-//		$folderManager->flushNow();
-				
 		return $this;
 	}
 	
@@ -229,15 +201,6 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			}			
 		}
 		
-//		$this->flushNow();
-		
-//		$folderManager = $this->container->get('folder.manager');
-//		foreach ($folders as $folder)
-//		{
-//			$folderManager->updateFolderCounterCaches($folder);			
-//		}
-//		$folderManager->flushNow();
-		
 		return $this;
 	}
 	
@@ -255,12 +218,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$message->setReadIt(true);
 			$this->persist($message);
 		}
-		
-//		$this->flushNow();
-		
-//		$folderManager = $this->container->get('folder.manager');
-//		$folderManager->updateFolderCounterCaches($messages[0]->getFolder())->flushNow();
-		
+	
 		return $this;
 	}
 	
@@ -278,12 +236,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$message->setReadIt(false);
 			$this->persist($message);
 		}
-		
-//		$this->flushNow();
-		
-//		$folderManager = $this->container->get('folder.manager');
-//		$folderManager->updateFolderCounterCaches($messages[0]->getFolder())->flushNow();
-			
+
 		return $this;		
 	}
 	
@@ -296,20 +249,12 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 	 */
 	public function bulkMoveToFolder($messages, $moveTo)
 	{
-//		$oldFolder = $messages[0]->getFolder();
 		
 		foreach ($messages as $message)
 		{
 			$message->setFolder($moveTo);
 			$this->persist($message);
 		}
-		
-//		$this->flushNow();
-		
-//		$folderManager = $this->container->get('folder.manager');
-//		$folderManager->updateFolderCounterCaches($oldFolder)		
-//			->updateFolderCounterCaches($moveTo)
-//			->flushNow();
 		
 		return $this;
 	}
