@@ -84,6 +84,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$temp->setOwnedBy($recipient);
 			$temp->setReadIt(false);
 			$temp->setFlagged($message->getFlagged());
+			$temp->setAttachment($message->getAttachment());
 			
 			if ($recipient->getUsername() == $user->getUsername() && ! $senderAlreadyHasCC)
 			{

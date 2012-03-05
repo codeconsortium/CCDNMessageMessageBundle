@@ -78,6 +78,13 @@
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+						<td class="h_align_right v_align_top">{{ form_label(form.attachment, null, { 'label': 'form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="h_align_left v_align_middle">
+							{{ form_errors(form.attachment) }}
+							{{ form_widget(form.attachment) }}
+						</td>
+					</tr>
+					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="h_align_centre v_align_middle" colspan="2">
 							<input type="submit" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" />
 						</td>

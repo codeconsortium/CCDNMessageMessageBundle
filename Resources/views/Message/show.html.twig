@@ -92,7 +92,17 @@
 										<td class="">
 											{{ message.getSentDate|date("d/m/Y - H:i:s") }}
 										</td>
-									</tr>	
+									</tr>
+									{% if message.getAttachment %}
+									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+										<td class="">
+											{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
+										</td>
+										<td class="">
+											<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" /></a>
+										</td>
+									</tr>
+									{% endif %}
 									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
 										<td class="v_align_middle" colspan="2" style="overflow: hidden; padding: 10px; padding: 10px;">
 											<div style="width: 100%; height: 100%; padding-top: 20px;">

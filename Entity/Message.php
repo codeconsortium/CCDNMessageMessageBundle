@@ -110,6 +110,12 @@ class Message
 	 */
 	protected $inResponseTo;
 	
+	/**
+     * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
+     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $attachment;
+	
     /**
      * Get id
      *
@@ -378,5 +384,27 @@ class Message
     public function getSendTo()
     {
         return $this->send_to;
+    }
+
+    /**
+     * Set attachment
+     *
+     * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @return Message
+     */
+    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
+    {
+        $this->attachment = $attachment;
+        return $this;
+    }
+
+    /**
+     * Get attachment
+     *
+     * @return CCDNComponent\AttachmentBundle\Entity\Attachment 
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
     }
 }

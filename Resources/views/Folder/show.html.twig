@@ -71,9 +71,10 @@
 									<th style="width: 18px; valign: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all" /></th>
 									<th style="width: 18px;"></th>
 									<th style="width: 18px;"></th>
+									<th style="width: 18px;"></th>
 									<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 									<th style="width: 40% auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
-									<th style="width: 200px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+									<th style="width: 190px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 								</thead>
 								<tbody>
 								{% for row, message in messages %}
@@ -84,6 +85,11 @@
 										<td class="">
 											{% if message.flagged %}
 											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" />
+											{% endif %}
+										</td>
+										<td class="">
+											{% if message.attachment %}
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" />
 											{% endif %}
 										</td>
 										<td class="">

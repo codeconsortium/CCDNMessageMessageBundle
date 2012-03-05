@@ -131,7 +131,7 @@ class MessageFormHandler
 			
 			if ($this->form->isValid())
 			{	
-				$this->onSuccess($this->form->getData());
+				$this->onSuccess(/*$this->form->getData()*/ $formData);
 				
 				return true;				
 			}
@@ -153,6 +153,8 @@ class MessageFormHandler
 			$messageType = $this->container->get('message.form.type');
 			
 			$defaultValues = array();
+			
+			$defaultValues['sender'] = $this->options['sender'];
 			
 			if (isset($this->options['send_to']))
 			{

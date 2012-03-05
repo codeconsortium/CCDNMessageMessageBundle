@@ -27,6 +27,20 @@ class MessageFormType extends AbstractType
 {
 	
 	
+	
+	/**
+	 *
+	 */
+	protected $container;
+	
+	
+	
+	public function __construct($doctrine, $service_container)
+	{
+		
+		$this->container = $service_container;
+	}
+	
 	/**
 	 *
 	 * @access protected
@@ -63,6 +77,19 @@ class MessageFormType extends AbstractType
 		$builder->add('subject', 'text', array('data' => $this->getQuotedSubject()));
 		$builder->add('body', 'textarea', array('data' => $this->getQuotedBody()));		
 		$builder->add('flagged');
+		
+		$userId = $this->defaults['sender']->getId();
+		$attachments = $this->container->get('attachment.repository')->findForUserByIdAsQB($userId);
+		
+		$builder->add('attachment', 'entity', array(
+		    'class' => 'CCDNComponentAttachmentBundle:Attachment',
+		  //  'query_builder' => $this->container->get('attachment.repository')->findForUserByIdAsQB($userId),
+			'choices' => $attachments,
+		    'property' => 'attachment_original',
+			'required' => false,
+			)
+		);
+		
 	}
 	
 	

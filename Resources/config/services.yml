@@ -37,7 +37,7 @@ services:
         
     message.form.type:
         class:  %ccdn_message_message.message.form.type.class%
-        arguments:  [@doctrine]
+        arguments:  [@doctrine, @service_container]
     message.form.handler:
         class:  %ccdn_message_message.message.form.handler.class%
         arguments:  [@form.factory, @service_container, @message.manager]        
