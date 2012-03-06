@@ -71,9 +71,9 @@ class FolderManager extends BaseManager implements EntityManagerInterface
 	{
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$readCount = $this->container->get('folder.repository')->getReadCounterForFolderById($folder->getId(), $user->getId());
+		$readCount = $this->container->get('ccdn_message_message.folder.repository')->getReadCounterForFolderById($folder->getId(), $user->getId());
 		$readCount = $readCount['readCount'];
-		$unreadCount = $this->container->get('folder.repository')->getUnreadCounterForFolderById($folder->getId(), $user->getId());
+		$unreadCount = $this->container->get('ccdn_message_message.folder.repository')->getUnreadCounterForFolderById($folder->getId(), $user->getId());
 		$unreadCount = $unreadCount['unreadCount'];
 		$totalCount = ($readCount + $unreadCount);
 		

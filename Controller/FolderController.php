@@ -51,13 +51,13 @@ class FolderController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 		
 		if ( ! $folders)
 		{
-			$this->container->get('folder.manager')->setupDefaults($user->getId())->flushNow();
+			$this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flushNow();
 
-			$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());		        
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 		}
 			
 		// find the current folder	
@@ -81,7 +81,7 @@ class FolderController extends ContainerAware
 			$inboxSpace = 100;
 		}
 		
-		$messages_paginated = $this->container->get('message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
+		$messages_paginated = $this->container->get('ccdn_message_message.message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
 		$messages_per_page = $this->container->getParameter('ccdn_message_message.folder.messages_per_page');
 		$messages_paginated->setMaxPerPage($messages_per_page);
@@ -137,35 +137,35 @@ class FolderController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$messages = $this->container->get('message.repository')->findTheseMessagesByUserId($messageIds, $user->getId());
+		$messages = $this->container->get('ccdn_message_message.message.repository')->findTheseMessagesByUserId($messageIds, $user->getId());
 			
 		if (isset($_POST['submit_delete']))
 		{
-			$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());		        
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 
-			$this->container->get('message.manager')->bulkDelete($messages, $folders)->flushNow();
+			$this->container->get('ccdn_message_message.message.manager')->bulkDelete($messages, $folders)->flushNow();
 		}
 		if (isset($_POST['submit_mark_as_read']))
 		{
-			$this->container->get('message.manager')->bulkMarkAsRead($messages)->flushNow();
+			$this->container->get('ccdn_message_message.message.manager')->bulkMarkAsRead($messages)->flushNow();
 		}
 		if (isset($_POST['submit_mark_as_unread']))
 		{
-			$this->container->get('message.manager')->bulkMarkAsUnread($messages)->flushNow();
+			$this->container->get('ccdn_message_message.message.manager')->bulkMarkAsUnread($messages)->flushNow();
 		}
 		if (isset($_POST['submit_move_to']))
 		{
-			$moveTo = $this->container->get('folder.repository')->findOneById($_POST['select_move_to']);
-			$this->container->get('message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
+			$moveTo = $this->container->get('ccdn_message_message.folder.repository')->findOneById($_POST['select_move_to']);
+			$this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
 		}
 		
-//		$folderManager = $this->container->get('folder.manager');
+//		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
 //		foreach ($messages as $message)
 //		{
 //			$folderManager->updateFolderCounterCaches($message->getFolder());			
 //		}
 //		$folderManager->flushNow();
-		$this->container->get('message.manager')->updateAllFolderCachesForUser($user);
+		$this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}

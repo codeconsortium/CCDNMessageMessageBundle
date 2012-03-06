@@ -13,50 +13,50 @@ parameters:
     ccdn_message_message.message.form.handler.class:    CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
 
 services:
-    unread_message_count.extension:
+    ccdn_message_message.unread_message_count.extension:
         class:  %ccdn_message_message.unread_message_count.extension.class%
         arguments: [@service_container]
         tags:
             - { name: twig.extension }
             
-    message.repository:
+    ccdn_message_message.message.repository:
         class: %ccdn_message_message.message.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments:
             - 'CCDNMessage\MessageBundle\Entity\Message'
-    folder.repository:
+    ccdn_message_message.folder.repository:
         class: %ccdn_message_message.folder.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments: 
             - 'CCDNMessage\MessageBundle\Entity\Folder'  
-    registry.repository:
+    ccdn_message_message.registry.repository:
         class: %ccdn_message_message.registry.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments: 
             - 'CCDNMessage\MessageBundle\Entity\Registry'
                     
-    message.manager:
+    ccdn_message_message.message.manager:
         class:  %ccdn_message_message.message.manager.class%
         arguments:  [@doctrine, @service_container]
-    folder.manager:
+    ccdn_message_message.folder.manager:
         class:  %ccdn_message_message.folder.manager.class%
         arguments:  [@doctrine, @service_container]
-    registry.manager:
+    ccdn_message_message.registry.manager:
         class:  %ccdn_message_message.registry.manager.class%
         arguments:  [@doctrine, @service_container]
     
-    validator.send_to:
+    ccdn_message_message.validator.send_to:
         class: CCDNMessage\MessageBundle\Form\Validator\SendToValidator
         arguments: [@doctrine, @service_container]
         tags:
             - { name: validator.constraint_validator, alias: send_to }
         
-    message.form.type:
+    ccdn_message_message.message.form.type:
         class:  %ccdn_message_message.message.form.type.class%
         arguments:  [@doctrine, @service_container]
-    message.form.handler:
+    ccdn_message_message.message.form.handler:
         class:  %ccdn_message_message.message.form.handler.class%
-        arguments:  [@form.factory, @service_container, @message.manager]        
+        arguments:  [@form.factory, @service_container, @ccdn_message_message.message.manager]        

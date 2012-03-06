@@ -65,8 +65,8 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		// case the message goes into outbox instead of inbox.
 		$senderAlreadyHasCC = false;
 		
-		$folderRepo = $this->container->get('folder.repository');
-		$folderManager = $this->container->get('folder.manager');
+		$folderRepo = $this->container->get('ccdn_message_message.folder.repository');
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
 		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 		
 		foreach($sendToUsers as $recipient_key => $recipient)
@@ -293,9 +293,9 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 	 */
 	public function updateAllFolderCachesForUser($user)
 	{		
-		$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 
-		$folderManager = $this->container->get('folder.manager');
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
 		
 		foreach($folders as $folder)
 		{
@@ -304,7 +304,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 
 		$folderManager->flushNow();
 			
-		$this->container->get('registry.manager')->updateCacheUnreadMessagesForUser($user);
+		$this->container->get('ccdn_message_message.registry.manager')->updateCacheUnreadMessagesForUser($user);
 		
 		return $this;
 	}

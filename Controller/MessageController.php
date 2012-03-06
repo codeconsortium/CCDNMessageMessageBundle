@@ -47,9 +47,9 @@ class MessageController extends ContainerAware
 		if ($user_id)
 		{
 			$send_to = $this->container->get('user.repository')->findOneById($user_id);
-			$formHandler = $this->container->get('message.form.handler')->setOptions(array('sender' => $user, 'send_to' => $send_to));
+			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'send_to' => $send_to));
 		} else {
-			$formHandler = $this->container->get('message.form.handler')->setOptions(array('sender' => $user));
+			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user));
 		}
 		
 					
@@ -94,9 +94,9 @@ class MessageController extends ContainerAware
 
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$formHandler = $this->container->get('message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
+		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
 
 		if ($formHandler->process())	
 		{				
@@ -142,9 +142,9 @@ class MessageController extends ContainerAware
 
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$formHandler = $this->container->get('message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
+		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
 
 		if ($formHandler->process())	
 		{
@@ -189,16 +189,16 @@ class MessageController extends ContainerAware
 			
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 		
 		if ( ! $folders)
 		{
-			$this->container->get('folder.manager')->setupDefaults($user->getId())->flushNow();
+			$this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flushNow();
 
-			$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());		        
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 		}
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 				
 		if ( ! $message)
 		{
@@ -216,7 +216,7 @@ class MessageController extends ContainerAware
 			}
 		}
 		
-		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
+		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
 			
 		$crumb_trail = $this->container->get('crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), 
@@ -247,9 +247,9 @@ class MessageController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 		
-		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
+		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}
@@ -270,9 +270,9 @@ class MessageController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$this->container->get('message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
+		$this->container->get('ccdn_message_message.message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));		
 	}
@@ -293,10 +293,10 @@ class MessageController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
-		$folders = $this->container->get('folder.repository')->findAllFoldersForUser($user->getId());		        
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 		
-		$this->container->get('message.manager')->delete($message, $folders)->flushNow()->updateAllFolderCachesForUser($user);
+		$this->container->get('ccdn_message_message.message.manager')->delete($message, $folders)->flushNow()->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}
