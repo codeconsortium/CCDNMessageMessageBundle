@@ -75,7 +75,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 
 			if ( ! $folders)
 			{
-				$folderManagaer->setupDefaults($recipient->getId())->flushNow();
+				$folderManager->setupDefaults($recipient->getId())->flushNow();
 
 				$folders = $folderRepo->findAllFoldersForUser($recipient->getId());		        
 			}
@@ -304,6 +304,8 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 
 		$folderManager->flushNow();
 			
+		$this->container->get('registry.manager')->updateCacheUnreadMessagesForUser($user);
+		
 		return $this;
 	}
 	

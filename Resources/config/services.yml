@@ -1,6 +1,10 @@
 parameters:
+    ccdn_message_message.unread_message_count.extension.class:    CCDNMessage\MessageBundle\Extension\UnreadMessageCountExtension
     ccdn_message_message.folder.repository.class:       CCDNMessage\MessageBundle\Repository\FolderRepository    
     ccdn_message_message.folder.manager.class:          CCDNMessage\MessageBundle\Entity\Manager\FolderManager
+
+    ccdn_message_message.registry.repository.class:     CCDNMessage\MessageBundle\Repository\RegistryRepository
+    ccdn_message_message.registry.manager.class:        CCDNMessage\MessageBundle\Entity\Manager\RegistryManager
 
     ccdn_message_message.message.repository.class:      CCDNMessage\MessageBundle\Repository\MessageRepository    
     ccdn_message_message.message.manager.class:         CCDNMessage\MessageBundle\Entity\Manager\MessageManager
@@ -9,6 +13,12 @@ parameters:
     ccdn_message_message.message.form.handler.class:    CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
 
 services:
+    unread_message_count.extension:
+        class:  %ccdn_message_message.unread_message_count.extension.class%
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+            
     message.repository:
         class: %ccdn_message_message.message.repository.class%
         factory_service: doctrine.orm.default_entity_manager
@@ -20,13 +30,22 @@ services:
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments: 
-            - 'CCDNMessage\MessageBundle\Entity\Folder'
-  
+            - 'CCDNMessage\MessageBundle\Entity\Folder'  
+    registry.repository:
+        class: %ccdn_message_message.registry.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments: 
+            - 'CCDNMessage\MessageBundle\Entity\Registry'
+                    
     message.manager:
         class:  %ccdn_message_message.message.manager.class%
         arguments:  [@doctrine, @service_container]
     folder.manager:
         class:  %ccdn_message_message.folder.manager.class%
+        arguments:  [@doctrine, @service_container]
+    registry.manager:
+        class:  %ccdn_message_message.registry.manager.class%
         arguments:  [@doctrine, @service_container]
     
     validator.send_to:
