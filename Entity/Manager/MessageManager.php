@@ -37,6 +37,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 	{
 		$recipients = $message->getSendTo();
 		
+		// build a list of recipients from the sendTo field.
 		if ($recipients = preg_split('/((,)|(\s))/', $recipients, PREG_OFFSET_CAPTURE))
 		{
 			foreach ($recipients as $key => $recipient)
@@ -56,22 +57,45 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$sendToUsers = $this->container->get('user.repository')->findByUsername($recipients);
 		}
 
+		// add ourself to the sending list so we have a carbon-copy.
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		$sendToUsers[] = $user; // send to self so we have it in our sent folder!
 		
+		// a check for when we encounter our own folder, in which
+		// case the message goes into outbox instead of inbox.
 		$senderAlreadyHasCC = false;
+		
+		$folderRepo = $this->container->get('folder.repository');
+		$folderManager = $this->container->get('folder.manager');
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 		
 		foreach($sendToUsers as $recipient_key => $recipient)
 		{
-			$folders = $this->container->get('folder.repository')->findAllFoldersForUser($recipient->getId());
+			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());
 
 			if ( ! $folders)
 			{
-				$this->container->get('folder.manager')->setupDefaults($recipient->getId())->flushNow();
+				$folderManagaer->setupDefaults($recipient->getId())->flushNow();
 
-				$folders = $this->container->get('folder.repository')->findAllFoldersForUser($recipient->getId());		        
+				$folders = $folderRepo->findAllFoldersForUser($recipient->getId());		        
 			}
 
+			$used = $folderManager->checkQuotaAllowanceUsed($folders);
+			
+			if ($used >= $quota)
+			{
+				$this->container->get('session')->setFlash('notice_' . $recipient, 
+					$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+				
+				continue;
+			} else {
+				if ($recipient->getUsername() != $user->getUsername())
+				{
+					$this->container->get('session')->setFlash('notice_' . $recipient,
+						$this->container->get('translator')->trans('flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+				}
+			}
+			
 			$temp = new Message();
 			$temp->setSentTo($recipient);
 			$temp->setSendTo($message->getSendTo());
@@ -95,7 +119,8 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 				$temp->setFolder($folders[0]);				
 			}
 			
-			$this->persist($temp);			
+			
+			$this->persist($temp);	
 		}
 
 		$this->flushNow();
@@ -103,7 +128,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 
 		foreach($sendToUsers as $recipient)
 		{
-			$this->updateAllFolderCachesForUser($user);		
+			$this->updateAllFolderCachesForUser($recipient);		
 		}
 				
 		return $this;

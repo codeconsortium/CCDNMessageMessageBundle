@@ -47,6 +47,7 @@ class CCDNMessageMessageExtension extends Extension
 		
 		$this->getFolderSection($container, $config);
 		$this->getMessageSection($container, $config);
+		$this->getQuotasSection($container, $config);
     }
 	
 	
@@ -72,5 +73,18 @@ class CCDNMessageMessageExtension extends Extension
 		$container->setParameter('ccdn_message_message.message.layout_templates.compose', $config['message']['layout_templates']['compose']);
 		$container->setParameter('ccdn_message_message.message.layout_templates.show', $config['message']['layout_templates']['show']);
 	}
+	
+	
+	
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getQuotasSection($container, $config)
+	{
+		$container->setParameter('ccdn_message_message.quotas.max_messages', $config['quotas']['max_messages']);
+	}
+	
 	
 }

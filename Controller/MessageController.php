@@ -55,8 +55,7 @@ class MessageController extends ContainerAware
 					
 		if ($formHandler->process())	
 		{
-			$this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle');
-				
+			
 			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 		}
 		else
@@ -101,7 +100,8 @@ class MessageController extends ContainerAware
 
 		if ($formHandler->process())	
 		{				
-			$this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle');
+			$this->container->get('session')->setFlash('notice', 
+				$this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
 			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 		}
@@ -148,7 +148,8 @@ class MessageController extends ContainerAware
 
 		if ($formHandler->process())	
 		{
-			$this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle');
+			$this->container->get('session')->setFlash('notice', 
+				$this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
 			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 		}
@@ -248,7 +249,7 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('message.repository')->findMessageByIdForUser($message_id, $user->getId());
 		
-		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
+		$this->container->get('message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}

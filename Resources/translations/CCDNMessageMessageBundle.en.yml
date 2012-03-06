@@ -22,7 +22,8 @@ message.table.head.sent: Sent
 
 message.table.empty: You have no messages.
 
-flash.message.sent.success: 'Message sent.'
+flash.message.sent.success: 'Message sent to %user%.'
+flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
 
 form.label.message.to: 'To: '
 form.label.message.subject: 'Subject: '

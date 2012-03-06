@@ -86,4 +86,23 @@ class FolderManager extends BaseManager implements EntityManagerInterface
 		return $this;
 	}
 	
+	
+	/**
+	 *
+	 * @access public
+	 * @
+	 */
+	public function checkQuotaAllowanceUsed($folders)
+	{
+		$totalMessageCount = 0;
+		
+		foreach($folders as $key => $folder)
+		{
+			$totalMessageCount += $folder->getCacheTotalMessageCount();
+		}
+
+		return $totalMessageCount;
+	}
+	
+	
 }

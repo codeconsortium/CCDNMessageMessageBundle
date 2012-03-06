@@ -72,9 +72,15 @@ class FolderController extends ContainerAware
 			$totalMessageCount += $folder->getCacheTotalMessageCount();
 		}
 		
-		$quota = 100;
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+		
 		$inboxSpace = ($totalMessageCount / $quota) * 100;
 			
+		if ($inboxSpace > 99)
+		{
+			$inboxSpace = 100;
+		}
+		
 		$messages_paginated = $this->container->get('message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
 		$messages_per_page = $this->container->getParameter('ccdn_message_message.folder.messages_per_page');

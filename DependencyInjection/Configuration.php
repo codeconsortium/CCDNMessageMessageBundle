@@ -62,9 +62,11 @@ class Configuration implements ConfigurationInterface
 		
 		$this->addFolderSection($rootNode);
 		$this->addMessageSection($rootNode);
+		$this->addQuotasSection($rootNode);
 		
         return $treeBuilder;
     }
+
 
 
 	/**
@@ -90,6 +92,7 @@ class Configuration implements ConfigurationInterface
 	}
 	
 
+
 	/**
 	 *
 	 * @access private
@@ -111,5 +114,25 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end();
 	}
+	
+	
+	
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addQuotasSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('quotas')
+					->children()
+						->scalarNode('max_messages')->defaultValue('200')->end()
+					->end()
+				->end()
+			->end();
+	}
+	
 	
 }

@@ -131,7 +131,7 @@ class MessageFormHandler
 			
 			if ($this->form->isValid())
 			{	
-				$this->onSuccess(/*$this->form->getData()*/ $formData);
+				$this->onSuccess($this->form->getData());
 				
 				return true;				
 			}
