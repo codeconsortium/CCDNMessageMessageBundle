@@ -36,7 +36,7 @@ class RegistryManager extends BaseManager implements EntityManagerInterface
 	 */	
 	public function setupDefaults($user_id)
 	{
-		$user = $this->container->get('user.repository')->findOneById($user_id);
+		$user = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
 		
 		if ( ! $user)
 		{

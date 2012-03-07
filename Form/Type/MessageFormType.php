@@ -79,11 +79,11 @@ class MessageFormType extends AbstractType
 		$builder->add('flagged');
 		
 		$userId = $this->defaults['sender']->getId();
-		$attachments = $this->container->get('attachment.repository')->findForUserByIdAsQB($userId);
+		$attachments = $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId);
 		
 		$builder->add('attachment', 'entity', array(
 		    'class' => 'CCDNComponentAttachmentBundle:Attachment',
-		  //  'query_builder' => $this->container->get('attachment.repository')->findForUserByIdAsQB($userId),
+		  //  'query_builder' => $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId),
 			'choices' => $attachments,
 		    'property' => 'attachment_original',
 			'required' => false,
