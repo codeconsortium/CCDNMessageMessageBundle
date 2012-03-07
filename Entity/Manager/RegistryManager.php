@@ -26,42 +26,14 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  */
 class RegistryManager extends BaseManager implements EntityManagerInterface
 {
-	
-	
+
+
+
 	/**
 	 *
 	 * @access public
-	 * @param $user_id
-	 * @return $this
-	 */	
-	public function setupDefaults($user_id)
-	{
-		$user = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
-		
-		if ( ! $user)
-		{
-			echo "error, cannot setup PM folders for non-user.";
-		}
-		
-		$folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
-		
-		foreach($folderNames as $key => $folderName)
-		{
-			$folder = new Folder();
-			$folder->setOwnedBy($user);
-			$folder->setName($folderName);
-			$folder->setSpecialType($key);
-			$folder->setCacheReadCount(0);
-			$folder->setCacheUnreadCount(0);
-			$folder->setCacheTotalMessageCount(0);
-			
-			$this->persist($folder);
-		}
-		
-		return $this;
-	}
-
-
+	 * @param $user
+	 */
 	public function updateCacheUnreadMessagesForUser($user)
 	{
 		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
