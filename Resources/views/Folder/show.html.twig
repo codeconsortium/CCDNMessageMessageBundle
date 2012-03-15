@@ -44,25 +44,22 @@
 	<div class="row" style="background-color: #f6f6f6; width: 100%; height: 100%; clear: both; overflow: hidden;">
 
 		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
-			<div style="margin: 0px 0px 0px 151px; overflow: hidden; border-left: 1px solid #eee;">
+			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #eee;">
 				<form method="POST" action="{{ path('cc_message_action_bulk') }}">
-					
-					<div class="common_box_panel common_tool_strip" style="border-top: none;">
-						<input type="submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete" />
-						<input type="submit" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read" />
-						<input type="submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread" />
-						<select name="select_move_to">
+					<div class="common_tool_strip">
+						<input type="submit" class="widget_submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete" />
+						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read" />
+						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread" />
+						<select name="select_move_to" class="widget_select">
 							{% for row, folder in folders %}
 								<option value="{{ folder.getId }}">{{ folder.getName|title }}</option>
 							{% endfor %}
 						</select>
-						<input type="submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to" />
+						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to" />
 					</div>
-					<div class="common_box_panel common_tool_strip">
-						<div class="pagerfanta">
-				{#			{% if path(app.request.attributes.get('_route')) = 'cc_message_folder_show' or path(app.request.attributes.get('_route')) = 'cc_message_folder_show_paginated' %} #}
-					    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
-						</div>
+					<div class="pagerfanta">
+			{#			{% if path(app.request.attributes.get('_route')) = 'cc_message_folder_show' or path(app.request.attributes.get('_route')) = 'cc_message_folder_show_paginated' %} #}
+				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
 					</div>
 					<div class="common_box_panel">
 						<div class="column v_align_top" style="width: 100%;">
@@ -130,22 +127,20 @@
 							</table>
 						</div>
 					</div>
-					<div class="common_box_panel common_tool_strip">
-						<div class="pagerfanta">
-					    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
-						</div>
+					<div class="pagerfanta">
+				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
 					</div>
 				</form>
 			</div>
 		</div>
 		
-		<div style="display: block; width: 150px; height: 100%; float: left; margin: 0px -152px 0px 0px; overflow: hidden;">
+		<div style="display: block; width: 111px; height: 100%; float: left; margin: 0px -111px 0px 0px; overflow: hidden;">
 			<div style="display: block; height: 100%; margin: 0px; overflow: hidden;">
 				<div class="row">
-					<div class="common_box_panel">
+					<div>
 						<div class="v_align_top h_align_centre">
 							{% for row, folder in folders %}
-								<div class="common_box_panel common_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+								<div class="common_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
 							{% endfor %}
 						</div>
 					</div>

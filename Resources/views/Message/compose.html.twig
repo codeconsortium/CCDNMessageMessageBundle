@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcommon/css/form.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -37,49 +36,44 @@
 		<span class="heading_glow">{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 	</div>
 	<div class="common_box_panel">
+		{% form_theme form param('ccdn_message_message.template.theme') %}
 		<form action="{{ path('cc_message_message_compose') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_row(form._token) }}
 			<div class="errors">{{ form_errors(form) }}</div>
 			<table class="common_list">
-				<thead>
-					<th style="width: 25%;"></th>
-					<th style="width: 75%;"></th>
-				</thead>
-				<tfoot>
-				</tfoot>
 				<tbody>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_right v_align_top">{{ form_label(form.send_to, null, { 'label': 'form.label.message.to'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="h_align_left v_align_top">
+						<td class="form_label">{{ form_label(form.send_to, null, { 'label': 'form.label.message.to'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="form_widget">
 							{{ form_errors(form.send_to) }}
 							{{ form_widget(form.send_to) }}
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_right v_align_top">{{ form_label(form.subject, null, { 'label': 'form.label.message.subject'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="h_align_left v_align_top">
+						<td class="form_label">{{ form_label(form.subject, null, { 'label': 'form.label.message.subject'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="form_widget">
 							{{ form_errors(form.subject) }}
 							{{ form_widget(form.subject) }}
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_right v_align_top">{{ form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="h_align_left v_align_top">
+						<td class="form_label">{{ form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="form_widget">
 							{{ form_errors(form.body) }}
 							{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
 							{{ form_widget(form.body) }}
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_right v_align_top">{{ form_label(form.flagged, null, { 'label': 'form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="h_align_left v_align_top">
+						<td class="form_label">{{ form_label(form.flagged, null, { 'label': 'form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="form_widget">
 							{{ form_errors(form.flagged) }}
 							{{ form_widget(form.flagged) }}
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_right v_align_top">{{ form_label(form.attachment, null, { 'label': 'form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="h_align_left v_align_middle">
+						<td class="form_label">{{ form_label(form.attachment, null, { 'label': 'form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
+						<td class="form_widget">
 							{{ form_errors(form.attachment) }}
 							{{ form_widget(form.attachment) }}
 							&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments_manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
@@ -87,8 +81,8 @@
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="h_align_centre v_align_middle" colspan="2">
-							<input type="submit" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" />
+						<td class="form_tool_strip" colspan="2">
+							<input type="submit" class="widget_submit" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" />
 						</td>
 					</tr>
 				</tbody>
