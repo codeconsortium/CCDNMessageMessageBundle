@@ -47,15 +47,15 @@
 			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #ccc;">
 				<form method="POST" action="{{ path('cc_message_action_bulk') }}">
 					<div class="common_tool_strip">
-						<input type="submit" class="widget_submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete" />
-						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read" />
-						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread" />
+						<input type="submit" class="widget_submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete">
+						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read">
+						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
 						<select name="select_move_to" class="widget_select">
 							{% for row, folder in folders %}
 								<option value="{{ folder.getId }}">{{ folder.getName|title }}</option>
 							{% endfor %}
 						</select>
-						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to" />
+						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
 					</div>
 					<div class="pagerfanta">
 			{#			{% if path(app.request.attributes.get('_route')) = 'cc_message_folder_show' or path(app.request.attributes.get('_route')) = 'cc_message_folder_show_paginated' %} #}
@@ -65,9 +65,9 @@
 						<div class="column v_align_top" style="width: 100%;">
 							<table class="common_list">
 								<thead>
-									<th style="width: 18px; vertical-align: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all" /></th>
-									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon" /></th>
-									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon" /></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all"></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon"></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon"></th>
 									<th style="width: 18px;"></th>
 									<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 									<th style="width: auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
@@ -77,23 +77,23 @@
 								{% for row, message in messages %}
 									<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
 										<td class"">
-											<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}" />
+											<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}">
 										</td>
 										<td class="">
 											{% if message.flagged %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
 											{% endif %}
 										</td>
 										<td class="">
 											{% if message.attachment %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon">
 											{% endif %}
 										</td>
 										<td class="">
 											{% if message.readIt %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon">
 											{% else %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" alt="icon" />
+											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" alt="icon">
 											{% endif %}
 										</td>
 										<td class="">
