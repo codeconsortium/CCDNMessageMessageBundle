@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block javascripts %}
@@ -52,7 +52,7 @@
 						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
 						<select name="select_move_to" class="widget_select">
 							{% for row, folder in folders %}
-								<option value="{{ folder.getId }}">{{ folder.getName|title }}</option>
+								<option class="widget_select" value="{{ folder.getId }}">{{ folder.getName|title }}</option>
 							{% endfor %}
 						</select>
 						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
