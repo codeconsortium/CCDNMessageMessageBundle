@@ -44,7 +44,7 @@
 	<div class="row" style="background-color: #f6f6f6; width: 100%; height: 100%; clear: both; overflow: hidden;">
 
 		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
-			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #eee;">
+			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #ccc;">
 				<form method="POST" action="{{ path('cc_message_action_bulk') }}">
 					<div class="common_tool_strip">
 						<input type="submit" class="widget_submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete" />
@@ -140,7 +140,11 @@
 					<div>
 						<div class="v_align_top h_align_centre">
 							{% for row, folder in folders %}
+								{% if folder.name == current_folder.name %}
+								<div class="common_tool_strip" style="background-color: #ebebeb !important;"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+								{% else %}
 								<div class="common_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+								{% endif %}
 							{% endfor %}
 						</div>
 					</div>
@@ -150,7 +154,7 @@
 		
 	</div>
 	
-	<div class="common_box_panel padding_5" style="border-top: 1px solid #eee; text-align: center !important;">
+	<div class="common_box_panel padding_10" style="border-top: 1px solid #ccc; text-align: center !important;">
 		
 		<div style="display: block; width: 90%; text-align: center !important; margin-left: auto; margin-right: auto;">
 			<span class="stat_xsmall">

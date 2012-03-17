@@ -206,17 +206,17 @@ class MessageController extends ContainerAware
 		}
 				
 		
-		$folder = null;
-		foreach($folders as $key => $_folder)
+		$currentFolder = null;
+		foreach($folders as $key => $folder)
 		{
-			if ($_folder->getName() == $message->getFolder()->getName())
+			if ($folder->getName() == $message->getFolder()->getName())
 			{
-				$folder = $_folder;
+				$currentFolder = $folder;
 				break;
 			}
 		}
 		
-		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);;
+		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 			
 		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), 
@@ -227,6 +227,7 @@ class MessageController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'folders' => $folders,
+			'current_folder' => $currentFolder,
 			'message' => $message,
 		));
 	}
