@@ -94,7 +94,7 @@
 											{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
 										</td>
 										<td class="form_widget">
-											<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" /></a>
+											<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" alt="icon" /></a>
 										</td>
 									</tr>
 									{% endif %}
