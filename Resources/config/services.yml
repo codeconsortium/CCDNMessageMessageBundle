@@ -12,7 +12,7 @@ parameters:
     ccdn_message_message.message.form.type.class:       CCDNMessage\MessageBundle\Form\Type\MessageFormType
     ccdn_message_message.message.form.handler.class:    CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
 
-    ccdn_message_message.dashboard_integrator.class:    CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
+    ccdn_message_message.dashboard.integrator.class:    CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
 
 services:
     ccdn_message_message.unread_message_count.extension:
@@ -64,10 +64,10 @@ services:
         arguments:  [@form.factory, @service_container, @ccdn_message_message.message.manager]        
         
     
-    ccdn_message_message.dashboard_integrator:
-        class: %ccdn_message_message.dashboard_integrator.class%
+    ccdn_message_message.dashboard.integrator:
+        class: %ccdn_message_message.dashboard.integrator.class%
         arguments: [@service_container]
         tags:
-            - { name: ccdn_component_dashboard.registry }
+            - { name: ccdn_component_dashboard.integrator }
                 
                 

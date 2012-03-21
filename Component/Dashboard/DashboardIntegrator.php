@@ -14,13 +14,15 @@
 namespace CCDNMessage\MessageBundle\Component\Dashboard;
 
 use CCDNComponent\DashboardBundle\Component\Integrator\BaseIntegrator;
+use CCDNComponent\DashboardBundle\Component\Integrator\IntegratorInterface;
+
 
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class DashboardIntegrator extends BaseIntegrator
+class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
 {
 
 	
