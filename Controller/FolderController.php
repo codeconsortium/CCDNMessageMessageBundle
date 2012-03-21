@@ -75,7 +75,8 @@ class FolderController extends ContainerAware
 		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 		
 		$inboxSpace = ($totalMessageCount / $quota) * 100;
-			
+		
+		// where 100 represents 100%, if the number should exceed then reset it to 100%
 		if ($inboxSpace > 99)
 		{
 			$inboxSpace = 100;
@@ -90,8 +91,7 @@ class FolderController extends ContainerAware
 		$messages = $messages_paginated->getCurrentPageResults();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), 
-				$this->container->get('router')->generate('cc_message_index'), "home");
+			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home");
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
 			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
@@ -158,13 +158,7 @@ class FolderController extends ContainerAware
 			$moveTo = $this->container->get('ccdn_message_message.folder.repository')->findOneById($_POST['select_move_to']);
 			$this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
 		}
-		
-//		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
-//		foreach ($messages as $message)
-//		{
-//			$folderManager->updateFolderCounterCaches($message->getFolder());			
-//		}
-//		$folderManager->flushNow();
+
 		$this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));

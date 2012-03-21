@@ -65,14 +65,7 @@ class MessageFormType extends AbstractType
 	 * @param FormBuilder $builder, Array() $options
 	 */
 	public function buildForm(FormBuilder $builder, array $options)
-	{	
-/*		if (isset($this->defaults['send_to']))
-		{
-			$builder->add('send_to', 'text', array('data' => $this->defaults['send_to']));			
-		} else {
-			$builder->add('send_to', 'text');
-		}*/
-		
+	{			
 		$builder->add('send_to', 'text', array('data' => $this->getRespondentSendTo()));
 		$builder->add('subject', 'text', array('data' => $this->getQuotedSubject()));
 		$builder->add('body', 'textarea', array('data' => $this->getQuotedBody()));		
