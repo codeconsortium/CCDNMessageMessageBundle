@@ -57,10 +57,12 @@
 						</select>
 						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
 					</div>
+					{% if pager.haveToPaginate %}
 					<div class="pagerfanta">
 			{#			{% if path(app.request.attributes.get('_route')) = 'cc_message_folder_show' or path(app.request.attributes.get('_route')) = 'cc_message_folder_show_paginated' %} #}
 				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
 					</div>
+					{% endif %}
 					<div class="common_box_panel">
 						<div class="column v_align_top" style="width: 100%;">
 							<table class="common_list">
@@ -129,9 +131,11 @@
 							</table>
 						</div>
 					</div>
+					{% if pager.haveToPaginate %}
 					<div class="pagerfanta">
 				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
 					</div>
+					{% endif %}
 				</form>
 			</div>
 		</div>
