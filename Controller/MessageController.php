@@ -35,15 +35,18 @@ class MessageController extends ContainerAware
 	 */   
     public function composeAction($user_id)
     {
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 	
+		//
+		// Are we sending this to someone who's 'send message' button we clicked? 
+		//
 		if ($user_id)
 		{
 			$send_to = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
@@ -52,23 +55,42 @@ class MessageController extends ContainerAware
 			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user));
 		}
 		
-					
-		if ($formHandler->process())	
+		
+		if (isset($_POST['submit_draft']))
 		{
-			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+			$formHandler->setMode($formHandler::DRAFT);
+			
+			if ($formHandler->process())	
+			{
+				return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'drafts')));
+			}
 		}
-		else
-		{		
-			// setup crumb trail.
-			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-				->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
-				->add($this->container->get('translator')->trans('crumbs.compose_message', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose'), "edit");
+		
+		if (isset($_POST['submit_preview']))
+		{
+			$formHandler->setMode($formHandler::PREVIEW);
+		}
+
+		if (isset($_POST['submit_post']))
+		{
+			if ($formHandler->process())	
+			{
+				return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+			}
+		}
+
+		// setup crumb trail.
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
+			->add($this->container->get('translator')->trans('crumbs.compose_message', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose'), "edit");
 				
-			return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
-				'crumbs' => $crumb_trail,
-				'form' => $formHandler->getForm()->createView(),
-			));
-		}
+		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
+			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
+			'crumbs' => $crumb_trail,
+			'form' => $formHandler->getForm()->createView(),
+			'preview' => $formHandler->getForm()->getData(),
+			'user' => $user,
+		));
     }
 
 

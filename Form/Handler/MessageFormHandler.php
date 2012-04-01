@@ -69,7 +69,19 @@ class MessageFormHandler
 	 * @access protected
 	 */
 	protected $form;
-
+	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 */
+	protected $mode;
+	const NORMAL = 0;
+	const PREVIEW = 1;
+	const DRAFT = 2;
+	
+	
 
 	/**
 	 *
@@ -81,10 +93,39 @@ class MessageFormHandler
 		$this->options = array();
 		$this->factory = $factory;
 		$this->container = $container;
+		
+		$this->mode = self::NORMAL;
 		$this->manager = $manager;
 
 		$this->request = $container->get('request');
 	}
+	
+	
+	
+	/**
+	 *
+	 *
+	 * @access public
+	 */
+	public function setMode($mode)
+	{
+		switch($mode)
+		{
+			case self::NORMAL:
+				$this->mode = self::NORMAL;
+				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+			break;
+			case self::PREVIEW:
+				$this->mode = self::PREVIEW;
+				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+			break;
+			case self::DRAFT:
+				$this->mode = self::DRAFT;
+				$this->manager = $this->container->get('ccdn_forum_forum.draft.manager');
+			break;
+		}
+	}
+	
 	
 	
 	/**
@@ -112,8 +153,6 @@ class MessageFormHandler
 		
 		if ($this->request->getMethod() == 'POST')
 		{
-			$this->form->bindRequest($this->request);
-		
 			$formData = $this->form->getData();
 	
 			$formData->setSentFrom($this->options['sender']);
@@ -187,6 +226,8 @@ class MessageFormHandler
 			} else {
 				$this->form = $this->factory->create($messageType);
 			}
+			
+			$this->form->bindRequest($this->request);
 		}
 		
 		return $this->form;
