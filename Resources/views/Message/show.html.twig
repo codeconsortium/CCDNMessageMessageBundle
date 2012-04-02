@@ -43,6 +43,9 @@
 			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #ccc;">
 				<div class="row">
 					<div class="common_tool_strip">
+						{% if message.isDraft %}
+						<a class="button_link" href="{{ path('cc_message_message_send_draft', {'message_id': message.id }) }}">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						{% endif %}
 						<a class="button_link" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 						<a class="button_link" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 						<a class="button_link" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>

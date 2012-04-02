@@ -72,6 +72,7 @@
 										<th style="width: 18px; vertical-align: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all"></th>
 										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon"></th>
 										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon"></th>
+										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon"></th>
 										<th style="width: 18px;"></th>
 										<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 										<th style="width: auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
@@ -95,6 +96,9 @@
 											{% endif %}
 										</td>
 										<td class="">
+											{% if message.isDraft %}<img width="16" height="16" class="icon_16x16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon">{% endif %}
+										</td>
+										<td class="">
 											{% if message.readIt %}
 											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon">
 											{% else %}
@@ -111,10 +115,11 @@
 											{% else %}Guest{% endif %}
 										</td>
 										<td class="">
+
 											{% if message.readIt %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}">{{ message.getSubject }}</a>
+												<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}">{{ message.getSubject }}</a>
 											{% else %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}"><b>{{ message.getSubject }}</b></a>
+												<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}"><b>{{ message.getSubject }}</b></a>
 											{% endif %}
 										</td>
 										<td class="">
@@ -123,7 +128,7 @@
 									</tr>
 								{% else %}
 									<tr>
-										<td class="h_align_centre v_align_middle" colspan="7" width="100%">
+										<td class="h_align_centre v_align_middle" colspan="8" width="100%">
 											{{ 'message.table.empty' | trans({}, 'CCDNMessageMessageBundle') }}
 										</td>
 									</tr>

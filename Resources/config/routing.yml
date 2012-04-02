@@ -53,7 +53,11 @@ cc_message_message_compose_forward:
     defaults:   { _controller: CCDNMessageMessageBundle:Message:forward, _locale: en }
     requirements:
         _locale: en
-        
+
+cc_message_message_send_draft:
+    pattern: /{_locale}/message/{message_id}/send
+    defaults: { _controller: CCDNMessageMessageBundle:Message:sendDraft, _locale: en }
+    
 cc_message_message_show_by_id:
     pattern:    /{_locale}/message/{message_id}/show
     defaults:   { _controller: CCDNMessageMessageBundle:Message:showMessage, _locale: en }
