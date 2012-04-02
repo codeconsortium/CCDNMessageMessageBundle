@@ -66,18 +66,10 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		}
 			
 		
-//		$temp->setSentTo($recipient);
-//		$message->setSendTo();
 		$message->setSentFrom($user);
-//		$message->setSubject($message->getSubject());
-//		$message->setBody($message->getBody());
-//		$message->setSentDate($message->getSentDate());
-//		$message->setCreatedDate($message->getCreatedDate());
 		$message->setIsDraft(true);
 		$message->setOwnedBy($user);
 		$message->setReadIt(false);
-//		$message->setFlagged($message->getFlagged());
-//		$message->setAttachment($message->getAttachment());			
 		$message->setFolder($folders[2]);
 			
 		$this->persist($message);	
@@ -86,6 +78,20 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		$this->updateAllFolderCachesForUser($user);		
 				
 		return $this;		
+	}
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $message
+	 * @return $this
+	 */
+	public function sendDraft($message)	
+	{
+		$this->insert($message);
+		
+		return $this;
 	}
 	
 	
@@ -120,10 +126,18 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findByUsername($recipients);
 		}
 
-		// add ourself to the sending list so we have a carbon-copy.
 		$user = $this->container->get('security.context')->getToken()->getUser();
-		$sendToUsers[] = $user; // send to self so we have it in our sent folder!
-		
+
+		//
+		// If message is a draft, don't send it to ourselves as
+		// we already have a copy and don't need another one.
+		//
+		if ( ! $message->getIsDraft())
+		{
+			// add ourself to the sending list so we have a carbon-copy.
+			$sendToUsers[] = $user; // send to self so we have it in our sent folder!			
+		}
+
 		// a check for when we encounter our own folder, in which
 		// case the message goes into outbox instead of inbox.
 		$senderAlreadyHasCC = false;
@@ -133,7 +147,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 		
 		foreach($sendToUsers as $recipient_key => $recipient)
-		{
+		{		
 			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());
 
 			if ( ! $folders)
@@ -165,7 +179,7 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 			$temp->setSentFrom($user);
 			$temp->setSubject($message->getSubject());
 			$temp->setBody($message->getBody());
-			$temp->setSentDate($message->getSentDate());
+			$temp->setSentDate(new \DateTime());
 			$temp->setCreatedDate($message->getCreatedDate());
 			$temp->setIsDraft($message->getIsDraft());
 			$temp->setOwnedBy($recipient);

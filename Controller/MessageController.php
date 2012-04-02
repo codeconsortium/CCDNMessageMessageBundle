@@ -101,9 +101,9 @@ class MessageController extends ContainerAware
 	 */
 	public function replyAction($message_id)
 	{
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
@@ -152,9 +152,9 @@ class MessageController extends ContainerAware
 	 */
 	public function forwardAction($message_id)
 	{
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
@@ -194,6 +194,38 @@ class MessageController extends ContainerAware
 		}		
 	}
 	
+	
+	
+	/**
+	* @access public
+	* @param int $message_id
+	* @return RedirectResponse|RenderResponse
+	*/
+	public function sendDraftAction($message_id)	
+	{
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
+		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+			throw new AccessDeniedException('You do not have permission to use this resource!');
+		}
+
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
+		
+		$this->container->get('ccdn_message_message.message.manager')->sendDraft($message)->flushNow();
+		
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+	}
+
+
+
 	/**
 	 *
 	 * route: /en/messages/1/show
