@@ -113,15 +113,12 @@ class MessageFormHandler
 		{
 			case self::NORMAL:
 				$this->mode = self::NORMAL;
-				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
 			break;
 			case self::PREVIEW:
 				$this->mode = self::PREVIEW;
-				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
 			break;
 			case self::DRAFT:
 				$this->mode = self::DRAFT;
-				$this->manager = $this->container->get('ccdn_forum_forum.draft.manager');
 			break;
 		}
 	}
@@ -246,6 +243,12 @@ class MessageFormHandler
 	 */
 	protected function onSuccess($entity)
     {
+	
+		if ($this->mode == self::DRAFT)
+		{
+			return $this->manager->saveDraft($entity)->flushNow();
+		}
+		
 		return $this->manager->insert($entity)->flushNow();
     }
 

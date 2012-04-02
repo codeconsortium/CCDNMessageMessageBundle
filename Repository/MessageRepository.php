@@ -32,7 +32,7 @@ class MessageRepository extends EntityRepository
 			->createQuery('
 				SELECT m
 				FROM CCDNMessageMessageBundle:Message m
-				WHERE m.folder = :folder_id AND m.sent_to = :user_id
+				WHERE m.folder = :folder_id AND m.owned_by = :user_id
 				ORDER BY m.sent_date DESC')
 			->setParameters(array('folder_id' => $folder_id, 'user_id' => $user_id));
 					

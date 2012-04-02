@@ -27,6 +27,69 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 {
 	
 	
+	
+	public function saveDraft($message)
+	{
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		$folderRepo = $this->container->get('ccdn_message_message.folder.repository');
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+		
+		//
+		// Get the folders for this user
+		//
+		$folders = $folderRepo->findAllFoldersForUser($user->getId());
+
+		//
+		// Ensure folders exist or create them
+		//
+		if ( ! $folders)
+		{
+			$folderManager->setupDefaults($recipient->getId())->flushNow();
+
+			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());		        
+		}
+
+		//
+		// Check the used space against the quota
+		//
+		$used = $folderManager->checkQuotaAllowanceUsed($folders);
+			
+		if ($used >= $quota)
+		{
+			$this->container->get('session')->setFlash('notice_' . $user, 
+				$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));			
+		} else {
+			$this->container->get('session')->setFlash('notice_' . $user,
+				$this->container->get('translator')->trans('flash.message.draft.saved', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
+		}
+			
+		
+//		$temp->setSentTo($recipient);
+//		$message->setSendTo();
+		$message->setSentFrom($user);
+//		$message->setSubject($message->getSubject());
+//		$message->setBody($message->getBody());
+//		$message->setSentDate($message->getSentDate());
+//		$message->setCreatedDate($message->getCreatedDate());
+		$message->setIsDraft(true);
+		$message->setOwnedBy($user);
+		$message->setReadIt(false);
+//		$message->setFlagged($message->getFlagged());
+//		$message->setAttachment($message->getAttachment());			
+		$message->setFolder($folders[2]);
+			
+		$this->persist($message);	
+		$this->flushNow();
+
+		$this->updateAllFolderCachesForUser($user);		
+				
+		return $this;		
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
