@@ -61,7 +61,7 @@ class MessageFormHandler
 	 *
 	 * @access protected
 	 */
-	protected $options;
+	protected $defaults = array();
 	
 	
 	/**
@@ -90,7 +90,7 @@ class MessageFormHandler
 	 */
 	public function __construct(FormFactory $factory, ContainerInterface $container, EntityManagerInterface $manager)
 	{
-		$this->options = array();
+		$this->defaults = array();
 		$this->factory = $factory;
 		$this->container = $container;
 		
@@ -131,9 +131,9 @@ class MessageFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setOptions(array $options = null )
+	public function setDefaultValues(array $defaults = null)
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
 		
 		return $this;
 	}
@@ -152,16 +152,16 @@ class MessageFormHandler
 		{
 			$formData = $this->form->getData();
 	
-			$formData->setSentFrom($this->options['sender']);
+			$formData->setSentFrom($this->defaults['sender']);
 			$formData->setSentDate(new \DateTime());
 			$formData->setCreatedDate(new \DateTime());
 			$formData->setIsDraft(false);
 			
-			if (isset($this->options['action']))
+			if (isset($this->defaults['action']))
 			{
-				if ($this->options['action'] == 'forward')
+				if ($this->defaults['action'] == 'forward')
 				{				
-					$formData->setInResponseTo($this->options['message']);
+					$formData->setInResponseTo($this->defaults['message']);
 				}
 			}
 			
@@ -190,21 +190,21 @@ class MessageFormHandler
 			
 			$defaultValues = array();
 			
-			$defaultValues['sender'] = $this->options['sender'];
+			$defaultValues['sender'] = $this->defaults['sender'];
 			
-			if (isset($this->options['send_to']))
+			if (isset($this->defaults['send_to']))
 			{
-				$defaultValues['send_to'] = $this->options['send_to']->getUsername();
+				$defaultValues['send_to'] = $this->defaults['send_to']->getUsername();
 			}
 			
-			if (isset($this->options['action']))
+			if (isset($this->defaults['action']))
 			{
-				if ($this->options['action'] == 'reply')
+				if ($this->defaults['action'] == 'reply')
 				{
 					$defaultValues['action'] = 'reply';
-					$defaultValues['message'] = $this->options['message'];
+					$defaultValues['message'] = $this->defaults['message'];
 				}
-				if ($this->options['action'] == 'forward')
+				if ($this->defaults['action'] == 'forward')
 				{
 					$defaultValues['action'] = 'forward';
 				}
@@ -212,11 +212,11 @@ class MessageFormHandler
 			
 			$messageType->setDefaultValues($defaultValues);
 			
-			if (isset($this->options['message']) && isset($this->options['action']))
+			if (isset($this->defaults['message']) && isset($this->defaults['action']))
 			{
-				if ($this->options['action'] == 'forward')
+				if ($this->defaults['action'] == 'forward')
 				{
-					$this->form = $this->factory->create($messageType, $this->options['message']);
+					$this->form = $this->factory->create($messageType, $this->defaults['message']);
 				} else {
 					$this->form = $this->factory->create($messageType);
 				}

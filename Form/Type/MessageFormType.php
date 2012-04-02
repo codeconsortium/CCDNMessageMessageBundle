@@ -35,17 +35,21 @@ class MessageFormType extends AbstractType
 	
 	
 	
-	public function __construct($doctrine, $service_container)
-	{
-		
-		$this->container = $service_container;
-	}
-	
 	/**
 	 *
 	 * @access protected
 	 */
-	protected $defaults = array('send_to' => '');
+	protected $defaults = array();
+	
+	
+	
+	public function __construct($doctrine, $service_container)
+	{
+		$this->container = $service_container;
+		
+		$this->defaults = array('send_to' => '');
+	}
+
 	
 	
 	/**
@@ -53,10 +57,13 @@ class MessageFormType extends AbstractType
 	 * @access public
 	 * @param Array() $defaults
 	 */
-	public function setDefaultValues(array $defaults)
+	public function setDefaultValues(array $defaults = null)
 	{
-		$this->defaults = $defaults;
+		$this->defaults = array_merge($this->defaults, $defaults);
+		
+		return $this;
 	}
+	
 	
 	
 	/**

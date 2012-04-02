@@ -50,9 +50,9 @@ class MessageController extends ContainerAware
 		if ($user_id)
 		{
 			$send_to = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
-			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'send_to' => $send_to));
+			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'send_to' => $send_to));
 		} else {
-			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user));
+			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user));
 		}	
 		
 		if (isset($_POST['submit_draft']))
@@ -112,7 +112,7 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
+		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
 
 		if ($formHandler->process())	
 		{				
@@ -155,7 +155,7 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
+		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
 
 		if ($formHandler->process())	
 		{
