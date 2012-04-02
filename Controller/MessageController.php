@@ -43,7 +43,7 @@ class MessageController extends ContainerAware
 		}
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
-	
+
 		//
 		// Are we sending this to someone who's 'send message' button we clicked? 
 		//
@@ -53,8 +53,7 @@ class MessageController extends ContainerAware
 			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user, 'send_to' => $send_to));
 		} else {
 			$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setOptions(array('sender' => $user));
-		}
-		
+		}	
 		
 		if (isset($_POST['submit_draft']))
 		{
@@ -231,6 +230,7 @@ class MessageController extends ContainerAware
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
 			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
+			'user' => $user,
 			'crumbs' => $crumb_trail,
 			'folders' => $folders,
 			'current_folder' => $currentFolder,

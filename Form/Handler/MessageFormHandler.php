@@ -227,7 +227,11 @@ class MessageFormHandler
 				$this->form = $this->factory->create($messageType);
 			}
 			
-			$this->form->bindRequest($this->request);
+
+			if ($this->request->getMethod() == 'POST')
+			{
+				$this->form->bindRequest($this->request);
+			}
 		}
 		
 		return $this->form;
