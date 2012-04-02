@@ -119,17 +119,30 @@ class FolderController extends ContainerAware
 			throw new AccessDeniedException('You do not have access to this section.');
 		}
 		
-		// get all the message id's
+		//
+		// Get all the message id's.
+		//
 		$messageIds = array();
 		$ids = $_POST;
 		foreach ($ids as $messageKey => $messageId)
 		{
 			if (substr($messageKey, 0, 14) == 'check_message_')
 			{
-				$messageIds[] = substr($messageKey, 14, (strlen($messageKey) - 14));
+				//
+				// Cast the key values to int upon extraction. 
+				//
+				$id = (int) substr($messageKey, 14, (strlen($messageKey) - 14));
+				
+				if (is_int($id) == true)
+				{
+					$messageIds[] = $id;
+				}
 			}
 		}
 		
+		//
+		// Don't bother if there are no messages to process.
+		//
 		if (count($messageIds) < 1)
 		{
 			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
@@ -138,6 +151,11 @@ class FolderController extends ContainerAware
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
 		$messages = $this->container->get('ccdn_message_message.message.repository')->findTheseMessagesByUserId($messageIds, $user->getId());
+		
+		if ( ! $messages || empty($messages))
+		{
+			throw new NotFoundHttpException('No messages found!');
+		}
 			
 		if (isset($_POST['submit_delete']))
 		{

@@ -112,6 +112,11 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
+		
 		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
 
 		if ($formHandler->process())	
@@ -129,8 +134,11 @@ class MessageController extends ContainerAware
 				->add($this->container->get('translator')->trans('crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose_reply', array('message_id' => $message_id)), "edit");
 
 			return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
+				'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
 				'crumbs' => $crumb_trail,
 				'form' => $formHandler->getForm()->createView(),
+				'preview' => $formHandler->getForm()->getData(),
+				'user' => $user,
 			));
 		}
 	}
@@ -155,6 +163,11 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
+		
 		$formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
 
 		if ($formHandler->process())	
@@ -172,8 +185,11 @@ class MessageController extends ContainerAware
 				->add($this->container->get('translator')->trans('crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose_forward', array('message_id' => $message_id)), "edit");
 
 			return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
+				'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
 				'crumbs' => $crumb_trail,
 				'form' => $formHandler->getForm()->createView(),
+				'preview' => $formHandler->getForm()->getData(),
+				'user' => $user,
 			));
 		}		
 	}
@@ -255,9 +271,14 @@ class MessageController extends ContainerAware
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}		
 		
 		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
-		
+				
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}
 	
@@ -279,8 +300,13 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 
-		$this->container->get('ccdn_message_message.message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
 		
+		$this->container->get('ccdn_message_message.message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
+	
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));		
 	}
 
@@ -302,6 +328,18 @@ class MessageController extends ContainerAware
 
 		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
 		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+		
+		if ( ! $folders)
+		{
+			$this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flushNow();
+
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+		}
+		
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
 		
 		$this->container->get('ccdn_message_message.message.manager')->delete($message, $folders)->flushNow()->updateAllFolderCachesForUser($user);
 		
