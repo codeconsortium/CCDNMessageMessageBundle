@@ -87,10 +87,13 @@ class MessageManager extends BaseManager implements EntityManagerInterface
 	 * @param $message
 	 * @return $this
 	 */
-	public function sendDraft($message)	
+	public function sendDraft(array $messages)	
 	{
-		$this->insert($message);
-		
+		foreach($messages as $message)
+		{
+			$this->insert($message);
+		}
+	
 		return $this;
 	}
 	

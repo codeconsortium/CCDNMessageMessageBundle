@@ -176,6 +176,10 @@ class FolderController extends ContainerAware
 			$moveTo = $this->container->get('ccdn_message_message.folder.repository')->findOneById($_POST['select_move_to']);
 			$this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
 		}
+		if (isset($_POST['submit_send']))
+		{
+			$this->container->get('ccdn_message_message.message.manager')->sendDraft($messages)->flushNow();
+		}
 
 		$this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);
 		

@@ -219,7 +219,7 @@ class MessageController extends ContainerAware
 			throw new NotFoundHttpException('No such message found!');
 		}
 		
-		$this->container->get('ccdn_message_message.message.manager')->sendDraft($message)->flushNow();
+		$this->container->get('ccdn_message_message.message.manager')->sendDraft(array($message))->flushNow();
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
 	}
