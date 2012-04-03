@@ -156,7 +156,9 @@ class FolderController extends ContainerAware
 		{
 			throw new NotFoundHttpException('No messages found!');
 		}
-			
+		
+		$folder = $messages[0]->getFolder();	
+		
 		if (isset($_POST['submit_delete']))
 		{
 			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
@@ -183,7 +185,16 @@ class FolderController extends ContainerAware
 
 		$this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);
 		
-		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $folder->getName())));
+		
+//		$session = $this->container->get('request')->getSession();		
+//		
+//		if ($session->has('referer'))
+//		{
+//			return new RedirectResponse($session->get('referer'));
+//		} else {
+//			return new RedirectResponse($this->container->get('router')->generate('cc_message_index')); // if no referer then go to inbox
+//		}
 	}
 	
 	
