@@ -274,6 +274,7 @@ class MessageController extends ContainerAware
 			
 		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
+			->add($message->getFolder()->getName(), $this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())), "folder")
 			->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email");
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
