@@ -74,7 +74,7 @@ class MessageController extends ContainerAware
 		{
 			if ($formHandler->process())	
 			{
-				return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+				return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 			}
 		}
 
@@ -123,7 +123,7 @@ class MessageController extends ContainerAware
 		{				
 			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
-			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+			return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 		}
 		else
 		{
@@ -174,7 +174,7 @@ class MessageController extends ContainerAware
 		{
 			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
-			return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+			return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 		}
 		else
 		{
@@ -221,7 +221,7 @@ class MessageController extends ContainerAware
 		
 		$this->container->get('ccdn_message_message.message.manager')->sendDraft(array($message))->flushNow();
 		
-		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 	}
 
 
@@ -311,7 +311,7 @@ class MessageController extends ContainerAware
 		
 		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 				
-		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
 	}
 	
 	
@@ -339,7 +339,7 @@ class MessageController extends ContainerAware
 		
 		$this->container->get('ccdn_message_message.message.manager')->markAsUnread($message)->flushNow()->updateAllFolderCachesForUser($user);
 	
-		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));		
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
 	}
 
 
@@ -375,7 +375,7 @@ class MessageController extends ContainerAware
 		
 		$this->container->get('ccdn_message_message.message.manager')->delete($message, $folders)->flushNow()->updateAllFolderCachesForUser($user);
 		
-		return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
 	}
 	
 	
