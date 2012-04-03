@@ -49,7 +49,7 @@
 						<a class="button_link" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 						<a class="button_link" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 						<a class="button_link" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-						<a class="button_link" href="{{ path('cc_message_message_mark_as_read', {'message_id': message.id }) }}">{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+						{#<a class="button_link" href="{{ path('cc_message_message_mark_as_read', {'message_id': message.id }) }}">{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}</a>#}
 						<a class="button_link" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 					</div>
 
