@@ -1,26 +1,26 @@
 parameters:
-    ccdn_message_message.unread_message_count.extension.class:    CCDNMessage\MessageBundle\Extension\UnreadMessageCountExtension
-    ccdn_message_message.folder.repository.class:       CCDNMessage\MessageBundle\Repository\FolderRepository    
-    ccdn_message_message.folder.manager.class:          CCDNMessage\MessageBundle\Entity\Manager\FolderManager
+    
+    ccdn_message_message.folder.repository.class:               CCDNMessage\MessageBundle\Repository\FolderRepository    
+    ccdn_message_message.message.repository.class:              CCDNMessage\MessageBundle\Repository\MessageRepository    
+    ccdn_message_message.registry.repository.class:             CCDNMessage\MessageBundle\Repository\RegistryRepository
+    
+    ccdn_message_message.folder.manager.class:                  CCDNMessage\MessageBundle\Manager\FolderManager
+    ccdn_message_message.message.manager.class:                 CCDNMessage\MessageBundle\Manager\MessageManager
+    ccdn_message_message.registry.manager.class:                CCDNMessage\MessageBundle\Manager\RegistryManager
 
-    ccdn_message_message.registry.repository.class:     CCDNMessage\MessageBundle\Repository\RegistryRepository
-    ccdn_message_message.registry.manager.class:        CCDNMessage\MessageBundle\Entity\Manager\RegistryManager
+    ccdn_message_message.message.form.type.class:               CCDNMessage\MessageBundle\Form\Type\MessageFormType
+    ccdn_message_message.message.form.handler.class:            CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+    ccdn_message_message.validator.send_to.class:               CCDNMessage\MessageBundle\Form\Validator\SendToValidator
+    
+    ccdn_message_message.unread_message_count.extension.class:  CCDNMessage\MessageBundle\Extension\UnreadMessageCountExtension
 
-    ccdn_message_message.message.repository.class:      CCDNMessage\MessageBundle\Repository\MessageRepository    
-    ccdn_message_message.message.manager.class:         CCDNMessage\MessageBundle\Entity\Manager\MessageManager
-
-    ccdn_message_message.message.form.type.class:       CCDNMessage\MessageBundle\Form\Type\MessageFormType
-    ccdn_message_message.message.form.handler.class:    CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
-
-    ccdn_message_message.dashboard.integrator.class:    CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
+    ccdn_message_message.dashboard.integrator.class:            CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
 
 services:
-    ccdn_message_message.unread_message_count.extension:
-        class:  %ccdn_message_message.unread_message_count.extension.class%
-        arguments: [@service_container]
-        tags:
-            - { name: twig.extension }
-            
+
+    #
+    # Repositories.
+    #   
     ccdn_message_message.message.repository:
         class: %ccdn_message_message.message.repository.class%
         factory_service: doctrine.orm.default_entity_manager
@@ -39,31 +39,48 @@ services:
         factory_method: getRepository 
         arguments: 
             - 'CCDNMessage\MessageBundle\Entity\Registry'
-                    
+     
+    #
+    # Managers.
+    #               
     ccdn_message_message.message.manager:
-        class:  %ccdn_message_message.message.manager.class%
+        class: %ccdn_message_message.message.manager.class%
         arguments:  [@doctrine, @service_container]
     ccdn_message_message.folder.manager:
-        class:  %ccdn_message_message.folder.manager.class%
+        class: %ccdn_message_message.folder.manager.class%
         arguments:  [@doctrine, @service_container]
     ccdn_message_message.registry.manager:
-        class:  %ccdn_message_message.registry.manager.class%
+        class: %ccdn_message_message.registry.manager.class%
         arguments:  [@doctrine, @service_container]
     
+    
+    #
+    # Message Forms.
+    #
+    ccdn_message_message.message.form.type:
+        class: %ccdn_message_message.message.form.type.class%
+        arguments:  [@doctrine, @service_container]
+    ccdn_message_message.message.form.handler:
+        class: %ccdn_message_message.message.form.handler.class%
+        arguments:  [@form.factory, @service_container, @ccdn_message_message.message.manager]        
     ccdn_message_message.validator.send_to:
-        class: CCDNMessage\MessageBundle\Form\Validator\SendToValidator
+        class: %ccdn_message_message.validator.send_to.class%
         arguments: [@doctrine, @service_container]
         tags:
             - { name: validator.constraint_validator, alias: send_to }
         
-    ccdn_message_message.message.form.type:
-        class:  %ccdn_message_message.message.form.type.class%
-        arguments:  [@doctrine, @service_container]
-    ccdn_message_message.message.form.handler:
-        class:  %ccdn_message_message.message.form.handler.class%
-        arguments:  [@form.factory, @service_container, @ccdn_message_message.message.manager]        
-        
-    
+    #
+    # Twig Extensions.
+    #
+    ccdn_message_message.unread_message_count.extension:
+        class: %ccdn_message_message.unread_message_count.extension.class%
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+                
+    #
+    # Dashboard Integrator.
+    #
     ccdn_message_message.dashboard.integrator:
         class: %ccdn_message_message.dashboard.integrator.class%
         arguments: [@service_container]

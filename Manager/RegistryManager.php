@@ -11,10 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Entity\Manager;
+namespace CCDNMessage\MessageBundle\Manager;
 
-use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
-use CCDNComponent\CommonBundle\Entity\Manager\BaseManager;
+use CCDNComponent\CommonBundle\Manager\ManagerInterface;
+use CCDNComponent\CommonBundle\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Registry;
@@ -24,7 +24,7 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class RegistryManager extends BaseManager implements EntityManagerInterface
+class RegistryManager extends BaseManager implements ManagerInterface
 {
 
 
