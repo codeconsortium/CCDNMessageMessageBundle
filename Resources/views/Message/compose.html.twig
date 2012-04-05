@@ -42,7 +42,7 @@
 	<div class="common_box_header">
 		<span class="heading_glow">{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 	</div>
-	<div class="common_box_panel">
+	<div class="common_table_panel">
 		{% form_theme form param('ccdn_message_message.template.theme') %}
 		<form action="{{ path('cc_message_message_compose') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_row(form._token) }}

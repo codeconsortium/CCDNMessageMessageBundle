@@ -53,66 +53,64 @@
 						<a class="button_link" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 					</div>
 
-					<div class="common_box_panel">
-						<div class="v_align_top">
-							<table class="common_list">
-								<tbody>
-									{% if message.getSentFrom.getId == user.getId %}
-									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-										<td class="form_label">
-											{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-										<td class="form_widget" colspan="3">
-											{{ message.getSendTo }}
-										</td>
-									</tr>
-									{% endif %}
-									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-										<td class="form_label" style="width: 20%;">
-											{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-										<td style="width: 30%;">
-											{% if message.getSentFrom %}
-											<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
-											{% else %}Guest{% endif %}
-										</td>
-										<td class="form_widget" style="width: 20%;">
-											{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-										<td style="width: 30%;">
-											{{ message.getSentDate|date("d/m/Y - H:i:s") }}
-										</td>
-									</tr>
-									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-										<td class="form_label">
-											{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-										<td class="form_widget" colspan="3">
-											{{ message.getSubject }}
-										</td>
-									</tr>
-									{% if message.getAttachment %}
-									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-										<td class="form_label">
-											{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-										<td class="form_widget" colspan="3">
-											<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" alt="icon"></a>
-										</td>
-									</tr>
-									{% endif %}
-									<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
-										<td class="v_align_middle" colspan="4" style="overflow: hidden; padding: 10px;">
-											<div class="common_box_5 margin_10 padding_10 text_bubble" style="overflow: hidden; clear: both;">
-												<span class="common_body">
-												{{ BBCode(message.getBody | raw) | raw }}
-												</span>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+					<div class="common_table_panel">
+						<table class="common_list">
+							<tbody>
+								{% if message.getSentFrom.getId == user.getId %}
+								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+									<td class="form_label">
+										{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+									<td class="form_widget" colspan="3">
+										{{ message.getSendTo }}
+									</td>
+								</tr>
+								{% endif %}
+								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+									<td class="form_label" style="width: 20%;">
+										{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+									<td style="width: 30%;">
+										{% if message.getSentFrom %}
+										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
+										{% else %}Guest{% endif %}
+									</td>
+									<td class="form_widget" style="width: 20%;">
+										{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+									<td style="width: 30%;">
+										{{ message.getSentDate|date("d/m/Y - H:i:s") }}
+									</td>
+								</tr>
+								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+									<td class="form_label">
+										{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+									<td class="form_widget" colspan="3">
+										{{ message.getSubject }}
+									</td>
+								</tr>
+								{% if message.getAttachment %}
+								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+									<td class="form_label">
+										{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+									<td class="form_widget" colspan="3">
+										<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" alt="icon"></a>
+									</td>
+								</tr>
+								{% endif %}
+								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
+									<td class="v_align_middle" colspan="4" style="overflow: hidden; padding: 10px;">
+										<div class="common_box_5 margin_10 padding_10 text_bubble" style="overflow: hidden; clear: both;">
+											<span class="common_body">
+											{{ BBCode(message.getBody | raw) | raw }}
+											</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				
 				</div>

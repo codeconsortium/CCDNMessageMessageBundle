@@ -67,78 +67,76 @@
 				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
 					</div>
 					{% endif %}
-					<div class="common_box_panel">
-						<div class="column v_align_top" style="width: 100%;">
-							<table class="common_list">
-								<thead>
-									<tr>
-										<th style="width: 18px; vertical-align: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all"></th>
-										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon"></th>
-										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon"></th>
-										<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon"></th>
-										<th style="width: 18px;"></th>
-										<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
-										<th style="width: auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
-										<th style="width: 190px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
-									</tr>
-								</thead>
-								<tbody>
-								{% for row, message in messages %}
-									<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-										<td class"">
-											<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}">
-										</td>
-										<td class="">
-											{% if message.flagged %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
-											{% endif %}
-										</td>
-										<td class="">
-											{% if message.attachment %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon">
-											{% endif %}
-										</td>
-										<td class="">
-											{% if message.isDraft %}<img width="16" height="16" class="icon_16x16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon">{% endif %}
-										</td>
-										<td class="">
+					<div class="common_table_panel">
+						<table class="common_list">
+							<thead>
+								<tr>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><input type="checkbox" id="check_all" name="check_all"></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon"></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon"></th>
+									<th style="width: 18px; vertical-align: middle; text-align: center;"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon"></th>
+									<th style="width: 18px;"></th>
+									<th style="width: 150px;">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+									<th style="width: auto;">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+									<th style="width: 190px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for row, message in messages %}
+								<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
+									<td class"">
+										<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}">
+									</td>
+									<td class="">
+										{% if message.flagged %}
+										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
+										{% endif %}
+									</td>
+									<td class="">
+										{% if message.attachment %}
+										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon">
+										{% endif %}
+									</td>
+									<td class="">
+										{% if message.isDraft %}<img width="16" height="16" class="icon_16x16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon">{% endif %}
+									</td>
+									<td class="">
+										{% if message.readIt %}
+										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon">
+										{% else %}
+										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" alt="icon">
+										{% endif %}
+									</td>
+									<td class="">
+										{% if message.getSentFrom %}
 											{% if message.readIt %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon">
+										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
 											{% else %}
-											<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" alt="icon">
+										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentFrom }}</b></a>
 											{% endif %}
-										</td>
-										<td class="">
-											{% if message.getSentFrom %}
-												{% if message.readIt %}
-											<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
-												{% else %}
-											<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentFrom }}</b></a>
-												{% endif %}
-											{% else %}Guest{% endif %}
-										</td>
-										<td class="">
+										{% else %}Guest{% endif %}
+									</td>
+									<td class="">
 
-											{% if message.readIt %}
-												<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}">{{ message.getSubject }}</a>
-											{% else %}
-												<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}"><b>{{ message.getSubject }}</b></a>
-											{% endif %}
-										</td>
-										<td class="">
-											{{ message.getSentDate|date("d/m/Y - H:i:s") }}
-										</td>
-									</tr>
-								{% else %}
-									<tr>
-										<td class="h_align_centre v_align_middle" colspan="8" width="100%">
-											{{ 'message.table.empty' | trans({}, 'CCDNMessageMessageBundle') }}
-										</td>
-									</tr>
-								{% endfor %}
-								</tbody>
-							</table>
-						</div>
+										{% if message.readIt %}
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}">{{ message.getSubject }}</a>
+										{% else %}
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}"><b>{{ message.getSubject }}</b></a>
+										{% endif %}
+									</td>
+									<td class="">
+										{{ message.getSentDate|date("d/m/Y - H:i:s") }}
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td class="h_align_centre v_align_middle" colspan="8" width="100%">
+										{{ 'message.table.empty' | trans({}, 'CCDNMessageMessageBundle') }}
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
 					</div>
 					{% if pager.haveToPaginate %}
 					<div class="pagerfanta">
