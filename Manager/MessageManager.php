@@ -58,10 +58,10 @@ class MessageManager extends BaseManager implements ManagerInterface
 			
 		if ($used >= $quota)
 		{
-			$this->container->get('session')->setFlash('notice_' . $user, 
+			$this->container->get('session')->setFlash('notice', 
 				$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));			
 		} else {
-			$this->container->get('session')->setFlash('notice_' . $user,
+			$this->container->get('session')->setFlash('notice',
 				$this->container->get('translator')->trans('flash.message.draft.saved', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
 		}
 			
@@ -164,14 +164,14 @@ class MessageManager extends BaseManager implements ManagerInterface
 			
 			if ($used >= $quota)
 			{
-				$this->container->get('session')->setFlash('notice_' . $recipient, 
+				$this->container->get('session')->setFlash('notice', 
 					$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
 				
 				continue;
 			} else {
 				if ($recipient->getUsername() != $user->getUsername())
 				{
-					$this->container->get('session')->setFlash('notice_' . $recipient,
+					$this->container->get('session')->setFlash('notice',
 						$this->container->get('translator')->trans('flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
 				}
 			}

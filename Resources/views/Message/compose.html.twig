@@ -15,11 +15,11 @@
 
 {% block sidebar %}
 	{% if is_granted('ROLE_MODERATOR') %}
-	<div class="common_box_5 bg_header_smoke">
-		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% if is_granted('ROLE_ADMIN') %}
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% endif %}
 	</div>
 	{% endif %}
@@ -31,18 +31,14 @@
 
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-{% if preview is not empty %}
-<div class="common_box_5 bg_header_smoke">
-	{% include 'CCDNMessageMessageBundle:Message:preview.html.twig' %}
-</div>
-{% endif %}
+{% if preview is not empty %}{% include 'CCDNMessageMessageBundle:Message:preview.html.twig' %}{% endif %}
 
-
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</h2>
 	</div>
-	<div class="common_table_panel">
+	
+	<div class="section_table_panel">
 		{% form_theme form param('ccdn_message_message.template.theme') %}
 		<form action="{{ path('cc_message_message_compose') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_row(form._token) }}
@@ -91,7 +87,7 @@
 						<td class="form_tool_strip" colspan="2">
 							<input type="submit" class="widget_submit" value="{{ 'form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_preview">
 							<input type="submit" class="widget_submit" value="{{ 'form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_draft">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_post">
+							<input type="submit" class="widget_submit_prominent" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_post">
 						</td>
 					</tr>
 				</tbody>

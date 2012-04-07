@@ -1,49 +1,63 @@
-<div class="common_box">
-	<div class="common_table_panel">
+<div class="section_wrap_square">
+	<div class="section_table_panel">
 		<table class="common_list">
 			<tbody>
 				<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-					<td class="form_label">
+					<td class="right">
+						<span class="table_label">
 						{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
+						</span>
 					</td>
-					<td class="form_widget">
+					<td class="left">
+						<span class="table_data">
 						{{ preview.getSendTo }}
+						</span>
 					</td>
 				</tr>
 				<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-					<td class="form_label">
+					<td class="right">
+						<span class="table_label">
 						{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
+						</span>
 					</td>
-					<td class="form_widget">
+					<td class="left">
+						<span class="table_data">
 						<a href="{{ path(user_profile_route, {'user_id': user.getId}) }}">{{ user.getUsername }}</a>
+						</span>
 					</td>
 				</tr>
 				<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-					<td class="form_label">
+					<td class="right">
+						<span class="table_label">
 						{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
+						</span>
 					</td>
-					<td class="form_widget">
+					<td class="left">
+						<span class="table_data">
 						{{ preview.getSubject }}
+						</span>
 					</td>
 				</tr>
 				{% if preview.getAttachment %}
 				<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-					<td class="form_label">
+					<td class="right">
+						<span class="table_label">
 						{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
+						</span>
 					</td>
-					<td class="form_widget">
+					<td class="left">
+						<span class="table_data">
 						<a href="{{ path('cc_attachment_download', {'attachment_id': preview.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': preview.getAttachment.getId }) }}" alt="icon"></a>
+						</span>
 					</td>
 				</tr>
 				{% endif %}
 				<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
-					<td class="v_align_middle" colspan="2" style="overflow: hidden; padding: 10px; padding: 10px;">
-						<div style="width: 100%; height: 100%;">
-							<div class="common_box_5 margin_10 padding_10 text_bubble" style="overflow: hidden; clear: both;">
-								<span class="common_body">
-								{{ BBCode(preview.getBody | raw) | raw }}
-								</span>
-							</div>
+					<td class="left" colspan="2">
+						<div class="round_box" style="margin-left: 20px !important;">
+							<span class="common_body">
+							{{ BBCode(preview.getBody | raw) | raw }}
+							</span>
 						</div>
 					</td>
 				</tr>

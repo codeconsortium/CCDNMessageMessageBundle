@@ -5,9 +5,9 @@ crumbs.compose_message: 'Compose New Message'
 crumbs.compose_reply: 'Compose Reply'
 crumbs.compose_forward: 'Forward Message'    
 
-title.message.index: 'Messages %folder_name%'
-title.message.show: 'Message: "%message_subject%"'
-title.message.compose: 'Compose Message'
+title.message.index: 'Messages %folder_name%.'
+title.message.show: 'Message: "%message_subject%".'
+title.message.compose: 'Compose Message.'
 
 link.message.reply: 'Reply'
 link.message.forward: 'Forward'
@@ -21,7 +21,7 @@ message.table.head.from: From
 message.table.head.subject: Subject
 message.table.head.sent: Sent
 
-message.table.empty: You have no messages.
+message.table.empty: 'You have no messages in this folder.'
 
 flash.message.sent.success: 'Message sent to %user%.'
 flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'

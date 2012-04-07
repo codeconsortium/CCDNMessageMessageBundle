@@ -10,18 +10,18 @@
 
 {% block sidebar %}
 {% if is_granted('ROLE_MODERATOR') %}
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+<div class="section_wrap_square">
+	<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+	<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 	{% if is_granted('ROLE_ADMIN') %}
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+	<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 	{% endif %}
 </div>
 {% endif %}
 
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></div>
+<div class="section_wrap_square">
+	<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+	<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></div>
 </div>
 {% endblock %}
 
@@ -32,17 +32,17 @@
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
 
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') }}</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>{{ 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') }}</h2>
 	</div>
 
-	<div class="row" style="background-color: #f6f6f6; width: 100%; height: 100%; clear: both; overflow: hidden;">
+	<div class="row" style="width: 100%; height: 100%; clear: both; overflow: hidden;">
 		
 		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
 			<div style="margin: 0px 0px 0px 111px; overflow: hidden; border-left: 1px solid #ccc;">
 				<div class="row">
-					<div class="common_tool_strip">
+					<div class="section_tool_strip">
 						{% if message.isDraft %}
 						<a class="button_link" href="{{ path('cc_message_message_send_draft', {'message_id': message.id }) }}">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 						{% endif %}
@@ -53,56 +53,56 @@
 						<a class="button_link" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 					</div>
 
-					<div class="common_table_panel">
+					<div class="section_table_panel">
 						<table class="common_list">
 							<tbody>
 								{% if message.getSentFrom.getId == user.getId %}
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-									<td class="form_label">
-										{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
+									<td class="right">
+										<span class="table_label">{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
-									<td class="form_widget" colspan="3">
-										{{ message.getSendTo }}
+									<td class="left" colspan="3">
+										<span class="table_data">{{ message.getSendTo }}</span>
 									</td>
 								</tr>
 								{% endif %}
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-									<td class="form_label" style="width: 20%;">
-										{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
+									<td class="right" style="width: 20%;">
+										<span class="table_label">{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
-									<td style="width: 30%;">
+									<td class="left" style="width: 30%;">
 										{% if message.getSentFrom %}
-										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
+										<span class="table_data"><a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a></span>
 										{% else %}Guest{% endif %}
 									</td>
-									<td class="form_widget" style="width: 20%;">
-										{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}
+									<td class="right" style="width: 20%;">
+										<span class="table_label">{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
-									<td style="width: 30%;">
-										{{ message.getSentDate|date("d/m/Y - H:i:s") }}
+									<td class="left" style="width: 30%;">
+										<span class="table_data">{{ message.getSentDate|date("d/m/Y - H:i:s") }}</span>
 									</td>
 								</tr>
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-									<td class="form_label">
-										{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
+									<td class="right">
+										<span class="table_label">{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
-									<td class="form_widget" colspan="3">
-										{{ message.getSubject }}
+									<td class="left" colspan="3">
+										<span class="table_data">{{ message.getSubject }}</span>
 									</td>
 								</tr>
 								{% if message.getAttachment %}
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-									<td class="form_label">
-										{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
+									<td class="right">
+										<span class="table_label">{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
-									<td class="form_widget" colspan="3">
+									<td class="left" colspan="3">
 										<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" alt="icon"></a>
 									</td>
 								</tr>
 								{% endif %}
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
 									<td class="v_align_middle" colspan="4" style="overflow: hidden; padding: 10px;">
-										<div class="common_box_5 margin_10 padding_10 text_bubble" style="overflow: hidden; clear: both;">
+										<div class="round_box" style="overflow: hidden; clear: both;">
 											<span class="common_body">
 											{{ BBCode(message.getBody | raw) | raw }}
 											</span>
@@ -124,9 +124,9 @@
 						<div class="v_align_top h_align_centre">
 							{% for row, folder in folders %}
 								{% if folder.name == current_folder.name %}
-								<div class="common_tool_strip" style="background-color: #ebebeb !important;"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+								<div class="section_tool_strip" style="background-color: #ebebeb !important;"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
 								{% else %}
-								<div class="common_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
+								<div class="section_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
 								{% endif %}
 							{% endfor %}
 						</div>
