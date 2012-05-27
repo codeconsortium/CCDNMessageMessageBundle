@@ -17,6 +17,8 @@ link.message.mark_as_unread: 'Mark as Unread'
 link.message.move_to: 'Move to folder'
 link.message.send_draft: 'Send'
 
+message.inbox_status: 'You have %message_count% messages.'
+
 message.table.head.from: From
 message.table.head.subject: Subject
 message.table.head.sent: Sent
