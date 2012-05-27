@@ -31,15 +31,33 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
-	
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}</h2>
-	</div>
 
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
+<div class="section_wrap_middle">
+	<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}</h2>
+</div>
+<div class="section_wrap_bottom">
+	<div style="display: block; width: 90%; text-align: center !important; margin-left: auto; margin-right: auto;">
+		<span class="stat_xsmall">
+		<div style="width:80%; text-align: center; border-right: 1px solid black; border-left: 1px solid black; margin-left: auto; margin-right: auto;">
+			<div style="width: 100%; height: 19px; background-color: #e7f5ff; border-bottom: 1px solid black; text-align: center;">
+				<div style="width: {{ inbox_space }}%; height: 19px; background-color: #ff9896; text-align: right; vertical-align: bottom; padding-top: auto; padding-bottom: auto; border-bottom: 1px solid black;">{{ inbox_space }}%</div>
+			</div>
+			<div style="width: 100%; height: 10px; text-align: center; vertical-align: bottom; position: relative; top: -10px;">
+				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">0%</div>
+				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">25%</div>
+				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">50%</div>
+				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block;">100%</div>
+			</div>
+		</div>
+		</span>
+	</div>
+</div>
+
+<div class="section_wrap_standalone">
 	<form method="POST" action="{{ path('cc_message_action_bulk') }}">
 
 	<div class="row" style="width: 100%; height: 100%; clear: both; overflow: hidden;">
@@ -173,29 +191,11 @@
 	</div>
 	
 	</form>
-	
-	<div class="section_panel padding_10" style="border-top: 1px solid #ccc; text-align: center !important;">
-		
-		<div style="display: block; width: 90%; text-align: center !important; margin-left: auto; margin-right: auto;">
-			<span class="stat_xsmall">
-			<div style="width:80%; text-align: center; border-right: 1px solid black; border-left: 1px solid black; margin-left: auto; margin-right: auto;">
-				<div style="width: 100%; height: 19px; background-color: #e7f5ff; border-bottom: 1px solid black; text-align: center;">
-					<div style="width: {{ inbox_space }}%; height: 19px; background-color: #ff9896; text-align: right; vertical-align: bottom; padding-top: auto; padding-bottom: auto; border-bottom: 1px solid black;">{{ inbox_space }}%</div>
-				</div>
-				<div style="width: 100%; height: 10px; text-align: center; vertical-align: bottom; position: relative; top: -10px;">
-					<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">0%</div>
-					<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">25%</div>
-					<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">50%</div>
-					<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block;">100%</div>
-				</div>
-			</div>
-			</span>
-		</div>
-		
-	</div>
 
 </div>
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}
