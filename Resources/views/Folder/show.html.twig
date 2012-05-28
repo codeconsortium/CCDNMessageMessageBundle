@@ -37,7 +37,9 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_middle">
-	<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}</h2>
+	<div class="section_header">
+		<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}</h2>
+	</div>
 </div>
 <div class="section_wrap_bottom">
 	<div style="display: block; width: 90%; text-align: center !important; margin-left: auto; margin-right: auto;">
@@ -67,17 +69,17 @@
 
 					<div class="section_tool_strip">
 						{% if current_folder.getName == 'drafts' %}
-						<input type="submit" class="widget_submit" value="{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_send">
+						<input type="submit" class="button_blue" value="{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_send">
 						{% endif %}
-						<input type="submit" class="widget_submit" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete">
-						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read">
-						<input type="submit" class="widget_submit" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
+						<input type="submit" class="button_red" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete">
+						<input type="submit" class="button_silver" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read">
+						<input type="submit" class="button_silver" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
 						<select name="select_move_to" class="widget_select">
 							{% for row, folder in folders %}
 								<option class="widget_select" value="{{ folder.getId }}">{{ folder.getName|title }}</option>
 							{% endfor %}
 						</select>
-						<input type="submit" class="widget_submit" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
+						<input type="submit" class="button_silver" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
 					</div>
 					{% if pager.haveToPaginate %}
 					<div class="pagerfanta">

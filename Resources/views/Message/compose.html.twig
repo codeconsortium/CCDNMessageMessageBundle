@@ -33,7 +33,9 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_bottom">
-	<h2>{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</h2>
+	<div class="section_header">
+		<h2>{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</h2>
+	</div>
 </div>
 
 {% if preview is not empty %}
@@ -90,9 +92,9 @@
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_preview">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_draft">
-							<input type="submit" class="widget_submit_prominent" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_post">
+							<input type="submit" class="button_silver" value="{{ 'form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_preview">
+							<input type="submit" class="button_silver" value="{{ 'form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_draft">
+							<input type="submit" class="button_blue" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_post">
 						</td>
 					</tr>
 				</tbody>
