@@ -5,8 +5,8 @@ crumbs.compose_message: 'Compose New Message'
 crumbs.compose_reply: 'Compose Reply'
 crumbs.compose_forward: 'Forward Message'    
 
-title.message.index: 'Messages %folder_name%.'
-title.message.show: 'Message: "%message_subject%".'
+title.message.index: 'Messages - %folder_name%.'
+title.message.show: 'Message: %message_subject%.'
 title.message.compose: 'Compose Message.'
 
 link.message.reply: 'Reply'
