@@ -133,9 +133,9 @@
 									<td class="left">
 										<span class="table_data">
 										{% if message.readIt %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}">{{ message.getSubject }}</a>
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.truncate_subject')) }}</a>
 										{% else %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}"><b>{{ message.getSubject }}</b></a>
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.truncate_subject')) }}</b></a>
 										{% endif %}
 										</span>
 									</td>

@@ -60,6 +60,7 @@ class CCDNMessageMessageExtension extends Extension
 	private function getFolderSection($container, $config)
 	{
 		$container->setParameter('ccdn_message_message.folder.messages_per_page', $config['folder']['messages_per_page']);
+		$container->setParameter('ccdn_message_message.folder.truncate_subject', $config['folder']['truncate_subject']);
 		$container->setParameter('ccdn_message_message.folder.layout_templates.show', $config['folder']['layout_templates']['show']);
 	}
 

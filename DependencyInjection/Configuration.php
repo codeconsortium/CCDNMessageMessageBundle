@@ -81,6 +81,7 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('folder')
 					->children()
 						->scalarNode('messages_per_page')->defaultValue('40')->end()
+						->scalarNode('truncate_subject')->defaultValue('50')->end()
 						->arrayNode('layout_templates')
 							->children()
 								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
