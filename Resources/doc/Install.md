@@ -95,16 +95,18 @@ ccdn_message_message:
         engine: twig
         theme: CCDNMessageMessageBundle:Form:fields.html.twig
     folder:
-        messages_per_page: 40
-		subject_truncate: 50
+        messages_per_page: 10
+        subject_truncate: 50
+        sent_datetime_format: "d-m-Y - H:i"
         layout_templates:
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     message:
+        sent_datetime_format: "d-m-Y - H:i"
         layout_templates:
             compose: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     quotas:
-        max_messages: 10
+        max_messages: 100
 ```
 
 **Warning:**
