@@ -41,7 +41,6 @@ class CCDNMessageMessageExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-
 		$container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
 		$container->setParameter('ccdn_message_message.template.theme', $config['template']['theme']);
 		$container->setParameter('ccdn_message_message.user.profile_route', $config['user']['profile_route']);
@@ -60,7 +59,8 @@ class CCDNMessageMessageExtension extends Extension
 	private function getFolderSection($container, $config)
 	{
 		$container->setParameter('ccdn_message_message.folder.messages_per_page', $config['folder']['messages_per_page']);
-		$container->setParameter('ccdn_message_message.folder.truncate_subject', $config['folder']['truncate_subject']);
+		$container->setParameter('ccdn_message_message.folder.subject_truncate', $config['folder']['subject_truncate']);
+		$container->setParameter('ccdn_message_message.folder.sent_datetime_format', $config['folder']['sent_datetime_format']);
 		$container->setParameter('ccdn_message_message.folder.layout_templates.show', $config['folder']['layout_templates']['show']);
 	}
 
@@ -72,6 +72,7 @@ class CCDNMessageMessageExtension extends Extension
 	 */
 	private function getMessageSection($container, $config)
 	{
+		$container->setParameter('ccdn_message_message.message.sent_datetime_format', $config['message']['sent_datetime_format']);
 		$container->setParameter('ccdn_message_message.message.layout_templates.compose', $config['message']['layout_templates']['compose']);
 		$container->setParameter('ccdn_message_message.message.layout_templates.show', $config['message']['layout_templates']['show']);
 	}

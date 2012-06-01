@@ -53,11 +53,6 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
 					->end()
 				->end()
-				->arrayNode('folder')
-					->children()
-						->scalarNode('messages_per_page')->defaultValue('40')->end()
-					->end()
-				->end()
 			->end();
 		
 		$this->addFolderSection($rootNode);
@@ -81,7 +76,8 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('folder')
 					->children()
 						->scalarNode('messages_per_page')->defaultValue('40')->end()
-						->scalarNode('truncate_subject')->defaultValue('50')->end()
+						->scalarNode('subject_truncate')->defaultValue('50')->end()
+						->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 						->arrayNode('layout_templates')
 							->children()
 								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
@@ -105,6 +101,7 @@ class Configuration implements ConfigurationInterface
 			->children()
 				->arrayNode('message')
 					->children()
+						->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 						->arrayNode('layout_templates')
 							->children()
 								->scalarNode('compose')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()

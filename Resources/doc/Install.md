@@ -96,7 +96,7 @@ ccdn_message_message:
         theme: CCDNMessageMessageBundle:Form:fields.html.twig
     folder:
         messages_per_page: 40
-		truncate_subject: 50
+		subject_truncate: 50
         layout_templates:
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     message:
