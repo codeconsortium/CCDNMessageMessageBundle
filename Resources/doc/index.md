@@ -20,4 +20,5 @@ For more information about translations, check [Symfony documentation](http://sy
 
 ## Installation Documentation:
 
-- [Installing CCDNMessage MessageBundle for Symfony 2.0.11](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/master/Resources/doc/Install.md)
+- [Installing CCDNMessage MessageBundle for Symfony 2.0.11](install.md).
+- [Configuration Reference](configuration_reference.md).

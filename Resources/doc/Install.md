@@ -85,7 +85,7 @@ CCDNMessageMessageBundle:
 In your app/config/config.yml add:   
 
 ``` yml
-#
+#        
 # for CCDNMessage MessageBundle      
 #
 ccdn_message_message:  
@@ -93,20 +93,9 @@ ccdn_message_message:
         profile_route: cc_profile_show_by_id
     template:
         engine: twig
-        theme: CCDNMessageMessageBundle:Form:fields.html.twig
-    folder:
-        messages_per_page: 10
-        subject_truncate: 50
-        sent_datetime_format: "d-m-Y - H:i"
-        layout_templates:
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    message:
-        sent_datetime_format: "d-m-Y - H:i"
-        layout_templates:
-            compose: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     quotas:
         max_messages: 100
+
 ```
 
 **Warning:**
@@ -152,4 +141,5 @@ Installation should now be complete!
 
 If you need further help/support, have suggestions or want to contribute please join the community at [Code Consortium](http://www.codeconsortium.com)
 
-[Return back to the docs index](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/master/Resources/doc/index.md).
+- [Return back to the docs index](index.md).
+- [Configuration Reference](configuration_reference.md).

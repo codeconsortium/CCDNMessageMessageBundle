@@ -80,7 +80,6 @@ class MessageController extends ContainerAware
 
 		// setup crumb trail.
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
 			->add($this->container->get('translator')->trans('crumbs.compose_message', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose'), "edit");
 				
@@ -130,7 +129,6 @@ class MessageController extends ContainerAware
 		{
 			// setup crumb trail.
 			$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-				->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 				->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
 				->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email")
 				->add($this->container->get('translator')->trans('crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose_reply', array('message_id' => $message_id)), "edit");
@@ -182,7 +180,6 @@ class MessageController extends ContainerAware
 		{
 			// setup crumb trail.
 			$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-				->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 				->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
 				->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email")
 				->add($this->container->get('translator')->trans('crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_message_compose_forward', array('message_id' => $message_id)), "edit");
@@ -276,7 +273,6 @@ class MessageController extends ContainerAware
 		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 			
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
 			->add($message->getFolder()->getName(), $this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())), "folder")
 			->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email");
@@ -393,4 +389,5 @@ class MessageController extends ContainerAware
     {
         return $this->container->getParameter('ccdn_message_message.template.engine');
     }
+
 }

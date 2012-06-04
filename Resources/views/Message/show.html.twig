@@ -1,4 +1,4 @@
-{% extends param('ccdn_message_message.message.layout_templates.show') %}
+{% extends param('ccdn_message_message.message.show.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -72,7 +72,7 @@
 										<span class="table_label">{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}</span>
 									</td>
 									<td class="left" style="width: 30%;">
-										<span class="table_timestamp">{{ message.getSentDate|date(param('ccdn_message_message.message.sent_datetime_format')) }}</span>
+										<span class="table_timestamp">{{ message.getSentDate |date(param('ccdn_message_message.message.show.sent_datetime_format')) }}</span>
 									</td>
 								</tr>
 								<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">

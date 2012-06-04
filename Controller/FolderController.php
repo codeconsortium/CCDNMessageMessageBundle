@@ -84,14 +84,13 @@ class FolderController extends ContainerAware
 		
 		$messages_paginated = $this->container->get('ccdn_message_message.message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
-		$messages_per_page = $this->container->getParameter('ccdn_message_message.folder.messages_per_page');
+		$messages_per_page = $this->container->getParameter('ccdn_message_message.folder.show.messages_per_page');
 		$messages_paginated->setMaxPerPage($messages_per_page);
 		$messages_paginated->setCurrentPage($page, false, true);
 		
 		$messages = $messages_paginated->getCurrentPageResults();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home");
 		
 		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(

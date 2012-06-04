@@ -42,7 +42,6 @@ class CCDNMessageMessageExtension extends Extension
         $loader->load('services.yml');
 
 		$container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
-		$container->setParameter('ccdn_message_message.template.theme', $config['template']['theme']);
 		$container->setParameter('ccdn_message_message.user.profile_route', $config['user']['profile_route']);
 		
 		$this->getFolderSection($container, $config);
@@ -58,10 +57,10 @@ class CCDNMessageMessageExtension extends Extension
 	 */
 	private function getFolderSection($container, $config)
 	{
-		$container->setParameter('ccdn_message_message.folder.messages_per_page', $config['folder']['messages_per_page']);
-		$container->setParameter('ccdn_message_message.folder.subject_truncate', $config['folder']['subject_truncate']);
-		$container->setParameter('ccdn_message_message.folder.sent_datetime_format', $config['folder']['sent_datetime_format']);
-		$container->setParameter('ccdn_message_message.folder.layout_templates.show', $config['folder']['layout_templates']['show']);
+		$container->setParameter('ccdn_message_message.folder.show.layout_template', $config['folder']['show']['layout_template']);
+		$container->setParameter('ccdn_message_message.folder.show.messages_per_page', $config['folder']['show']['messages_per_page']);
+		$container->setParameter('ccdn_message_message.folder.show.subject_truncate', $config['folder']['show']['subject_truncate']);
+		$container->setParameter('ccdn_message_message.folder.show.sent_datetime_format', $config['folder']['show']['sent_datetime_format']);
 	}
 
 	
@@ -72,9 +71,11 @@ class CCDNMessageMessageExtension extends Extension
 	 */
 	private function getMessageSection($container, $config)
 	{
-		$container->setParameter('ccdn_message_message.message.sent_datetime_format', $config['message']['sent_datetime_format']);
-		$container->setParameter('ccdn_message_message.message.layout_templates.compose', $config['message']['layout_templates']['compose']);
-		$container->setParameter('ccdn_message_message.message.layout_templates.show', $config['message']['layout_templates']['show']);
+		$container->setParameter('ccdn_message_message.message.show.layout_template', $config['message']['show']['layout_template']);
+		$container->setParameter('ccdn_message_message.message.show.sent_datetime_format', $config['message']['show']['sent_datetime_format']);
+
+		$container->setParameter('ccdn_message_message.message.compose.layout_template', $config['message']['compose']['layout_template']);
+		$container->setParameter('ccdn_message_message.message.compose.form_theme', $config['message']['compose']['form_theme']);
 	}
 	
 	

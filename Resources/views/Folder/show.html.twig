@@ -1,4 +1,4 @@
-{% extends param('ccdn_message_message.folder.layout_templates.show') %}
+{% extends param('ccdn_message_message.folder.show.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -133,15 +133,15 @@
 									<td class="left">
 										<span class="table_data">
 										{% if message.readIt %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.subject_truncate')) }}</a>
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</a>
 										{% else %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.subject_truncate')) }}</b></a>
+											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</b></a>
 										{% endif %}
 										</span>
 									</td>
 									<td class="center">
 										<span class="table_timestamp">
-										{{ message.getSentDate|date(param('ccdn_message_message.folder.sent_datetime_format')) }}
+										{{ message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) }}
 										</span>
 									</td>
 								</tr>
