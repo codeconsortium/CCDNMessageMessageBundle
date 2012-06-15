@@ -19,6 +19,7 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 Icons courtesy of http://pc.de/icons/ licensed under http://creativecommons.org/licenses/by/3.0/
+Theme and Sprite graphics courtesy of [twitter bootstrap](http://twitter.github.com/bootstrap/index.html) and [GLYPHICONS](http://glyphicons.com/).
 
 Other graphics are works of CodeConsortium.
 

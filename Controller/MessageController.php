@@ -64,11 +64,6 @@ class MessageController extends ContainerAware
 				return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'drafts')));
 			}
 		}
-		
-		if (isset($_POST['submit_preview']))
-		{
-			$formHandler->setMode($formHandler::PREVIEW);
-		}
 
 		if (isset($_POST['submit_post']))
 		{
@@ -77,7 +72,12 @@ class MessageController extends ContainerAware
 				return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 			}
 		}
-
+		
+		if (isset($_POST['submit_preview']))
+		{
+			$formHandler->setMode($formHandler::PREVIEW);
+		}
+		
 		// setup crumb trail.
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
