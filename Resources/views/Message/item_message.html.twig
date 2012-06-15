@@ -1,0 +1,59 @@
+<table class="table">
+	<tbody>
+		<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+			<td class="right" style="width: 80px;">
+				{{ 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') }}
+			</td>
+			<td class="left">
+				{% if message.getSentFrom %}
+					<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom |title }}</a>
+				{% else %}Guest{% endif %}
+			</td>
+		</tr>
+		{% if message.getSentFrom %}
+			{% if message.getSentFrom.getId == app.user.id %}
+			<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+				<td class="right" style="width: 80px;">
+					{{ 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') }}
+				</td>
+				<td class="left" colspan="3">
+					{{ message.getSendTo |title }}
+				</td>
+			</tr>
+			{% endif %}
+		{% endif %}
+		<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+			<td class="right" style="width: 80px;">
+				{{ 'message.subject' |trans({}, 'CCDNMessageMessageBundle') }}
+			</td>
+			<td class="left" colspan="3">
+				{{ message.getSubject }}
+			</td>
+		</tr>
+		<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+			<td class="right" style="width: 80px;">
+				{{ 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') }}
+			</td>
+			<td class="left">
+				{{ message.getSentDate |date(param('ccdn_message_message.message.show.sent_datetime_format')) }}
+			</td>
+		</tr>
+		{% if message.getAttachment %}
+		<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+			<td class="right" style="wdith: 80px;">
+				{{ 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') }}
+			</td>
+			<td class="left" colspan="3">
+				<a href="{{ path('cc_attachment_download', {'attachment_id': message.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) }}" alt="icon"></a>
+			</td>
+		</tr>
+		{% endif %}
+		<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">					
+			<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
+				<span class="common_body">
+				{{ BBCode(message.getBody | raw) | raw }}
+				</span>
+			</td>
+		</tr>
+	</tbody>
+</table>

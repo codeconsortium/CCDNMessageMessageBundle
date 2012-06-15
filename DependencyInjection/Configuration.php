@@ -80,7 +80,7 @@ class Configuration implements ConfigurationInterface
 							->addDefaultsIfNotSet()
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('messages_per_page')->defaultValue('40')->end()
+								->scalarNode('messages_per_page')->defaultValue('10')->end()
 								->scalarNode('subject_truncate')->defaultValue('50')->end()
 								->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 							->end()

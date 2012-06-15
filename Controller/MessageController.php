@@ -257,18 +257,23 @@ class MessageController extends ContainerAware
 		if ( ! $message)
 		{
 			throw new NotFoundHttpException('No such message found!');
-		}
-				
+		}	
 		
-		$currentFolder = null;
-		foreach($folders as $key => $folder)
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		
+		if ( ! $folders)
 		{
-			if ($folder->getName() == $message->getFolder()->getName())
-			{
-				$currentFolder = $folder;
-				break;
-			}
+			$folderManager->setupDefaults($user->getId())->flushNow();
+
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 		}
+
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+		$currentFolder = $folderManager->getCurrentFolder($folders, $message->getFolder()->getName());
+		$stats = $folderManager->getUsedAllowance($folders, $quota);
+		$totalMessageCount = $stats['total_message_count'];
+		$usedAllowance = $stats['used_allowance'];
 		
 		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
 			
@@ -283,6 +288,7 @@ class MessageController extends ContainerAware
 			'crumbs' => $crumb_trail,
 			'folders' => $folders,
 			'current_folder' => $currentFolder,
+			'used_allowance' => $usedAllowance,
 			'message' => $message,
 		));
 	}

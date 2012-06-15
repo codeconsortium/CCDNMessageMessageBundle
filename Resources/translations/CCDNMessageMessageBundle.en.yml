@@ -1,3 +1,4 @@
+sidebar.link.messages: Messages
 sidebar.link.compose: Compose Message
 
 crumbs.message_index: 'Inbox'
@@ -17,9 +18,22 @@ link.message.mark_as_unread: 'Mark as Unread'
 link.message.move_to: 'Move to folder'
 link.message.send_draft: 'Send'
 
+link.message.select_none: 'None'
+link.message.select_all: 'All'
+link.message.select_all_read: 'Read'
+link.message.select_all_unread: 'Unread'
+link.message.select_all_flagged: 'Flagged'
+link.message.select_all_attached: 'Attached'
+link.message.select_all_draft: 'Draft'
+
+
+
+label.folders: 'Folders'
+
 message.inbox_status: 'You have %message_count% messages.'
 
 message.table.head.from: From
+message.table.head.to: To
 message.table.head.subject: Subject
 message.table.head.sent: Sent
 

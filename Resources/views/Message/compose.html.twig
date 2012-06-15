@@ -2,8 +2,8 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
+{#	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">#}
 {% endblock %}
 
 {% block javascripts %}
@@ -16,88 +16,83 @@
 {% block sidebar %}
 	{{ parent() }}
 	
+	{% include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' %}
+	
 {% endblock %}
 
 {% block body %}
 
-{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_top">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
-<div class="section_wrap_bottom">
-	<div class="section_header">
-		<h2>{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</h2>
-	</div>
-</div>
 
-<div class="section_wrap_standalone">	
-	<div class="section_table_panel">
+	<h2>{{ 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') }}</h2>
+
+	<div class="errors">{{ form_errors(form) }}</div>
+
+	<div class="well">
 		{% form_theme form param('ccdn_message_message.message.compose.form_theme') %}
-		<form action="{{ path('cc_message_message_compose') }}" method="post" {{ form_enctype(form) }}>
-			{{ form_row(form._token) }}
-			<div class="errors">{{ form_errors(form) }}</div>
-			<table class="common_list">
-				<tbody>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.send_to, null, { 'label': 'form.label.message.to'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.send_to) }}
-							{{ form_widget(form.send_to) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.subject, null, { 'label': 'form.label.message.subject'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.subject) }}
-							{{ form_widget(form.subject) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.body) }}
-							{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
-							{{ form_widget(form.body) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.flagged, null, { 'label': 'form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.flagged) }}
-							{{ form_widget(form.flagged) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.attachment, null, { 'label': 'form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.attachment) }}
-							{{ form_widget(form.attachment) }}
-							&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments_manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-							&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="button_silver" value="{{ 'form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_preview">
-							<input type="submit" class="button_silver" value="{{ 'form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_draft">
-							<input type="submit" class="button_blue" value="{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}" name="submit_post">
-						</td>
-					</tr>
-				</tbody>
-			</table>
+
+		<form action="{{ path('cc_message_message_compose') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+			<fieldset>
+				
+				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
+				
+				<div class="control-group">
+					{{ form_label(form.send_to, null, { 'label': 'form.label.message.to'| trans({}, 'CCDNMessageMessageBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.send_to) }}
+						{{ form_widget(form.send_to) }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.subject, null, { 'label': 'form.label.message.subject'| trans({}, 'CCDNMessageMessageBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.subject) }}
+						{{ form_widget(form.subject) }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) }}
+					<div class="controls row-fluid">					
+						{{ form_errors(form.body) }}
+						{{ form_widget(form.body) }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.flagged, null, { 'label': 'form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.flagged) }}
+						<label class="checkbox">{{ form_widget(form.flagged, {'class': 'checkbox pull-left', 'value': 'option1'}) }}</label>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.attachment, null, { 'label': 'form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.attachment) }}
+						{{ form_widget(form.attachment) }}
+						&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+						&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+					</div>
+				</div>
+				
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary" name="submit_post">{{ 'form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') }}</button>
+					<button type="submit" class="btn btn-default" name="submit_preview">{{ 'form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') }}</button>
+					<button type="submit" class="btn btn-default" name="submit_draft">{{ 'form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') }}</button>
+				</div>
+			</fieldset>
 		</form>
 	</div>
-</div>
+	
+	{% if preview is not empty %}
+		{% include 'CCDNMessageMessageBundle:Message:item_preview.html.twig' with {'message': preview } %}
+	{% endif %}
 
-{% if preview is not empty %}
-<div class="section_wrap_standalone">
-	{% include 'CCDNMessageMessageBundle:Message:preview.html.twig' %}
-</div>
-{% endif %}
-
-<div class="section_wrap_standalone">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
 
 {% endblock %}

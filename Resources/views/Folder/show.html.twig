@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block javascripts %}
@@ -10,186 +9,329 @@
 	<script src="{{ asset('bundles/ccdncomponentcommon/js/jquery.checkboxes.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}{% endblock %}
+{% block title %}{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') }}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	<div class="sidebar">
-		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></div>
-	</div>
+	{% include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' %}
+
 {% endblock %}
 
 {% block body %}
 
-{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_top">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
-<div class="section_wrap_middle">
-	<div class="section_header">
-		<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName }, 'CCDNMessageMessageBundle') }}</h2>
-	</div>
-</div>
-<div class="section_wrap_bottom">
-	<div style="display: block; width: 90%; text-align: center !important; margin-left: auto; margin-right: auto;">
-		<span class="stat_xsmall">
-		<div style="width:80%; text-align: center; border-right: 1px solid black; border-left: 1px solid black; margin-left: auto; margin-right: auto;">
-			<div style="width: 100%; height: 19px; background-color: #e7f5ff; border-bottom: 1px solid black; text-align: center;">
-				<div style="width: {{ inbox_space }}%; height: 19px; background-color: #ff9896; text-align: right; vertical-align: bottom; padding-top: auto; padding-bottom: auto; border-bottom: 1px solid black;">{{ inbox_space }}%</div>
-			</div>
-			<div style="width: 100%; height: 10px; text-align: center; vertical-align: bottom; position: relative; top: -10px;">
-				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">0%</div>
-				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">25%</div>
-				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block; border-right: 1px solid black;">50%</div>
-				<div style="width: 24%; height: 100%; padding-top: 10px; display: inline-block;">100%</div>
-			</div>
+
+	{#<h2>{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') }}</h2>#}
+
+	{% spaceless %}
+	<div class="well" style="padding: 10px; height: 20px;">
+		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{ used_allowance }}&#37;&nbsp;</span>
+		<div class="progress progress-danger">
+			<div class="bar" style="width:{{ used_allowance }}%;"></div>
 		</div>
-		</span>
 	</div>
-</div>
+	{% endspaceless %}
 
-<div class="section_wrap_standalone">
-	<form method="POST" action="{{ path('cc_message_action_bulk') }}">
-
-	<div class="row" style="width: 100%; height: 100%; clear: both; overflow: hidden;">
+	<div style="display: block; clear: both; overflow: hidden;">
 
 		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
-			<div style="margin: 0px 0px 0px 110px; overflow: hidden; border-left: 1px solid #ccc;">
+			<div style="margin: 0px 0px 0px 191px; overflow: hidden;">
 
-					<div class="section_tool_strip">
+				<form method="POST" action="{{ path('cc_message_action_bulk') }}" class="form-inline">
+					<input type="hidden" id="submit_action" name="submit_action" value="">
+					
+					<div class="btn-toolbar" style="margin-top: 0px;" data-compat="interactive-non-js-compat">
 						{% if current_folder.getName == 'drafts' %}
-						<input type="submit" class="button_blue" value="{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_send">
+							<input type="submit" class="btn btn-primary" value="{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_send">
 						{% endif %}
-						<input type="submit" class="button_red" value="{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_delete">
-						<input type="submit" class="button_silver" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read">
-						<input type="submit" class="button_silver" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
-						<select name="select_move_to" class="widget_select">
+						
+						<button type="submit" class="btn btn-danger" name="submit_delete"><i class="icon-trash icon-white"></i>&nbsp;{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</button>
+						
+						<input type="submit" class="btn" value="{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_read">
+						
+						<input type="submit" class="btn" value="{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_mark_as_unread">
+						
+						<select name="select_move_to">
 							{% for row, folder in folders %}
-								<option class="widget_select" value="{{ folder.getId }}">{{ folder.getName|title }}</option>
+								<option value="{{ folder.getId }}">{{ folder.getName|title }}</option>
 							{% endfor %}
 						</select>
-						<input type="submit" class="button_silver" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
+						
+						<input type="submit" class="btn" value="{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}" name="submit_move_to">
 					</div>
-					{% if pager.haveToPaginate %}
-					<div class="pagerfanta">
-			{#			{% if path(app.request.attributes.get('_route')) = 'cc_message_folder_show' or path(app.request.attributes.get('_route')) = 'cc_message_folder_show_paginated' %} #}
-				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
+					
+					<div class="btn-toolbar hidden" style="margin-top: 0px; margin-left: 30px;" data-compat="interactive-js-compat">
+
+						<div class="btn-group" style="vertical-align: middle;">
+							<button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><i class="icon-check"></i> <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href="#" data-action="select_none" data-identifier="{{ current_folder.name }}">{{ 'link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li class="divider"></li>
+								<li><a href="#" data-action="select_all" data-identifier="{{ current_folder.name }}" data-qualifier="read">{{ 'link.message.select_all_read' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li><a href="#" data-action="select_all" data-identifier="{{ current_folder.name }}" data-qualifier="unread">{{ 'link.message.select_all_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li class="divider"></li>
+								<li><a href="#" data-action="select_all" data-identifier="{{ current_folder.name }}" data-qualifier="draft">{{ 'link.message.select_all_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li><a href="#" data-action="select_all" data-identifier="{{ current_folder.name }}" data-qualifier="flagged">{{ 'link.message.select_all_flagged' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li class="divider"></li>
+								<li><a href="#" data-action="select_all" data-identifier="{{ current_folder.name }}" data-qualifier="attached">{{ 'link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+							</ul>
+						</div>
+						
+						<div class="btn-group" style="vertical-align: middle;">
+							<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{ current_folder.name }}" data-responds-hidden="{{ current_folder.name }}" data-toggle="dropdown"><i class="icon-eye-close"></i> <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href="#" data-action="submit_mark_as_read">{{ 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+								<li><a href="#" data-action="submit_mark_as_unread">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+							</ul>
+						</div>
+						
+						<div class="btn-group" style="vertical-align: middle;">
+							<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{ current_folder.name }}" data-responds-hidden="{{ current_folder.name }}" data-toggle="dropdown"><i class="icon-folder-close"></i> <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li style="text-align: center;"><h4>{{ 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') }}</h4></li>
+								<li class="divider"></li>
+								{% for row, folder in folders %}
+									<li><a href="#" data-action="submit_move_to" data-value="{{ folder.getId }}">{{ folder.getName|title }}</a></li>
+								{% endfor %}									
+							</ul>
+						</div>	
+											
+						{% if current_folder.getName == 'drafts' %}
+							&nbsp;<button type="submit" disabled data-responds-disabled="{{ current_folder.name }}" data-responds-hidden="{{ current_folder.name }}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</button>
+						{% endif %}						
+						
+						&nbsp;<button type="submit" disabled data-responds-disabled="{{ current_folder.name }}" data-responds-hidden="{{ current_folder.name }}" name="submit_delete" class="btn btn-large btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</button>
+						
 					</div>
-					{% endif %}
-					<div class="section_table_panel">
-						<table class="common_list">
-							<thead>
-								<tr>
-									<th class="icon"><input type="checkbox" id="check_all" name="check_all"></th>
-									<th class="icon"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon"></th>
-									<th class="icon"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon"></th>
-									<th class="icon"><img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon"></th>
-									<th class="icon"></th>
-									<th class="left"><span class="table_header">{{ 'message.table.head.from' | trans({}, 'CCDNMessageMessageBundle') }}</span></th>
-									<th class="left"><span class="table_header">{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</span></th>
-									<th class="center"><span class="table_header">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</span></th>
-								</tr>
-							</thead>
-							<tbody>
-							{% for row, message in messages %}
-								<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-									<td class="icon16">
-										<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}">
-									</td>
-									<td class="icon16">
-										{% if message.flagged %}
-										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
-										{% endif %}
-									</td>
-									<td class="icon16">
-										{% if message.attachment %}
-										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_attachment.png') }}" alt="icon">
-										{% endif %}
-									</td>
-									<td class="icon16">
-										{% if message.isDraft %}<img width="16" height="16" class="icon16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_pen.png') }}" alt="icon">{% endif %}
-									</td>
-									<td class="icon16">
-										{% if message.readIt %}
-										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email_open.png') }}" alt="icon">
-										{% else %}
-										<img class="16x16_icon" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_email.png') }}" alt="icon">
-										{% endif %}
-									</td>
-									<td class="left">
-										<span class="table_data">
-										{% if message.getSentFrom %}
-											{% if message.readIt %}
-										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom }}</a>
+
+					{%- if pager.haveToPaginate -%}
+				    	{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_name':current_folder.getName} } ) }}
+					{%- endif -%}
+
+					{% spaceless %}
+					<table class="table">
+						<thead>
+							<tr>
+								<th style="width: 16px;"><input type="checkbox" id="check_all" name="check_all" class="hidden" data-compat='interactive-js-compat' data-action-toggle="{{ current_folder.name }}" data-identifier="{{ current_folder.name }}" data-qualifier="all"></th>
+								<th style="width: 16px;"><i class="icon-flag"></i></th>
+								<th style="width: 16px;"><i class="icon-file"></i></th>
+								<th style="width: 16px;"><i class="icon-inbox"></i></th>
+								<th style="width: 16px;"><i class="icon-eye-open"></i></th>
+								<th style="width: 40px;">{{ ((current_folder.name == 'sent') ? 'message.table.head.to' :'message.table.head.from') | trans({}, 'CCDNMessageMessageBundle') }}</th>
+								<th>{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+								<th style="width: 140px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for row, message in messages %}
+							<tr class="{{ (message.readIt ? 'marked_read': 'marked_unread') }}" data-read="{{ (message.readIt ? 'marked_read': 'marked_unread') }}" id="message_row_{{ message.id }}">
+								<td>
+									<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}" data-check-all-responds="true" data-identifier="{{ current_folder.name }}" data-qualifier="all {{ (message.readIt) ? 'read ' : 'unread ' }}{{ (message.isDraft) ? 'draft ' : '' }}{{ (message.flagged) ? 'flagged ' : '' }}{{ (message.attachment) ? 'attached ' : '' }}">
+								</td>
+								<td>
+									{% if message.flagged %}
+									<i class="icon-flag"></i>
+									{% endif %}
+								</td>
+								<td>
+									{% if message.attachment %}
+									<i class="icon-file"></i>
+									{% endif %}
+								</td>
+								<td>
+									{% if message.isDraft %}
+										{% if message.sentFrom %}
+											{% if message.sentFrom.getId == app.user.id %}
+												<i class="icon-repeat"></i>
 											{% else %}
-										<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentFrom }}</b></a>
+												<i class="icon-share-alt"></i>				
 											{% endif %}
-										{% else %}Guest{% endif %}
-										</span>
-									</td>
-									<td class="left">
-										<span class="table_data">
-										{% if message.readIt %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</a>
 										{% else %}
-											<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</b></a>
+											<i class="icon-pencil"></i>
 										{% endif %}
-										</span>
-									</td>
-									<td class="center">
-										<span class="table_timestamp">
-										{{ message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) }}
-										</span>
-									</td>
-								</tr>
-							{% else %}
-								<tr>
-									<td class="center" colspan="8">
-										<span class="table_empty">{{ 'message.table.empty' | trans({}, 'CCDNMessageMessageBundle') }}</span>
-									</td>
-								</tr>
-							{% endfor %}
-							</tbody>
-						</table>
-					</div>
-					{% if pager.haveToPaginate %}
-					<div class="pagerfanta">
-				    	{{ pagerfanta(pager, 'default', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_id':current_folder.getName} } ) }}
-					</div>
-					{% endif %}
+									{% else %}
+										{% if message.sentFrom %}
+											{% if message.sentFrom.getId == app.user.id %}
+												<i class="icon-repeat"></i>
+											{% else %}
+												<i class="icon-share-alt"></i>				
+											{% endif %}
+										{% endif %}
+									{% endif %}							
+								</td>
+								<td>
+									{{ (message.readIt) ? '' : '<i class="icon-envelope"></i>' }}
+								</td>
+								<td>
+									{%- if current_folder.name == "sent" -%}
+										{%- if message.getSentTo -%}
+											{%- if message.readIt -%}
+												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentTo |title }}</a>
+											{%- else -%}
+												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentTo |title }}</b></a>
+											{%- endif -%}
+										{%- else -%}
+											Guest
+										{%- endif -%}
+									{%- else -%}
+										{%- if message.getSentFrom -%}
+											{%- if message.readIt -%}
+												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom |title }}</a>
+											{%- else -%}
+												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentFrom |title }}</b></a>
+											{%- endif -%}
+										{%- else -%}
+											Guest
+										{%- endif -%}
+									{%- endif -%}
+								</td>
+								<td>
+									{% if message.readIt %}
+										<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</a>
+									{% else %}
+										<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</b></a>
+									{% endif %}
+								</td>
+								<td>
+									{%- if message.sentTo -%}
+										{%- if message.getSentDate -%}
+											<span class="hidden">{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}</span>
+											{%- if message.readIt -%}
+												{{- relevantDateFormat(message.getSentDate) -}}
+											{%- else -%}
+												<b>{{- relevantDateFormat(message.getSentDate) -}}</b>
+											{%- endif -%}
+										{%- else -%}
+
+										{%- endif -%}
+									{%- endif -%}
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="8">
+									<div class="well">{{ 'message.table.empty' | trans({}, 'CCDNMessageMessageBundle') }}</div>
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					{% endspaceless %}
+					
+					{%- if pager.haveToPaginate -%}
+				    	{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_name':current_folder.getName} } ) }}
+					{%- endif -%}
+					
+				</form>
 
 			</div>
 		</div>
 		
-		<div style="display: block; width: 111px; height: inherit; float: left; margin: 0px -111px 0px 0px; overflow: hidden;">
-			<div style="display: block; height: 100%; margin: 0px; overflow: hidden; border-right: 1px solid #ccc;">
-				<div class="row">
-					<div>
-						<div class="v_align_top h_align_centre">
-							{% for row, folder in folders %}
-								{% if folder.name == current_folder.name %}
-								<div class="section_tool_strip" style="background-color: #ebebeb !important;"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
-								{% else %}
-								<div class="section_tool_strip"><a class="sidebar" href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">{% if folder.getCacheUnreadCount %}<b>{{ folder.getName|title }}&nbsp;({{ folder.getCacheUnreadCount }})</b>{% else %}{{ folder.getName|title }}{% endif %}</a></div>
-								{% endif %}
-							{% endfor %}
-						</div>
-					</div>
-				</div>
+		<div style="display: block; width: 180px; float: left; margin: 0px -181px 0px 0px; overflow: hidden;">
+			<div style="display: block; width: 175px; margin: 0px; overflow: hidden; padding: 0px;">
+				
+				<a class="btn btn-large btn-danger" style="width: 145px;" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a><br><br>
+				{% spaceless %}
+				<ul class="nav nav-pills nav-stacked">
+					<li class="nav-header">{{ 'label.folders' |trans({}, 'CCDNMessageMessageBundle') }}</li>
+					{% for row, folder in folders %}
+						{%- if folder.name == current_folder.name -%}
+						<li class="active">
+							<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
+								{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
+									<i class="icon-white icon-inbox">
+								{%- else -%}
+									{%- if folder.name == 'drafts' -%}
+										<i class="icon-white icon-share-alt">
+									{%- else -%}
+										{%- if folder.name == 'trash' -%}
+											<i class="icon-white icon-trash">
+										{%- else -%}
+											<i class="icon-white icon-folder-close">											
+										{%- endif -%}
+									{%- endif -%}
+								{%- endif -%}
+								</i>&nbsp;
+								{%- if folder.getCacheUnreadCount -%}
+									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- else -%}
+									{{- folder.getName|title -}}
+								{%- endif -%}
+							</a>
+						</li>
+						{%- else -%}
+						<li>
+							<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
+								{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
+									<i class="icon-inbox">
+								{%- else -%}
+									{%- if folder.name == 'drafts' -%}
+										<i class="icon-share-alt">
+									{%- else -%}
+										{%- if folder.name == 'trash' -%}
+											<i class="icon-trash">
+										{%- else -%}
+											<i class="icon-folder-close">											
+										{%- endif -%}
+									{%- endif -%}
+								{%- endif -%}
+								</i>&nbsp;
+								{%- if folder.getCacheUnreadCount -%}
+									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- else -%}
+									{{ folder.getName|title }}
+								{%- endif -%}
+							</a>
+						</li>
+						{%- endif -%}
+					{% endfor %}
+				</ul>
+				{% endspaceless %}
 			</div>
 		</div>
 		
 	</div>
+
+{#	<div class="well">
+		<i class="icon-pencil"></i> Draft
+		<i class="icon-repeat"></i> Sent to yourself
+		<i class="icon-share-alt"></i> Sent Draft
+		<i class="icon-flag"></i> Message Flagged as Important
+		<i class="icon-file"></i> Attached File
+		<i class="icon-envelope"></i> Unread
+	</div>#}
 	
-	</form>
-
-</div>
-
-<div class="section_wrap_standalone">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
+
+	<script type='text/javascript'>
+	<!--
+	$(document).ready(function() {
+		
+		$("[data-action='submit_mark_as_read']").click(function() {
+			$('input#submit_action').attr('value', $(this).attr('data-action'));
+			$('input#submit_action').parent('form').submit();
+		});
+		
+		$("[data-action='submit_mark_as_unread']").click(function() {
+			$('input#submit_action').attr('value', $(this).attr('data-action'));
+			$('input#submit_action').parent('form').submit();
+		});
+		
+		$("[data-action='submit_move_to']").click(function() {
+			// set the hidden textbox to action its action type
+			$('input#submit_action').attr('value', $(this).attr('data-action'));
+			
+			// set the select box val to match the data-value of the faux combo box
+			$("select[name='select_move_to']").val($(this).attr('data-value'));
+			$('input#submit_action').parent('form').submit();
+		});
+		
+		
+	});
+	//-->
+	</script>
 
 {% endblock %}

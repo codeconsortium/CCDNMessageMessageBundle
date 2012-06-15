@@ -53,34 +53,21 @@ class FolderController extends ContainerAware
 		
 		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 		
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		
 		if ( ! $folders)
 		{
-			$this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flushNow();
+			$folderManager->setupDefaults($user->getId())->flushNow();
 
 			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 		}
-			
-		// find the current folder	
-		$currentFolder = null;
-		$totalMessageCount = 0;
-		foreach($folders as $key => $folder)
-		{
-			if ($folder->getName() == $folder_name)
-			{
-				$currentFolder = $folder;
-			}
-			$totalMessageCount += $folder->getCacheTotalMessageCount();
-		}
-		
+
 		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
-		
-		$inboxSpace = ($totalMessageCount / $quota) * 100;
-		
-		// where 100 represents 100%, if the number should exceed then reset it to 100%
-		if ($inboxSpace > 99)
-		{
-			$inboxSpace = 100;
-		}
+
+		$currentFolder = $folderManager->getCurrentFolder($folders, $folder_name);
+		$stats = $folderManager->getUsedAllowance($folders, $quota);
+		$totalMessageCount = $stats['total_message_count'];
+		$usedAllowance = $stats['used_allowance'];
 		
 		$messages_paginated = $this->container->get('ccdn_message_message.message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
@@ -100,9 +87,9 @@ class FolderController extends ContainerAware
 			'folders' => $folders,
 			'current_folder' => $currentFolder,
 			'messages' => $messages,
-			'total_message_count' => $totalMessageCount,
 			'quota' => $quota,
-			'inbox_space' => $inboxSpace,
+			'used_allowance' => $usedAllowance,
+			'total_message_count' => $totalMessageCount,
 		));
 	}
 	
@@ -114,6 +101,7 @@ class FolderController extends ContainerAware
 	 */
 	public function bulkAction()
 	{
+		
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER'))
 		{
 			throw new AccessDeniedException('You do not have access to this section.');
@@ -159,26 +147,28 @@ class FolderController extends ContainerAware
 		
 		$folder = $messages[0]->getFolder();	
 		
-		if (isset($_POST['submit_delete']))
+		$action = $_POST['submit_action'];
+		
+		if ($action == 'submit_delete')
 		{
 			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
 
 			$this->container->get('ccdn_message_message.message.manager')->bulkDelete($messages, $folders)->flushNow();
 		}
-		if (isset($_POST['submit_mark_as_read']))
+		if ($action == 'submit_mark_as_read')
 		{
 			$this->container->get('ccdn_message_message.message.manager')->bulkMarkAsRead($messages)->flushNow();
 		}
-		if (isset($_POST['submit_mark_as_unread']))
+		if ($action == 'submit_mark_as_unread')
 		{
 			$this->container->get('ccdn_message_message.message.manager')->bulkMarkAsUnread($messages)->flushNow();
 		}
-		if (isset($_POST['submit_move_to']))
+		if ($action == 'submit_move_to')
 		{
 			$moveTo = $this->container->get('ccdn_message_message.folder.repository')->findOneById($_POST['select_move_to']);
 			$this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
 		}
-		if (isset($_POST['submit_send']))
+		if ($action == 'submit_send')
 		{
 			$this->container->get('ccdn_message_message.message.manager')->sendDraft($messages)->flushNow();
 		}

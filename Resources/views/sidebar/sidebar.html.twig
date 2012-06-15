@@ -1,0 +1,18 @@
+{% spaceless %}
+	{% set route = app.request.attributes.get('_route') %}
+
+	<li class="nav-header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</li>
+	
+	{% if route == 'cc_message_index' %}
+		<li class="active"><a href="{{ path('cc_message_index') }}"><i class="icon-white icon-inbox"></i>&nbsp;{{ 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+	{% else %}
+		<li><a href="{{ path('cc_message_index') }}"><i class="icon-inbox"></i>&nbsp;{{ 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+	{% endif %}
+	
+	{% if route == 'cc_message_message_compose' %}
+		<li class="active"><a href="{{ path('cc_message_message_compose') }}"><i class="icon-white icon-pencil"></i>&nbsp;{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+	{% else %}
+		<li><a href="{{ path('cc_message_message_compose') }}"><i class="icon-pencil"></i>&nbsp;{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+	{% endif %}
+		
+{% endspaceless %}
