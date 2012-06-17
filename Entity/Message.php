@@ -247,7 +247,7 @@ class Message
      *
      * @param CCDNUser\UserBundle\Entity\User $sentTo
      */
-    public function setSentTo(\CCDNUser\UserBundle\Entity\User $sentTo)
+    public function setSentTo(\CCDNUser\UserBundle\Entity\User $sentTo = null)
     {
         $this->sent_to = $sentTo;
     }

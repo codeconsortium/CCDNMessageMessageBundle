@@ -102,6 +102,93 @@ class MessageManager extends BaseManager implements ManagerInterface
 	/**
 	 *
 	 * @access public
+	 * @param String $message, String $recipient, String $sender, bool $isCarbonCopy
+	 * @return $this
+	 */
+	public function sendTo($message, $recipient, $sender, $isCarbonCopy)
+	{
+		$folderRepo = $this->container->get('ccdn_message_message.folder.repository');
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+		
+		//
+		// If recipient is null, then this is likely the carbon copy.
+		//
+		if ($recipient)
+		{
+			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());
+		} else {
+			if ($sender)
+			{
+				$folders = $folderRepo->findAllFoldersForUser($sender->getId());			
+			} else {
+				return $this;
+			}
+		}
+		
+		if ( ! $folders)
+		{
+			$folderManager->setupDefaults($recipient->getId())->flushNow();
+
+			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());		        
+		}
+
+		//
+		// Check quotas.
+		//
+		$used = $folderManager->checkQuotaAllowanceUsed($folders);
+		
+		if ($used >= $quota)
+		{
+			$this->container->get('session')->setFlash('notice', 
+				$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+			
+			continue;
+		} else {
+			if ($recipient)
+			{
+				if ($recipient->getId() != $sender->getId())
+				{
+					$this->container->get('session')->setFlash('notice',
+						$this->container->get('translator')->trans('flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+				}
+			}
+		}
+		
+		//
+		// Create the message.
+		//
+		$temp = new Message();
+		$temp->setSendTo($message->getSendTo());
+		$temp->setSentTo(($recipient) ? $recipient : null);
+		$temp->setSentFrom($sender);
+		$temp->setSubject($message->getSubject());
+		$temp->setBody($message->getBody());
+		$temp->setSentDate(new \DateTime());
+		$temp->setCreatedDate($message->getCreatedDate());
+		$temp->setIsDraft($message->getIsDraft());
+		$temp->setReadIt(false);
+		$temp->setFlagged($message->getFlagged());
+		$temp->setAttachment($message->getAttachment());
+		
+		if ($isCarbonCopy)
+		{
+			$temp->setOwnedBy($sender);
+			$temp->setFolder($folders[1]);
+			$temp->setReadIt(true);
+		} else {
+			$temp->setOwnedBy($recipient);
+			$temp->setFolder($folders[0]);				
+		}
+		
+		$this->persist($temp);
+		
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @access public
 	 * @param $message
 	 * @return $this
 	 */
@@ -135,76 +222,28 @@ class MessageManager extends BaseManager implements ManagerInterface
 		// If message is a draft, don't send it to ourselves as
 		// we already have a copy and don't need another one.
 		//
-		if ( ! $message->getIsDraft())
-		{
-			// add ourself to the sending list so we have a carbon-copy.
-			$sendToUsers[] = $user; // send to self so we have it in our sent folder!			
-		}
+//		if ( ! $message->getIsDraft())
+//		{
+//			// add ourself to the sending list so we have a carbon-copy.
+//			$sendToUsers[] = $user; // send to self so we have it in our sent folder!			
+//		}
 
 		// a check for when we encounter our own folder, in which
 		// case the message goes into outbox instead of inbox.
-		$senderAlreadyHasCC = false;
+//		$senderAlreadyHasCC = false;
 		
 		$folderRepo = $this->container->get('ccdn_message_message.folder.repository');
 		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
 		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 		
 		foreach($sendToUsers as $recipient_key => $recipient)
-		{		
-			$folders = $folderRepo->findAllFoldersForUser($recipient->getId());
-
-			if ( ! $folders)
-			{
-				$folderManager->setupDefaults($recipient->getId())->flushNow();
-
-				$folders = $folderRepo->findAllFoldersForUser($recipient->getId());		        
-			}
-
-			$used = $folderManager->checkQuotaAllowanceUsed($folders);
-			
-			if ($used >= $quota)
-			{
-				$this->container->get('session')->setFlash('notice', 
-					$this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-				
-				continue;
-			} else {
-				if ($recipient->getUsername() != $user->getUsername())
-				{
-					$this->container->get('session')->setFlash('notice',
-						$this->container->get('translator')->trans('flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-				}
-			}
-			
-			$temp = new Message();
-			$temp->setSentTo($recipient);
-			$temp->setSendTo($message->getSendTo());
-			$temp->setSentFrom($user);
-			$temp->setSubject($message->getSubject());
-			$temp->setBody($message->getBody());
-			$temp->setSentDate(new \DateTime());
-			$temp->setCreatedDate($message->getCreatedDate());
-			$temp->setIsDraft($message->getIsDraft());
-			$temp->setOwnedBy($recipient);
-			$temp->setReadIt(false);
-			$temp->setFlagged($message->getFlagged());
-			$temp->setAttachment($message->getAttachment());
-			
-			if ($recipient->getUsername() == $user->getUsername() && ! $senderAlreadyHasCC)
-			{
-				$temp->setFolder($folders[1]);
-				$senderAlreadyHasCC = true;
-				$temp->setReadIt(true);
-			} else {
-				$temp->setFolder($folders[0]);				
-			}
-			
-			
-			$this->persist($temp);	
+		{	
+			$this->sendTo($message, $recipient, $user, false);
 		}
 
-		$this->flushNow();
+		$this->sendTo($message, null, $user, true);
 
+		$this->flushNow();
 
 		foreach($sendToUsers as $recipient)
 		{

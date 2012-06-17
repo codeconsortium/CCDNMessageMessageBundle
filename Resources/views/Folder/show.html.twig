@@ -120,7 +120,7 @@
 								<th style="width: 16px;"><i class="icon-file"></i></th>
 								<th style="width: 16px;"><i class="icon-inbox"></i></th>
 								<th style="width: 16px;"><i class="icon-eye-open"></i></th>
-								<th style="width: 40px;">{{ ((current_folder.name == 'sent') ? 'message.table.head.to' :'message.table.head.from') | trans({}, 'CCDNMessageMessageBundle') }}</th>
+								<th style="width: 60px;">{{ ((current_folder.name == 'sent') ? 'message.table.head.to' :'message.table.head.from') | trans({}, 'CCDNMessageMessageBundle') }}</th>
 								<th>{{ 'message.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 								<th style="width: 140px;">{{ 'message.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') }}</th>
 							</tr>
@@ -167,11 +167,11 @@
 								</td>
 								<td>
 									{%- if current_folder.name == "sent" -%}
-										{%- if message.getSentTo -%}
+										{%- if message.getSendTo -%}
 											{%- if message.readIt -%}
-												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentTo |title }}</a>
+												{{ truncDot(message.getSendTo |title, 50) }}
 											{%- else -%}
-												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentTo |title }}</b></a>
+												<b>{{ truncDot(message.getSendTo |title, 50) }}</b>
 											{%- endif -%}
 										{%- else -%}
 											Guest
