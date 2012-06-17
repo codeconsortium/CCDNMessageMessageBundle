@@ -219,32 +219,21 @@ class MessageManager extends BaseManager implements ManagerInterface
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
 		//
-		// If message is a draft, don't send it to ourselves as
-		// we already have a copy and don't need another one.
+		// Send.
 		//
-//		if ( ! $message->getIsDraft())
-//		{
-//			// add ourself to the sending list so we have a carbon-copy.
-//			$sendToUsers[] = $user; // send to self so we have it in our sent folder!			
-//		}
-
-		// a check for when we encounter our own folder, in which
-		// case the message goes into outbox instead of inbox.
-//		$senderAlreadyHasCC = false;
-		
-		$folderRepo = $this->container->get('ccdn_message_message.folder.repository');
-		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
-		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
-		
 		foreach($sendToUsers as $recipient_key => $recipient)
 		{	
 			$this->sendTo($message, $recipient, $user, false);
 		}
 
+		// add Carbon Copy.
 		$this->sendTo($message, null, $user, true);
 
 		$this->flushNow();
 
+		//
+		// Update recipients folders read/unread cache counts.
+		//
 		foreach($sendToUsers as $recipient)
 		{
 			$this->updateAllFolderCachesForUser($recipient);		
