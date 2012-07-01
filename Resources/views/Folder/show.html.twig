@@ -198,12 +198,13 @@
 								<td>
 									{%- if message.sentTo -%}
 										{%- if message.getSentDate -%}
-											<span class="hidden">{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}</span>
+											<abbr class="timestamper" title="{{- message.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 											{%- if message.readIt -%}
-												{{- relevantDateFormat(message.getSentDate) -}}
+												{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}
 											{%- else -%}
-												<b>{{- relevantDateFormat(message.getSentDate) -}}</b>
+												<b>{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}</b>
 											{%- endif -%}
+											</abbr>
 										{%- else -%}
 
 										{%- endif -%}
