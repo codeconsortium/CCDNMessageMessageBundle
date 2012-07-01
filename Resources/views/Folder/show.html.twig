@@ -6,7 +6,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdncomponentcommon/js/jquery.checkboxes.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ccdncomponentcommon/js/ccdn/jquery.checkboxes.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title %}{{ 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') }}{% endblock %}
