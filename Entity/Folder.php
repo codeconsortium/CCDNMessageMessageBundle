@@ -40,31 +40,30 @@ class Folder
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $owned_by;
+	protected $ownedBy = null;
 	
 	// either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\Column(type="integer", name="special_type", nullable=true)
      */
-	protected $special_type;
+	protected $specialType;
 
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\Column(type="integer", name="cached_read_count", nullable=true)
      */
-	protected $cache_read_count;
+	protected $cachedReadCount = 0;
 	
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\Column(type="integer", name="cached_unread_count", nullable=true)
      */
-	protected $cache_unread_count;
+	protected $cachedUnreadCount = 0;
 	
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\Column(type="integer", name="cached_total_message_count", nullable=true)
      */
-	protected $cache_total_message_count;
-	
+	protected $cachedTotalMessageCount = 0;
 
 
     /**
@@ -98,102 +97,102 @@ class Folder
     }
 
     /**
-     * Set special_type
+     * Set specialType
      *
      * @param integer $specialType
      */
     public function setSpecialType($specialType)
     {
-        $this->special_type = $specialType;
+        $this->specialType = $specialType;
     }
 
     /**
-     * Get special_type
+     * Get specialType
      *
      * @return integer 
      */
     public function getSpecialType()
     {
-        return $this->special_type;
+        return $this->specialType;
     }
 
     /**
-     * Set cache_read_count
+     * Set cachedReadCount
      *
-     * @param integer $cacheReadCount
+     * @param integer $cachedReadCount
      */
-    public function setCacheReadCount($cacheReadCount)
+    public function setCachedReadCount($cachedReadCount)
     {
-        $this->cache_read_count = $cacheReadCount;
+        $this->cachedReadCount = $cachedReadCount;
     }
 
     /**
-     * Get cache_read_count
-     *
-     * @return integer 
-     */
-    public function getCacheReadCount()
-    {
-        return $this->cache_read_count;
-    }
-
-    /**
-     * Set cache_unread_count
-     *
-     * @param integer $cacheUnreadCount
-     */
-    public function setCacheUnreadCount($cacheUnreadCount)
-    {
-        $this->cache_unread_count = $cacheUnreadCount;
-    }
-
-    /**
-     * Get cache_unread_count
+     * Get cachedReadCount
      *
      * @return integer 
      */
-    public function getCacheUnreadCount()
+    public function getCachedReadCount()
     {
-        return $this->cache_unread_count;
+        return $this->cachedReadCount;
     }
 
     /**
-     * Set cache_total_message_count
+     * Set cachedUnreadCount
      *
-     * @param integer $cacheTotalMessageCount
+     * @param integer $cachedUnreadCount
      */
-    public function setCacheTotalMessageCount($cacheTotalMessageCount)
+    public function setCachedUnreadCount($cachedUnreadCount)
     {
-        $this->cache_total_message_count = $cacheTotalMessageCount;
+        $this->cachedUnreadCount = $cachedUnreadCount;
     }
 
     /**
-     * Get cache_total_message_count
+     * Get cachedUnreadCount
      *
      * @return integer 
      */
-    public function getCacheTotalMessageCount()
+    public function getCachedUnreadCount()
     {
-        return $this->cache_total_message_count;
+        return $this->cachedUnreadCount;
     }
 
     /**
-     * Set owned_by
+     * Set cachedTotalMessageCount
+     *
+     * @param integer $cachedTotalMessageCount
+     */
+    public function setCachedTotalMessageCount($cachedTotalMessageCount)
+    {
+        $this->cachedTotalMessageCount = $cachedTotalMessageCount;
+    }
+
+    /**
+     * Get cachedTotalMessageCount
+     *
+     * @return integer 
+     */
+    public function getCachedTotalMessageCount()
+    {
+        return $this->cachedTotalMessageCount;
+    }
+
+    /**
+     * Set ownedBy
      *
      * @param CCDNUser\UserBundle\Entity\User $ownedBy
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy)
+    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {
-        $this->owned_by = $ownedBy;
+        $this->ownedBy = $ownedBy;
     }
 
     /**
-     * Get owned_by
+     * Get ownedBy
      *
      * @return CCDNUser\UserBundle\Entity\User 
      */
     public function getOwnedBy()
     {
-        return $this->owned_by;
+        return $this->ownedBy;
     }
 }

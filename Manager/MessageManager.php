@@ -65,11 +65,11 @@ class MessageManager extends BaseManager implements ManagerInterface
 				$this->container->get('translator')->trans('flash.message.draft.saved', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
 		}
 			
-		
+
+		$message->setOwnedBy($user);
 		$message->setSentFrom($user);
 		$message->setIsDraft(true);
-		$message->setOwnedBy($user);
-		$message->setReadIt(false);
+		$message->setIsRead(false);
 		$message->setFolder($folders[2]);
 			
 		$this->persist($message);	
@@ -164,21 +164,21 @@ class MessageManager extends BaseManager implements ManagerInterface
 		$temp->setSentFrom($sender);
 		$temp->setSubject($message->getSubject());
 		$temp->setBody($message->getBody());
-		$temp->setSentDate(new \DateTime());
 		$temp->setCreatedDate($message->getCreatedDate());
+		$temp->setSentDate(new \DateTime());
 		$temp->setIsDraft($message->getIsDraft());
-		$temp->setReadIt(false);
-		$temp->setFlagged($message->getFlagged());
+		$temp->setIsFlagged($message->getIsFlagged());
 		$temp->setAttachment($message->getAttachment());
 		
 		if ($isCarbonCopy)
 		{
 			$temp->setOwnedBy($sender);
 			$temp->setFolder($folders[1]);
-			$temp->setReadIt(true);
+			$temp->setIsRead(true);
 		} else {
 			$temp->setOwnedBy($recipient);
 			$temp->setFolder($folders[0]);				
+			$temp->setIsRead(false);
 		}
 		
 		$this->persist($temp);
@@ -251,7 +251,7 @@ class MessageManager extends BaseManager implements ManagerInterface
 	 */
 	public function markAsRead($message)
 	{
-		$message->setReadIt(true);
+		$message->setIsRead(true);
 		$this->persist($message)->flushNow();
 		
 		return $this;
@@ -266,7 +266,7 @@ class MessageManager extends BaseManager implements ManagerInterface
 	 */
 	public function markAsUnread($message)
 	{
-		$message->setReadIt(false);
+		$message->setIsRead(false);
 		$this->persist($message)->flushNow();
 
 		return $this;
@@ -348,7 +348,7 @@ class MessageManager extends BaseManager implements ManagerInterface
 	{
 		foreach ($messages as $message)
 		{
-			$message->setReadIt(true);
+			$message->setIsRead(true);
 			$this->persist($message);
 		}
 	
@@ -366,7 +366,7 @@ class MessageManager extends BaseManager implements ManagerInterface
 	{
 		foreach ($messages as $message)
 		{
-			$message->setReadIt(false);
+			$message->setIsRead(false);
 			$this->persist($message);
 		}
 

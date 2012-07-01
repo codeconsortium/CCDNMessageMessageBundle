@@ -127,12 +127,12 @@
 						</thead>
 						<tbody>
 						{% for row, message in messages %}
-							<tr class="{{ (message.readIt ? 'marked_read': 'marked_unread') }}" data-read="{{ (message.readIt ? 'marked_read': 'marked_unread') }}" id="message_row_{{ message.id }}">
+							<tr class="{{ (message.isRead ? 'marked_read': 'marked_unread') }}" data-read="{{ (message.isRead ? 'marked_read': 'marked_unread') }}" id="message_row_{{ message.id }}">
 								<td>
-									<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}" data-check-all-responds="true" data-identifier="{{ current_folder.name }}" data-qualifier="all {{ (message.readIt) ? 'read ' : 'unread ' }}{{ (message.isDraft) ? 'draft ' : '' }}{{ (message.flagged) ? 'flagged ' : '' }}{{ (message.attachment) ? 'attached ' : '' }}">
+									<input type="checkbox" id="message_{{ message.id }}" name="check_message_{{ message.id }}" data-check-all-responds="true" data-identifier="{{ current_folder.name }}" data-qualifier="all {{ (message.isRead) ? 'read ' : 'unread ' }}{{ (message.isDraft) ? 'draft ' : '' }}{{ (message.isFlagged) ? 'flagged ' : '' }}{{ (message.attachment) ? 'attached ' : '' }}">
 								</td>
 								<td>
-									{% if message.flagged %}
+									{% if message.isFlagged %}
 									<i class="icon-flag"></i>
 									{% endif %}
 								</td>
@@ -163,12 +163,12 @@
 									{% endif %}							
 								</td>
 								<td>
-									{{ (message.readIt) ? '' : '<i class="icon-envelope"></i>' }}
+									{{ (message.isRead) ? '' : '<i class="icon-envelope"></i>' }}
 								</td>
 								<td>
 									{%- if current_folder.name == "sent" -%}
 										{%- if message.getSendTo -%}
-											{%- if message.readIt -%}
+											{%- if message.isRead -%}
 												{{ truncDot(message.getSendTo |title, 50) }}
 											{%- else -%}
 												<b>{{ truncDot(message.getSendTo |title, 50) }}</b>
@@ -178,7 +178,7 @@
 										{%- endif -%}
 									{%- else -%}
 										{%- if message.getSentFrom -%}
-											{%- if message.readIt -%}
+											{%- if message.isRead -%}
 												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}">{{ message.getSentFrom |title }}</a>
 											{%- else -%}
 												<a href="{{ path(user_profile_route, {'user_id': message.getSentFrom.getId}) }}"><b>{{ message.getSentFrom |title }}</b></a>
@@ -189,7 +189,7 @@
 									{%- endif -%}
 								</td>
 								<td>
-									{% if message.readIt %}
+									{% if message.isRead %}
 										<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}">{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</a>
 									{% else %}
 										<a href="{{ path('cc_message_message_show_by_id', {'message_id': message.getId }) }}" title="{{ message.getSubject }}"><b>{{ truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) }}</b></a>
@@ -199,7 +199,7 @@
 									{%- if message.sentTo -%}
 										{%- if message.getSentDate -%}
 											<abbr class="timestamper" title="{{- message.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-											{%- if message.readIt -%}
+											{%- if message.isRead -%}
 												{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}
 											{%- else -%}
 												<b>{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}</b>
@@ -256,8 +256,8 @@
 									{%- endif -%}
 								{%- endif -%}
 								</i>&nbsp;
-								{%- if folder.getCacheUnreadCount -%}
-									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- if folder.getCachedUnreadCount -%}
+									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCachedUnreadCount }}</span></b>
 								{%- else -%}
 									{{- folder.getName|title -}}
 								{%- endif -%}
@@ -280,8 +280,8 @@
 									{%- endif -%}
 								{%- endif -%}
 								</i>&nbsp;
-								{%- if folder.getCacheUnreadCount -%}
-									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- if folder.getCachedUnreadCount -%}
+									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCachedUnreadCount }}</span></b>
 								{%- else -%}
 									{{ folder.getName|title }}
 								{%- endif -%}

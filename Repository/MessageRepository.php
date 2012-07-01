@@ -26,15 +26,15 @@ use Pagerfanta\Pagerfanta;
 class MessageRepository extends EntityRepository
 {
 	
-	public function findAllPaginatedForFolderById($folder_id, $user_id)
+	public function findAllPaginatedForFolderById($folderId, $userId)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
 				SELECT m
 				FROM CCDNMessageMessageBundle:Message m
-				WHERE m.folder = :folder_id AND m.owned_by = :user_id
-				ORDER BY m.sent_date DESC')
-			->setParameters(array('folder_id' => $folder_id, 'user_id' => $user_id));
+				WHERE m.folder = :folderId AND m.ownedBy = :userId
+				ORDER BY m.sentDate DESC')
+			->setParameters(array('folderId' => $folderId, 'userId' => $userId));
 					
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
@@ -44,14 +44,14 @@ class MessageRepository extends EntityRepository
 	    }
 	}
 	
-	public function findMessageByIdForUser($message_id, $user_id)
+	public function findMessageByIdForUser($messageId, $userId)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
 				SELECT m
 				FROM CCDNMessageMessageBundle:Message m
-				WHERE m.id = :message_id AND m.owned_by = :user_id')
-			->setParameters(array('message_id' => $message_id, 'user_id' => $user_id));
+				WHERE m.id = :messageId AND m.ownedBy = :userId')
+			->setParameters(array('messageId' => $messageId, 'userId' => $userId));
 			
 		try {
 	        return $query->getSingleResult();
@@ -66,7 +66,7 @@ class MessageRepository extends EntityRepository
 		$query = $qb->add('select', 'm')
 			->from('CCDNMessageMessageBundle:Message', 'm')
 			->where($qb->expr()->andx(
-				$qb->expr()->eq('m.owned_by', '?1'),
+				$qb->expr()->eq('m.ownedBy', '?1'),
 				$qb->expr()->in('m.id', '?2')))
 			->setParameters(array('1' => $userId, '2' => array_values($messageIds)))
 			->getQuery();

@@ -33,16 +33,16 @@ class FolderRepository extends EntityRepository
 	 * @access public
 	 * @param int $user_id
 	 */	
-	public function findAllFoldersForUser($user_id)
+	public function findAllFoldersForUser($userId)
 	{
 		// get topic / post count
 		$query = $this->getEntityManager()
 			->createQuery('	
 				SELECT f 
 				FROM CCDNMessageMessageBundle:Folder f
-				WHERE f.owned_by = :id
-				ORDER BY f.special_type ASC')
-			->setParameter('id', $user_id);
+				WHERE f.ownedBy = :userId
+				ORDER BY f.specialType ASC')
+			->setParameter('userId', $userId);
 
 		try {
 	        return $query->getResult();
@@ -57,15 +57,15 @@ class FolderRepository extends EntityRepository
 	 * @access public
 	 * @param int $folder_id
 	 */
-	public function getReadCounterForFolderById($folder_id)
+	public function getReadCounterForFolderById($folderId)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('	
 				SELECT COUNT(DISTINCT m.id) AS readCount
 				FROM CCDNMessageMessageBundle:Message m
-				WHERE m.folder = :id AND m.read_it = 1
+				WHERE m.folder = :folderId AND m.isRead = 1
 				')
-			->setParameter('id', $folder_id);
+			->setParameter('folderId', $folderId);
 
 		try {
 	        return $query->getSingleResult();
@@ -80,15 +80,15 @@ class FolderRepository extends EntityRepository
 	 * @access public
 	 * @param int $folder_id
 	 */
-	public function getUnreadCounterForFolderById($folder_id)
+	public function getUnreadCounterForFolderById($folderId)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('	
 				SELECT COUNT(DISTINCT m.id) AS unreadCount
 				FROM CCDNMessageMessageBundle:Message m
-				WHERE m.folder = :id AND m.read_it = 0
+				WHERE m.folder = :folderId AND m.isRead = 0
 				')
-			->setParameter('id', $folder_id);
+			->setParameter('folderId', $folderId);
 
 		try {
 	        return $query->getSingleResult();

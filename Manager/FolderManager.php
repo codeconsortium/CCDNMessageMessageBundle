@@ -50,9 +50,9 @@ class FolderManager extends BaseManager implements ManagerInterface
 			$folder->setOwnedBy($user);
 			$folder->setName($folderName);
 			$folder->setSpecialType($key);
-			$folder->setCacheReadCount(0);
-			$folder->setCacheUnreadCount(0);
-			$folder->setCacheTotalMessageCount(0);
+			$folder->setCachedReadCount(0);
+			$folder->setCachedUnreadCount(0);
+			$folder->setCachedTotalMessageCount(0);
 			
 			$this->persist($folder);
 		}
@@ -77,9 +77,9 @@ class FolderManager extends BaseManager implements ManagerInterface
 		$unreadCount = $unreadCount['unreadCount'];
 		$totalCount = ($readCount + $unreadCount);
 		
-		$folder->setCacheReadCount($readCount);
-		$folder->setCacheUnreadCount($unreadCount);
-		$folder->setCacheTotalMessageCount($totalCount);
+		$folder->setCachedReadCount($readCount);
+		$folder->setCachedUnreadCount($unreadCount);
+		$folder->setCachedTotalMessageCount($totalCount);
 		
 		$this->persist($folder);
 		
@@ -98,7 +98,7 @@ class FolderManager extends BaseManager implements ManagerInterface
 		
 		foreach($folders as $key => $folder)
 		{
-			$totalMessageCount += $folder->getCacheTotalMessageCount();
+			$totalMessageCount += $folder->getCachedTotalMessageCount();
 		}
 
 		return $totalMessageCount;
@@ -142,7 +142,7 @@ class FolderManager extends BaseManager implements ManagerInterface
 		
 		foreach($folders as $key => $folder)
 		{
-			$totalMessageCount += $folder->getCacheTotalMessageCount();
+			$totalMessageCount += $folder->getCachedTotalMessageCount();
 		}
 		
 		$usedAllowance = ($totalMessageCount / $quota) * 100;

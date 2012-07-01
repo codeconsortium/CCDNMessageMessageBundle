@@ -35,14 +35,14 @@ class Registry
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $owned_by;
+	protected $ownedBy = null;
 		
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="cached_unread_message_count")
      */
-    protected $cacheUnreadMessagesCount;
+    protected $cachedUnreadMessagesCount = 0;
 
 
     /**
@@ -56,47 +56,42 @@ class Registry
     }
 
     /**
-     * Set owned_by
+     * Set cachedUnreadMessagesCount
      *
-     * @param CCDNUser\UserBundle\Entity\User $ownedBy
-     * @return Registry
+     * @param integer $cachedUnreadMessagesCount
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
     {
-        $this->owned_by = $ownedBy;
-        return $this;
+        $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
     }
 
     /**
-     * Get owned_by
+     * Get cachedUnreadMessagesCount
+     *
+     * @return integer 
+     */
+    public function getCachedUnreadMessagesCount()
+    {
+        return $this->cachedUnreadMessagesCount;
+    }
+
+    /**
+     * Set ownedBy
+     *
+     * @param CCDNUser\UserBundle\Entity\User $ownedBy
+     */
+    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    {
+        $this->ownedBy = $ownedBy;
+    }
+
+    /**
+     * Get ownedBy
      *
      * @return CCDNUser\UserBundle\Entity\User 
      */
     public function getOwnedBy()
     {
-        return $this->owned_by;
-    }
-
-
-    /**
-     * Set cacheUnreadMessagesCount
-     *
-     * @param integer $cacheUnreadMessagesCount
-     * @return Registry
-     */
-    public function setCacheUnreadMessagesCount($cacheUnreadMessagesCount)
-    {
-        $this->cacheUnreadMessagesCount = $cacheUnreadMessagesCount;
-        return $this;
-    }
-
-    /**
-     * Get cacheUnreadMessagesCount
-     *
-     * @return integer 
-     */
-    public function getCacheUnreadMessagesCount()
-    {
-        return $this->cacheUnreadMessagesCount;
+        return $this->ownedBy;
     }
 }

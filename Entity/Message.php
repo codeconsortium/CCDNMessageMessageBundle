@@ -47,71 +47,72 @@ class Message
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNMessage\MessageBundle\Entity\Folder", cascade={"persist"})
-     * @ORM\JoinColumn(name="in_folder_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_folder_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $folder;
+	protected $folder = null;
 
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="sent_date", nullable=true)
 	 */
-	protected $sent_date;
+	protected $sentDate;
 	
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", name="created_date", nullable=true)
 	 */
-	protected $created_date;
+	protected $createdDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="sent_to_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_sent_to_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $sent_to;
+	protected $sentTo = null;
 	
 	/**
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", name="send_to")
 	 * @CCDNMessageAssert\SendTo()
 	 */
-	protected $send_to;
+	protected $sendTo;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_from_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $sent_from;
+	protected $sentFrom = null;
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $owned_by;
+	protected $ownedBy = null;
 	
 	/**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_draft")
      */
-	protected $is_draft;
+	protected $isDraft = false;
 	
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", name="is_read")
 	 */
-	protected $read_it;
+	protected $isRead = false;
 	
 	/**
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @ORM\Column(type="boolean", name="is_flagged")
 	 */
-	protected $flagged;
+	protected $isFlagged;
 	
 	/***
      * @ORM\ManyToOne(targetEntity="CCDNMessage\MessageBundle\Entity\Message", cascade={"persist"})
-     * @ORM\JoinColumn(name="in_response_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_in_response_message_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $inResponseTo;
+	protected $inResponseTo = null;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
-     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $attachment;
-	
+	protected $attachment = null;
+
+
     /**
      * Get id
      *
@@ -121,11 +122,11 @@ class Message
     {
         return $this->id;
     }
-	
+
     /**
      * Set subject
      *
-     * @param text $subject
+     * @param string $subject
      */
     public function setSubject($subject)
     {
@@ -135,7 +136,7 @@ class Message
     /**
      * Get subject
      *
-     * @return text 
+     * @return string 
      */
     public function getSubject()
     {
@@ -163,63 +164,123 @@ class Message
     }
 
     /**
-     * Set sent_date
+     * Set sentDate
      *
      * @param datetime $sentDate
      */
     public function setSentDate($sentDate)
     {
-        $this->sent_date = $sentDate;
+        $this->sentDate = $sentDate;
     }
 
     /**
-     * Get sent_date
+     * Get sentDate
      *
      * @return datetime 
      */
     public function getSentDate()
     {
-        return $this->sent_date;
+        return $this->sentDate;
     }
 
     /**
-     * Set created_date
+     * Set createdDate
      *
      * @param datetime $createdDate
      */
     public function setCreatedDate($createdDate)
     {
-        $this->created_date = $createdDate;
+        $this->createdDate = $createdDate;
     }
 
     /**
-     * Get created_date
+     * Get createdDate
      *
      * @return datetime 
      */
     public function getCreatedDate()
     {
-        return $this->created_date;
+        return $this->createdDate;
     }
 
     /**
-     * Set is_draft
+     * Set sendTo
+     *
+     * @param text $sendTo
+     */
+    public function setSendTo($sendTo)
+    {
+        $this->sendTo = $sendTo;
+    }
+
+    /**
+     * Get sendTo
+     *
+     * @return text 
+     */
+    public function getSendTo()
+    {
+        return $this->sendTo;
+    }
+
+    /**
+     * Set isDraft
      *
      * @param boolean $isDraft
      */
     public function setIsDraft($isDraft)
     {
-        $this->is_draft = $isDraft;
+        $this->isDraft = $isDraft;
     }
 
     /**
-     * Get is_draft
+     * Get isDraft
      *
      * @return boolean 
      */
     public function getIsDraft()
     {
-        return $this->is_draft;
+        return $this->isDraft;
+    }
+
+    /**
+     * Set isRead
+     *
+     * @param boolean $isRead
+     */
+    public function setIsRead($isRead)
+    {
+        $this->isRead = $isRead;
+    }
+
+    /**
+     * Get isRead
+     *
+     * @return boolean 
+     */
+    public function getIsRead()
+    {
+        return $this->isRead;
+    }
+
+    /**
+     * Set isFlagged
+     *
+     * @param boolean $isFlagged
+     */
+    public function setIsFlagged($isFlagged)
+    {
+        $this->isFlagged = $isFlagged;
+    }
+
+    /**
+     * Get isFlagged
+     *
+     * @return boolean 
+     */
+    public function getIsFlagged()
+    {
+        return $this->isFlagged;
     }
 
     /**
@@ -227,7 +288,7 @@ class Message
      *
      * @param CCDNMessage\MessageBundle\Entity\Folder $folder
      */
-    public function setFolder(\CCDNMessage\MessageBundle\Entity\Folder $folder)
+    public function setFolder(\CCDNMessage\MessageBundle\Entity\Folder $folder = null)
     {
         $this->folder = $folder;
     }
@@ -243,155 +304,73 @@ class Message
     }
 
     /**
-     * Set sent_to
+     * Set sentTo
      *
      * @param CCDNUser\UserBundle\Entity\User $sentTo
      */
     public function setSentTo(\CCDNUser\UserBundle\Entity\User $sentTo = null)
     {
-        $this->sent_to = $sentTo;
+        $this->sentTo = $sentTo;
     }
 
     /**
-     * Get sent_to
+     * Get sentTo
      *
      * @return CCDNUser\UserBundle\Entity\User 
      */
     public function getSentTo()
     {
-        return $this->sent_to;
+        return $this->sentTo;
     }
 
     /**
-     * Set sent_from
+     * Set sentFrom
      *
      * @param CCDNUser\UserBundle\Entity\User $sentFrom
      */
-    public function setSentFrom(\CCDNUser\UserBundle\Entity\User $sentFrom)
+    public function setSentFrom(\CCDNUser\UserBundle\Entity\User $sentFrom = null)
     {
-        $this->sent_from = $sentFrom;
+        $this->sentFrom = $sentFrom;
     }
 
     /**
-     * Get sent_from
+     * Get sentFrom
      *
      * @return CCDNUser\UserBundle\Entity\User 
      */
     public function getSentFrom()
     {
-        return $this->sent_from;
+        return $this->sentFrom;
     }
 
     /**
-     * Set owned_by
+     * Set ownedBy
      *
      * @param CCDNUser\UserBundle\Entity\User $ownedBy
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy)
+    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {
-        $this->owned_by = $ownedBy;
+        $this->ownedBy = $ownedBy;
     }
 
     /**
-     * Get owned_by
+     * Get ownedBy
      *
      * @return CCDNUser\UserBundle\Entity\User 
      */
     public function getOwnedBy()
     {
-        return $this->owned_by;
-    }
-
-    /**
-     * Set read
-     *
-     * @param boolean $read
-     */
-    public function setRead($read)
-    {
-        $this->read = $read;
-    }
-
-    /**
-     * Get read
-     *
-     * @return boolean 
-     */
-    public function getRead()
-    {
-        return $this->read;
-    }
-
-    /**
-     * Set flagged
-     *
-     * @param boolean $flagged
-     */
-    public function setFlagged($flagged)
-    {
-        $this->flagged = $flagged;
-    }
-
-    /**
-     * Get flagged
-     *
-     * @return boolean 
-     */
-    public function getFlagged()
-    {
-        return $this->flagged;
-    }
-
-    /**
-     * Set read_it
-     *
-     * @param boolean $readIt
-     */
-    public function setReadIt($readIt)
-    {
-        $this->read_it = $readIt;
-    }
-
-    /**
-     * Get read_it
-     *
-     * @return boolean 
-     */
-    public function getReadIt()
-    {
-        return $this->read_it;
-    }
-
-    /**
-     * Set send_to
-     *
-     * @param text $sendTo
-     */
-    public function setSendTo($sendTo)
-    {
-        $this->send_to = $sendTo;
-    }
-
-    /**
-     * Get send_to
-     *
-     * @return text 
-     */
-    public function getSendTo()
-    {
-        return $this->send_to;
+        return $this->ownedBy;
     }
 
     /**
      * Set attachment
      *
      * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
-     * @return Message
      */
     public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
     {
         $this->attachment = $attachment;
-        return $this;
     }
 
     /**

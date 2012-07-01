@@ -42,7 +42,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 
 		foreach($folders as $key => $folder)
 		{
-			$totalMessageCount += $folder->getCacheUnreadCount();
+			$totalMessageCount += $folder->getCachedUnreadCount();
 		}
 
 		$record = $this->container->get('ccdn_message_message.registry.repository')->findRegistryRecordForUser($user->getId());
@@ -53,7 +53,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 			$record->setOwnedBy($user);
 		}
 		
-		$record->setCacheUnreadMessagesCount($totalMessageCount);
+		$record->setCachedUnreadMessagesCount($totalMessageCount);
 		
 		$this->persist($record)->flushNow();
 	}

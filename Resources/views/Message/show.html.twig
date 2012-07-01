@@ -77,8 +77,8 @@
 									{%- endif -%}
 								{%- endif -%}
 								</i>&nbsp;
-								{%- if folder.getCacheUnreadCount -%}
-									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- if folder.getCachedUnreadCount -%}
+									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCachedUnreadCount }}</span></b>
 								{%- else -%}
 									{{- folder.getName|title -}}
 								{%- endif -%}
@@ -101,8 +101,8 @@
 									{%- endif -%}
 								{%- endif -%}
 								</i>&nbsp;
-								{%- if folder.getCacheUnreadCount -%}
-									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCacheUnreadCount }}</span></b>
+								{%- if folder.getCachedUnreadCount -%}
+									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCachedUnreadCount }}</span></b>
 								{%- else -%}
 									{{ folder.getName|title }}
 								{%- endif -%}

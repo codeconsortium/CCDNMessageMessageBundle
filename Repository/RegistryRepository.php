@@ -31,15 +31,15 @@ class RegistryRepository extends EntityRepository
 	 * @access public
 	 * @param int $folder_id
 	 */
-	public function findRegistryRecordForUser($user_id)
+	public function findRegistryRecordForUser($userId)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('	
 				SELECT r
 				FROM CCDNMessageMessageBundle:Registry r
-				WHERE r.owned_by = :id
+				WHERE r.ownedBy = :userId
 				')
-			->setParameter('id', $user_id);
+			->setParameter('userId', $userId);
 
 		try {
 	        return $query->getSingleResult();
