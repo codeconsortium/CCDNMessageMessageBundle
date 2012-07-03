@@ -25,9 +25,9 @@ Other graphics are works of CodeConsortium.
 
 ## Description:
 
-This is a complimentary ModeratorBundle for forum management of the [CCDNMessage ForumBundle](https://github.com/codeconsortium/CCDNForumForumBundle) for Symfony (2.0.11).
+This is a private messaging system as a bundle for Symfony (2.0.11).
 
-You will need to look at [CCDNForum ForumBundle](https://github.com/codeconsortium/CCDNForumForumBundle) and install it along with its dependencies before using this bundle.
+Send and receive private messages as part of a symfony2 powered website.
 
 ## Features.
 
@@ -50,11 +50,20 @@ Before installation of this bundle, you can download the [Sandbox](https://githu
 
 Documentation can be found in the `Resources/doc/index.md` file in this bundle:
 
-[Read the Documentation](index.md).
+[Read the Documentation](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/master/Resources/doc/index.md).
 
 ## Installation.
 
-All the installation instructions are located in [documentation](install.md).
+All the installation instructions are located in [documentation](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/master/Resources/doc/install.md).
+
+## Upgrading.
+
+**Warning:**
+
+> Do NOT use the CLI doctrine/symfony console utility to force an update, data will be lost if you do!
+> Manually run the sql update in the upgrading docs. Always backup your database before updating.
+
+To upgrade to version 1.1.2 please read the [upgrading to version 1.1.3 guide](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/v1.1.3/Resources/doc/upgrading_to_1_1_3.md).
 
 ## License.
 
