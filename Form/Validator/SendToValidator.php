@@ -19,7 +19,9 @@ use Symfony\Component\Validator\Constraint;
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
- * @version 1.0
+ * @version 1.1
+ * 
+ * @see http://symfony.com/doc/current/cookbook/validation/custom_constraint.html
  */
 class SendToValidator extends ConstraintValidator
 {
@@ -60,6 +62,12 @@ class SendToValidator extends ConstraintValidator
 	 */
 	public function isValid($value, Constraint $constraint)
 	{
+		
+		if (strlen($value) < 1)
+		{
+			$constraint->addNotFoundUsernames(array());
+		}
+		
 		// convert either one user or mulitple users who
 		// the mail will be sent to into user entities.	
 		if ($recipients = preg_split('/((,)|(\s))/', $value, PREG_OFFSET_CAPTURE))
@@ -74,7 +82,12 @@ class SendToValidator extends ConstraintValidator
 				}
 			}				
 
-			$sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findTheseUsersByUsername($recipients);				
+			if (count($recipients) > 0)
+			{
+				$sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findTheseUsersByUsername($recipients);				
+			} else {
+				$constraint->addNotFoundUsernames(array());
+			}
 		} else {
 			$recipients = array($value);
 			

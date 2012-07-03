@@ -19,7 +19,9 @@ use Symfony\Component\Validator\Constraint;
  * @Annotation
  *
  * @author Reece Fowell <reece@codeconsortium.com> 
- * @version 1.0
+ * @version 1.1
+ *
+ * @see http://symfony.com/doc/current/cookbook/validation/custom_constraint.html
  */
 class SendTo extends Constraint
 {
@@ -39,8 +41,14 @@ class SendTo extends Constraint
 	 */
 	public function addNotFoundUsernames($usernames)
 	{
-		$usernames = implode(", ", $usernames);
-		$this->message = str_replace("%users%", $usernames, $this->message);
+		if (is_array($usernames) && count($usernames) > 0)
+		{
+			$usernames = implode(", ", $usernames);		
+
+			$this->message = str_replace("%users%", $usernames, $this->message);
+		} else {
+			$this->message = "You must provide a valid username to receive the message.";
+		}
 	}
 	
 	

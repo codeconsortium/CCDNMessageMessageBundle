@@ -1,0 +1,12 @@
+CCDNMessage\MessageBundle\Entity\Message:
+    properties:
+        sendTo:
+            - NotBlank: ~
+        subject:
+            - NotBlank: ~
+            - MinLength: { limit: 15 }    
+        body:
+            - NotBlank: ~
+            - MinLength: { limit: 50 }
+        isFlagged:
+            - NotNull: ~

@@ -35,13 +35,11 @@ class Message
 	
 	/**
      * @ORM\Column(type="string")
-	 * @Assert\NotBlank()
      */
     protected $subject;
 	
 	/**
      * @ORM\Column(type="text")
-	 * @Assert\NotBlank()
      */
 	protected $body;
 
@@ -86,19 +84,19 @@ class Message
 	protected $ownedBy = null;
 	
 	/**
-     * @ORM\Column(type="boolean", name="is_draft")
+     * @ORM\Column(type="boolean", name="is_draft", nullable=false)
      */
 	protected $isDraft = false;
 	
 	/**
-	 * @ORM\Column(type="boolean", name="is_read")
+	 * @ORM\Column(type="boolean", name="is_read", nullable=false)
 	 */
 	protected $isRead = false;
 	
 	/**
-	 * @ORM\Column(type="boolean", name="is_flagged")
+	 * @ORM\Column(type="boolean", name="is_flagged", nullable=false)
 	 */
-	protected $isFlagged;
+	protected $isFlagged = false;
 	
 	/***
      * @ORM\ManyToOne(targetEntity="CCDNMessage\MessageBundle\Entity\Message", cascade={"persist"})

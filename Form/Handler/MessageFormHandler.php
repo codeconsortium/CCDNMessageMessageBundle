@@ -167,7 +167,9 @@ class MessageFormHandler
 			
 			if ($this->form->isValid())
 			{	
-				$this->onSuccess($this->form->getData());
+//				echo '<pre>' . print_r($this->form->getData(), true) . '</pre>'; die();
+//				$this->onSuccess($this->form->getData());
+				$this->onSuccess($formData);
 				
 				return true;				
 			}
@@ -226,8 +228,8 @@ class MessageFormHandler
 			
 
 			if ($this->request->getMethod() == 'POST')
-			{
-				$this->form->bindRequest($this->request);
+			{			
+				$this->form->bindRequest($this->request);				
 			}
 		}
 		
