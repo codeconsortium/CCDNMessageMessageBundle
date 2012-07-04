@@ -15,15 +15,10 @@
 
 {% endblock %}
 
-{% block body %}
-
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
-
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
-	{#<h2>{{ 'title.message.show' |trans({'%message_subject%': truncDot(message.getSubject, 60) }, 'CCDNMessageMessageBundle') }}</h2>#}
-
+{% block sidebar_status %}
+	{{ parent() }}
 	{% spaceless %}
+	
 	<div class="well" style="padding: 10px; height: 20px;">
 		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{ used_allowance }}&#37;&nbsp;</span>
 		<div class="progress progress-danger">
@@ -31,90 +26,30 @@
 		</div>
 	</div>
 	{% endspaceless %}
+{% endblock %}
+
+
+
+{% block body %}
+
+	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+	{#<h2>{{ 'title.message.show' |trans({'%message_subject%': truncDot(message.getSubject, 60) }, 'CCDNMessageMessageBundle') }}</h2>#}
 	
 	<div style="display: block; clear: both; overflow: hidden;">
-
-		<div style="display: block; width: 100%; height: 100%; float: right; margin: 0px; overflow: hidden;">
-			<div style="margin: 0px 0px 0px 191px; overflow: hidden;">
-				
-				<div class="btn-toolbar" style="margin-top: 0px;">
-					{% if message.isDraft %}
-					<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_send_draft', {'message_id': message.id }) }}">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-					{% endif %}
-					<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-					<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-					<a class="btn btn-large" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-					<a class="btn btn-large btn-danger" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-				</div>
-
-				{% include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} %}
-				
-			</div>
+		<div class="btn-toolbar" style="margin-top: 0px;">
+			{% if message.isDraft %}
+			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_send_draft', {'message_id': message.id }) }}">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+			{% endif %}
+			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+			<a class="btn btn-large" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+			<a class="btn btn-large btn-danger" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>
 		</div>
-		
-		<div style="display: block; width: 180px; float: left; margin: 0px -181px 0px 0px; overflow: hidden;">
-			<div style="display: block; width: 175px; margin: 0px; overflow: hidden; padding: 0px;">
-				
-				<a class="btn btn-large btn-danger" style="width: 145px;" href="{{ path('cc_message_message_compose') }}">{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a><br><br>
-				{% spaceless %}
-				<ul class="nav nav-pills nav-stacked">
-					<li class="nav-header">{{ 'label.folders' |trans({}, 'CCDNMessageMessageBundle') }}</li>
-					{% for row, folder in folders %}
-						{%- if folder.name == current_folder.name -%}
-						<li class="active">
-							<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
-								{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-									<i class="icon-white icon-inbox">
-								{%- else -%}
-									{%- if folder.name == 'drafts' -%}
-										<i class="icon-white icon-share-alt">
-									{%- else -%}
-										{%- if folder.name == 'trash' -%}
-											<i class="icon-white icon-trash">
-										{%- else -%}
-											<i class="icon-white icon-folder-close">											
-										{%- endif -%}
-									{%- endif -%}
-								{%- endif -%}
-								</i>&nbsp;
-								{%- if folder.getCachedUnreadCount -%}
-									<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCachedUnreadCount }}</span></b>
-								{%- else -%}
-									{{- folder.getName|title -}}
-								{%- endif -%}
-							</a>
-						</li>
-						{%- else -%}
-						<li>
-							<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
-								{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-									<i class="icon-inbox">
-								{%- else -%}
-									{%- if folder.name == 'drafts' -%}
-										<i class="icon-share-alt">
-									{%- else -%}
-										{%- if folder.name == 'trash' -%}
-											<i class="icon-trash">
-										{%- else -%}
-											<i class="icon-folder-close">											
-										{%- endif -%}
-									{%- endif -%}
-								{%- endif -%}
-								</i>&nbsp;
-								{%- if folder.getCachedUnreadCount -%}
-									<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCachedUnreadCount }}</span></b>
-								{%- else -%}
-									{{ folder.getName|title }}
-								{%- endif -%}
-							</a>
-						</li>
-						{%- endif -%}
-					{% endfor %}
-				</ul>
-				{% endspaceless %}
-			</div>
-		</div>
-		
+
+		{% include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} %}
 	</div>
 
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
