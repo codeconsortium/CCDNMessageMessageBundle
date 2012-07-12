@@ -28,8 +28,6 @@
 
 	<h2>{{- 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h2>
 
-	<div class="errors">{{- form_errors(form) -}}</div>
-
 	{%- spaceless -%}
 		{%- form_theme form param('ccdn_message_message.message.compose.form_theme') -%}
 		<form action="{{- path('cc_message_message_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
