@@ -73,12 +73,12 @@
 				<input type="submit" class="btn" value="{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_move_to">
 			</div>
 			
-			<div class="btn-toolbar hidden" style="margin-top:0px;margin-left:30px;" data-compat="interactive-js-compat">
+			<div class="btn-toolbar hidden" style="margin-left:30px;" data-compat="interactive-js-compat">
 
-				<a class="btn btn-large btn-danger" href="{{- path('cc_message_message_compose') -}}">{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+				<a class="btn btn-large btn-danger" style="vertical-align:top;" href="{{- path('cc_message_message_compose') -}}">{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
 				
-				<div class="btn-group" style="vertical-align:middle;">										
-					<button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><i class="icon-check"></i> <span class="caret"></span></button>&nbsp;
+				<div class="btn-group">										
+					<button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><i class="icon-check"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
 						<li><a href="#" data-action="select_none" data-identifier="{{- current_folder.name -}}">{{- 'link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 						<li class="divider"></li>
@@ -90,20 +90,20 @@
 						<li class="divider"></li>
 						<li><a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="attached">{{- 'link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 					</ul>
-				</div>
+				</div>&nbsp;
 				
-				<div class="btn-group" style="vertical-align: middle;">
-					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-eye-close"></i> <span class="caret"></span></button>&nbsp;
+				<div class="btn-group">
+					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-eye-close"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
 						<li><a href="#" data-action="submit_mark_as_read">{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 						<li><a href="#" data-action="submit_mark_as_unread">{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 					</ul>
-				</div>
+				</div>&nbsp;
 				
-				<div class="btn-group" style="vertical-align: middle;">
-					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-folder-close"></i> <span class="caret"></span></button>&nbsp;
+				<div class="btn-group">
+					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-folder-close"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
-						<li style="text-align: center;"><h4>{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}</h4></li>
+						<li style="padding-left:15px;"><h4>{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}</h4></li>
 						<li class="divider"></li>
 						{%- for row, folder in folders -%}
 							<li><a href="#" data-action="submit_move_to" data-value="{{- folder.getId -}}">{{- folder.getName|title -}}</a></li>
@@ -112,10 +112,10 @@
 				</div>&nbsp;
 									
 				{%- if current_folder.getName == 'drafts' -%}
-					<button type="submit" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
+					<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
 				{%- endif -%}						
 				
-				<button type="submit" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-large btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
+				<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-large btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
 				
 			</div>
 
