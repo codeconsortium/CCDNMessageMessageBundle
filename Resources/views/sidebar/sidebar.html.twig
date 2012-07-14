@@ -1,21 +1,21 @@
-{% spaceless %}
-	{% set route = app.request.attributes.get('_route') %}
+{%- spaceless -%}
+	{%- set route = app.request.attributes.get('_route') -%}
 
-	<li class="nav-header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</li>
+	<li class="nav-header">{{- 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') -}}</li>
 	
-	{% if route == 'cc_message_message_compose' %}
-		<li class="active"><a href="{{ path('cc_message_message_compose') }}"><i class="icon-white icon-pencil"></i>&nbsp;{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
-	{% else %}
-		<li><a href="{{ path('cc_message_message_compose') }}"><i class="icon-pencil"></i>&nbsp;{{ 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
-	{% endif %}
+	{%- if route == 'cc_message_message_compose' -%}
+		<li class="active"><a href="{{- path('cc_message_message_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+	{%- else -%}
+		<li><a href="{{- path('cc_message_message_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+	{%- endif -%}
 		
-	{% if folders is defined %}
-		<li class="nav-header">{{ 'label.folders' |trans({}, 'CCDNMessageMessageBundle') }}</li>
+	{%- if folders is defined -%}
+		<li class="nav-header">{{- 'label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
 		{%- for row, folder in folders -%}
 			{%- if current_folder is defined -%}
 				{%- if folder.name == current_folder.name -%}
 					<li class="active">
-						<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
+						<a href="{{- path('cc_message_folder_show', {'folder_name': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 								<i class="icon-white icon-inbox">
 							{%- else -%}
@@ -31,7 +31,7 @@
 							{%- endif -%}
 							</i>&nbsp;
 							{%- if folder.getCachedUnreadCount -%}
-								<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{ folder.getCachedUnreadCount }}</span></b>
+								<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{- folder.getCachedUnreadCount -}}</span></b>
 							{%- else -%}
 								{{- folder.getName|title -}}
 							{%- endif -%}
@@ -39,7 +39,7 @@
 					</li>
 				{%- else -%}
 					<li>
-						<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
+						<a href="{{- path('cc_message_folder_show', {'folder_name': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 								<i class="icon-inbox">
 							{%- else -%}
@@ -55,16 +55,16 @@
 							{%- endif -%}
 							</i>&nbsp;
 							{%- if folder.getCachedUnreadCount -%}
-								<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCachedUnreadCount }}</span></b>
+								<b>{{- folder.getName|title -}}&nbsp;<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
 							{%- else -%}
-								{{ folder.getName|title }}
+								{{- folder.getName|title -}}
 							{%- endif -%}
 						</a>
 					</li>
 				{%- endif -%}
 			{%- else -%}
 				<li>
-					<a href="{{ path('cc_message_folder_show', {'folder_name': folder.getName }) }}">
+					<a href="{{- path('cc_message_folder_show', {'folder_name': folder.getName }) -}}">
 						{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 							<i class="icon-inbox">
 						{%- else -%}
@@ -80,9 +80,9 @@
 						{%- endif -%}
 						</i>&nbsp;
 						{%- if folder.getCachedUnreadCount -%}
-							<b>{{ folder.getName|title }}&nbsp;<span class="badge badge-info pull-right">{{ folder.getCachedUnreadCount }}</span></b>
+							<b>{{- folder.getName|title -}}&nbsp;<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
 						{%- else -%}
-							{{ folder.getName|title }}
+							{{- folder.getName|title -}}
 						{%- endif -%}
 					</a>
 				</li>
@@ -90,9 +90,9 @@
 		{%- endfor -%}
 	{%- else -%}
 		{%- if route == 'cc_message_index' -%}
-			<li class="active"><a href="{{- path('cc_message_index') -}}"><i class="icon-white icon-inbox"></i>&nbsp;{{ 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+			<li class="active"><a href="{{- path('cc_message_index') -}}"><i class="icon-white icon-inbox"></i>&nbsp;{{- 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 		{%- else -%}
-			<li><a href="{{- path('cc_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{ 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') }}</a></li>
+			<li><a href="{{- path('cc_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{- 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 		{%- endif -%}
 	{%- endif -%}
-{% endspaceless %}
+{%- endspaceless -%}

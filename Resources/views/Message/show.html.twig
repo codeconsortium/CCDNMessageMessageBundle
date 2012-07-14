@@ -2,56 +2,59 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{ 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') }}{% endblock %}
+{% block title %}{{- 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	{% include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' %}
+	{%- include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' -%}
 
 {% endblock %}
 
 {% block sidebar_status %}
 	{{ parent() }}
-	{% spaceless %}
+	{%- spaceless -%}
 	
 	<div class="well" style="padding: 10px; height: 20px;">
-		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{ used_allowance }}&#37;&nbsp;</span>
+		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
 		<div class="progress progress-danger">
-			<div class="bar" style="width:{{ used_allowance }}%;"></div>
+			<div class="bar" style="width:{{- used_allowance -}}%;"></div>
 		</div>
 	</div>
-	{% endspaceless %}
+	{%- endspaceless -%}
 {% endblock %}
 
 
 
 {% block body %}
 
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	{#<h2>{{ 'title.message.show' |trans({'%message_subject%': truncDot(message.getSubject, 60) }, 'CCDNMessageMessageBundle') }}</h2>#}
 	
 	<div style="display: block; clear: both; overflow: hidden;">
 		<div class="btn-toolbar" style="margin-top: 0px;">
-			{% if message.isDraft %}
-			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_send_draft', {'message_id': message.id }) }}">{{ 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-			{% endif %}
-			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_reply', {'message_id': message.id }) }}">{{ 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-			<a class="btn btn-large btn-primary" href="{{ path('cc_message_message_compose_forward', {'message_id': message.id }) }}">{{ 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-			<a class="btn btn-large" href="{{ path('cc_message_message_mark_as_unread', {'message_id': message.id }) }}">{{ 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') }}</a>
-			<a class="btn btn-large btn-danger" href="{{ path('cc_message_message_delete', {'message_id': message.id }) }}">{{ 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') }}</a>
+			{%- if message.isDraft -%}
+			<a class="btn btn-large btn-primary" href="{{- path('cc_message_message_send_draft', {'message_id': message.id }) -}}">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			{%- endif -%}
+			<a class="btn btn-large btn-primary" href="{{- path('cc_message_message_compose_reply', {'message_id': message.id }) -}}">{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-large btn-primary" href="{{- path('cc_message_message_compose_forward', {'message_id': message.id }) -}}">{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-large" href="{{- path('cc_message_message_mark_as_unread', {'message_id': message.id }) -}}">{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-large btn-danger" href="{{- path('cc_message_message_delete', {'message_id': message.id }) -}}">{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
 		</div>
 
-		{% include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} %}
+		{%- include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} -%}
 	</div>
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+	{%- endspaceless -%}
 
 {% endblock %}
