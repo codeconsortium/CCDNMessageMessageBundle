@@ -9,7 +9,7 @@
 	<script src="{{- asset('bundles/ccdncomponentcommon/js/ccdn/jquery.checkboxes.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{- 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), param('ccdn_message_message.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -109,7 +109,7 @@
 							<li><a href="#" data-action="submit_move_to" data-value="{{- folder.getId -}}">{{- folder.getName|title -}}</a></li>
 						{%- endfor -%}
 					</ul>
-				</div>	
+				</div>&nbsp;
 									
 				{%- if current_folder.getName == 'drafts' -%}
 					<button type="submit" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;

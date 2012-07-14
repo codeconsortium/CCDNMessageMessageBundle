@@ -5,7 +5,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- 'title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle'), param('ccdn_message_message.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

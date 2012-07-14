@@ -44,10 +44,24 @@ class CCDNMessageMessageExtension extends Extension
 		$container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
 		$container->setParameter('ccdn_message_message.user.profile_route', $config['user']['profile_route']);
 		
+		$this->getSEOSection($container, $config);
 		$this->getFolderSection($container, $config);
 		$this->getMessageSection($container, $config);
 		$this->getQuotasSection($container, $config);
     }
+	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 * @param $container, $config
+	 */
+	protected function getSEOSection($container, $config)
+	{
+	    $container->setParameter('ccdn_message_message.seo.title_length', $config['seo']['title_length']);
+	}
+	
 	
 	
 	/**
@@ -62,6 +76,7 @@ class CCDNMessageMessageExtension extends Extension
 		$container->setParameter('ccdn_message_message.folder.show.subject_truncate', $config['folder']['show']['subject_truncate']);
 		$container->setParameter('ccdn_message_message.folder.show.sent_datetime_format', $config['folder']['show']['sent_datetime_format']);
 	}
+
 
 	
 	/**
@@ -88,7 +103,6 @@ class CCDNMessageMessageExtension extends Extension
 	private function getQuotasSection($container, $config)
 	{
 		$container->setParameter('ccdn_message_message.quotas.max_messages', $config['quotas']['max_messages']);
-	}
-	
+	}	
 	
 }
