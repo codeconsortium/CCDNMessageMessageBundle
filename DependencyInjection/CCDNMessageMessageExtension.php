@@ -30,6 +30,17 @@ class CCDNMessageMessageExtension extends Extension
 {
 	
 	
+	
+    /**
+     * {@inheritDoc}
+     */
+	public function getAlias()
+	{
+		return 'ccdn_message_message';
+	}
+	
+	
+	
     /**
      * {@inheritDoc}
      */
