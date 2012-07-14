@@ -43,6 +43,7 @@ flash.message.sent.success: 'Message sent to %user%.'
 flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
 flash.message.draft.saved: 'Draft message saved.'
 
+form.field.required: 'This field is required'
 form.label.message.to: 'To: '
 form.label.message.subject: 'Subject: '
 form.label.message.body: 'Message: '
