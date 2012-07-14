@@ -55,8 +55,9 @@
 		
 			<div class="control-group{{- (form.body.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">					
+				<div class="controls row-fluid">
 					{{- form_errors(form.body) -}}
+					{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
 					{{- form_widget(form.body) -}}
 				</div>
 			</div>
