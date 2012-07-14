@@ -27,6 +27,76 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MessageController extends ContainerAware
 {
  
+
+
+	/**
+	 *
+	 * route: /en/messages/1/show
+	 *
+	 * @access public
+	 * @param int $message_id
+	 * @return RedirectResponse|RenderResponse
+	 */
+	public function showMessageAction($message_id)
+	{
+		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER'))
+		{
+			throw new AccessDeniedException('You do not have access to this section.');
+		}
+			
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		//
+		// Get all the folders.
+		//
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+		
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		
+		if ( ! $folders)
+		{
+			$folderManager->setupDefaults($user->getId())->flushNow();
+
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+		}
+
+		//
+		// Get the message.
+		//
+		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+				
+		if ( ! $message)
+		{
+			throw new NotFoundHttpException('No such message found!');
+		}
+		
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+		$currentFolder = $folderManager->getCurrentFolder($folders, $message->getFolder()->getName());
+		$stats = $folderManager->getUsedAllowance($folders, $quota);
+		$totalMessageCount = $stats['total_message_count'];
+		$usedAllowance = $stats['used_allowance'];
+		
+		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
+			
+		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
+			->add($message->getFolder()->getName(), $this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())), "folder")
+			->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email");
+		
+		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
+			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
+			'user' => $user,
+			'crumbs' => $crumb_trail,
+			'folders' => $folders,
+			'current_folder' => $currentFolder,
+			'used_allowance' => $usedAllowance,
+			'message' => $message,
+		));
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -43,7 +113,7 @@ class MessageController extends ContainerAware
 		}
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
-
+		
 		//
 		// Are we sending this to someone who's 'send message' button we clicked? 
 		//
@@ -78,6 +148,20 @@ class MessageController extends ContainerAware
 			$formHandler->setMode($formHandler::PREVIEW);
 		}
 		
+		//
+		// Get all the folders.
+		//
+		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+		
+		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+		
+		if ( ! $folders)
+		{
+			$folderManager->setupDefaults($user->getId())->flushNow();
+
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+		}
+		
 		// setup crumb trail.
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
 			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
@@ -88,9 +172,11 @@ class MessageController extends ContainerAware
 			'crumbs' => $crumb_trail,
 			'form' => $formHandler->getForm()->createView(),
 			'preview' => $formHandler->getForm()->getData(),
+			'folders' => $folders,
 			'user' => $user,
 		));
     }
+
 
 
 	/**
@@ -126,7 +212,21 @@ class MessageController extends ContainerAware
 			return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 		}
 		else
-		{
+		{	
+			//
+			// Get all the folders.
+			//
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+
+			$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+
+			if ( ! $folders)
+			{
+				$folderManager->setupDefaults($user->getId())->flushNow();
+
+				$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+			}
+			
 			// setup crumb trail.
 			$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
 				->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
@@ -138,10 +238,12 @@ class MessageController extends ContainerAware
 				'crumbs' => $crumb_trail,
 				'form' => $formHandler->getForm()->createView(),
 				'preview' => $formHandler->getForm()->getData(),
+				'folders' => $folders,
 				'user' => $user,
 			));
 		}
 	}
+	
 	
 	
 	/**
@@ -178,6 +280,20 @@ class MessageController extends ContainerAware
 		}
 		else
 		{
+			//
+			// Get all the folders.
+			//
+			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+
+			$folderManager = $this->container->get('ccdn_message_message.folder.manager');
+
+			if ( ! $folders)
+			{
+				$folderManager->setupDefaults($user->getId())->flushNow();
+
+				$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
+			}
+			
 			// setup crumb trail.
 			$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
 				->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
@@ -189,6 +305,7 @@ class MessageController extends ContainerAware
 				'crumbs' => $crumb_trail,
 				'form' => $formHandler->getForm()->createView(),
 				'preview' => $formHandler->getForm()->getData(),
+				'folders' => $folders,
 				'user' => $user,
 			));
 		}		
@@ -223,75 +340,7 @@ class MessageController extends ContainerAware
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => 'sent')));
 	}
-
-
-
-	/**
-	 *
-	 * route: /en/messages/1/show
-	 *
-	 * @access public
-	 * @param int $message_id
-	 * @return RedirectResponse|RenderResponse
-	 */
-	public function showMessageAction($message_id)
-	{
-		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER'))
-		{
-			throw new AccessDeniedException('You do not have access to this section.');
-		}
-			
-		$user = $this->container->get('security.context')->getToken()->getUser();
-		
-		$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
-		
-		if ( ! $folders)
-		{
-			$this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flushNow();
-
-			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
-		}
-
-		$message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
-				
-		if ( ! $message)
-		{
-			throw new NotFoundHttpException('No such message found!');
-		}	
-		
-		$folderManager = $this->container->get('ccdn_message_message.folder.manager');
-		
-		if ( ! $folders)
-		{
-			$folderManager->setupDefaults($user->getId())->flushNow();
-
-			$folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());		        
-		}
-
-		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
-
-		$currentFolder = $folderManager->getCurrentFolder($folders, $message->getFolder()->getName());
-		$stats = $folderManager->getUsedAllowance($folders, $quota);
-		$totalMessageCount = $stats['total_message_count'];
-		$usedAllowance = $stats['used_allowance'];
-		
-		$this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flushNow()->updateAllFolderCachesForUser($user);
-			
-		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home")
-			->add($message->getFolder()->getName(), $this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())), "folder")
-			->add($message->getSubject(), $this->container->get('router')->generate('cc_message_message_show_by_id', array('message_id' => $message_id)), "email");
-		
-		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-			'user' => $user,
-			'crumbs' => $crumb_trail,
-			'folders' => $folders,
-			'current_folder' => $currentFolder,
-			'used_allowance' => $usedAllowance,
-			'message' => $message,
-		));
-	}
+	
 	
 	
 	/**
@@ -322,6 +371,7 @@ class MessageController extends ContainerAware
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -348,6 +398,7 @@ class MessageController extends ContainerAware
 	
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
 	}
+
 
 
 	/**
@@ -384,6 +435,7 @@ class MessageController extends ContainerAware
 		
 		return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
 	}
+	
 	
 	
 	/**
