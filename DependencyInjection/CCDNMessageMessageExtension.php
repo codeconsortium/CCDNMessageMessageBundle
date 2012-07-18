@@ -99,9 +99,11 @@ class CCDNMessageMessageExtension extends Extension
 	{
 		$container->setParameter('ccdn_message_message.message.show.layout_template', $config['message']['show']['layout_template']);
 		$container->setParameter('ccdn_message_message.message.show.sent_datetime_format', $config['message']['show']['sent_datetime_format']);
+		$container->setParameter('ccdn_message_message.message.show.enable_bbcode', $config['message']['show']['enable_bbcode']);
 
 		$container->setParameter('ccdn_message_message.message.compose.layout_template', $config['message']['compose']['layout_template']);
 		$container->setParameter('ccdn_message_message.message.compose.form_theme', $config['message']['compose']['form_theme']);
+		$container->setParameter('ccdn_message_message.message.compose.enable_bbcode', $config['message']['compose']['enable_bbcode']);
 	}
 	
 	
