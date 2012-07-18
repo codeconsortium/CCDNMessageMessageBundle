@@ -57,7 +57,7 @@
 				{{- form_label(form.body, null, { 'label': 'form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.body) -}}
-					{%- if param('ccdn_message_message.message.compose.enable_bbcode') -%}
+					{%- if param('ccdn_message_message.message.compose.enable_bb_editor') -%}
 						{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
 					{%- endif -%}
 					{{- form_widget(form.body) -}}
