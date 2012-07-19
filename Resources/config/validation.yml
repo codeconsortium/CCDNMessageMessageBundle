@@ -1,12 +1,19 @@
 CCDNMessage\MessageBundle\Entity\Message:
     properties:
         sendTo:
+            - Type: string
             - NotBlank: ~
+            - MaxLength: { limit: 255 }
         subject:
+            - Type: string
             - NotBlank: ~
-            - MinLength: { limit: 15 }    
+            - MinLength: { limit: 10 }
+            - MaxLength: { limit: 255 }
         body:
+            - Type: string
             - NotBlank: ~
-            - MinLength: { limit: 50 }
+            - MinLength: { limit: 30 }
+            - MaxLength: { limit: 5000 }
         isFlagged:
+            - Type: bool
             - NotNull: ~
