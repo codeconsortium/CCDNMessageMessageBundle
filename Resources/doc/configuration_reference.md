@@ -12,19 +12,23 @@ ccdn_message_message:
         profile_route: cc_profile_show_by_id
     template:
         engine: twig
-#    folder:
-#        show:
-#            layout_template: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-#            messages_per_page: 10
-#            subject_truncate: 50
-#            sent_datetime_format: "d-m-Y - H:i"
-#    message:
-#        compose:
-#            layout_template: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-#            form_theme: CCDNMessageMessageBundle:Form:fields.html.twig
-#        show:
-#            layout_template: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-#            sent_datetime_format: "d-m-Y - H:i"
+	seo:
+		title_length: 67
+    folder:
+        show:
+            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
+            messages_per_page: 10
+            subject_truncate: 50
+            sent_datetime_format: "d-m-Y - H:i"
+    message:
+        compose:
+            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
+            form_theme: CCDNMessageMessageBundle:Form:fields.html.twig
+			enable_bb_editor: true
+        show:
+            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
+            sent_datetime_format: "d-m-Y - H:i"
+			enable_bb_parser: true
     quotas:
         max_messages: 100
 
