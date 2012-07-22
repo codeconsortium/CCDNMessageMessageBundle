@@ -54,11 +54,8 @@
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">					
 			<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
 				<span class="common_body">
-					{%- if param('ccdn_message_message.message.show.enable_bb_parser') -%}
-						{{- BBCode(message.getBody | raw) | raw -}}
-					{%- else -%}
-						{{- message.getBody -}}
-					{%- endif -%}
+					{{- BBCode(message.getBody | raw, param('ccdn_message_message.message.show.enable_bb_parser')) | raw -}}
+					<br>
 				</span>
 			</td>
 		</tr>
