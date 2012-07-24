@@ -68,7 +68,7 @@
 				{{- form_label(form.is_flagged, null, { 'label': 'form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.is_flagged) -}}
-					<label class="checkbox">{{- form_widget(form.is_flagged, {'class': 'checkbox pull-left', 'value': 'option1'}) -}}</label>
+					<label class="checkbox">{{- form_widget(form.is_flagged, {'class': 'checkbox pull-left'}) -}}</label>
 				</div>
 			</div>
 		

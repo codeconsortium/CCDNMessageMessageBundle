@@ -76,7 +76,7 @@ class MessageFormType extends AbstractType
 		$builder->add('send_to', 'text', array('data' => $this->getRespondentSendTo()));
 		$builder->add('subject', 'text', array('data' => $this->getQuotedSubject()));
 		$builder->add('body', 'textarea', array('data' => $this->getQuotedBody()));		
-		$builder->add('is_flagged', 'checkbox');
+		$builder->add('is_flagged', 'checkbox', array('data' => false, 'required' => false));
 		
 		$userId = $this->defaults['sender']->getId();
 		$attachments = $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId);
