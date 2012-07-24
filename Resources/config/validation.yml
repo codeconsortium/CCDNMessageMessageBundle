@@ -7,12 +7,12 @@ CCDNMessage\MessageBundle\Entity\Message:
         subject:
             - Type: string
             - NotBlank: ~
-            - MinLength: { limit: 10 }
+            - MinLength: { limit: 5 }
             - MaxLength: { limit: 255 }
         body:
             - Type: string
             - NotBlank: ~
-            - MinLength: { limit: 30 }
+            - MinLength: { limit: 5 }
             - MaxLength: { limit: 5000 }
         isFlagged:
             - Type: bool
