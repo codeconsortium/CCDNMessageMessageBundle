@@ -34,7 +34,6 @@ class Folder
 	
 	/**
      * @ORM\Column(type="text")
-	 * @Assert\NotBlank()
      */
     protected $name;
 	
