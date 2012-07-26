@@ -18,7 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNUser\UserBundle\Entity\User;
-use CCDNMessage\MessageBundle\Form\Validator\Constraints as CCDNMessageAssert;
+//use CCDNMessage\MessageBundle\Form\Validator\Constraints as CCDNMessageAssert;
+//	 * @CCDNMessageAssert\SendTo()
 
 /**
  * @ORM\Entity(repositoryClass="CCDNMessage\MessageBundle\Repository\MessageRepository")
@@ -67,7 +68,6 @@ class Message
 	
 	/**
 	 * @ORM\Column(type="text", name="send_to")
-	 * @CCDNMessageAssert\SendTo()
 	 */
 	protected $sendTo;
 	

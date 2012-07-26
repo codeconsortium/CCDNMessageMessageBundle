@@ -73,7 +73,8 @@ class SendToValidator extends ConstraintValidator
 		if ($recipients = preg_split('/((,)|(\s))/', $value, PREG_OFFSET_CAPTURE))
 		{
 			foreach ($recipients as $key => $recipient)
-			{			
+			{		
+				// Sanitize the input by removing non-alpha-numeric chars.	
 				$recipients[$key] = preg_replace("/[^a-zA-Z0-9_]/", "", $recipients[$key]);
 
 				if ( ! $recipient)
