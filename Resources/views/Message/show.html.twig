@@ -17,7 +17,7 @@
 {% block sidebar_status %}
 	{{ parent() }}
 	{%- spaceless -%}
-	
+
 	<div class="well" style="padding: 10px; height: 20px;">
 		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
 		<div class="progress progress-danger">
@@ -38,7 +38,7 @@
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	{#<h2>{{ 'title.message.show' |trans({'%message_subject%': truncDot(message.getSubject, 60) }, 'CCDNMessageMessageBundle') }}</h2>#}
-	
+
 	<div style="display: block; clear: both; overflow: hidden;">
 		<div class="btn-toolbar" style="margin-top: 0px;">
 			{%- if message.isDraft -%}

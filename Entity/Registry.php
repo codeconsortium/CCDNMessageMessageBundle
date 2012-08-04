@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN MessageBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNUser\UserBundle\Entity\User;
 
@@ -25,30 +23,29 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Registry
 {
-	
-	/**
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
+    protected $id;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $ownedBy = null;
-		
-	/**
+     */
+    protected $ownedBy = null;
+
+    /**
      * @ORM\Column(type="integer", name="cached_unread_message_count")
      */
     protected $cachedUnreadMessagesCount = 0;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +65,7 @@ class Registry
     /**
      * Get cachedUnreadMessagesCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedUnreadMessagesCount()
     {
@@ -88,7 +85,7 @@ class Registry
     /**
      * Get ownedBy
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {

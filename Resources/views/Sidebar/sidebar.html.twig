@@ -2,13 +2,13 @@
 	{%- set route = app.request.attributes.get('_route') -%}
 
 	<li class="nav-header">{{- 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') -}}</li>
-	
+
 	{%- if route == 'cc_message_message_compose' -%}
 		<li class="active"><a href="{{- path('cc_message_message_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- else -%}
 		<li><a href="{{- path('cc_message_message_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- endif -%}
-		
+
 	{%- if folders is defined -%}
 		<li class="nav-header">{{- 'label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
 		{%- for row, folder in folders -%}
@@ -25,7 +25,7 @@
 									{%- if folder.name == 'trash' -%}
 										<i class="icon-white icon-trash">
 									{%- else -%}
-										<i class="icon-white icon-folder-close">											
+										<i class="icon-white icon-folder-close">
 									{%- endif -%}
 								{%- endif -%}
 							{%- endif -%}
@@ -49,7 +49,7 @@
 									{%- if folder.name == 'trash' -%}
 										<i class="icon-trash">
 									{%- else -%}
-										<i class="icon-folder-close">											
+										<i class="icon-folder-close">
 									{%- endif -%}
 								{%- endif -%}
 							{%- endif -%}
@@ -74,7 +74,7 @@
 								{%- if folder.name == 'trash' -%}
 									<i class="icon-trash">
 								{%- else -%}
-									<i class="icon-folder-close">											
+									<i class="icon-folder-close">
 								{%- endif -%}
 							{%- endif -%}
 						{%- endif -%}

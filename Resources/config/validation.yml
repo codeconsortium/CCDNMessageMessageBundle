@@ -1,6 +1,6 @@
 namespaces:
     CCDNMessageMessageBundle: CCDNMessage\MessageBundle\Form\Validator\Constraints\
-         
+
 CCDNMessage\MessageBundle\Entity\Message:
     properties:
         sendTo:

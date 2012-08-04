@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN MessageBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNUser\UserBundle\Entity\User;
 
@@ -25,50 +23,49 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Folder
 {
-	/**
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
-	/**
+    protected $id;
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $name;
-	
-	/**
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $ownedBy = null;
-	
-	// either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
-	/**
-	 * @ORM\Column(type="integer", name="special_type", nullable=true)
      */
-	protected $specialType;
+    protected $ownedBy = null;
 
-	/**
-	 * @ORM\Column(type="integer", name="cached_read_count", nullable=true)
+    // either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
+    /**
+     * @ORM\Column(type="integer", name="special_type", nullable=true)
      */
-	protected $cachedReadCount = 0;
-	
-	/**
-	 * @ORM\Column(type="integer", name="cached_unread_count", nullable=true)
-     */
-	protected $cachedUnreadCount = 0;
-	
-	/**
-	 * @ORM\Column(type="integer", name="cached_total_message_count", nullable=true)
-     */
-	protected $cachedTotalMessageCount = 0;
+    protected $specialType;
 
+    /**
+     * @ORM\Column(type="integer", name="cached_read_count", nullable=true)
+     */
+    protected $cachedReadCount = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="cached_unread_count", nullable=true)
+     */
+    protected $cachedUnreadCount = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="cached_total_message_count", nullable=true)
+     */
+    protected $cachedTotalMessageCount = 0;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +85,7 @@ class Folder
     /**
      * Get name
      *
-     * @return text 
+     * @return text
      */
     public function getName()
     {
@@ -108,7 +105,7 @@ class Folder
     /**
      * Get specialType
      *
-     * @return integer 
+     * @return integer
      */
     public function getSpecialType()
     {
@@ -128,7 +125,7 @@ class Folder
     /**
      * Get cachedReadCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedReadCount()
     {
@@ -148,7 +145,7 @@ class Folder
     /**
      * Get cachedUnreadCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedUnreadCount()
     {
@@ -168,7 +165,7 @@ class Folder
     /**
      * Get cachedTotalMessageCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedTotalMessageCount()
     {
@@ -188,7 +185,7 @@ class Folder
     /**
      * Get ownedBy
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {

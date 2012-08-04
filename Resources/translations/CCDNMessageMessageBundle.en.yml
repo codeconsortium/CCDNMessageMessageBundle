@@ -4,7 +4,7 @@ sidebar.link.compose: Compose Message
 crumbs.message_index: 'Inbox'
 crumbs.compose_message: 'Compose New Message'
 crumbs.compose_reply: 'Compose Reply'
-crumbs.compose_forward: 'Forward Message'    
+crumbs.compose_forward: 'Forward Message'
 
 title.message.index: 'Messages - %folder_name%.'
 title.message.show: 'Message: %message_subject%.'

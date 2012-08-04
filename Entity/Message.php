@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN MessageBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNUser\UserBundle\Entity\User;
 
@@ -25,94 +23,93 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Message
 {
-	/**
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
-	/**
+    protected $id;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $subject;
-	
-	/**
+
+    /**
      * @ORM\Column(type="text")
      */
-	protected $body;
+    protected $body;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNMessage\MessageBundle\Entity\Folder", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_folder_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $folder = null;
+     */
+    protected $folder = null;
 
-	/**
-	 * @ORM\Column(type="datetime", name="sent_date", nullable=true)
-	 */
-	protected $sentDate;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="created_date", nullable=true)
-	 */
-	protected $createdDate;
-	
-	/**
+    /**
+     * @ORM\Column(type="datetime", name="sent_date", nullable=true)
+     */
+    protected $sentDate;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_date", nullable=true)
+     */
+    protected $createdDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_sent_to_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $sentTo = null;
-	
-	/**
-	 * @ORM\Column(type="text", name="send_to")
-	 */
-	protected $sendTo;
-	
-	/**
+     */
+    protected $sentTo = null;
+
+    /**
+     * @ORM\Column(type="text", name="send_to")
+     */
+    protected $sendTo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_from_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $sentFrom = null;
+     */
+    protected $sentFrom = null;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $ownedBy = null;
-	
-	/**
+     */
+    protected $ownedBy = null;
+
+    /**
      * @ORM\Column(type="boolean", name="is_draft", nullable=false)
      */
-	protected $isDraft = false;
-	
-	/**
-	 * @ORM\Column(type="boolean", name="is_read", nullable=false)
-	 */
-	protected $isRead = false;
-	
-	/**
-	 * @ORM\Column(type="boolean", name="is_flagged", nullable=false)
-	 */
-	protected $isFlagged = false;
-	
-	/***
+    protected $isDraft = false;
+
+    /**
+     * @ORM\Column(type="boolean", name="is_read", nullable=false)
+     */
+    protected $isRead = false;
+
+    /**
+     * @ORM\Column(type="boolean", name="is_flagged", nullable=false)
+     */
+    protected $isFlagged = false;
+
+    /***
      * @ORM\ManyToOne(targetEntity="CCDNMessage\MessageBundle\Entity\Message", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_in_response_message_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $inResponseTo = null;
-	
-	/**
+     */
+    protected $inResponseTo = null;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $attachment = null;
-
+     */
+    protected $attachment = null;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -132,7 +129,7 @@ class Message
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -152,7 +149,7 @@ class Message
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
@@ -172,7 +169,7 @@ class Message
     /**
      * Get sentDate
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getSentDate()
     {
@@ -192,7 +189,7 @@ class Message
     /**
      * Get createdDate
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDate()
     {
@@ -212,7 +209,7 @@ class Message
     /**
      * Get sendTo
      *
-     * @return text 
+     * @return text
      */
     public function getSendTo()
     {
@@ -232,7 +229,7 @@ class Message
     /**
      * Get isDraft
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsDraft()
     {
@@ -252,7 +249,7 @@ class Message
     /**
      * Get isRead
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsRead()
     {
@@ -272,7 +269,7 @@ class Message
     /**
      * Get isFlagged
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsFlagged()
     {
@@ -292,7 +289,7 @@ class Message
     /**
      * Get folder
      *
-     * @return CCDNMessage\MessageBundle\Entity\Folder 
+     * @return CCDNMessage\MessageBundle\Entity\Folder
      */
     public function getFolder()
     {
@@ -312,7 +309,7 @@ class Message
     /**
      * Get sentTo
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getSentTo()
     {
@@ -332,7 +329,7 @@ class Message
     /**
      * Get sentFrom
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getSentFrom()
     {
@@ -352,7 +349,7 @@ class Message
     /**
      * Get ownedBy
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {
@@ -372,7 +369,7 @@ class Message
     /**
      * Get attachment
      *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment 
+     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
      */
     public function getAttachment()
     {

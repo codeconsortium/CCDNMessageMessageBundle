@@ -21,16 +21,16 @@
 {% block sidebar_status %}
 	{{ parent() }}
 	{%- spaceless -%}
-	
+
 	<div class="well" style="padding: 10px; height: 20px;">
 		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
 		<div class="progress progress-danger">
 			<div class="bar" style="width:{{- used_allowance -}}%;"></div>
 		</div>
 	</div>
-	
+
 	{%- endspaceless -%}
-	
+
 {% endblock %}
 
 
@@ -49,35 +49,35 @@
 
 		<form method="POST" action="{{- path('cc_message_action_bulk') -}}" class="form-inline">
 			<input type="hidden" id="submit_action" name="submit_action" value="">
-			
+
 			<div class="btn-toolbar" style="margin-top:0px;margin-left:30px;" data-compat="interactive-non-js-compat">
-				
+
 				<a class="btn btn-large btn-danger" style="width:145px;" href="{{- path('cc_message_message_compose') -}}">{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-				
+
 				{%- if current_folder.getName == 'drafts' -%}
 					<input type="submit" class="btn btn-primary" value="{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_send">&nbsp;
 				{%- endif -%}
-				
+
 				<button type="submit" class="btn btn-danger" name="submit_delete"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
-				
+
 				<input type="submit" class="btn" value="{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_mark_as_read">&nbsp;
-				
+
 				<input type="submit" class="btn" value="{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_mark_as_unread">&nbsp;
-				
+
 				<select name="select_move_to">
 					{%- for row, folder in folders -%}
 						<option value="{{- folder.getId -}}">{{- folder.getName|title -}}</option>
 					{%- endfor -%}
 				</select>&nbsp;
-				
+
 				<input type="submit" class="btn" value="{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_move_to">
 			</div>
-			
+
 			<div class="btn-toolbar hidden" style="margin-left:30px;" data-compat="interactive-js-compat">
 
 				<a class="btn btn-large btn-danger" style="vertical-align:top;" href="{{- path('cc_message_message_compose') -}}">{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-				
-				<div class="btn-group">										
+
+				<div class="btn-group">
 					<button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><i class="icon-check"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
 						<li><a href="#" data-action="select_none" data-identifier="{{- current_folder.name -}}">{{- 'link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
@@ -91,7 +91,7 @@
 						<li><a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="attached">{{- 'link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 					</ul>
 				</div>&nbsp;
-				
+
 				<div class="btn-group">
 					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-eye-close"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
@@ -99,7 +99,7 @@
 						<li><a href="#" data-action="submit_mark_as_unread">{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 					</ul>
 				</div>&nbsp;
-				
+
 				<div class="btn-group">
 					<button class="btn disabled btn-large dropdown-toggle hidden" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" data-toggle="dropdown"><i class="icon-folder-close"></i>&nbsp;<span class="caret"></span></button>
 					<ul class="dropdown-menu">
@@ -110,13 +110,13 @@
 						{%- endfor -%}
 					</ul>
 				</div>&nbsp;
-									
+
 				{%- if current_folder.getName == 'drafts' -%}
 					<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
-				{%- endif -%}						
-				
+				{%- endif -%}
+
 				<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-large btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
-				
+
 			</div>
 
 			{%- if pager.haveToPaginate -%}
@@ -158,7 +158,7 @@
 									{%- if message.sentFrom.getId == app.user.id -%}
 										<i class="icon-repeat"></i>
 									{%- else -%}
-										<i class="icon-share-alt"></i>				
+										<i class="icon-share-alt"></i>
 									{%- endif -%}
 								{%- else -%}
 									<i class="icon-pencil"></i>
@@ -168,10 +168,10 @@
 									{%- if message.sentFrom.getId == app.user.id -%}
 										<i class="icon-repeat"></i>
 									{%- else -%}
-										<i class="icon-share-alt"></i>				
+										<i class="icon-share-alt"></i>
 									{%- endif -%}
 								{%- endif -%}
-							{%- endif -%}							
+							{%- endif -%}
 						</td>
 						<td>
 							{{- (message.isRead) ? '' : '<i class="icon-envelope"></i>' -}}
@@ -231,13 +231,13 @@
 				{%- endfor -%}
 				</tbody>
 			</table>
-		
+
 			{%- if pager.haveToPaginate -%}
 		    	{{- pagerfanta(pager, 'twitter_bootstrap', {'routeName': 'cc_message_folder_show_paginated', 'routeParams':{'folder_name':current_folder.getName} }) -}}
 			{%- endif -%}
-		
+
 		</form>
-	
+
 	</div>
 
 {#	<div class="well">
@@ -248,33 +248,33 @@
 		<i class="icon-file"></i> Attached File
 		<i class="icon-envelope"></i> Unread
 	</div>#}
-	
+
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<script type='text/javascript'>
 	<!--
 	$(document).ready(function() {
-		
+
 		$("[data-action='submit_mark_as_read']").click(function() {
 			$('input#submit_action').attr('value', $(this).attr('data-action'));
 			$('input#submit_action').parent('form').submit();
 		});
-		
+
 		$("[data-action='submit_mark_as_unread']").click(function() {
 			$('input#submit_action').attr('value', $(this).attr('data-action'));
 			$('input#submit_action').parent('form').submit();
 		});
-		
+
 		$("[data-action='submit_move_to']").click(function() {
 			// set the hidden textbox to action its action type
 			$('input#submit_action').attr('value', $(this).attr('data-action'));
-			
+
 			// set the select box val to match the data-value of the faux combo box
 			$("select[name='select_move_to']").val($(this).attr('data-value'));
 			$('input#submit_action').parent('form').submit();
 		});
-		
-		
+
+
 	});
 	//-->
 	</script>
