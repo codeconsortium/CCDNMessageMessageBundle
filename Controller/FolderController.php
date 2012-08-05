@@ -53,7 +53,7 @@ class FolderController extends ContainerAware
         $folderManager = $this->container->get('ccdn_message_message.folder.manager');
 
         if (! $folders) {
-            $folderManager->setupDefaults($user->getId())->flushNow();
+            $folderManager->setupDefaults($user->getId())->flush();
 
             $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
         }
@@ -141,20 +141,20 @@ class FolderController extends ContainerAware
         if ($action == 'submit_delete' || isset($_POST['submit_delete'])) {
             $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 
-            $this->container->get('ccdn_message_message.message.manager')->bulkDelete($messages, $folders)->flushNow();
+            $this->container->get('ccdn_message_message.message.manager')->bulkDelete($messages, $folders)->flush();
         }
         if ($action == 'submit_mark_as_read' || isset($_POST['submit_mark_as_read'])) {
-            $this->container->get('ccdn_message_message.message.manager')->bulkMarkAsRead($messages)->flushNow();
+            $this->container->get('ccdn_message_message.message.manager')->bulkMarkAsRead($messages)->flush();
         }
         if ($action == 'submit_mark_as_unread' || isset($_POST['submit_mark_as_unread'])) {
-            $this->container->get('ccdn_message_message.message.manager')->bulkMarkAsUnread($messages)->flushNow();
+            $this->container->get('ccdn_message_message.message.manager')->bulkMarkAsUnread($messages)->flush();
         }
         if ($action == 'submit_move_to' || isset($_POST['submit_move_to'])) {
             $moveTo = $this->container->get('ccdn_message_message.folder.repository')->findOneById($_POST['select_move_to']);
-            $this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flushNow();
+            $this->container->get('ccdn_message_message.message.manager')->bulkMoveToFolder($messages, $moveTo)->flush();
         }
         if ($action == 'submit_send' || isset($_POST['submit_send'])) {
-            $this->container->get('ccdn_message_message.message.manager')->sendDraft($messages)->flushNow();
+            $this->container->get('ccdn_message_message.message.manager')->sendDraft($messages)->flush();
         }
 
         $this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);

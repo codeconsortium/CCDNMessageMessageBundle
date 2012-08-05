@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN MessageBundle
+ * This file is part of the CCDNMessage MessageBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Manager;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
-use CCDNComponent\CommonBundle\Manager\BaseManager;
+use CCDNMessage\MessageBundle\Manager\ManagerInterface;
+use CCDNMessage\MessageBundle\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Registry;
@@ -51,7 +51,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 
         $record->setCachedUnreadMessagesCount($totalMessageCount);
 
-        $this->persist($record)->flushNow();
+        $this->persist($record)->flush();
     }
 
 }

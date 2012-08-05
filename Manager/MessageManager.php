@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN MessageBundle
+ * This file is part of the CCDNMessage MessageBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Manager;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
-use CCDNComponent\CommonBundle\Manager\BaseManager;
+use CCDNMessage\MessageBundle\Manager\ManagerInterface;
+use CCDNMessage\MessageBundle\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Message;
 
@@ -43,7 +43,7 @@ class MessageManager extends BaseManager implements ManagerInterface
         // Ensure folders exist or create them
         //
         if (! $folders) {
-            $folderManager->setupDefaults($recipient->getId())->flushNow();
+            $folderManager->setupDefaults($recipient->getId())->flush();
 
             $folders = $folderRepo->findAllFoldersForUser($recipient->getId());
         }
@@ -68,7 +68,7 @@ class MessageManager extends BaseManager implements ManagerInterface
         $message->setFolder($folders[2]);
 
         $this->persist($message);
-        $this->flushNow();
+        $this->flush();
 
         $this->updateAllFolderCachesForUser($user);
 
@@ -116,7 +116,7 @@ class MessageManager extends BaseManager implements ManagerInterface
         }
 
         if (! $folders) {
-            $folderManager->setupDefaults($recipient->getId())->flushNow();
+            $folderManager->setupDefaults($recipient->getId())->flush();
 
             $folders = $folderRepo->findAllFoldersForUser($recipient->getId());
         }
@@ -209,7 +209,7 @@ class MessageManager extends BaseManager implements ManagerInterface
         // add Carbon Copy.
         $this->sendTo($message, null, $user, true);
 
-        $this->flushNow();
+        $this->flush();
 
         //
         // Update recipients folders read/unread cache counts.
@@ -230,7 +230,7 @@ class MessageManager extends BaseManager implements ManagerInterface
     public function markAsRead($message)
     {
         $message->setIsRead(true);
-        $this->persist($message)->flushNow();
+        $this->persist($message)->flush();
 
         return $this;
     }
@@ -244,7 +244,7 @@ class MessageManager extends BaseManager implements ManagerInterface
     public function markAsUnread($message)
     {
         $message->setIsRead(false);
-        $this->persist($message)->flushNow();
+        $this->persist($message)->flush();
 
         return $this;
     }
@@ -370,7 +370,7 @@ class MessageManager extends BaseManager implements ManagerInterface
             $folderManager->updateFolderCounterCaches($folder);
         }
 
-        $folderManager->flushNow();
+        $folderManager->flush();
 
         $this->container->get('ccdn_message_message.registry.manager')->updateCacheUnreadMessagesForUser($user);
 

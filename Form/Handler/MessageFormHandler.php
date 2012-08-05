@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
+use CCDNMessage\MessageBundle\Manager\ManagerInterface;
 
 /**
  *
@@ -216,10 +216,10 @@ class MessageFormHandler
     {
 
         if ($this->mode == self::DRAFT) {
-            return $this->manager->saveDraft($entity)->flushNow();
+            return $this->manager->saveDraft($entity)->flush();
         }
 
-        return $this->manager->insert($entity)->flushNow();
+        return $this->manager->insert($entity)->flush();
     }
 
 }
