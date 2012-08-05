@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN MessageBundle
+ * This file is part of the CCDNMessage MessageBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -48,7 +48,7 @@ class SendTo extends Constraint
         }
     }
 
-    /*
+    /**
      *
      * @access public
      * @return string

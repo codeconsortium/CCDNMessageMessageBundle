@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN MessageBundle
+ * This file is part of the CCDNMessage MessageBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
