@@ -74,7 +74,7 @@ class FolderController extends ContainerAware
         $messages = $messages_paginated->getCurrentPageResults();
 
         $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('cc_message_index'), "home");
+            ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
@@ -123,7 +123,7 @@ class FolderController extends ContainerAware
         // Don't bother if there are no messages to process.
         //
         if (count($messageIds) < 1) {
-            return new RedirectResponse($this->container->get('router')->generate('cc_message_index'));
+            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_index'));
         }
 
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -159,7 +159,7 @@ class FolderController extends ContainerAware
 
         $this->container->get('ccdn_message_message.message.manager')->updateAllFolderCachesForUser($user);
 
-        return new RedirectResponse($this->container->get('router')->generate('cc_message_folder_show', array('folder_name' => $folder->getName())));
+        return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $folder->getName())));
 
 //		$session = $this->container->get('request')->getSession();
 //
@@ -167,7 +167,7 @@ class FolderController extends ContainerAware
 //		{
 //			return new RedirectResponse($session->get('referer'));
 //		} else {
-//			return new RedirectResponse($this->container->get('router')->generate('cc_message_index')); // if no referer then go to inbox
+//			return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_index')); // if no referer then go to inbox
 //		}
     }
 

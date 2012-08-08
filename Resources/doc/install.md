@@ -90,7 +90,7 @@ In your app/config/config.yml add:
 #
 ccdn_message_message:  
     user:
-        profile_route: cc_profile_show_by_id
+        profile_route: ccdn_user_profile_show_by_id
     template:
         engine: twig
     quotas:

@@ -30,7 +30,7 @@
 	<h2>{{- 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h2>
 
 	{%- form_theme form param('ccdn_message_message.message.compose.form_theme') -%}
-	<form action="{{- path('cc_message_message_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<form action="{{- path('ccdn_message_message_mail_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 		<fieldset>
 
 			{{- form_errors(form) -}}
@@ -77,8 +77,8 @@
 				<div class="controls row-fluid">
 					{{- form_errors(form.attachment) -}}
 					{{- form_widget(form.attachment) -}}
-					&nbsp;<a target="_blank" href="{{- path('cc_attachment_index') -}}">{{- 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-					&nbsp;<a target="_blank" href="{{- path('cc_attachment_upload') -}}">{{- 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+					&nbsp;<a target="_blank" href="{{- path('ccdn_component_attachment_index') -}}">{{- 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+					&nbsp;<a target="_blank" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
 				</div>
 			</div>
 

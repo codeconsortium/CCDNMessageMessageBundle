@@ -43,7 +43,7 @@ class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
         $resources = array(
             'user' => array(
                 'Account' => array(
-                    'cc_message_index' => array('auth' => 'ROLE_USER', 'name' => 'Messages', 'icon' => $this->basePath . '/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png'),
+                    'ccdn_message_message_index' => array('auth' => 'ROLE_USER', 'name' => 'Messages', 'icon' => $this->basePath . '/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png'),
                 ),
             ),
 
