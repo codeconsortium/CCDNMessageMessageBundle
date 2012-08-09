@@ -112,10 +112,10 @@
 				</div>&nbsp;
 
 				{%- if current_folder.getName == 'drafts' -%}
-					<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-large btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
+					<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-primary disabled hidden">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
 				{%- endif -%}
 
-				<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-large btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
+				<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-danger disabled hidden"><i class="icon-trash icon-white"></i>&nbsp;{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
 
 			</div>
 
