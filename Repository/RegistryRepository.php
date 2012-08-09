@@ -28,7 +28,7 @@ class RegistryRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $folder_id
+     * @param Int $folderId
      */
     public function findRegistryRecordForUser($userId)
     {

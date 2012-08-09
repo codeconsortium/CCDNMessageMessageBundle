@@ -28,20 +28,18 @@ class FolderController extends ContainerAware
 
     /**
      *
-     * route: /{_locale}/message/(inbox|sent|drafts|junk|trash)
-     *
      * @access protected
-     * @param  string                          $folder_name, int $page
-     * @return RedirectResponse|RenderResponse
+     * @param  String $folderName, Int $page
+     * @return RenderResponse
      */
-    public function showFolderByNameAction($folder_name, $page)
+    public function showFolderByNameAction($folderName, $page)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have access to this section.');
         }
 
-        if ($folder_name != 'inbox' && $folder_name != 'sent'
-        && $folder_name != 'drafts' && $folder_name != 'junk' && $folder_name != 'trash')
+        if ($folderName != 'inbox' && $folderName != 'sent'
+        && $folderName != 'drafts' && $folderName != 'junk' && $folderName != 'trash')
         {
             throw new NotFoundHttpExceptin('Folder not found.');
         }
@@ -60,26 +58,26 @@ class FolderController extends ContainerAware
 
         $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 
-        $currentFolder = $folderManager->getCurrentFolder($folders, $folder_name);
+        $currentFolder = $folderManager->getCurrentFolder($folders, $folderName);
         $stats = $folderManager->getUsedAllowance($folders, $quota);
         $totalMessageCount = $stats['total_message_count'];
         $usedAllowance = $stats['used_allowance'];
 
-        $messages_paginated = $this->container->get('ccdn_message_message.message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
+        $messagesPager = $this->container->get('ccdn_message_message.message.repository')->findAllPaginatedForFolderById($currentFolder, $user->getId());
 
-        $messages_per_page = $this->container->getParameter('ccdn_message_message.folder.show.messages_per_page');
-        $messages_paginated->setMaxPerPage($messages_per_page);
-        $messages_paginated->setCurrentPage($page, false, true);
+        $messagesPerPage = $this->container->getParameter('ccdn_message_message.folder.show.messages_per_page');
+        $messagesPager->setMaxPerPage($messagesPerPage);
+        $messagesPager->setCurrentPage($page, false, true);
 
-        $messages = $messages_paginated->getCurrentPageResults();
+        $messages = $messagesPager->getCurrentPageResults();
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-            'crumbs' => $crumb_trail,
-            'pager' => $messages_paginated,
+            'crumbs' => $crumbs,
+            'pager' => $messagesPager,
             'folders' => $folders,
             'current_folder' => $currentFolder,
             'messages' => $messages,

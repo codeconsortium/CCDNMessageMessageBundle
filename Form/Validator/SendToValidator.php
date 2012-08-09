@@ -41,13 +41,13 @@ class SendToValidator extends ConstraintValidator
     /**
      *
      * @access public
-     * @param $doctrine, $service_container
+     * @param $doctrine, $container
      */
-    public function __construct($doctrine, $service_container)
+    public function __construct($doctrine, $container)
     {
 
         $this->doctrine = $doctrine;
-        $this->container = $service_container;
+        $this->container = $container;
     }
 
     /**

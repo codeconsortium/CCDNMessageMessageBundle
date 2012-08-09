@@ -42,12 +42,12 @@
 	<div style="display: block; clear: both; overflow: hidden;">
 		<div class="btn-toolbar" style="margin-top: 0px;">
 			{%- if message.isDraft -%}
-			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'message_id': message.id }) -}}">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'messageId': message.id }) -}}">{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
 			{%- endif -%}
-			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'message_id': message.id }) -}}">{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'message_id': message.id }) -}}">{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-			<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'message_id': message.id }) -}}">{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-			<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'message_id': message.id }) -}}">{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
+			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'messageId': message.id }) -}}">{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'messageId': message.id }) -}}">{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'messageId': message.id }) -}}">{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'messageId': message.id }) -}}">{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
 		</div>
 
 		{%- include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} -%}

@@ -28,13 +28,11 @@ class MessageController extends ContainerAware
 
     /**
      *
-     * route: /en/messages/1/show
-     *
      * @access public
-     * @param  int                             $message_id
-     * @return RedirectResponse|RenderResponse
+     * @param  Int $messageId
+     * @return RenderResponse
      */
-    public function showMessageAction($message_id)
+    public function showMessageAction($messageId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have access to this section.');
@@ -49,7 +47,7 @@ class MessageController extends ContainerAware
 
         $folderManager = $this->container->get('ccdn_message_message.folder.manager');
 
-        if (! $folders) {
+        if ( ! $folders) {
             $folderManager->setupDefaults($user->getId())->flush();
 
             $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
@@ -58,7 +56,7 @@ class MessageController extends ContainerAware
         //
         // Get the message.
         //
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -73,15 +71,15 @@ class MessageController extends ContainerAware
 
         $this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
-            ->add($message->getFolder()->getName(), $this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $message->getFolder()->getName())), "folder")
-            ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('message_id' => $message_id)), "email");
+            ->add($message->getFolder()->getName(), $this->container->get('router')->generate('ccdn_message_message_folder_show', array('folderName' => $message->getFolder()->getName())), "folder")
+            ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email");
 
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
             'user' => $user,
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'folders' => $folders,
             'current_folder' => $currentFolder,
             'used_allowance' => $usedAllowance,
@@ -92,10 +90,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int                             $user_id
+     * @param  Int $userId
      * @return RedirectResponse|RenderResponse
      */
-    public function composeAction($user_id)
+    public function composeAction($userId)
     {
         //
         //	Invalidate this action / redirect if user should not have access to it
@@ -109,9 +107,10 @@ class MessageController extends ContainerAware
         //
         // Are we sending this to someone who's 'send message' button we clicked?
         //
-        if ($user_id) {
-            $send_to = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
-            $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'send_to' => $send_to));
+        if ($userId) {
+            $sendTo = $this->container->get('ccdn_user_user.user.repository')->findOneById($userId);
+
+            $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'send_to' => $sendTo));
         } else {
             $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user));
         }
@@ -148,13 +147,13 @@ class MessageController extends ContainerAware
         }
 
         // setup crumb trail.
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
             ->add($this->container->get('translator')->trans('crumbs.compose_message', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose'), "edit");
 
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'form' => $formHandler->getForm()->createView(),
             'preview' => $formHandler->getForm()->getData(),
             'folders' => $folders,
@@ -167,10 +166,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int                             $message_id
+     * @param  Int $messageId
      * @return RedirectResponse|RenderResponse
      */
-    public function replyAction($message_id)
+    public function replyAction($messageId)
     {
         //
         //	Invalidate this action / redirect if user should not have access to it
@@ -181,7 +180,7 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -208,14 +207,14 @@ class MessageController extends ContainerAware
             }
 
             // setup crumb trail.
-            $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+            $crumbs = $this->container->get('ccdn_component_crumb.trail')
                 ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
-                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('message_id' => $message_id)), "email")
-                ->add($this->container->get('translator')->trans('crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_reply', array('message_id' => $message_id)), "edit");
+                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
+                ->add($this->container->get('translator')->trans('crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_reply', array('messageId' => $messageId)), "edit");
 
             return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
                 'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-                'crumbs' => $crumb_trail,
+                'crumbs' => $crumbs,
                 'form' => $formHandler->getForm()->createView(),
                 'preview' => $formHandler->getForm()->getData(),
                 'folders' => $folders,
@@ -229,10 +228,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int                             $message_id
+     * @param  Int $messageId
      * @return RedirectResponse|RenderResponse
      */
-    public function forwardAction($message_id)
+    public function forwardAction($messageId)
     {
         //
         //	Invalidate this action / redirect if user should not have access to it
@@ -243,7 +242,7 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -270,14 +269,14 @@ class MessageController extends ContainerAware
             }
 
             // setup crumb trail.
-            $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+            $crumbs = $this->container->get('ccdn_component_crumb.trail')
                 ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
-                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('message_id' => $message_id)), "email")
-                ->add($this->container->get('translator')->trans('crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_forward', array('message_id' => $message_id)), "edit");
+                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
+                ->add($this->container->get('translator')->trans('crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_forward', array('messageId' => $messageId)), "edit");
 
             return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
                 'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-                'crumbs' => $crumb_trail,
+                'crumbs' => $crumbs,
                 'form' => $formHandler->getForm()->createView(),
                 'preview' => $formHandler->getForm()->getData(),
                 'folders' => $folders,
@@ -290,10 +289,10 @@ class MessageController extends ContainerAware
 
     /**
     * @access public
-    * @param int $message_id
-    * @return RedirectResponse|RenderResponse
+    * @param Int $messageId
+    * @return RedirectResponse
     */
-    public function sendDraftAction($message_id)
+    public function sendDraftAction($messageId)
     {
         //
         //	Invalidate this action / redirect if user should not have access to it
@@ -304,7 +303,7 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -320,10 +319,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int              $message_id
+     * @param  Int $messageId
      * @return RedirectResponse
      */
-    public function markAsReadAction($message_id)
+    public function markAsReadAction($messageId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have access to this section.');
@@ -331,7 +330,7 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -347,10 +346,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int                             $message_id
-     * @return RedirectResponse|RenderResponse
+     * @param  Int $messageId
+     * @return RedirectResponse
      */
-    public function markAsUnreadAction($message_id)
+    public function markAsUnreadAction($messageId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have access to this section.');
@@ -358,7 +357,7 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -374,10 +373,10 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  int              $message_id
+     * @param  Int $messageId
      * @return RedirectResponse
      */
-    public function deleteAction($message_id)
+    public function deleteAction($messageId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have access to this section.');
@@ -385,16 +384,16 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($message_id, $user->getId());
+        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
         $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
 
-        if (! $folders) {
+        if ( ! $folders) {
             $this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flush();
 
             $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
         }
 
-        if (! $message) {
+        if ( ! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
@@ -408,7 +407,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access protected
-     * @return string
+     * @return String
      */
     protected function getEngine()
     {

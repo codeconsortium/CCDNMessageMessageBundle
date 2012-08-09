@@ -29,12 +29,12 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $user_id
+     * @param $userId
      * @return $this
      */
-    public function setupDefaults($user_id)
+    public function setupDefaults($userId)
     {
-        $user = $this->container->get('ccdn_user_user.user.repository')->findOneById($user_id);
+        $user = $this->container->get('ccdn_user_user.user.repository')->findOneById($userId);
 
         if (! $user) {
             echo "error, cannot setup PM folders for non-user.";
@@ -85,7 +85,7 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array $folders
+     * @param Array() $folders
      */
     public function checkQuotaAllowanceUsed($folders)
     {
@@ -101,15 +101,15 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array $folders
+     * @param Array() $folders, $folderName
      */
-    public function getCurrentFolder($folders, $folder_name)
+    public function getCurrentFolder($folders, $folderName)
     {
         // find the current folder
         $currentFolder = null;
 
         foreach ($folders as $key => $folder) {
-            if ($folder->getName() == $folder_name) {
+            if ($folder->getName() == $folderName) {
                 $currentFolder = $folder;
 
                 break;
@@ -122,7 +122,8 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array $folders
+     * @param Array() $folders, Int $quota
+	 * @return Array()
      */
     public function getUsedAllowance($folders, $quota)
     {

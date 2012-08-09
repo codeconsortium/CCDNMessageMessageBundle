@@ -7,7 +7,7 @@
 			</td>
 			<td class="left">
 				{%- if message.getSentFrom -%}
-					<a href="{{- path(user_profile_route, {'user_id': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
+					<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
 				{%- else -%}
 					Guest
 				{%- endif -%}
@@ -47,7 +47,7 @@
 				{{- 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left" colspan="3">
-				<a href="{{- path('ccdn_component_attachment_download', {'attachment_id': message.getAttachment.getId }) -}}"><img src="{{- path('ccdn_component_attachment_thumbnail', {'attachment_id': message.getAttachment.getId }) -}}" alt="icon"></a>
+				<a href="{{- path('ccdn_component_attachment_download', {'attachmentId': message.getAttachment.getId }) -}}"><img src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': message.getAttachment.getId }) -}}" alt="icon"></a>
 			</td>
 		</tr>
 		{%- endif -%}

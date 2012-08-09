@@ -192,9 +192,9 @@
 							{%- else -%}
 								{%- if message.getSentFrom -%}
 									{%- if message.isRead -%}
-										<a href="{{- path(user_profile_route, {'user_id': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
+										<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
 									{%- else -%}
-										<a href="{{- path(user_profile_route, {'user_id': message.getSentFrom.getId}) -}}"><b>{{- message.getSentFrom |title -}}</b></a>
+										<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}"><b>{{- message.getSentFrom |title -}}</b></a>
 									{%- endif -%}
 								{%- else -%}
 									Guest
@@ -203,9 +203,9 @@
 						</td>
 						<td>
 							{%- if message.isRead -%}
-								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'message_id': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</a>
+								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</a>
 							{%- else -%}
-								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'message_id': message.getId }) -}}" title="{{- message.getSubject -}}"><b>{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</b></a>
+								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}"><b>{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</b></a>
 							{%- endif -%}
 						</td>
 						<td>
