@@ -55,10 +55,10 @@ class MessageManager extends BaseManager implements ManagerInterface
 
         if ($used >= $quota) {
             $this->container->get('session')->setFlash('notice',
-                $this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
+                $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
         } else {
             $this->container->get('session')->setFlash('notice',
-                $this->container->get('translator')->trans('flash.message.draft.saved', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
+                $this->container->get('translator')->trans('ccdn_message_message.flash.message.draft.saved', array('%user%' => $user->getUsername()), 'CCDNMessageMessageBundle'));
         }
 
         $message->setOwnedBy($user);
@@ -128,14 +128,14 @@ class MessageManager extends BaseManager implements ManagerInterface
 
         if ($used >= $quota) {
             $this->container->get('session')->setFlash('notice',
-                $this->container->get('translator')->trans('flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+                $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
 
             continue;
         } else {
             if ($recipient) {
                 if ($recipient->getId() != $sender->getId()) {
                     $this->container->get('session')->setFlash('notice',
-                        $this->container->get('translator')->trans('flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+                        $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
                 }
             }
         }

@@ -1,60 +1,58 @@
-sidebar.link.messages: Messages
-sidebar.link.compose: Compose Message
+ccdn_message_message.sidebar.ccdn_message_message.link.messages: Messages
+ccdn_message_message.sidebar.link.compose: Compose Message
 
-crumbs.message_index: 'Inbox'
-crumbs.compose_message: 'Compose New Message'
-crumbs.compose_reply: 'Compose Reply'
-crumbs.compose_forward: 'Forward Message'
+ccdn_message_message.crumbs.message_index: 'Inbox'
+ccdn_message_message.crumbs.compose_message: 'Compose New Message'
+ccdn_message_message.crumbs.compose_reply: 'Compose Reply'
+ccdn_message_message.crumbs.compose_forward: 'Forward Message'
 
-title.message.index: 'Messages - %folder_name%.'
-title.message.show: 'Message: %message_subject%.'
-title.message.compose: 'Compose Message.'
+ccdn_message_message.title.message.index: 'Messages - %folder_name%.'
+ccdn_message_message.title.message.show: 'Message: %message_subject%.'
+ccdn_message_message.title.message.compose: 'Compose Message.'
 
-link.message.reply: 'Reply'
-link.message.forward: 'Forward'
-link.message.delete: 'Delete'
-link.message.mark_as_read: 'Mark as Read'
-link.message.mark_as_unread: 'Mark as Unread'
-link.message.move_to: 'Move to folder'
-link.message.send_draft: 'Send'
+ccdn_message_message.link.message.reply: 'Reply'
+ccdn_message_message.link.message.forward: 'Forward'
+ccdn_message_message.link.message.delete: 'Delete'
+ccdn_message_message.link.message.mark_as_read: 'Mark as Read'
+ccdn_message_message.link.message.mark_as_unread: 'Mark as Unread'
+ccdn_message_message.link.message.move_to: 'Move to folder'
+ccdn_message_message.link.message.send_draft: 'Send'
 
-link.message.select_none: 'None'
-link.message.select_all: 'All'
-link.message.select_all_read: 'Read'
-link.message.select_all_unread: 'Unread'
-link.message.select_all_flagged: 'Flagged'
-link.message.select_all_attached: 'Attached'
-link.message.select_all_draft: 'Draft'
+ccdn_message_message.link.message.select_none: 'None'
+ccdn_message_message.link.message.select_all: 'All'
+ccdn_message_message.link.message.select_all_read: 'Read'
+ccdn_message_message.link.message.select_all_unread: 'Unread'
+ccdn_message_message.link.message.select_all_flagged: 'Flagged'
+ccdn_message_message.link.message.select_all_attached: 'Attached'
+ccdn_message_message.link.message.select_all_draft: 'Draft'
 
+ccdn_message_message.label.folders: 'Folders'
 
+ccdn_message_message.message.inbox_status: 'You have %message_count% messages.'
 
-label.folders: 'Folders'
+ccdn_message_message.inbox.table.head.from: From
+ccdn_message_message.inbox.table.head.to: To
+ccdn_message_message.inbox.table.head.subject: Subject
+ccdn_message_message.inbox.table.head.sent: Sent
 
-message.inbox_status: 'You have %message_count% messages.'
+ccdn_message_message.inbox.table.empty: 'You have no messages in this folder.'
 
-message.table.head.from: From
-message.table.head.to: To
-message.table.head.subject: Subject
-message.table.head.sent: Sent
+ccdn_message_message.flash.message.sent.success: 'Message sent to %user%.'
+ccdn_message_message.flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
+ccdn_message_message.flash.message.draft.saved: 'Draft message saved.'
 
-message.table.empty: 'You have no messages in this folder.'
+ccdn_message_message.form.field.required: 'This field is required'
+ccdn_message_message.form.label.message.to: 'To: '
+ccdn_message_message.form.label.message.subject: 'Subject: '
+ccdn_message_message.form.label.message.body: 'Message: '
+ccdn_message_message.form.label.message.flagged: 'Flag as important: '
+ccdn_message_message.form.label.message.attachment: 'Attachment: '
+ccdn_message_message.form.button.message.preview: 'Preview'
+ccdn_message_message.form.button.message.save_draft: 'Save Draft'
+ccdn_message_message.form.button.message.send: 'Send Message'
 
-flash.message.sent.success: 'Message sent to %user%.'
-flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
-flash.message.draft.saved: 'Draft message saved.'
-
-form.field.required: 'This field is required'
-form.label.message.to: 'To: '
-form.label.message.subject: 'Subject: '
-form.label.message.body: 'Message: '
-form.label.message.flagged: 'Flag as important: '
-form.label.message.attachment: 'Attachment: '
-form.button.message.preview: 'Preview'
-form.button.message.save_draft: 'Save Draft'
-form.button.message.send: 'Send Message'
-
-message.send.to: 'To: '
-message.sent.from: 'From: '
-message.subject: 'Subject: '
-message.sent.date: 'Sent On: '
-message.attachment: 'Attachment: '
+ccdn_message_message.item_message.send.to: 'To: '
+ccdn_message_message.item_message.sent.from: 'From: '
+ccdn_message_message.item_message.subject: 'Subject: '
+ccdn_message_message.item_message.sent_datetime: 'Sent On: '
+ccdn_message_message.item_message.attachment: 'Attachment: '

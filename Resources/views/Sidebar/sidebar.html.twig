@@ -4,13 +4,13 @@
 	<li class="nav-header">{{- 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') -}}</li>
 
 	{%- if route == 'ccdn_message_message_mail_compose' -%}
-		<li class="active"><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+		<li class="active"><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- else -%}
-		<li><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+		<li><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- endif -%}
 
 	{%- if folders is defined -%}
-		<li class="nav-header">{{- 'label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
+		<li class="nav-header">{{- 'ccdn_message_message.label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
 		{%- for row, folder in folders -%}
 			{%- if current_folder is defined -%}
 				{%- if folder.name == current_folder.name -%}
@@ -90,9 +90,9 @@
 		{%- endfor -%}
 	{%- else -%}
 		{%- if route == 'ccdn_message_message_index' -%}
-			<li class="active"><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-white icon-inbox"></i>&nbsp;{{- 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+			<li class="active"><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-white icon-inbox"></i>&nbsp;{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 		{%- else -%}
-			<li><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{- 'sidebar.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+			<li><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 		{%- endif -%}
 	{%- endif -%}
 {%- endspaceless -%}

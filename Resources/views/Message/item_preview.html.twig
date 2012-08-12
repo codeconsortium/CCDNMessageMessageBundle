@@ -3,7 +3,7 @@
 	<tbody>
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 			<td class="right" style="width: 80px;">
-				{{- 'message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left">
 				{%- if message.getSentFrom -%}
@@ -17,7 +17,7 @@
 			{%- if message.getSentFrom.getId == app.user.id -%}
 			<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 				<td class="right" style="width: 80px;">
-					{{- 'message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</td>
 				<td class="left" colspan="3">
 					{{- message.getSendTo |title -}}
@@ -27,7 +27,7 @@
 		{%- endif -%}
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 			<td class="right" style="width: 80px;">
-				{{- 'message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left" colspan="3">
 				{{- message.getSubject -}}
@@ -35,7 +35,7 @@
 		</tr>
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 			<td class="right" style="width: 80px;">
-				{{- 'message.sent.date' |trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left">
 				{{- message.getSentDate |date(param('ccdn_message_message.message.show.sent_datetime_format')) -}}
@@ -44,7 +44,7 @@
 		{%- if message.getAttachment -%}
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 			<td class="right" style="wdith: 80px;">
-				{{- 'message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'ccdn_message_message.item_message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left" colspan="3">
 				<a href="{{- path('ccdn_component_attachment_download', {'attachmentId': message.getAttachment.getId }) -}}"><img src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': message.getAttachment.getId }) -}}" alt="icon"></a>

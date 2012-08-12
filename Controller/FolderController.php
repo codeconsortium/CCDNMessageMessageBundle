@@ -71,12 +71,17 @@ class FolderController extends ContainerAware
 
         $messages = $messagesPager->getCurrentPageResults();
 
+//		$formHandler = $this->container->get('ccdn_message_message.message_manager.form.handler');
+		
+//		$formHandler->setDefaultValues(array('messages' => $messages));
+		
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
-
+            ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
+//echo '<pre>' . print_r($formHandler->getForm()->createView()->get('messages'), true) . '</pre>'; die();
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
             'crumbs' => $crumbs,
+//			'form'	=> $formHandler->getForm()->createView(),
             'pager' => $messagesPager,
             'folders' => $folders,
             'current_folder' => $currentFolder,
