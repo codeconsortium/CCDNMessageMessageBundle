@@ -95,4 +95,14 @@
 			<li><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 		{%- endif -%}
 	{%- endif -%}
+
+	{% if used_allowance is defined -%}
+		<li class="divider"></li>
+		<li>
+			<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
+			<div class="progress progress-danger">
+				<div class="bar" style="width:{{- used_allowance -}}%;"></div>
+			</div>
+		</li>
+	{%- endif -%}
 {%- endspaceless -%}

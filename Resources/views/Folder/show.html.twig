@@ -18,23 +18,6 @@
 
 {% endblock %}
 
-{% block sidebar_status %}
-	{{ parent() }}
-	{%- spaceless -%}
-
-	<div class="well" style="padding: 10px; height: 20px;">
-		<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
-		<div class="progress progress-danger">
-			<div class="bar" style="width:{{- used_allowance -}}%;"></div>
-		</div>
-	</div>
-
-	{%- endspaceless -%}
-
-{% endblock %}
-
-
-
 {% block body %}
 
 	{%- spaceless -%}
