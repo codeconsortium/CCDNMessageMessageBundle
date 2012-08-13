@@ -1,7 +1,7 @@
 {%- spaceless -%}
 	{%- set route = app.request.attributes.get('_route') -%}
 
-	<li class="nav-header">{{- 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') -}}</li>
+	<li class="nav-header">{{- 'ccdn_message_message.sidebar.header.tools' | trans({}, 'CCDNMessageMessageBundle') -}}</li>
 
 	{%- if route == 'ccdn_message_message_mail_compose' -%}
 		<li class="active"><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>

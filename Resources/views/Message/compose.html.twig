@@ -77,8 +77,8 @@
 				<div class="controls row-fluid">
 					{{- form_errors(form.attachment) -}}
 					{{- form_widget(form.attachment) -}}
-					&nbsp;<a target="_blank" href="{{- path('ccdn_component_attachment_index') -}}">{{- 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-					&nbsp;<a target="_blank" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'ccdn_component_attachment.link.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+					&nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_index') -}}">{{- 'ccdn_component_attachment.link.manage' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+					&nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'ccdn_component_attachment.link.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
 				</div>
 			</div>
 

@@ -1,15 +1,35 @@
-ccdn_message_message.sidebar.ccdn_message_message.link.messages: Messages
-ccdn_message_message.sidebar.link.compose: Compose Message
+#
+# Page Titles.
+#
+ccdn_message_message.title.message.index: 'Messages - %folder_name%.'
+ccdn_message_message.title.message.show: 'Message: %message_subject%.'
+ccdn_message_message.title.message.compose: 'Compose Message.'
 
+#
+# Crumbs.
+#
 ccdn_message_message.crumbs.message_index: 'Inbox'
 ccdn_message_message.crumbs.compose_message: 'Compose New Message'
 ccdn_message_message.crumbs.compose_reply: 'Compose Reply'
 ccdn_message_message.crumbs.compose_forward: 'Forward Message'
 
-ccdn_message_message.title.message.index: 'Messages - %folder_name%.'
-ccdn_message_message.title.message.show: 'Message: %message_subject%.'
-ccdn_message_message.title.message.compose: 'Compose Message.'
+#
+# Flash Messages.
+#
+ccdn_message_message.flash.message.sent.success: 'Message sent to %user%.'
+ccdn_message_message.flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
+ccdn_message_message.flash.message.draft.saved: 'Draft message saved.'
 
+#
+# Sidebar.
+#
+ccdn_message_message.sidebar.header.tools: 'Tools'
+ccdn_message_message.sidebar.link.messages: 'Messages'
+ccdn_message_message.sidebar.link.compose: 'Compose Message'
+
+#
+# Link Labels.
+#
 ccdn_message_message.link.message.reply: 'Reply'
 ccdn_message_message.link.message.forward: 'Forward'
 ccdn_message_message.link.message.delete: 'Delete'
@@ -17,7 +37,6 @@ ccdn_message_message.link.message.mark_as_read: 'Mark as Read'
 ccdn_message_message.link.message.mark_as_unread: 'Mark as Unread'
 ccdn_message_message.link.message.move_to: 'Move to folder'
 ccdn_message_message.link.message.send_draft: 'Send'
-
 ccdn_message_message.link.message.select_none: 'None'
 ccdn_message_message.link.message.select_all: 'All'
 ccdn_message_message.link.message.select_all_read: 'Read'
@@ -26,21 +45,9 @@ ccdn_message_message.link.message.select_all_flagged: 'Flagged'
 ccdn_message_message.link.message.select_all_attached: 'Attached'
 ccdn_message_message.link.message.select_all_draft: 'Draft'
 
-ccdn_message_message.label.folders: 'Folders'
-
-ccdn_message_message.message.inbox_status: 'You have %message_count% messages.'
-
-ccdn_message_message.inbox.table.head.from: From
-ccdn_message_message.inbox.table.head.to: To
-ccdn_message_message.inbox.table.head.subject: Subject
-ccdn_message_message.inbox.table.head.sent: Sent
-
-ccdn_message_message.inbox.table.empty: 'You have no messages in this folder.'
-
-ccdn_message_message.flash.message.sent.success: 'Message sent to %user%.'
-ccdn_message_message.flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
-ccdn_message_message.flash.message.draft.saved: 'Draft message saved.'
-
+#
+# Forms.
+#
 ccdn_message_message.form.field.required: 'This field is required'
 ccdn_message_message.form.label.message.to: 'To: '
 ccdn_message_message.form.label.message.subject: 'Subject: '
@@ -50,6 +57,22 @@ ccdn_message_message.form.label.message.attachment: 'Attachment: '
 ccdn_message_message.form.button.message.preview: 'Preview'
 ccdn_message_message.form.button.message.save_draft: 'Save Draft'
 ccdn_message_message.form.button.message.send: 'Send Message'
+
+#
+# Table Labels.
+#
+ccdn_message_message.inbox.table.head.from: 'From'
+ccdn_message_message.inbox.table.head.to: 'To'
+ccdn_message_message.inbox.table.head.subject: 'Subject'
+ccdn_message_message.inbox.table.head.sent: 'Sent'
+ccdn_message_message.inbox.table.empty: 'You have no messages in this folder.'
+
+#
+# Generic.
+#
+ccdn_message_message.label.folders: 'Folders'
+
+ccdn_message_message.message.inbox_status: 'You have %message_count% messages.'
 
 ccdn_message_message.item_message.send.to: 'To: '
 ccdn_message_message.item_message.sent.from: 'From: '
