@@ -15,7 +15,7 @@
 			{%- if current_folder is defined -%}
 				{%- if folder.name == current_folder.name -%}
 					<li class="active">
-						<a href="{{- path('ccdn_message_message_folder_show', {'folder_name': folder.getName }) -}}">
+						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 								<i class="icon-white icon-inbox">
 							{%- else -%}
@@ -39,7 +39,7 @@
 					</li>
 				{%- else -%}
 					<li>
-						<a href="{{- path('ccdn_message_message_folder_show', {'folder_name': folder.getName }) -}}">
+						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 								<i class="icon-inbox">
 							{%- else -%}
@@ -64,7 +64,7 @@
 				{%- endif -%}
 			{%- else -%}
 				<li>
-					<a href="{{- path('ccdn_message_message_folder_show', {'folder_name': folder.getName }) -}}">
+					<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 						{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 							<i class="icon-inbox">
 						{%- else -%}
