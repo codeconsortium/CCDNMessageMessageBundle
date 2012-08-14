@@ -62,12 +62,11 @@ class MessageController extends ContainerAware
             throw new NotFoundHttpException('No such message found!');
         }
 
+        $currentFolder = $folderManager->getCurrentFolder($folders, $message->getFolder()->getName());
+
         $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 
-        $currentFolder = $folderManager->getCurrentFolder($folders, $message->getFolder()->getName());
         $stats = $folderManager->getUsedAllowance($folders, $quota);
-        $totalMessageCount = $stats['total_message_count'];
-        $usedAllowance = $stats['used_allowance'];
 
         $this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
 
@@ -81,8 +80,8 @@ class MessageController extends ContainerAware
             'user' => $user,
             'crumbs' => $crumbs,
             'folders' => $folders,
-            'current_folder' => $currentFolder,
-            'used_allowance' => $usedAllowance,
+            'used_allowance' => $stats['used_allowance'],
+            'total_message_count' => $stats['total_message_count'],
             'message' => $message,
         ));
     }
@@ -146,6 +145,10 @@ class MessageController extends ContainerAware
             $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
         }
 
+        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+        $stats = $folderManager->getUsedAllowance($folders, $quota);
+
         // setup crumb trail.
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
@@ -157,6 +160,8 @@ class MessageController extends ContainerAware
             'form' => $formHandler->getForm()->createView(),
             'preview' => $formHandler->getForm()->getData(),
             'folders' => $folders,
+            'used_allowance' => $stats['used_allowance'],
+            'total_message_count' => $stats['total_message_count'],
             'user' => $user,
         ));
     }
@@ -206,6 +211,10 @@ class MessageController extends ContainerAware
                 $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
             }
 
+	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+        	$stats = $folderManager->getUsedAllowance($folders, $quota);
+
             // setup crumb trail.
             $crumbs = $this->container->get('ccdn_component_crumb.trail')
                 ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
@@ -218,6 +227,8 @@ class MessageController extends ContainerAware
                 'form' => $formHandler->getForm()->createView(),
                 'preview' => $formHandler->getForm()->getData(),
                 'folders' => $folders,
+	            'used_allowance' => $stats['used_allowance'],
+	            'total_message_count' => $stats['total_message_count'],
                 'user' => $user,
             ));
         }
@@ -268,6 +279,10 @@ class MessageController extends ContainerAware
                 $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
             }
 
+	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+        	$stats = $folderManager->getUsedAllowance($folders, $quota);
+
             // setup crumb trail.
             $crumbs = $this->container->get('ccdn_component_crumb.trail')
                 ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
@@ -280,6 +295,8 @@ class MessageController extends ContainerAware
                 'form' => $formHandler->getForm()->createView(),
                 'preview' => $formHandler->getForm()->getData(),
                 'folders' => $folders,
+	            'used_allowance' => $stats['used_allowance'],
+	            'total_message_count' => $stats['total_message_count'],
                 'user' => $user,
             ));
         }
