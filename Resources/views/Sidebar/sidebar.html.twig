@@ -1,13 +1,25 @@
 {%- spaceless -%}
 	{%- set route = app.request.attributes.get('_route') -%}
 
+	{%- if current_folder.name is not defined -%}
+		{%- if route == 'ccdn_message_message_mail_show_by_id' -%}
+			{%- set current_folder = message.getFolder -%}
+		{%- endif -%}
+	{%- endif -%}
+
 	<li class="nav-header">{{- 'ccdn_message_message.sidebar.header.tools' | trans({}, 'CCDNMessageMessageBundle') -}}</li>
 
-	{%- if route == 'ccdn_message_message_mail_compose' -%}
+	{%- if
+		route == 'ccdn_message_message_mail_compose' or
+		route == 'ccdn_message_message_mail_compose_to' or
+		route == 'ccdn_message_message_mail_compose_reply' or
+		route == 'ccdn_message_message_mail_compose_forward'
+	-%}
 		<li class="active"><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- else -%}
 		<li><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
 	{%- endif -%}
+
 
 	{%- if folders is defined -%}
 		<li class="nav-header">{{- 'ccdn_message_message.label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
@@ -96,6 +108,8 @@
 		{%- endif -%}
 	{%- endif -%}
 
+
+
 	{% if used_allowance is defined -%}
 		<li class="divider"></li>
 		<li>
@@ -105,4 +119,5 @@
 			</div>
 		</li>
 	{%- endif -%}
+	
 {%- endspaceless -%}
