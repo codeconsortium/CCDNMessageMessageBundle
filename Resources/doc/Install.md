@@ -1,15 +1,15 @@
-Installing CCDNMessage MessageBundle 1.0
+Installing CCDNMessage MessageBundle 1.2
 ========================================
 
 ## Dependencies:
 
 1. [PagerFanta](https://github.com/whiteoctober/Pagerfanta).
 2. [PagerFantaBundle](http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle).
-3. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle).
-4. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle).
-5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle).
-6. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle).
-7. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
+3. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle/tree/v1.2).
+4. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle/tree/v1.2).
+5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle/tree/v1.2).
+6. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle/tree/v1.2).
+7. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle/tree/v1.2).
 
 ## Installation:
 
@@ -33,7 +33,7 @@ Append the following to end of your deps file (found in the root of your Symfony
 [CCDNMessageMessageBundle]
 	git=http://github.com/codeconsortium/CCDNMessage.git
 	target=/bundles/CCDNMessage/MessageBundle
-	
+    version=v1.2	
 ```
 
 ### Step 2: Register bundles with autoload.php.
