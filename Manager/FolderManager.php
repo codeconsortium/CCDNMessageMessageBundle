@@ -34,7 +34,7 @@ class FolderManager extends BaseManager implements ManagerInterface
      */
     public function setupDefaults($userId)
     {
-        $user = $this->container->get('ccdn_user_user.user.repository')->findOneById($userId);
+        $user = $this->container->get('ccdn_user_user.repository.user')->findOneById($userId);
 
         if (! $user) {
             echo "error, cannot setup PM folders for non-user.";
@@ -67,9 +67,9 @@ class FolderManager extends BaseManager implements ManagerInterface
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $readCount = $this->container->get('ccdn_message_message.folder.repository')->getReadCounterForFolderById($folder->getId(), $user->getId());
+        $readCount = $this->container->get('ccdn_message_message.repository.folder')->getReadCounterForFolderById($folder->getId(), $user->getId());
         $readCount = $readCount['readCount'];
-        $unreadCount = $this->container->get('ccdn_message_message.folder.repository')->getUnreadCounterForFolderById($folder->getId(), $user->getId());
+        $unreadCount = $this->container->get('ccdn_message_message.repository.folder')->getUnreadCounterForFolderById($folder->getId(), $user->getId());
         $unreadCount = $unreadCount['unreadCount'];
         $totalCount = ($readCount + $unreadCount);
 

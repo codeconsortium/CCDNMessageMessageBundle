@@ -76,14 +76,14 @@ class SendToValidator extends ConstraintValidator
             }
 
             if (count($recipients) > 0) {
-                $sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findTheseUsersByUsername($recipients);
+                $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findTheseUsersByUsername($recipients);
             } else {
                 $constraint->addNotFoundUsernames(array());
             }
         } else {
             $recipients = array($value);
 
-            $sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findByUsername($recipients);
+            $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findByUsername($recipients);
         }
 
         $notFound = array();

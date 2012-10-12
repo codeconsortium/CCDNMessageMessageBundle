@@ -43,20 +43,20 @@ class MessageController extends ContainerAware
         //
         // Get all the folders.
         //
-        $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-        $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
         if ( ! $folders) {
             $folderManager->setupDefaults($user->getId())->flush();
 
-            $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
         }
 
         //
         // Get the message.
         //
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
@@ -68,7 +68,7 @@ class MessageController extends ContainerAware
 
         $stats = $folderManager->getUsedAllowance($folders, $quota);
 
-        $this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
+        $this->container->get('ccdn_message_message.manager.message')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
@@ -107,11 +107,11 @@ class MessageController extends ContainerAware
         // Are we sending this to someone who's 'send message' button we clicked?
         //
         if ($userId) {
-            $sendTo = $this->container->get('ccdn_user_user.user.repository')->findOneById($userId);
+            $sendTo = $this->container->get('ccdn_user_user.repository.user')->findOneById($userId);
 
-            $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'send_to' => $sendTo));
+            $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user, 'send_to' => $sendTo));
         } else {
-            $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user));
+            $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user));
         }
 
         if (isset($_POST['submit_draft'])) {
@@ -135,14 +135,14 @@ class MessageController extends ContainerAware
         //
         // Get all the folders.
         //
-        $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-        $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
         if (! $folders) {
             $folderManager->setupDefaults($user->getId())->flush();
 
-            $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
         }
 
         $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
@@ -185,13 +185,13 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
+        $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
 
         if ($formHandler->process()) {
             $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
@@ -201,14 +201,14 @@ class MessageController extends ContainerAware
             //
             // Get all the folders.
             //
-            $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-            $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+            $folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
             if (! $folders) {
                 $folderManager->setupDefaults($user->getId())->flush();
 
-                $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+                $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
             }
 
 	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
@@ -253,13 +253,13 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $formHandler = $this->container->get('ccdn_message_message.message.form.handler')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
+        $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
 
         if ($formHandler->process()) {
             $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
@@ -269,14 +269,14 @@ class MessageController extends ContainerAware
             //
             // Get all the folders.
             //
-            $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-            $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+            $folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
             if (! $folders) {
                 $folderManager->setupDefaults($user->getId())->flush();
 
-                $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+                $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
             }
 
 	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
@@ -320,13 +320,13 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $this->container->get('ccdn_message_message.message.manager')->sendDraft(array($message))->flush();
+        $this->container->get('ccdn_message_message.manager.message')->sendDraft(array($message))->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
     }
@@ -347,13 +347,13 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $this->container->get('ccdn_message_message.message.manager')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
+        $this->container->get('ccdn_message_message.manager.message')->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
     }
@@ -374,13 +374,13 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
 
         if (! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $this->container->get('ccdn_message_message.message.manager')->markAsUnread($message)->flush()->updateAllFolderCachesForUser($user);
+        $this->container->get('ccdn_message_message.manager.message')->markAsUnread($message)->flush()->updateAllFolderCachesForUser($user);
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
     }
@@ -401,20 +401,20 @@ class MessageController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $message = $this->container->get('ccdn_message_message.message.repository')->findMessageByIdForUser($messageId, $user->getId());
-        $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+        $message = $this->container->get('ccdn_message_message.repository.message')->findMessageByIdForUser($messageId, $user->getId());
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
         if ( ! $folders) {
-            $this->container->get('ccdn_message_message.folder.manager')->setupDefaults($user->getId())->flush();
+            $this->container->get('ccdn_message_message.manager.folder')->setupDefaults($user->getId())->flush();
 
-            $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
         }
 
         if ( ! $message) {
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $this->container->get('ccdn_message_message.message.manager')->delete($message, $folders)->flush()->updateAllFolderCachesForUser($user);
+        $this->container->get('ccdn_message_message.manager.message')->delete($message, $folders)->flush()->updateAllFolderCachesForUser($user);
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $message->getFolder()->getName())));
     }

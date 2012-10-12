@@ -58,7 +58,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $unreadMessageCount = $this->container->get('ccdn_message_message.registry.repository')->findRegistryRecordForUser($user->getId());
+        $unreadMessageCount = $this->container->get('ccdn_message_message.repository.registry')->findRegistryRecordForUser($user->getId());
 
         if ($unreadMessageCount == null) {
             return 0;

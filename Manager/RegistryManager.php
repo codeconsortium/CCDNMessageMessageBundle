@@ -34,7 +34,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
      */
     public function updateCacheUnreadMessagesForUser($user)
     {
-        $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
         $totalMessageCount = 0;
 
@@ -42,7 +42,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
             $totalMessageCount += $folder->getCachedUnreadCount();
         }
 
-        $record = $this->container->get('ccdn_message_message.registry.repository')->findRegistryRecordForUser($user->getId());
+        $record = $this->container->get('ccdn_message_message.repository.registry')->findRegistryRecordForUser($user->getId());
 
         if (! $record) {
             $record = new Registry();

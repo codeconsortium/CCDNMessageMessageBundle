@@ -72,7 +72,7 @@ class MessageFormType extends AbstractType
         $builder->add('is_flagged', 'checkbox', array('data' => false, 'required' => false));
 
         $userId = $this->defaults['sender']->getId();
-        $attachments = $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId);
+        $attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
 
         $builder->add('attachment', 'entity', array(
             'class' => 'CCDNComponentAttachmentBundle:Attachment',

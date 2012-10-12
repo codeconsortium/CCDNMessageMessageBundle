@@ -30,8 +30,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $folderRepo = $this->container->get('ccdn_message_message.folder.repository');
-        $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+        $folderRepo = $this->container->get('ccdn_message_message.repository.folder');
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
         $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 
         //
@@ -98,8 +98,8 @@ class MessageManager extends BaseManager implements ManagerInterface
      */
     public function sendTo($message, $recipient, $sender, $isCarbonCopy)
     {
-        $folderRepo = $this->container->get('ccdn_message_message.folder.repository');
-        $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+        $folderRepo = $this->container->get('ccdn_message_message.repository.folder');
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
         $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 
         //
@@ -190,11 +190,11 @@ class MessageManager extends BaseManager implements ManagerInterface
                 }
             }
 
-            $sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findTheseUsersByUsername($recipients);
+            $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findTheseUsersByUsername($recipients);
         } else {
             $recipients = array($value);
 
-            $sendToUsers = $this->container->get('ccdn_user_user.user.repository')->findByUsername($recipients);
+            $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findByUsername($recipients);
         }
 
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -362,9 +362,9 @@ class MessageManager extends BaseManager implements ManagerInterface
      */
     public function updateAllFolderCachesForUser($user)
     {
-        $folders = $this->container->get('ccdn_message_message.folder.repository')->findAllFoldersForUser($user->getId());
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-        $folderManager = $this->container->get('ccdn_message_message.folder.manager');
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
         foreach ($folders as $folder) {
             $folderManager->updateFolderCounterCaches($folder);
@@ -372,7 +372,7 @@ class MessageManager extends BaseManager implements ManagerInterface
 
         $folderManager->flush();
 
-        $this->container->get('ccdn_message_message.registry.manager')->updateCacheUnreadMessagesForUser($user);
+        $this->container->get('ccdn_message_message.manager.registry')->updateCacheUnreadMessagesForUser($user);
 
         return $this;
     }

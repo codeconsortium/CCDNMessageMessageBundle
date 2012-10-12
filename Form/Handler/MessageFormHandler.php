@@ -166,7 +166,7 @@ class MessageFormHandler
     public function getForm()
     {
         if (! $this->form) {
-            $messageType = $this->container->get('ccdn_message_message.message.form.type');
+            $messageType = $this->container->get('ccdn_message_message.form.type.message');
 
             $defaultValues = array();
 
