@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Extension;
+namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
 /**
  *

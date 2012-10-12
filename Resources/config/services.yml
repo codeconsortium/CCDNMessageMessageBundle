@@ -12,7 +12,7 @@ parameters:
     ccdn_message_message.message.form.handler.class:            CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
     ccdn_message_message.validator.send_to.class:               CCDNMessage\MessageBundle\Form\Validator\SendToValidator
 
-    ccdn_message_message.unread_message_count.extension.class:  CCDNMessage\MessageBundle\Extension\UnreadMessageCountExtension
+    ccdn_message_message.unread_message_count.extension.class:  CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension
 
     ccdn_message_message.dashboard.integrator.class:            CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
 
