@@ -76,7 +76,6 @@ class MessageFormType extends AbstractType
 
         $builder->add('attachment', 'entity', array(
             'class' => 'CCDNComponentAttachmentBundle:Attachment',
-          //  'query_builder' => $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId),
             'choices' => $attachments,
             'property' => 'filename_original',
             'required' => false,
