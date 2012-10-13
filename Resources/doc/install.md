@@ -31,7 +31,7 @@ Append the following to end of your deps file (found in the root of your Symfony
 
 ``` ini
 [CCDNMessageMessageBundle]
-	git=http://github.com/codeconsortium/CCDNMessage.git
+	git=https://github.com/codeconsortium/CCDNMessageMessageBundle.git
 	target=/bundles/CCDNMessage/MessageBundle
     version=v1.2	
 ```
