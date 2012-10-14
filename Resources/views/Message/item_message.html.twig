@@ -38,7 +38,7 @@
 				{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
 			<td class="left">
-				{{- message.getSentDate |date(param('ccdn_message_message.message.show.sent_datetime_format')) -}}
+				{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
 			</td>
 		</tr>
 		{%- if message.getAttachment -%}
@@ -54,7 +54,7 @@
 		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
 			<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
 				<span class="common_body">
-					{{- BBCode(message.getBody | raw, param('ccdn_message_message.message.show.enable_bb_parser')) | raw -}}
+					{{- BBCode(message.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
 					<br>
 				</span>
 			</td>

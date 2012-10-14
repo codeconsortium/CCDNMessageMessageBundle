@@ -1,11 +1,11 @@
-{% extends param('ccdn_message_message.message.show.layout_template') %}
+{% extends ccdn_message_message.message.show.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_message_message.title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle'), param('ccdn_message_message.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_message_message.title.message.show' |trans({'%message_subject%': message.getSubject }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

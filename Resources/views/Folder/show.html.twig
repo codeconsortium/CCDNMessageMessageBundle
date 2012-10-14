@@ -1,4 +1,4 @@
-{% extends param('ccdn_message_message.folder.show.layout_template') %}
+{% extends ccdn_message_message.folder.show.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -9,7 +9,7 @@
 	<script src="{{- asset('bundles/ccdncomponentcommon/js/ccdn/jquery.checkboxes.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_message_message.title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), param('ccdn_message_message.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_message_message.title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -186,9 +186,9 @@
 						</td>
 						<td>
 							{%- if message.isRead -%}
-								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</a>
+								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}</a>
 							{%- else -%}
-								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}"><b>{{- truncDot(message.getSubject, param('ccdn_message_message.folder.show.subject_truncate')) -}}</b></a>
+								<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}"><b>{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}</b></a>
 							{%- endif -%}
 						</td>
 						<td>
@@ -196,9 +196,9 @@
 								{%- if message.getSentDate -%}
 									<abbr class="timestamper" title="{{- message.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 									{%- if message.isRead -%}
-										{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}
+										{{- message.getSentDate |date(ccdn_message_message.folder.show.sent_datetime_format) -}}
 									{%- else -%}
-										<b>{{- message.getSentDate |date(param('ccdn_message_message.folder.show.sent_datetime_format')) -}}</b>
+										<b>{{- message.getSentDate |date(ccdn_message_message.folder.show.sent_datetime_format) -}}</b>
 									{%- endif -%}
 									</abbr>
 								{%- else -%}
