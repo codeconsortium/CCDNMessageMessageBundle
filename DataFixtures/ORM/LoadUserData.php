@@ -29,6 +29,11 @@ use CCDNMessage\MessageBundle\Entity\Message;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
 
+	/**
+	 *
+	 * @access public
+	 * @param ObjectManager $manager
+	 */
     public function load(ObjectManager $manager)
     {
 		
@@ -90,6 +95,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 		
     }
 
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
 	public function getOrder()
 	{
 		return 3;

@@ -92,8 +92,8 @@ class MessageFormHandler
 
     /**
      *
-     *
      * @access public
+ 	 * @param int $mode
      */
     public function setMode($mode)
     {
@@ -113,8 +113,8 @@ class MessageFormHandler
     /**
      *
      * @access public
-     * @param Array() $options
-     * @return $this
+     * @param array $defaults
+     * @return self
      */
     public function setDefaultValues(array $defaults = null)
     {

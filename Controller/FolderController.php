@@ -29,7 +29,7 @@ class FolderController extends ContainerAware
     /**
      *
      * @access protected
-     * @param  String $folderName, Int $page
+     * @param string $folderName, int $page
      * @return RenderResponse
      */
     public function showFolderByNameAction($folderName, $page)

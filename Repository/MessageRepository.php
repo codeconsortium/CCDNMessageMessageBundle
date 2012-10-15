@@ -26,6 +26,11 @@ use Pagerfanta\Pagerfanta;
 class MessageRepository extends EntityRepository
 {
 
+	/**
+	 *
+	 * @access public
+	 * @param int $folderId, int $userId
+	 */
     public function findAllPaginatedForFolderById($folderId, $userId)
     {
         $query = $this->getEntityManager()
@@ -44,6 +49,11 @@ class MessageRepository extends EntityRepository
         }
     }
 
+	/**
+	 *
+	 * @access public
+	 * @param int $messageId, int $userId
+	 */
     public function findMessageByIdForUser($messageId, $userId)
     {
         $query = $this->getEntityManager()
@@ -60,6 +70,11 @@ class MessageRepository extends EntityRepository
         }
     }
 
+	/**
+	 *
+	 * @access public
+	 * @param array $messageIds, int $userId
+	 */
     public function findTheseMessagesByUserId($messageIds, $userId)
     {
          $qb = $this->getEntityManager()->createQueryBuilder();
@@ -77,4 +92,5 @@ class MessageRepository extends EntityRepository
             return null;
         }
     }
+
 }

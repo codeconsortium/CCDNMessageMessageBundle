@@ -26,6 +26,12 @@ use CCDNMessage\MessageBundle\Entity\Message;
 class MessageManager extends BaseManager implements ManagerInterface
 {
 
+	/**
+	 *
+	 * @access public
+	 * @param Message $message
+	 * @return self
+	 */
     public function saveDraft($message)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -78,8 +84,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $message
-     * @return $this
+     * @param array $message
+     * @return self
      */
     public function sendDraft(array $messages)
     {
@@ -93,8 +99,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param String $message, String $recipient, String $sender, bool $isCarbonCopy
-     * @return $this
+     * @param string $message, string $recipient, string $sender, bool $isCarbonCopy
+     * @return self
      */
     public function sendTo($message, $recipient, $sender, $isCarbonCopy)
     {
@@ -173,8 +179,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $message
-     * @return $this
+     * @param Message $message
+     * @return self
      */
     public function insert($message)
     {
@@ -224,8 +230,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $message
-     * @return $this
+     * @param Message $message
+     * @return self
      */
     public function markAsRead($message)
     {
@@ -238,8 +244,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $message
-     * @return $this
+     * @param Message $message
+     * @return self
      */
     public function markAsUnread($message)
     {
@@ -252,8 +258,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $message, $folders
-     * @return $this
+     * @param Message $message, array $folders
+     * @return self
      */
     public function delete($message, $folders)
     {
@@ -278,8 +284,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $messages, $folders
-     * @return $this
+     * @param array $messages, array $folders
+     * @return self
      */
     public function bulkDelete($messages, $folders)
     {
@@ -308,8 +314,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $messages
-     * @return $this
+     * @param array $messages
+     * @return self
      */
     public function bulkMarkAsRead($messages)
     {
@@ -324,8 +330,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $messages
-     * @return $this
+     * @param array $messages
+     * @return self
      */
     public function bulkMarkAsUnread($messages)
     {
@@ -340,8 +346,8 @@ class MessageManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $messages, $moveTo
-     * @return $this
+     * @param array $messages, Folder $moveTo
+     * @return self
      */
     public function bulkMoveToFolder($messages, $moveTo)
     {
@@ -358,7 +364,7 @@ class MessageManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param $user
-     * @return $this
+     * @return self
      */
     public function updateAllFolderCachesForUser($user)
     {

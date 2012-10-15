@@ -53,7 +53,7 @@ class SendToValidator extends ConstraintValidator
     /**
      *
      * @access public
-     * @param $value, Constraint $constraint
+     * @param string $value, Constraint $constraint
      * @return bool
      */
     public function isValid($value, Constraint $constraint)

@@ -35,7 +35,7 @@ class SendTo extends Constraint
     /**
      *
      * @access public
-     * @param Array() $usernames
+     * @param array $usernames
      */
     public function addNotFoundUsernames($usernames)
     {

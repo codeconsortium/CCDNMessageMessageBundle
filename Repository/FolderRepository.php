@@ -28,7 +28,7 @@ class FolderRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $userId
+     * @param int $userId
      */
     public function findAllFoldersForUser($userId)
     {
@@ -51,7 +51,7 @@ class FolderRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $folderId
+     * @param int $folderId
      */
     public function getReadCounterForFolderById($folderId)
     {
@@ -73,7 +73,7 @@ class FolderRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $folderId
+     * @param int $folderId
      */
     public function getUnreadCounterForFolderById($folderId)
     {

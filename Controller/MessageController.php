@@ -29,7 +29,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RenderResponse
      */
     public function showMessageAction($messageId)
@@ -89,7 +89,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $userId
+     * @param  int $userId
      * @return RedirectResponse|RenderResponse
      */
     public function composeAction($userId)
@@ -171,7 +171,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RedirectResponse|RenderResponse
      */
     public function replyAction($messageId)
@@ -239,7 +239,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RedirectResponse|RenderResponse
      */
     public function forwardAction($messageId)
@@ -306,7 +306,7 @@ class MessageController extends ContainerAware
 
     /**
     * @access public
-    * @param Int $messageId
+    * @param int $messageId
     * @return RedirectResponse
     */
     public function sendDraftAction($messageId)
@@ -336,7 +336,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RedirectResponse
      */
     public function markAsReadAction($messageId)
@@ -363,7 +363,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RedirectResponse
      */
     public function markAsUnreadAction($messageId)
@@ -390,7 +390,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access public
-     * @param  Int $messageId
+     * @param  int $messageId
      * @return RedirectResponse
      */
     public function deleteAction($messageId)
@@ -424,7 +424,7 @@ class MessageController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

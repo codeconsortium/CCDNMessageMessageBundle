@@ -29,6 +29,8 @@ class UnreadMessageCountExtension extends \Twig_Extension
 
     /**
      *
+ 	 * @access public
+	 * @param $container
      */
     public function __construct($container)
     {
@@ -38,7 +40,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @return Array()
+     * @return array
      */
     public function getFunctions()
     {
@@ -51,7 +53,6 @@ class UnreadMessageCountExtension extends \Twig_Extension
      * Gets the number of unread messages that is cached in the message registry.
      *
      * @access public
-     * @param  object $user
      * @return int
      */
     public function unreadMessageCount()

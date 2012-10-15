@@ -29,8 +29,8 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $userId
-     * @return $this
+     * @param int $userId
+     * @return self
      */
     public function setupDefaults($userId)
     {
@@ -61,7 +61,7 @@ class FolderManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param $folder
-     * @return $this
+     * @return self
      */
     public function updateFolderCounterCaches($folder)
     {
@@ -85,7 +85,7 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array() $folders
+     * @param array $folders
      */
     public function checkQuotaAllowanceUsed($folders)
     {
@@ -101,7 +101,7 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array() $folders, $folderName
+     * @param array $folders, $folderName
      */
     public function getCurrentFolder($folders, $folderName)
     {
@@ -122,8 +122,8 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param Array() $folders, Int $quota
-	 * @return Array()
+     * @param array $folders, int $quota
+	 * @return array
      */
     public function getUsedAllowance($folders, $quota)
     {
