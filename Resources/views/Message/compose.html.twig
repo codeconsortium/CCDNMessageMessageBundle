@@ -64,6 +64,7 @@
 				</div>
 			</div>
 
+			{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
 			<div class="control-group{{- (form.is_flagged.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.is_flagged, null, { 'label': 'ccdn_message_message.form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) -}}
 				<div class="controls row-fluid">
