@@ -19,6 +19,7 @@ ccdn_message_message.crumbs.compose_forward: 'Forward Message'
 ccdn_message_message.flash.message.sent.success: 'Message sent to %user%.'
 ccdn_message_message.flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
 ccdn_message_message.flash.message.draft.saved: 'Draft message saved.'
+ccdn_message_message.flash.send.flood_control: 'Flood Control - You have sent too much at once, take a break before sending again.'
 
 #
 # Sidebar.

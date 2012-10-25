@@ -114,23 +114,31 @@ class MessageController extends ContainerAware
             $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user));
         }
 
-        if (isset($_POST['submit_draft'])) {
-            $formHandler->setMode($formHandler::DRAFT);
+	    if (isset($_POST['submit_draft'])) {
+           $formHandler->setMode($formHandler::DRAFT);
 
-            if ($formHandler->process()) {
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'drafts')));
-            }
-        }
-
-        if (isset($_POST['submit_post'])) {
-            if ($formHandler->process()) {
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
-            }
+           if ($formHandler->process()) {
+               return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'drafts')));
+           }
         }
 
         if (isset($_POST['submit_preview'])) {
             $formHandler->setMode($formHandler::PREVIEW);
         }
+
+		// Flood Control.
+		if ( ! $this->container->get('ccdn_message_message.component.flood_control')->isFlooded())
+		{
+	        if (isset($_POST['submit_post'])) {
+	            if ($formHandler->process()) {
+					$this->container->get('ccdn_message_message.component.flood_control')->incrementCounter();
+					
+	                return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
+	            }
+	        }
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_message_message.flash.send.flood_control', array(), 'CCDNMessageMessageBundle'));
+		}
 
         //
         // Get all the folders.
@@ -193,45 +201,53 @@ class MessageController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'reply'));
 
-        if ($formHandler->process()) {
-            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
+		// Flood Control.
+		if ( ! $this->container->get('ccdn_message_message.component.flood_control')->isFlooded())
+		{
+	        if ($formHandler->process()) {
+	     		$this->container->get('ccdn_message_message.component.flood_control')->incrementCounter();
+	       		
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
-            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
-        } else {
-            //
-            // Get all the folders.
-            //
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
+	        }
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_message_message.flash.send.flood_control', array(), 'CCDNMessageMessageBundle'));
+		}
+		
+        //
+        // Get all the folders.
+        //
+        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
+
+        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
+
+        if (! $folders) {
+            $folderManager->setupDefaults($user->getId())->flush();
+
             $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-
-            $folderManager = $this->container->get('ccdn_message_message.manager.folder');
-
-            if (! $folders) {
-                $folderManager->setupDefaults($user->getId())->flush();
-
-                $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-            }
-
-	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
-
-        	$stats = $folderManager->getUsedAllowance($folders, $quota);
-
-            // setup crumb trail.
-            $crumbs = $this->container->get('ccdn_component_crumb.trail')
-                ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
-                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
-                ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_reply', array('messageId' => $messageId)), "edit");
-
-            return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
-                'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-                'crumbs' => $crumbs,
-                'form' => $formHandler->getForm()->createView(),
-                'preview' => $formHandler->getForm()->getData(),
-                'folders' => $folders,
-	            'used_allowance' => $stats['used_allowance'],
-	            'total_message_count' => $stats['total_message_count'],
-                'user' => $user,
-            ));
         }
+
+     	$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+
+    	$stats = $folderManager->getUsedAllowance($folders, $quota);
+
+        // setup crumb trail.
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
+            ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
+            ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
+            ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.compose_reply', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_reply', array('messageId' => $messageId)), "edit");
+
+        return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
+            'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
+            'crumbs' => $crumbs,
+            'form' => $formHandler->getForm()->createView(),
+            'preview' => $formHandler->getForm()->getData(),
+            'folders' => $folders,
+         	'used_allowance' => $stats['used_allowance'],
+         	'total_message_count' => $stats['total_message_count'],
+            'user' => $user,
+        ));
     }
 
 
@@ -261,45 +277,53 @@ class MessageController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message')->setDefaultValues(array('sender' => $user, 'message' => $message, 'action' => 'forward'));
 
-        if ($formHandler->process()) {
-            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
+		// Flood Control.
+		if ( ! $this->container->get('ccdn_message_message.component.flood_control')->isFlooded())
+		{
+	        if ($formHandler->process()) {
+				$this->container->get('ccdn_message_message.component.flood_control')->incrementCounter();
+				
+	            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array(), 'CCDNMessageMessageBundle'));
 
-            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
-        } else {
-            //
-            // Get all the folders.
-            //
-            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
+	        }
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_message_message.flash.send.flood_control', array(), 'CCDNMessageMessageBundle'));
+		}
 
-            $folderManager = $this->container->get('ccdn_message_message.manager.folder');
+		//
+		// Get all the folders.
+		//
+		$folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
 
-            if (! $folders) {
-                $folderManager->setupDefaults($user->getId())->flush();
+		$folderManager = $this->container->get('ccdn_message_message.manager.folder');
 
-                $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-            }
+		if (! $folders) {
+		    $folderManager->setupDefaults($user->getId())->flush();
 
-	        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
+		    $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
+		}
 
-        	$stats = $folderManager->getUsedAllowance($folders, $quota);
+		$quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
 
-            // setup crumb trail.
-            $crumbs = $this->container->get('ccdn_component_crumb.trail')
-                ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
-                ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
-                ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_forward', array('messageId' => $messageId)), "edit");
+		$stats = $folderManager->getUsedAllowance($folders, $quota);
 
-            return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
-                'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
-                'crumbs' => $crumbs,
-                'form' => $formHandler->getForm()->createView(),
-                'preview' => $formHandler->getForm()->getData(),
-                'folders' => $folders,
-	            'used_allowance' => $stats['used_allowance'],
-	            'total_message_count' => $stats['total_message_count'],
-                'user' => $user,
-            ));
-        }
+		// setup crumb trail.
+		$crumbs = $this->container->get('ccdn_component_crumb.trail')
+		    ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home")
+		    ->add($message->getSubject(), $this->container->get('router')->generate('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)), "email")
+		    ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.compose_forward', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_mail_compose_forward', array('messageId' => $messageId)), "edit");
+
+		return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Message:compose.html.' . $this->getEngine(), array(
+		    'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
+		    'crumbs' => $crumbs,
+		    'form' => $formHandler->getForm()->createView(),
+		    'preview' => $formHandler->getForm()->getData(),
+		    'folders' => $folders,
+		 	'used_allowance' => $stats['used_allowance'],
+		 	'total_message_count' => $stats['total_message_count'],
+		    'user' => $user,
+		));
     }
 
 
@@ -326,8 +350,16 @@ class MessageController extends ContainerAware
             throw new NotFoundHttpException('No such message found!');
         }
 
-        $this->container->get('ccdn_message_message.manager.message')->sendDraft(array($message))->flush();
-
+				// Flood Control.
+		if ( ! $this->container->get('ccdn_message_message.component.flood_control')->isFlooded())
+		{
+			$this->container->get('ccdn_message_message.component.flood_control')->incrementCounter();
+			
+	        $this->container->get('ccdn_message_message.manager.message')->sendDraft(array($message))->flush();
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_message_message.flash.send.flood_control', array(), 'CCDNMessageMessageBundle'));
+		}
+		
         return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
     }
 
