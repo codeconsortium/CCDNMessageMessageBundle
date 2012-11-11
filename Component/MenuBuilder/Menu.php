@@ -46,12 +46,12 @@ class Menu
 		        $unreadMessageCountObj = $container->get('ccdn_message_message.repository.registry')->findRegistryRecordForUser($user->getId());
 
 		        if ($unreadMessageCountObj == null) {
-		            $unreadMessageCount = 0;
+		            $unreadMessageCount = '0';
 		        } else {
 			        $unreadMessageCount = $unreadMessageCountObj->getCachedUnreadMessagesCount();
 				}				
 			} else {
-				$unreadMessageCount = 0;
+				$unreadMessageCount = '0';
 			}
 			
 			$container->get('session')->set('message_count', $unreadMessageCount);
