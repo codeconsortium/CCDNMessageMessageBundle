@@ -21,14 +21,17 @@ ccdn_message_message:
             subject_truncate: 50
             sent_datetime_format: "d-m-Y - H:i"
     message:
+		flood_control:
+			send_limit: 4
+			block_for_minutes: 1
+        show:
+            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
+            sent_datetime_format: "d-m-Y - H:i"
+			enable_bb_parser: true	
         compose:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
             form_theme: CCDNMessageMessageBundle:Form:fields.html.twig
 			enable_bb_editor: true
-        show:
-            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
-            sent_datetime_format: "d-m-Y - H:i"
-			enable_bb_parser: true
     quotas:
         max_messages: 100
 
