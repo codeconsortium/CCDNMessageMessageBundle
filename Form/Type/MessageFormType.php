@@ -13,6 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Form\Type;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
@@ -64,7 +66,7 @@ class MessageFormType extends AbstractType
      * @access public
      * @param FormBuilder $builder, array $options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('send_to', 'text', array('data' => $this->getRespondentSendTo()));
         $builder->add('subject', 'text', array('data' => $this->getQuotedSubject()));
