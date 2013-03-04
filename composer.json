@@ -1,0 +1,24 @@
+{
+    "name": "codeconsortium/ccdn-message-bundle",
+    "type": "symfony-bundle",
+    "description": "CCDN Message Bundle",
+    "keywords": ["ccdn", "codeconsortium", "message", "mail"],
+    "homepage": "http://github.com/codeconsortium/CCDNMessageMessageBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "reecefowell",
+            "email": "reece@codeconsortium.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": "2.1.*",
+        "doctrine/doctrine-bundle": "*"
+    },
+    "autoload": {
+        "psr-0": { "CCDNMessage\\MessageBundle": "" }
+    },
+    "target-dir": "CCDNMessage/MessageBundle"
+}
