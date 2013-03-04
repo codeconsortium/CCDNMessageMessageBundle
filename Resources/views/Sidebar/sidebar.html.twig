@@ -15,9 +15,19 @@
 		route == 'ccdn_message_message_mail_compose_reply' or
 		route == 'ccdn_message_message_mail_compose_forward'
 	-%}
-		<li class="active"><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-white icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+		<li class="active">
+			<a href="{{- path('ccdn_message_message_mail_compose') -}}">
+				<i class="icon-white icon-pencil"></i>
+				{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+			</a>
+		</li>
 	{%- else -%}
-		<li><a href="{{- path('ccdn_message_message_mail_compose') -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+		<li>
+			<a href="{{- path('ccdn_message_message_mail_compose') -}}">
+				<i class="icon-pencil"></i>
+				{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+			</a>
+		</li>
 	{%- endif -%}
 
 
@@ -29,21 +39,21 @@
 					<li class="active">
 						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-								<i class="icon-white icon-inbox">
+								<i class="icon-white icon-inbox"></i>
 							{%- else -%}
 								{%- if folder.name == 'drafts' -%}
-									<i class="icon-white icon-share-alt">
+									<i class="icon-white icon-share-alt"></i>
 								{%- else -%}
 									{%- if folder.name == 'trash' -%}
-										<i class="icon-white icon-trash">
+										<i class="icon-white icon-trash"></i>
 									{%- else -%}
-										<i class="icon-white icon-folder-close">
+										<i class="icon-white icon-folder-close"></i>
 									{%- endif -%}
 								{%- endif -%}
 							{%- endif -%}
-							</i>&nbsp;
+							
 							{%- if folder.getCachedUnreadCount -%}
-								<b>{{- folder.getName|title -}}&nbsp;<span class="badge pull-right" style="background-color: #fff; color: #000;">{{- folder.getCachedUnreadCount -}}</span></b>
+								<b>{{- folder.getName|title -}}<span class="badge pull-right" style="background-color: #fff; color: #000;">{{- folder.getCachedUnreadCount -}}</span></b>
 							{%- else -%}
 								{{- folder.getName|title -}}
 							{%- endif -%}
@@ -53,21 +63,21 @@
 					<li>
 						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-								<i class="icon-inbox">
+								<i class="icon-inbox"></i>
 							{%- else -%}
 								{%- if folder.name == 'drafts' -%}
-									<i class="icon-share-alt">
+									<i class="icon-share-alt"></i>
 								{%- else -%}
 									{%- if folder.name == 'trash' -%}
-										<i class="icon-trash">
+										<i class="icon-trash"></i>
 									{%- else -%}
-										<i class="icon-folder-close">
+										<i class="icon-folder-close"></i>
 									{%- endif -%}
 								{%- endif -%}
 							{%- endif -%}
-							</i>&nbsp;
+							
 							{%- if folder.getCachedUnreadCount -%}
-								<b>{{- folder.getName|title -}}&nbsp;<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
+								<b>{{- folder.getName|title -}}<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
 							{%- else -%}
 								{{- folder.getName|title -}}
 							{%- endif -%}
@@ -78,21 +88,21 @@
 				<li>
 					<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
 						{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-							<i class="icon-inbox">
+							<i class="icon-inbox"></i>
 						{%- else -%}
 							{%- if folder.name == 'drafts' -%}
-								<i class="icon-share-alt">
+								<i class="icon-share-alt"></i>
 							{%- else -%}
 								{%- if folder.name == 'trash' -%}
-									<i class="icon-trash">
+									<i class="icon-trash"></i>
 								{%- else -%}
-									<i class="icon-folder-close">
+									<i class="icon-folder-close"></i>
 								{%- endif -%}
 							{%- endif -%}
 						{%- endif -%}
-						</i>&nbsp;
+						</i>
 						{%- if folder.getCachedUnreadCount -%}
-							<b>{{- folder.getName|title -}}&nbsp;<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
+							<b>{{- folder.getName|title -}}<span class="badge badge-info pull-right">{{- folder.getCachedUnreadCount -}}</span></b>
 						{%- else -%}
 							{{- folder.getName|title -}}
 						{%- endif -%}
@@ -102,9 +112,19 @@
 		{%- endfor -%}
 	{%- else -%}
 		{%- if route == 'ccdn_message_message_index' -%}
-			<li class="active"><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-white icon-inbox"></i>&nbsp;{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+			<li class="active">
+				<a href="{{- path('ccdn_message_message_index') -}}">
+					<i class="icon-white icon-inbox"></i>
+					{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}
+				</a>
+			</li>
 		{%- else -%}
-			<li><a href="{{- path('ccdn_message_message_index') -}}"><i class="icon-inbox"></i>&nbsp;{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}</a></li>
+			<li>
+				<a href="{{- path('ccdn_message_message_index') -}}">
+					<i class="icon-inbox"></i>
+					{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}
+				</a>
+			</li>
 		{%- endif -%}
 	{%- endif -%}
 
@@ -113,7 +133,10 @@
 	{% if used_allowance is defined -%}
 		<li class="divider"></li>
 		<li>
-			<span class="pull-left"><i class="icon-hdd"></i>&nbsp;{{- used_allowance -}}&#37;&nbsp;</span>
+			<span class="pull-left">
+				<i class="icon-hdd"></i>
+				{{- used_allowance -}}&#37;
+			</span>
 			<div class="progress progress-danger">
 				<div class="bar" style="width:{{- used_allowance -}}%;"></div>
 			</div>

@@ -68,21 +68,38 @@ class MessageFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('send_to', 'text', array('data' => $this->getRespondentSendTo()));
-        $builder->add('subject', 'text', array('data' => $this->getQuotedSubject()));
-        $builder->add('body', 'textarea', array('data' => $this->getQuotedBody()));
-        $builder->add('is_flagged', 'checkbox', array('data' => false, 'required' => false));
+        $builder->add('send_to', 'text', array(
+			'data' => $this->getRespondentSendTo(),
+			'label' => 'ccdn_message_message.form.label.message.to',
+			'translation_domain' => 'CCDNMessageMessageBundle',
+		));
+        $builder->add('subject', 'text', array(
+			'data' => $this->getQuotedSubject(),
+			'label' => 'ccdn_message_message.form.label.message.subject',
+			'translation_domain' => 'CCDNMessageMessageBundle',
+		));
+        $builder->add('body', 'textarea', array(
+			'data' => $this->getQuotedBody(),
+			'label' => 'ccdn_message_message.form.label.message.body',
+			'translation_domain' => 'CCDNMessageMessageBundle',
+		));
+        $builder->add('is_flagged', 'checkbox', array(
+			'data' => false,
+			'required' => false,
+			'label' => 'ccdn_message_message.form.label.message.flagged',
+			'translation_domain' => 'CCDNMessageMessageBundle',
+		));
 
-        $userId = $this->defaults['sender']->getId();
-        $attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
-
-        $builder->add('attachment', 'entity', array(
-            'class' => 'CCDNComponentAttachmentBundle:Attachment',
-            'choices' => $attachments,
-            'property' => 'filename_original',
-            'required' => false,
-            )
-        );
+        //$userId = $this->defaults['sender']->getId();
+        //$attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
+        //
+        //$builder->add('attachment', 'entity', array(
+        //    'class' => 'CCDNComponentAttachmentBundle:Attachment',
+        //    'choices' => $attachments,
+        //    'property' => 'filename_original',
+        //    'required' => false,
+        //    )
+        //);
 
     }
 

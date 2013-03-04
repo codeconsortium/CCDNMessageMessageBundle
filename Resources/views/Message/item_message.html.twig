@@ -1,9 +1,11 @@
 {%- spaceless -%}
-<table class="table">
+<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
 	<tbody>
-		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+		<tr>
 			<td class="right" style="width: 80px;">
-				{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
+				<b>
+					{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
+				</b>
 			</td>
 			<td class="left">
 				{%- if message.getSentFrom -%}
@@ -15,9 +17,11 @@
 		</tr>
 		{%- if message.getSentFrom -%}
 			{%- if message.getSentFrom.getId == app.user.id -%}
-			<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+			<tr>
 				<td class="right" style="width: 80px;">
-					{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+					<b>
+						{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+					</b>
 				</td>
 				<td class="left" colspan="3">
 					{{- message.getSendTo |title -}}
@@ -25,24 +29,29 @@
 			</tr>
 			{%- endif -%}
 		{%- endif -%}
-		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+		<tr>
 			<td class="right" style="width: 80px;">
-				{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
+				<b>
+					{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
+				</b>
 			</td>
 			<td class="left" colspan="3">
 				{{- message.getSubject -}}
 			</td>
 		</tr>
-		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+		<tr>
 			<td class="right" style="width: 80px;">
-				{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
+				<b>
+					{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
+				</b>
 			</td>
 			<td class="left">
 				{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
 			</td>
 		</tr>
+		{#
 		{%- if message.getAttachment -%}
-		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+		<tr>
 			<td class="right" style="wdith: 80px;">
 				{{- 'ccdn_message_message.item_message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
 			</td>
@@ -51,12 +60,13 @@
 			</td>
 		</tr>
 		{%- endif -%}
-		<tr class="{{- cycler(['row_odd', 'row_even'], 'cycle') -}}">
+		#}
+		<tr>
 			<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
-				<span class="common_body">
+				<article>
 					{{- BBCode(message.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
 					<br>
-				</span>
+				</article>
 			</td>
 		</tr>
 	</tbody>

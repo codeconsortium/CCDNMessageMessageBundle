@@ -1,9 +1,7 @@
-{% extends ccdn_message_message.message.compose.layout_template %}
+{% extends 'CCDNMessageMessageBundle::base.html.twig' %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
-{% endblock %}
+{% set LayoutTemplate = ccdn_message_message.message.compose.layout_template %}
+
 
 {% block javascripts %}
 	{{ parent() }}
@@ -12,81 +10,40 @@
 
 {% block title %}{{- truncDot('ccdn_message_message.title.message.compose' |trans({}, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
 
-{% block sidebar %}
-	{{ parent() }}
 
-	{%- include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' -%}
-
-{% endblock %}
-
-{% block body %}
+{% block body_content %}
 
 	{%- spaceless -%}
 
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-
-	<h2>{{- 'ccdn_message_message.title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h2>
 
 	{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
 	<form action="{{- path('ccdn_message_message_mail_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 		<fieldset>
 
+			<div class="control-group form-title">
+				<div class="controls">
+					<h3>{{- 'ccdn_message_message.title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h3>
+				</div>
+			</div>
+
 			{{- form_errors(form) -}}
 
-			<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
-
-			<div class="control-group{{- (form.send_to.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.send_to, null, { 'label': 'ccdn_message_message.form.label.message.to'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">
-					{{- form_errors(form.send_to) -}}
-					{{- form_widget(form.send_to) -}}
-				</div>
-			</div>
-
-			<div class="control-group{{- (form.subject.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.subject, null, { 'label': 'ccdn_message_message.form.label.message.subject'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">
-					{{- form_errors(form.subject) -}}
-					{{- form_widget(form.subject) -}}
-				</div>
-			</div>
-
-			<div class="control-group{{- (form.body.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.body, null, { 'label': 'ccdn_message_message.form.label.message.body'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">
-					{{- form_errors(form.body) -}}
-					{%- if ccdn_message_message.message.compose.enable_bb_editor -%}
-						{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
-					{%- endif -%}
-					{{- form_widget(form.body) -}}
-				</div>
-			</div>
-
-			{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
-			<div class="control-group{{- (form.is_flagged.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.is_flagged, null, { 'label': 'ccdn_message_message.form.label.message.flagged'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">
-					{{- form_errors(form.is_flagged) -}}
-					<label class="checkbox">{{- form_widget(form.is_flagged, {'class': 'checkbox pull-left'}) -}}</label>
-				</div>
-			</div>
-
-			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.attachment, null, { 'label': 'ccdn_message_message.form.label.message.attachment'| trans({}, 'CCDNMessageMessageBundle')}) -}}
-				<div class="controls row-fluid">
-					{{- form_errors(form.attachment) -}}
-					{{- form_widget(form.attachment) -}}
-					&nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_index') -}}">{{- 'ccdn_component_attachment.link.manage' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-					&nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'ccdn_component_attachment.link.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-				</div>
-			</div>
-
+			{{- form_widget(form) -}}
+					
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary" name="submit_post">{{- 'ccdn_message_message.form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
-				<button type="submit" class="btn btn-default" name="submit_preview">{{- 'ccdn_message_message.form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') -}}</button>&nbsp;
-				<button type="submit" class="btn btn-default" name="submit_draft">{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}</button>
+				<button type="submit" class="btn btn-primary" name="submit_post">
+					{{- 'ccdn_message_message.form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') -}}
+				</button>
+				
+				<button type="submit" class="btn btn-default" name="submit_preview">
+					{{- 'ccdn_message_message.form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
+				</button>
+				
+				<button type="submit" class="btn btn-default" name="submit_draft">
+					{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
+				</button>
 			</div>
 		</fieldset>
 	</form>
@@ -95,8 +52,6 @@
 		{%- include 'CCDNMessageMessageBundle:Message:item_preview.html.twig' with {'message': preview } -%}
 	{%- endif -%}
 
-	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-
 	{%- endspaceless -%}
 
-{% endblock %}
+{% endblock body_content %}
