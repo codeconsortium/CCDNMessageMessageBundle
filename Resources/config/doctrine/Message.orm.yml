@@ -1,0 +1,72 @@
+CCDNMessage\MessageBundle\Entity\Message:
+    type: entity
+    table: CC_Message_Message
+    repositoryClass: CCDNMessage\MessageBundle\Repository\MessageRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        subject:
+            type: string
+        body:
+            type: text
+        sentDate:
+            type: datetime
+            name: send_date
+            nullable: true
+        createdDate:
+            type: datetime
+            name: created_date
+            nullable: true
+        sendTo:
+            type: text
+            name: send_to
+        isDraft:
+            type: boolean
+            nullable: false
+            name: is_draft
+        isRead:
+            type: boolean
+            nullable: false
+            name: is_read
+        isFlagged:
+            type: boolean
+            nullable: false
+            name: is_flagged
+    manyToOne:
+        folder:
+            targetEntity: CCDNMessage\MessageBundle\Entity\Folder
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_folder_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        sentTo:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_sent_to_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        sentFrom:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]			
+            joinColumn:
+                name: fk_sent_from_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        ownedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        inResponseTo: 
+            targetEntity: CCDNMessage\MessageBundle\Entity\Message
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_in_response_message_id
+                referencedColumnName: id
+                onDelete: SET NULL

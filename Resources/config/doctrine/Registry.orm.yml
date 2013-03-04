@@ -1,0 +1,20 @@
+CCDNMessage\MessageBundle\Entity\Registry:
+    type: entity
+    table: CC_Message_Registry
+    repositoryClass: CCDNMessage\MessageBundle\Repository\RegistryRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        cachedUnreadMessagesCount:
+            type: integer
+            name: cached_unread_message_count
+    manyToOne:
+        ownedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL

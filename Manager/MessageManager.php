@@ -159,7 +159,7 @@ class MessageManager extends BaseManager implements ManagerInterface
         $temp->setSentDate(new \DateTime());
         $temp->setIsDraft($message->getIsDraft());
         $temp->setIsFlagged($message->getIsFlagged());
-        $temp->setAttachment($message->getAttachment());
+        //$temp->setAttachment($message->getAttachment());
 
         if ($isCarbonCopy) {
             $temp->setOwnedBy($sender);

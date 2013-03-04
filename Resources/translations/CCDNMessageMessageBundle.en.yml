@@ -58,6 +58,7 @@ ccdn_message_message.form.label.message.attachment: 'Attachment: '
 ccdn_message_message.form.button.message.preview: 'Preview'
 ccdn_message_message.form.button.message.save_draft: 'Save Draft'
 ccdn_message_message.form.button.message.send: 'Send Message'
+ccdn_message_message.form.button.message.cancel: 'Cancel'
 
 #
 # Table Labels.

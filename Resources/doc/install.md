@@ -1,4 +1,4 @@
-Installing CCDNMessage MessageBundle 1.2
+Installing CCDNMessage MessageBundle 1.x
 ========================================
 
 ## Dependencies:
@@ -8,102 +8,96 @@ Installing CCDNMessage MessageBundle 1.2
 3. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle/tree/v1.2).
 4. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle/tree/v1.2).
 5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle/tree/v1.2).
-6. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle/tree/v1.2).
-7. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle/tree/v1.2).
 
 ## Installation:
 
-Installation takes only 9 steps:
+Installation takes only 4 steps:
 
-1. Download and install the dependencies.
-2. Register bundles with autoload.php.
-3. Register bundles with AppKernel.php.  
-4. Run vendors install script.
-5. Update your app/config/routing.yml. 
-6. Update your app/config/config.yml. 
-7. Update your database schema.
-8. Symlink assets to your public web directory.
-9. Warmup the cache.
+1. Download and install dependencies via Composer.
+2. Register bundles with AppKernel.php.
+3. Update your app/config/routing.yml.
+4. Update your database schema.
 
-### Step 1: Download and install the dependencies.
+### Step 1: Download and install dependencies via Composer.
 
-Append the following to end of your deps file (found in the root of your Symfony2 installation):
+Append the following to end of your applications composer.json file (found in the root of your Symfony2 installation):
 
-``` ini
-[CCDNMessageMessageBundle]
-	git=https://github.com/codeconsortium/CCDNMessageMessageBundle.git
-	target=/bundles/CCDNMessage/MessageBundle
-    version=v1.2	
+``` js
+// composer.json
+{
+    // ...
+    "require": {
+        // ...
+        "codeconsortium/ccdn-message-bundle": "dev-master"
+    }
+}
 ```
 
-### Step 2: Register bundles with autoload.php.
+NOTE: Please replace ``dev-master`` in the snippet above with the latest stable branch, for example ``2.0.*``.
 
-Add the following to the registerNamespaces array in the method by appending it to the end of the array.
+Then, you can install the new dependencies by running Composer's ``update``
+command from the directory where your ``composer.json`` file is located:
 
-``` php
-// app/autoload.php
-$loader->registerNamespaces(array(
-    'CCDNMessage'      => __DIR__.'/../vendor/bundles',
-	**...**
-));
+``` bash
+$ php composer.phar update
 ```
-### Step 3: Register bundles with AppKernel.php.  
 
-In your AppKernel.php add the following bundles to the registerBundles method array:  
+### Step 2: Register bundles with AppKernel.php.
+
+Now, Composer will automatically download all required files, and install them
+for you. All that is left to do is to update your ``AppKernel.php`` file, and
+register the new bundle:
 
 ``` php
 // app/AppKernel.php
 public function registerBundles()
 {
     $bundles = array(
-		new CCDNMessage\MessageBundle\CCDNMessageBundle(),
-		**...**
+		new CCDNMessage\MessageBundle\CCDNMessageMessageBundle(),
+		...
 	);
 }
 ```
 
-### Step 4: Run vendors install script.
+### Step 3: Update your app/config/routing.yml.
 
-From your projects root Symfony directory on the command line run:
-
-``` bash
-$ php bin/vendors install
-```
-
-### Step 5: Update your app/config/routing.yml. 
-
-In your app/config/routing.yml add:  
+In your app/config/routing.yml add:
 
 ``` yml
 CCDNMessageMessageBundle:
     resource: "@CCDNMessageMessageBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /
 ```
 
-### Step 6: Update your app/config/config.yml. 
+You can change the route of the standalone route to any route you like, it is included for convenience.
 
-In your app/config/config.yml add:   
+### Step 4: Update your database schema.
 
-``` yml
-#        
-# for CCDNMessage MessageBundle      
-#
-ccdn_message_message:  
-    user:
-        profile_route: ccdn_user_profile_show_by_id
-    template:
-        engine: twig
-    quotas:
-        max_messages: 100
+Make sure to add the ForumBundle to doctrines mapping configuration:
 
 ```
+# app/config/config.yml
+# Doctrine Configuration
+doctrine:
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: "%kernel.debug%"
+        resolve_target_entities:
+            Symfony\Component\Security\Core\User\UserInterface: FOS\UserBundle\Entity\User
+        entity_managers:
+            default:
+                mappings:
+                    FOSUserBundle: ~
+                    CCDNMessageMessageBundle:
+                        mapping:              true
+                        type:                 yml
+                        dir:                  "Resources/config/doctrine"
+                        alias:                ~
+                        prefix:               CCDNMessage\MessageBundle\Entity
+                        is_bundle:            true
+```
 
-**Warning:**
-
->Set the appropriate layout templates you want under the sections 'layout_templates' and the 
-route to a users profile if you are not using the [CCDNUser\ProfileBundle](http://github.com/codeconsortium/CCDNUserProfileBundle). Otherwise use defaults.
-
-### Step 7: Update your database schema.
+> FOSUserBundle is noted as an additional example, you can add multiple bundles here. You should however choose a UserBundle of your own and change the user entity that UserInterface will resolve to.
 
 From your projects root Symfony directory on the command line run:
 
@@ -117,25 +111,21 @@ Take the SQL that is output and update your database manually.
 
 > Please take care when updating your database, check the output SQL before applying it.
 
-### Step 8: Symlink assets to your public web directory.
+### Translations
 
-From your projects root Symfony directory on the command line run:
+If you wish to use default texts provided in this bundle, you have to make sure you have translator enabled in your config.
 
-``` bash
-$ php app/console assets:install --symlink web/
+``` yaml
+# app/config/config.yml
+
+framework:
+    translator: ~
 ```
 
-### Step 9: Warmup the cache.
-
-From your projects root Symfony directory on the command line run:
-
-``` bash
-$ php app/console cache:warmup
-```
+## Next Steps.
 
 Change the layout template you wish to use for each page by changing the configs under the labelled section 'layout_templates'.
 
-## Next Steps.
 
 Installation should now be complete!
 

@@ -147,8 +147,6 @@ class MessageFormHandler
             }
 
             if ($this->form->isValid()) {
-//				echo '<pre>' . print_r($this->form->getData(), true) . '</pre>'; die();
-//				$this->onSuccess($this->form->getData());
                 $this->onSuccess($formData);
 
                 return true;

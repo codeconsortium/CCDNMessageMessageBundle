@@ -1,0 +1,36 @@
+CCDNMessage\MessageBundle\Entity\Folder:
+    type: entity
+    table: CC_Message_Folder
+    repositoryClass: CCDNMessage\MessageBundle\Repository\FolderRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+        specialType:
+            type: integer
+            name: special_type
+            nullable: true
+        cachedReadCount:
+            type: integer
+            name: cached_read_count
+            nullable: true
+        cachedUnreadCount:
+            type: integer
+            name: cached_unread_count
+            nullable: true
+        cachedTotalMessageCount:
+            type: integer
+            name: cached_total_message_count
+            nullable: true
+    manyToOne:
+        ownedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]
+            nullable: true
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL

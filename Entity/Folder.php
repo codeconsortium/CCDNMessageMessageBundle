@@ -15,52 +15,26 @@ namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use CCDNUser\UserBundle\Entity\User;
+use CCDNMessage\MessageBundle\Model\Folder as AbstractFolder;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNMessage\MessageBundle\Repository\FolderRepository")
- * @ORM\Table(name="CC_Message_Folder")
- */
-class Folder
+class Folder extends AbstractFolder
 {
-	
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+	/** @var integer $id */
     protected $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    /** @var string $name */
     protected $name;
+    
+    /** @var integer $specialType */
+    protected $specialType; // either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
 
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $ownedBy = null;
-
-    // either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
-    /**
-     * @ORM\Column(type="integer", name="special_type", nullable=true)
-     */
-    protected $specialType;
-
-    /**
-     * @ORM\Column(type="integer", name="cached_read_count", nullable=true)
-     */
+    /** @var integer $cachedReadCount */
     protected $cachedReadCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", name="cached_unread_count", nullable=true)
-     */
+    /** @var integer $cachedUnreadCount */
     protected $cachedUnreadCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", name="cached_total_message_count", nullable=true)
-     */
+    /** @var integer $cachedTotalMessageCount */
     protected $cachedTotalMessageCount = 0;
 
     /**
@@ -171,25 +145,5 @@ class Folder
     public function getCachedTotalMessageCount()
     {
         return $this->cachedTotalMessageCount;
-    }
-
-    /**
-     * Set ownedBy
-     *
-     * @param CCDNUser\UserBundle\Entity\User $ownedBy
-     */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
-    {
-        $this->ownedBy = $ownedBy;
-    }
-
-    /**
-     * Get ownedBy
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getOwnedBy()
-    {
-        return $this->ownedBy;
     }
 }

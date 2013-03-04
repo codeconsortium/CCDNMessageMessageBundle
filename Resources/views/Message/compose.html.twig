@@ -44,6 +44,10 @@
 				<button type="submit" class="btn btn-default" name="submit_draft">
 					{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
 				</button>
+				
+				<a href="{{- path('ccdn_message_message_folder_show', {'folderName': 'inbox' }) -}}" class="btn">
+					{{- 'ccdn_message_message.form.button.message.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
+				</a>
 			</div>
 		</fieldset>
 	</form>
