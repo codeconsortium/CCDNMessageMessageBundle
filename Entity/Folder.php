@@ -55,6 +55,8 @@ class Folder extends AbstractFolder
     public function setName($name)
     {
         $this->name = $name;
+		
+		return $this;
     }
 
     /**
@@ -75,6 +77,8 @@ class Folder extends AbstractFolder
     public function setSpecialType($specialType)
     {
         $this->specialType = $specialType;
+		
+		return $this;
     }
 
     /**
@@ -95,6 +99,8 @@ class Folder extends AbstractFolder
     public function setCachedReadCount($cachedReadCount)
     {
         $this->cachedReadCount = $cachedReadCount;
+		
+		return $this;
     }
 
     /**
@@ -115,6 +121,8 @@ class Folder extends AbstractFolder
     public function setCachedUnreadCount($cachedUnreadCount)
     {
         $this->cachedUnreadCount = $cachedUnreadCount;
+		
+		return $this;
     }
 
     /**
@@ -135,6 +143,8 @@ class Folder extends AbstractFolder
     public function setCachedTotalMessageCount($cachedTotalMessageCount)
     {
         $this->cachedTotalMessageCount = $cachedTotalMessageCount;
+		
+		return $this;
     }
 
     /**

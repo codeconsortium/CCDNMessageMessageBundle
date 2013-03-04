@@ -43,6 +43,8 @@ class Registry extends AbstractRegistry
     public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
     {
         $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
+		
+		return $this;
     }
 
     /**

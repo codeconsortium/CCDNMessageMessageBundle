@@ -66,6 +66,8 @@ class Message extends AbstractMessage
     public function setSubject($subject)
     {
         $this->subject = $subject;
+		
+		return $this;
     }
 
     /**
@@ -86,6 +88,8 @@ class Message extends AbstractMessage
     public function setBody($body)
     {
         $this->body = $body;
+		
+		return $this;
     }
 
     /**
@@ -106,6 +110,8 @@ class Message extends AbstractMessage
     public function setSentDate($sentDate)
     {
         $this->sentDate = $sentDate;
+		
+		return $this;
     }
 
     /**
@@ -126,6 +132,8 @@ class Message extends AbstractMessage
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
+		
+		return $this;
     }
 
     /**
@@ -146,6 +154,8 @@ class Message extends AbstractMessage
     public function setSendTo($sendTo)
     {
         $this->sendTo = $sendTo;
+		
+		return $this;
     }
 
     /**
@@ -166,6 +176,8 @@ class Message extends AbstractMessage
     public function setIsDraft($isDraft)
     {
         $this->isDraft = $isDraft;
+		
+		return $this;
     }
 
     /**
@@ -186,6 +198,8 @@ class Message extends AbstractMessage
     public function setIsRead($isRead)
     {
         $this->isRead = $isRead;
+		
+		return $this;
     }
 
     /**
@@ -206,6 +220,8 @@ class Message extends AbstractMessage
     public function setIsFlagged($isFlagged)
     {
         $this->isFlagged = $isFlagged;
+		
+		return $this;
     }
 
     /**

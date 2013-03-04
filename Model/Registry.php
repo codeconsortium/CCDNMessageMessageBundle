@@ -35,6 +35,8 @@ abstract class Registry
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
+		
+		return $this;
     }
 
     /**

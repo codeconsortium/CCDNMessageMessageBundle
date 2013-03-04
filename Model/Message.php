@@ -48,6 +48,8 @@ abstract class Message
     public function setFolder(\CCDNMessage\MessageBundle\Entity\Folder $folder = null)
     {
         $this->folder = $folder;
+		
+		return $this;
     }
 
     /**
@@ -68,6 +70,8 @@ abstract class Message
     public function setSentTo(UserInterface $sentTo = null)
     {
         $this->sentTo = $sentTo;
+		
+		return $this;
     }
 
     /**
@@ -88,6 +92,8 @@ abstract class Message
     public function setSentFrom(UserInterface $sentFrom = null)
     {
         $this->sentFrom = $sentFrom;
+		
+		return $this;
     }
 
     /**
@@ -108,6 +114,8 @@ abstract class Message
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
+		
+		return $this;
     }
 
     /**
@@ -128,6 +136,8 @@ abstract class Message
 	public function setInResponseTo(\CCDNMessage\MessageBundle\Entity\Message $inResponseTo)
 	{
 		$this->inResponseTo = $inResponseTo;
+		
+		return $this;
 	}
 	
     /**
