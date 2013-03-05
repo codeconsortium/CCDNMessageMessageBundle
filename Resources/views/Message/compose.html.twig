@@ -15,43 +15,42 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<section>
+		{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
+		<form action="{{- path('ccdn_message_message_mail_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+			<fieldset>
 
-
-	{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
-	<form action="{{- path('ccdn_message_message_mail_compose') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-		<fieldset>
-
-			<div class="control-group form-title">
-				<div class="controls">
-					<h3>{{- 'ccdn_message_message.title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h3>
+				<div class="control-group form-title">
+					<div class="controls">
+						<h3>{{- 'ccdn_message_message.title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h3>
+					</div>
 				</div>
-			</div>
 
-			{{- form_errors(form) -}}
+				{{- form_errors(form) -}}
 
-			{{- form_widget(form) -}}
+				{{- form_widget(form) -}}
 					
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary" name="submit_post">
-					{{- 'ccdn_message_message.form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') -}}
-				</button>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary" name="submit_post">
+						{{- 'ccdn_message_message.form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') -}}
+					</button>
 				
-				<button type="submit" class="btn btn-default" name="submit_preview">
-					{{- 'ccdn_message_message.form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
-				</button>
+					<button type="submit" class="btn btn-default" name="submit_preview">
+						{{- 'ccdn_message_message.form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
+					</button>
 				
-				<button type="submit" class="btn btn-default" name="submit_draft">
-					{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
-				</button>
+					<button type="submit" class="btn btn-default" name="submit_draft">
+						{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
+					</button>
 				
-				<a href="{{- path('ccdn_message_message_folder_show', {'folderName': 'inbox' }) -}}" class="btn">
-					{{- 'ccdn_message_message.form.button.message.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
-				</a>
-			</div>
-		</fieldset>
-	</form>
-
+					<a href="{{- path('ccdn_message_message_folder_show', {'folderName': 'inbox' }) -}}" class="btn">
+						{{- 'ccdn_message_message.form.button.message.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
+					</a>
+				</div>
+			</fieldset>
+		</form>
+	</section>
+			
 	{%- if preview is not empty -%}
 		{%- include 'CCDNMessageMessageBundle:Message:item_preview.html.twig' with {'message': preview } -%}
 	{%- endif -%}

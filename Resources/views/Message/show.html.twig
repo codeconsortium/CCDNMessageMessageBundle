@@ -9,22 +9,20 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<section>
+		<div class="btn-toolbar">
+			{%- if message.isDraft -%}
+				<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			{%- endif -%}
+			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
+			<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
+		</div>
 
-	{#<h2>{{ 'ccdn_message_message.title.message.show' |trans({'%message_subject%': truncDot(message.getSubject, 60) }, 'CCDNMessageMessageBundle') }}</h2>#}
-
-	<div class="btn-toolbar">
-		{%- if message.isDraft -%}
-			<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-		{%- endif -%}
-		<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-		<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-		<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}</a>&nbsp;
-		<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
-	</div>
-
-	{%- include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} -%}
-
+		{%- include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} -%}
+	</section>
+	
 	{%- endspaceless -%}
 
 {% endblock body_content %}

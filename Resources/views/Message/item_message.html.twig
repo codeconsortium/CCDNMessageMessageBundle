@@ -1,74 +1,74 @@
 {%- spaceless -%}
-<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
-	<tbody>
-		<tr>
-			<td class="right" style="width: 80px;">
-				<b>
-					{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
-				</b>
-			</td>
-			<td class="left">
-				{%- if message.getSentFrom -%}
-					<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
-				{%- else -%}
-					Guest
-				{%- endif -%}
-			</td>
-		</tr>
-		{%- if message.getSentFrom -%}
-			{%- if message.getSentFrom.getId == app.user.id -%}
+	<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
+		<tbody>
 			<tr>
 				<td class="right" style="width: 80px;">
 					<b>
-						{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+						{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
+					</b>
+				</td>
+				<td class="left">
+					{%- if message.getSentFrom -%}
+						<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
+					{%- else -%}
+						Guest
+					{%- endif -%}
+				</td>
+			</tr>
+			{%- if message.getSentFrom -%}
+				{%- if message.getSentFrom.getId == app.user.id -%}
+				<tr>
+					<td class="right" style="width: 80px;">
+						<b>
+							{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+						</b>
+					</td>
+					<td class="left" colspan="3">
+						{{- message.getSendTo |title -}}
+					</td>
+				</tr>
+				{%- endif -%}
+			{%- endif -%}
+			<tr>
+				<td class="right" style="width: 80px;">
+					<b>
+						{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</b>
 				</td>
 				<td class="left" colspan="3">
-					{{- message.getSendTo |title -}}
+					{{- message.getSubject -}}
+				</td>
+			</tr>
+			<tr>
+				<td class="right" style="width: 80px;">
+					<b>
+						{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
+					</b>
+				</td>
+				<td class="left">
+					{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
+				</td>
+			</tr>
+			{#
+			{%- if message.getAttachment -%}
+			<tr>
+				<td class="right" style="wdith: 80px;">
+					{{- 'ccdn_message_message.item_message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
+				</td>
+				<td class="left" colspan="3">
+					<a href="{{- path('ccdn_component_attachment_download', {'attachmentId': message.getAttachment.getId }) -}}"><img src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': message.getAttachment.getId }) -}}" alt="icon"></a>
 				</td>
 			</tr>
 			{%- endif -%}
-		{%- endif -%}
-		<tr>
-			<td class="right" style="width: 80px;">
-				<b>
-					{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
-				</b>
-			</td>
-			<td class="left" colspan="3">
-				{{- message.getSubject -}}
-			</td>
-		</tr>
-		<tr>
-			<td class="right" style="width: 80px;">
-				<b>
-					{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
-				</b>
-			</td>
-			<td class="left">
-				{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
-			</td>
-		</tr>
-		{#
-		{%- if message.getAttachment -%}
-		<tr>
-			<td class="right" style="wdith: 80px;">
-				{{- 'ccdn_message_message.item_message.attachment' |trans({}, 'CCDNMessageMessageBundle') -}}
-			</td>
-			<td class="left" colspan="3">
-				<a href="{{- path('ccdn_component_attachment_download', {'attachmentId': message.getAttachment.getId }) -}}"><img src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': message.getAttachment.getId }) -}}" alt="icon"></a>
-			</td>
-		</tr>
-		{%- endif -%}
-		#}
-		<tr>
-			<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
-				<article>
-					{{- BBCode(message.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
-					<br>
-				</article>
-			</td>
-		</tr>
-	</tbody>
-</table>
+			#}
+			<tr>
+				<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
+					<article>
+						{{- BBCode(message.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
+						<br>
+					</article>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 {%- endspaceless -%}

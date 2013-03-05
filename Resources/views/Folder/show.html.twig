@@ -14,10 +14,7 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
-
-	<div style="row-fluid">
-
+	<section>
 		<form method="POST" action="{{- path('ccdn_message_message_mail_bulk_action') -}}" class="form-inline">
 			<input type="hidden" id="submit_action" name="submit_action" value="">
 
@@ -161,7 +158,7 @@
 
 		</form>
 
-	</div>
+	</section>
 
 {#	<div class="well">
 		<i class="icon-pencil"></i> Draft
