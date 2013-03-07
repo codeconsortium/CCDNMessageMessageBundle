@@ -8,8 +8,6 @@ All available configuration options are listed below with their default values.
 # for CCDNMessage MessageBundle      
 #
 ccdn_message_message:  
-    user:                 
-        profile_route:        ccdn_user_profile_show_by_id 
     template:             
         engine:               twig 
     seo:                  

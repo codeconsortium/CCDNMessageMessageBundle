@@ -77,7 +77,6 @@ class FolderController extends ContainerAware
             ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_message_message.user.profile_route'),
             'crumbs' => $crumbs,
 			//'form'	=> $formHandler->getForm()->createView(),
             'pager' => $messagesPager,

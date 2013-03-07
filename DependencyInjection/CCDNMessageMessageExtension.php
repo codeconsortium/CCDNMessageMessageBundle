@@ -49,7 +49,6 @@ class CCDNMessageMessageExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
-        $container->setParameter('ccdn_message_message.user.profile_route', $config['user']['profile_route']);
 
         $this->getSEOSection($container, $config);
         $this->getFolderSection($container, $config);
