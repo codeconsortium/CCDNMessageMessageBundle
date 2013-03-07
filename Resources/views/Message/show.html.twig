@@ -20,7 +20,7 @@
 			<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'messageId': message.id }) -}}">{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}</a>
 		</div>
 
-		{%- include 'CCDNMessageMessageBundle:Message:item_message.html.twig' with {'message': message} -%}
+		{%- include 'CCDNMessageMessageBundle:Message:Item/item_message.html.twig' with {'message': message} -%}
 	</section>
 	
 	{%- endspaceless -%}

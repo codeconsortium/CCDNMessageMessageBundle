@@ -1,0 +1,71 @@
+{%- spaceless -%}
+
+	{%- set sender = create_profile(message.getSentFrom) -%}
+	{%- set recipient = create_profile(message.getSentTo) -%}
+					
+	<tr class="{{- (message.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (message.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- message.id -}}">
+		<td>
+			<input type="checkbox" id="message_{{- message.id -}}" name="check_message_{{- message.id -}}" data-check-all-responds="true" data-identifier="{{- current_folder.name -}}" data-qualifier="all {{- (message.isRead) ? 'read ' : 'unread ' -}}{{- (message.isDraft) ? 'draft ' : '' -}}{{- (message.isFlagged) ? 'flagged ' : '' -}}{#{- (message.attachment) ? 'attached ' : '' -}#}">
+		</td>
+		<td>
+			{%- if message.isFlagged -%}
+				<i class="icon-flag"></i>
+			{%- endif -%}
+		</td>
+		{#
+		<td>
+			{%- if message.attachment -%}
+				<i class="icon-file"></i>
+			{%- endif -%}
+		</td>
+		#}
+		<td>
+			{%- if message.isDraft -%}
+				{%- if message.sentFrom -%}
+					{%- if message.sentFrom.getId == app.user.id -%}
+						<i class="icon-repeat"></i>
+					{%- else -%}
+						<i class="icon-share-alt"></i>
+					{%- endif -%}
+				{%- else -%}
+					<i class="icon-pencil"></i>
+				{%- endif -%}
+			{%- else -%}
+				{%- if message.sentFrom -%}
+					{%- if message.sentFrom.getId == app.user.id -%}
+						<i class="icon-repeat"></i>
+					{%- else -%}
+						<i class="icon-share-alt"></i>
+					{%- endif -%}
+				{%- endif -%}
+			{%- endif -%}
+		</td>
+		<td>
+			{{- (message.isRead) ? '' : '<i class="icon-envelope"></i>' -}}
+		</td>
+		<td>
+			{%- if current_folder.name == "sent" -%}
+				{%- if message.getSendTo -%}
+					{{- truncDot(message.getSendTo |title, 50) -}}
+				{%- else -%}
+					Guest
+				{%- endif -%}
+			{%- else -%}
+				{{- sender.getProfilePath() |raw -}}
+			{%- endif -%}
+		</td>
+		<td>
+			<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}</a>
+		</td>
+		<td>
+			{%- if message.sentTo -%}
+				{%- if message.getSentDate -%}
+					<abbr class="timestamper" title="{{- message.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+						{{- message.getSentDate |date(ccdn_message_message.folder.show.sent_datetime_format) -}}
+					</abbr>
+				{%- endif -%}
+			{%- endif -%}
+		</td>
+	</tr>
+	
+{%- endspaceless -%}

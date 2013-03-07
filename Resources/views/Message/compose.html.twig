@@ -52,7 +52,9 @@
 	</section>
 			
 	{%- if preview is not empty -%}
-		{%- include 'CCDNMessageMessageBundle:Message:item_preview.html.twig' with {'message': preview } -%}
+		<section>
+			{%- include 'CCDNMessageMessageBundle:Message:Item/item_preview.html.twig' with {'message': preview } -%}
+		</section>
 	{%- endif -%}
 
 	{%- endspaceless -%}

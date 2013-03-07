@@ -1,27 +1,22 @@
 {%- spaceless -%}
+	{%- set sender = create_profile(message.getSentFrom) -%}
+	{%- set recipient = create_profile(message.getSentTo) -%}
+
 	<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
 		<tbody>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>
-						{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</b>
+					<b>{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left">
-					{%- if message.getSentFrom -%}
-						<a href="{{- path(user_profile_route, {'userId': message.getSentFrom.getId}) -}}">{{- message.getSentFrom |title -}}</a>
-					{%- else -%}
-						Guest
-					{%- endif -%}
+					{{- sender.getProfilePath() |raw -}}
 				</td>
 			</tr>
 			{%- if message.getSentFrom -%}
 				{%- if message.getSentFrom.getId == app.user.id -%}
 				<tr>
 					<td class="right" style="width: 80px;">
-						<b>
-							{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
-						</b>
+						<b>{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 					</td>
 					<td class="left" colspan="3">
 						{{- message.getSendTo |title -}}
@@ -31,9 +26,7 @@
 			{%- endif -%}
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>
-						{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</b>
+					<b>{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left" colspan="3">
 					{{- message.getSubject -}}
@@ -41,9 +34,7 @@
 			</tr>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>
-						{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</b>
+					<b>{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left">
 					{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
