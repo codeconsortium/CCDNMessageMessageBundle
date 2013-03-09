@@ -9,7 +9,7 @@ CCDNMessage\MessageBundle\Entity\Registry:
     fields:
         cachedUnreadMessagesCount:
             type: integer
-            name: cached_unread_message_count
+            column: cached_unread_message_count
     manyToOne:
         ownedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface

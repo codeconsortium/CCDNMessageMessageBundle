@@ -25,6 +25,16 @@ class Registry extends AbstractRegistry
 	/** @var integer $cachedUnreadMessageCount */
     protected $cachedUnreadMessagesCount = 0;
 
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *

@@ -20,13 +20,16 @@ abstract class Folder
 {
     /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
-
-
+	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
+        // your own logic
     }
-
-
+	
     /**
      * Set ownedBy
      *

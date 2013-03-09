@@ -73,7 +73,7 @@ You can change the route of the standalone route to any route you like, it is in
 
 ### Step 4: Update your database schema.
 
-Make sure to add the ForumBundle to doctrines mapping configuration:
+Make sure to add the MessageBundle to doctrines mapping configuration:
 
 ```
 # app/config/config.yml

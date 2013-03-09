@@ -13,27 +13,27 @@ CCDNMessage\MessageBundle\Entity\Message:
             type: text
         sentDate:
             type: datetime
-            name: send_date
+            column: send_date
             nullable: true
         createdDate:
             type: datetime
-            name: created_date
+            column: created_date
             nullable: true
         sendTo:
             type: text
-            name: send_to
+            column: send_to
         isDraft:
             type: boolean
+            column: is_draft
             nullable: false
-            name: is_draft
         isRead:
             type: boolean
+            column: is_read
             nullable: false
-            name: is_read
         isFlagged:
             type: boolean
+            column: is_flagged
             nullable: false
-            name: is_flagged
     manyToOne:
         folder:
             targetEntity: CCDNMessage\MessageBundle\Entity\Folder

@@ -34,11 +34,14 @@ abstract class Message
 	/** @var CCDNMessage\MessageBundle\Entity\Message $inResponseTo */
     protected $inResponseTo = null;
 	
-	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
+        // your own logic
     }
-	
 	
     /**
      * Set folder

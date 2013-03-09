@@ -11,19 +11,19 @@ CCDNMessage\MessageBundle\Entity\Folder:
             type: string
         specialType:
             type: integer
-            name: special_type
+            column: special_type
             nullable: true
         cachedReadCount:
             type: integer
-            name: cached_read_count
+            column: cached_read_count
             nullable: true
         cachedUnreadCount:
             type: integer
-            name: cached_unread_count
+            column: cached_unread_count
             nullable: true
         cachedTotalMessageCount:
             type: integer
-            name: cached_total_message_count
+            column: cached_total_message_count
             nullable: true
     manyToOne:
         ownedBy:

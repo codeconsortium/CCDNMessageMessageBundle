@@ -19,7 +19,6 @@ use CCDNMessage\MessageBundle\Model\Message as AbstractMessage;
 
 class Message extends AbstractMessage
 {
-	
     /** @var integer $id */
     protected $id;
 

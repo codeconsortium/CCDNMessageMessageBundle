@@ -36,7 +36,17 @@ class Folder extends AbstractFolder
 
     /** @var integer $cachedTotalMessageCount */
     protected $cachedTotalMessageCount = 0;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *
