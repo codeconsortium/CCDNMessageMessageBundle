@@ -58,18 +58,6 @@ class Message extends AbstractMessage
     }
 
     /**
-     * Set subject
-     *
-     * @param string $subject
-     */
-    public function setSubject($subject)
-    {
-        $this->subject = $subject;
-		
-		return $this;
-    }
-
-    /**
      * Get subject
      *
      * @return string
@@ -78,15 +66,16 @@ class Message extends AbstractMessage
     {
         return $this->subject;
     }
-
+	
     /**
-     * Set body
+     * Set subject
      *
-     * @param text $body
+     * @param string $subject
+	 * @return Message
      */
-    public function setBody($body)
+    public function setSubject($subject)
     {
-        $this->body = $body;
+        $this->subject = $subject;
 		
 		return $this;
     }
@@ -100,15 +89,16 @@ class Message extends AbstractMessage
     {
         return $this->body;
     }
-
+	
     /**
-     * Set sentDate
+     * Set body
      *
-     * @param datetime $sentDate
+     * @param text $body
+	 * @return Message
      */
-    public function setSentDate($sentDate)
+    public function setBody($body)
     {
-        $this->sentDate = $sentDate;
+        $this->body = $body;
 		
 		return $this;
     }
@@ -124,13 +114,14 @@ class Message extends AbstractMessage
     }
 
     /**
-     * Set createdDate
+     * Set sentDate
      *
-     * @param datetime $createdDate
+     * @param datetime $sentDate
+	 * @return Message
      */
-    public function setCreatedDate($createdDate)
+    public function setSentDate($sentDate)
     {
-        $this->createdDate = $createdDate;
+        $this->sentDate = $sentDate;
 		
 		return $this;
     }
@@ -144,15 +135,16 @@ class Message extends AbstractMessage
     {
         return $this->createdDate;
     }
-
+	
     /**
-     * Set sendTo
+     * Set createdDate
      *
-     * @param text $sendTo
+     * @param datetime $createdDate
+	 * @return Message
      */
-    public function setSendTo($sendTo)
+    public function setCreatedDate($createdDate)
     {
-        $this->sendTo = $sendTo;
+        $this->createdDate = $createdDate;
 		
 		return $this;
     }
@@ -166,15 +158,16 @@ class Message extends AbstractMessage
     {
         return $this->sendTo;
     }
-
+	
     /**
-     * Set isDraft
+     * Set sendTo
      *
-     * @param boolean $isDraft
+     * @param text $sendTo
+	 * @return Message
      */
-    public function setIsDraft($isDraft)
+    public function setSendTo($sendTo)
     {
-        $this->isDraft = $isDraft;
+        $this->sendTo = $sendTo;
 		
 		return $this;
     }
@@ -188,15 +181,16 @@ class Message extends AbstractMessage
     {
         return $this->isDraft;
     }
-
+	
     /**
-     * Set isRead
+     * Set isDraft
      *
-     * @param boolean $isRead
+     * @param boolean $isDraft
+	 * @return Message
      */
-    public function setIsRead($isRead)
+    public function setIsDraft($isDraft)
     {
-        $this->isRead = $isRead;
+        $this->isDraft = $isDraft;
 		
 		return $this;
     }
@@ -212,13 +206,14 @@ class Message extends AbstractMessage
     }
 
     /**
-     * Set isFlagged
+     * Set isRead
      *
-     * @param boolean $isFlagged
+     * @param boolean $isRead
+	 * @return Message
      */
-    public function setIsFlagged($isFlagged)
+    public function setIsRead($isRead)
     {
-        $this->isFlagged = $isFlagged;
+        $this->isRead = $isRead;
 		
 		return $this;
     }
@@ -231,5 +226,18 @@ class Message extends AbstractMessage
     public function getIsFlagged()
     {
         return $this->isFlagged;
+    }
+	
+    /**
+     * Set isFlagged
+     *
+     * @param boolean $isFlagged
+	 * @return Message
+     */
+    public function setIsFlagged($isFlagged)
+    {
+        $this->isFlagged = $isFlagged;
+		
+		return $this;
     }
 }

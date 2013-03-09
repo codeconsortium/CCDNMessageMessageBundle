@@ -44,19 +44,7 @@ class Registry extends AbstractRegistry
     {
         return $this->id;
     }
-
-    /**
-     * Set cachedUnreadMessagesCount
-     *
-     * @param integer $cachedUnreadMessagesCount
-     */
-    public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
-    {
-        $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
-		
-		return $this;
-    }
-
+	
     /**
      * Get cachedUnreadMessagesCount
      *
@@ -65,5 +53,18 @@ class Registry extends AbstractRegistry
     public function getCachedUnreadMessagesCount()
     {
         return $this->cachedUnreadMessagesCount;
+    }
+	
+    /**
+     * Set cachedUnreadMessagesCount
+     *
+     * @param integer $cachedUnreadMessagesCount
+	 * @return Registry
+     */
+    public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
+    {
+        $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
+		
+		return $this;
     }
 }

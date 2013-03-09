@@ -29,18 +29,6 @@ abstract class Registry
     {
         // your own logic
     }
-	
-    /**
-     * Set ownedBy
-     *
-     * @param UserInterface $ownedBy
-     */
-    public function setOwnedBy(UserInterface $ownedBy = null)
-    {
-        $this->ownedBy = $ownedBy;
-		
-		return $this;
-    }
 
     /**
      * Get ownedBy
@@ -50,5 +38,18 @@ abstract class Registry
     public function getOwnedBy()
     {
         return $this->ownedBy;
+    }
+	
+    /**
+     * Set ownedBy
+     *
+     * @param UserInterface $ownedBy
+	 * @return Registry
+     */
+    public function setOwnedBy(UserInterface $ownedBy = null)
+    {
+        $this->ownedBy = $ownedBy;
+		
+		return $this;
     }
 }

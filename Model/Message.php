@@ -42,18 +42,6 @@ abstract class Message
     {
         // your own logic
     }
-	
-    /**
-     * Set folder
-     *
-     * @param CCDNMessage\MessageBundle\Entity\Folder $folder
-     */
-    public function setFolder(\CCDNMessage\MessageBundle\Entity\Folder $folder = null)
-    {
-        $this->folder = $folder;
-		
-		return $this;
-    }
 
     /**
      * Get folder
@@ -64,15 +52,16 @@ abstract class Message
     {
         return $this->folder;
     }
-
+		
     /**
-     * Set sentTo
+     * Set folder
      *
-     * @param UserInterface $sentTo
+     * @param CCDNMessage\MessageBundle\Entity\Folder $folder
+	 * @return Message
      */
-    public function setSentTo(UserInterface $sentTo = null)
+    public function setFolder(\CCDNMessage\MessageBundle\Entity\Folder $folder = null)
     {
-        $this->sentTo = $sentTo;
+        $this->folder = $folder;
 		
 		return $this;
     }
@@ -86,15 +75,16 @@ abstract class Message
     {
         return $this->sentTo;
     }
-
+	
     /**
-     * Set sentFrom
+     * Set sentTo
      *
-     * @param UserInterface $sentFrom
+     * @param UserInterface $sentTo
+	 * @return Message
      */
-    public function setSentFrom(UserInterface $sentFrom = null)
+    public function setSentTo(UserInterface $sentTo = null)
     {
-        $this->sentFrom = $sentFrom;
+        $this->sentTo = $sentTo;
 		
 		return $this;
     }
@@ -110,13 +100,14 @@ abstract class Message
     }
 
     /**
-     * Set ownedBy
+     * Set sentFrom
      *
-     * @param UserInterface $ownedBy
+     * @param UserInterface $sentFrom
+	 * @return Message
      */
-    public function setOwnedBy(UserInterface $ownedBy = null)
+    public function setSentFrom(UserInterface $sentFrom = null)
     {
-        $this->ownedBy = $ownedBy;
+        $this->sentFrom = $sentFrom;
 		
 		return $this;
     }
@@ -132,16 +123,17 @@ abstract class Message
     }
 	
     /**
-     * Set inResponseTo
+     * Set ownedBy
      *
-     * @param CCDNMessage\MessageBundle\Entity\Message $inResponseTo
+     * @param UserInterface $ownedBy
+	 * @return Message
      */
-	public function setInResponseTo(\CCDNMessage\MessageBundle\Entity\Message $inResponseTo)
-	{
-		$this->inResponseTo = $inResponseTo;
+    public function setOwnedBy(UserInterface $ownedBy = null)
+    {
+        $this->ownedBy = $ownedBy;
 		
 		return $this;
-	}
+    }
 	
     /**
      * Get inResponseTo
@@ -151,5 +143,18 @@ abstract class Message
 	public function getInResponseTo()
 	{
 		return $this->inResponseTo;
+	}
+	
+    /**
+     * Set inResponseTo
+     *
+     * @param CCDNMessage\MessageBundle\Entity\Message $inResponseTo
+	 * @return Message
+     */
+	public function setInResponseTo(\CCDNMessage\MessageBundle\Entity\Message $inResponseTo)
+	{
+		$this->inResponseTo = $inResponseTo;
+		
+		return $this;
 	}
 }

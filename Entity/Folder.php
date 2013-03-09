@@ -58,18 +58,6 @@ class Folder extends AbstractFolder
     }
 
     /**
-     * Set name
-     *
-     * @param text $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-		
-		return $this;
-    }
-
-    /**
      * Get name
      *
      * @return text
@@ -78,15 +66,16 @@ class Folder extends AbstractFolder
     {
         return $this->name;
     }
-
+	
     /**
-     * Set specialType
+     * Set name
      *
-     * @param integer $specialType
+     * @param text $name
+	 * @return Folder
      */
-    public function setSpecialType($specialType)
+    public function setName($name)
     {
-        $this->specialType = $specialType;
+        $this->name = $name;
 		
 		return $this;
     }
@@ -102,17 +91,18 @@ class Folder extends AbstractFolder
     }
 
     /**
-     * Set cachedReadCount
+     * Set specialType
      *
-     * @param integer $cachedReadCount
+     * @param integer $specialType
+	 * @return Folder
      */
-    public function setCachedReadCount($cachedReadCount)
+    public function setSpecialType($specialType)
     {
-        $this->cachedReadCount = $cachedReadCount;
+        $this->specialType = $specialType;
 		
 		return $this;
     }
-
+	
     /**
      * Get cachedReadCount
      *
@@ -122,15 +112,16 @@ class Folder extends AbstractFolder
     {
         return $this->cachedReadCount;
     }
-
+	
     /**
-     * Set cachedUnreadCount
+     * Set cachedReadCount
      *
-     * @param integer $cachedUnreadCount
+     * @param integer $cachedReadCount
+	 * @return Folder
      */
-    public function setCachedUnreadCount($cachedUnreadCount)
+    public function setCachedReadCount($cachedReadCount)
     {
-        $this->cachedUnreadCount = $cachedUnreadCount;
+        $this->cachedReadCount = $cachedReadCount;
 		
 		return $this;
     }
@@ -146,13 +137,14 @@ class Folder extends AbstractFolder
     }
 
     /**
-     * Set cachedTotalMessageCount
+     * Set cachedUnreadCount
      *
-     * @param integer $cachedTotalMessageCount
+     * @param integer $cachedUnreadCount
+	 * @return Folder
      */
-    public function setCachedTotalMessageCount($cachedTotalMessageCount)
+    public function setCachedUnreadCount($cachedUnreadCount)
     {
-        $this->cachedTotalMessageCount = $cachedTotalMessageCount;
+        $this->cachedUnreadCount = $cachedUnreadCount;
 		
 		return $this;
     }
@@ -165,5 +157,18 @@ class Folder extends AbstractFolder
     public function getCachedTotalMessageCount()
     {
         return $this->cachedTotalMessageCount;
+    }
+	
+    /**
+     * Set cachedTotalMessageCount
+     *
+     * @param integer $cachedTotalMessageCount
+	 * @return Folder
+     */
+    public function setCachedTotalMessageCount($cachedTotalMessageCount)
+    {
+        $this->cachedTotalMessageCount = $cachedTotalMessageCount;
+		
+		return $this;
     }
 }
