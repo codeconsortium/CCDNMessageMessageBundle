@@ -1,6 +1,6 @@
 CCDNMessage\MessageBundle\Entity\Folder:
     type: entity
-    table: CC_Message_Folder
+    table: cc_message_folder
     repositoryClass: CCDNMessage\MessageBundle\Repository\FolderRepository
     id:
         id:

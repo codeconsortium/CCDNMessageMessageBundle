@@ -1,6 +1,6 @@
 CCDNMessage\MessageBundle\Entity\Message:
     type: entity
-    table: CC_Message_Message
+    table: cc_message_message
     repositoryClass: CCDNMessage\MessageBundle\Repository\MessageRepository
     id:
         id:
