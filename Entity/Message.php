@@ -15,9 +15,9 @@ namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use CCDNMessage\MessageBundle\Model\Message as AbstractMessage;
+use CCDNMessage\MessageBundle\Model\MessageModel;
 
-class Message extends AbstractMessage
+class Message extends MessageModel
 {
     /** @var integer $id */
     protected $id;

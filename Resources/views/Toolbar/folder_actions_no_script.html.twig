@@ -4,17 +4,17 @@
 	</a>
 
 	{%- if current_folder.getName == 'drafts' -%}
-		<input type="submit" class="btn btn-primary" value="{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_send">
+		<input type="submit" class="btn btn-primary" value="{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit[send]">
 	{%- endif -%}
 
-	<button type="submit" class="btn btn-danger" name="submit_delete">
+	<button type="submit" class="btn btn-danger" name="submit[delete]">
 		<i class="icon-trash icon-white"></i>
 		{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>
 
-	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_mark_as_read">
+	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit[mark_as_read]">
 
-	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_mark_as_unread">
+	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit[mark_as_unread]">
 
 	<select name="select_move_to">
 		{%- for row, folder in folders -%}
@@ -22,5 +22,5 @@
 		{%- endfor -%}
 	</select>
 
-	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit_move_to">
+	<input type="submit" class="btn" value="{{- 'ccdn_message_message.link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}" name="submit[move_to]">
 {%- endspaceless -%}

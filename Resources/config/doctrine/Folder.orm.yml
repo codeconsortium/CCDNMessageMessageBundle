@@ -34,3 +34,7 @@ CCDNMessage\MessageBundle\Entity\Folder:
                 name: fk_owned_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
+    oneToMany:
+        messages:
+            targetEntity: CCDNMessage\MessageBundle\Entity\Message
+            mappedBy: folder	

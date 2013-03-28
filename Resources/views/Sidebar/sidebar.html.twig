@@ -2,7 +2,7 @@
 	{%- set route = app.request.attributes.get('_route') -%}
 
 	{%- if current_folder.name is not defined -%}
-		{%- if route == 'ccdn_message_message_mail_show_by_id' -%}
+		{%- if message is defined -%}
 			{%- set current_folder = message.getFolder -%}
 		{%- endif -%}
 	{%- endif -%}
@@ -17,7 +17,7 @@
 	-%}
 		<li class="active">
 			<a href="{{- path('ccdn_message_message_mail_compose') -}}">
-				<i class="icon-white icon-pencil"></i>
+				<i class="icon-pencil icon-white"></i>
 				{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 			</a>
 		</li>
@@ -30,117 +30,37 @@
 		</li>
 	{%- endif -%}
 
-
-	{%- if folders is defined -%}
-		<li class="nav-header">{{- 'ccdn_message_message.label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}</li>
-		{%- for row, folder in folders -%}
+	{%- set folders = message_bundle_folder_list() -%}
+	
+	{%- if folders['folders'] is defined -%}
+		<li class="nav-header">
+			{{- 'ccdn_message_message.label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}
+		</li>
+		
+		{%- import 'CCDNMessageMessageBundle:Sidebar:sidebarMacro.html.twig' as format -%}
+		
+		{%- for folder in folders['folders'] -%}
 			{%- if current_folder is defined -%}
-				{%- if folder.name == current_folder.name -%}
-					<li class="active{%- if folder.getCachedUnreadCount %} marked_unread{%- endif -%}">
-						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
-							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-								<i class="icon-white icon-inbox"></i>
-							{%- else -%}
-								{%- if folder.name == 'drafts' -%}
-									<i class="icon-white icon-share-alt"></i>
-								{%- else -%}
-									{%- if folder.name == 'trash' -%}
-										<i class="icon-white icon-trash"></i>
-									{%- else -%}
-										<i class="icon-white icon-folder-close"></i>
-									{%- endif -%}
-								{%- endif -%}
-							{%- endif -%}
-							
-							{{- folder.getName|title -}}
-							
-							{%- if folder.getCachedUnreadCount %}
-								<span class="label pull-right" style="vertical-align:top;background-color:#fff;color:#000;">{{- folder.getCachedUnreadCount -}}</span>
-							{%- endif -%}
-						</a>
-					</li>
-				{%- else -%}
-					<li{%- if folder.getCachedUnreadCount %} class="marked_unread"{%- endif -%}>
-						<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
-							{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-								<i class="icon-inbox"></i>
-							{%- else -%}
-								{%- if folder.name == 'drafts' -%}
-									<i class="icon-share-alt"></i>
-								{%- else -%}
-									{%- if folder.name == 'trash' -%}
-										<i class="icon-trash"></i>
-									{%- else -%}
-										<i class="icon-folder-close"></i>
-									{%- endif -%}
-								{%- endif -%}
-							{%- endif -%}
-							
-							{{- folder.getName|title -}}
-							
-							{%- if folder.getCachedUnreadCount -%}
-								<span class="label label-info pull-right">{{- folder.getCachedUnreadCount -}}</span>
-							{%- endif -%}
-						</a>
-					</li>
-				{%- endif -%}
+				{{- format.folderWithCurrentFolder(folder, current_folder) -}}
 			{%- else -%}
-				<li{%- if folder.getCachedUnreadCount %} class="marked_unread"{%- endif -%}>
-					<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
-						{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
-							<i class="icon-inbox"></i>
-						{%- else -%}
-							{%- if folder.name == 'drafts' -%}
-								<i class="icon-share-alt"></i>
-							{%- else -%}
-								{%- if folder.name == 'trash' -%}
-									<i class="icon-trash"></i>
-								{%- else -%}
-									<i class="icon-folder-close"></i>
-								{%- endif -%}
-							{%- endif -%}
-						{%- endif -%}
-						
-						{{- folder.getName|title -}}
-						
-						{%- if folder.getCachedUnreadCount -%}
-							<span class="label label-info pull-right">{{- folder.getCachedUnreadCount -}}</span>
-						{%- endif -%}
-					</a>
-				</li>
+				{{- format.folder(folder) -}}
 			{%- endif -%}
 		{%- endfor -%}
-	{%- else -%}
-		{%- if route == 'ccdn_message_message_index' -%}
-			<li class="active{%- if folder.getCachedUnreadCount %} marked_unread{%- endif -%}">
-				<a href="{{- path('ccdn_message_message_index') -}}">
-					<i class="icon-white icon-inbox"></i>
-					{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}
-				</a>
-			</li>
-		{%- else -%}
-			<li{%- if folder.getCachedUnreadCount %} class="marked_unread"{%- endif -%}>
-				<a href="{{- path('ccdn_message_message_index') -}}">
-					<i class="icon-inbox"></i>
-					{{- 'ccdn_message_message.sidebar.ccdn_message_message.link.messages' | trans({}, 'CCDNMessageMessageBundle') -}}
-				</a>
-			</li>
-		{%- endif -%}
 	{%- endif -%}
 
-
-
-	{% if used_allowance is defined -%}
+	{% if folders['quota'] is defined -%}
 		<li class="divider"></li>
-		<li>
-			<span class="pull-left">
+		<li style="text-align:center;padding:5px;">
+			<div class="span3">
 				<i class="icon-hdd"></i>
-				{{- used_allowance -}}&#37;&nbsp;
-			</span>
-			<div class="progress progress-danger">
-				<div class="bar" style="width:{{- used_allowance -}}%;"></div>
+				{{- folders['quota']['allowed'] -}}&#37;&nbsp;
+			</div>
+			<div class="span9">
+				<div class="progress progress-danger">
+					<div class="bar" style="width:{{- folders['quota']['used'] -}}%;"></div>
+				</div>								
 			</div>
 		</li>
 	{%- endif -%}
-	
+
 {%- endspaceless -%}

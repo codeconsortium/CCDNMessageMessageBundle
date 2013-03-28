@@ -31,15 +31,15 @@
 				{{- form_widget(form) -}}
 					
 				<div class="form-actions">
-					<button type="submit" class="btn btn-primary" name="submit_post">
+					<button type="submit" class="btn btn-primary" name="submit[send]">
 						{{- 'ccdn_message_message.form.button.message.send' | trans({}, 'CCDNMessageMessageBundle') -}}
 					</button>
 				
-					<button type="submit" class="btn btn-default" name="submit_preview">
+					<button type="submit" class="btn btn-default" name="submit[preview]">
 						{{- 'ccdn_message_message.form.button.message.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
 					</button>
 				
-					<button type="submit" class="btn btn-default" name="submit_draft">
+					<button type="submit" class="btn btn-default" name="submit[save_draft]">
 						{{- 'ccdn_message_message.form.button.message.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
 					</button>
 				

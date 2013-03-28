@@ -28,7 +28,6 @@ use Symfony\Component\Config\FileLocator;
  */
 class CCDNMessageMessageExtension extends Extension
 {
-
     /**
      * {@inheritDoc}
      */
@@ -55,7 +54,7 @@ class CCDNMessageMessageExtension extends Extension
         $this->getMessageSection($container, $config);
         $this->getQuotasSection($container, $config);
     }
-
+	
     /**
      *
      * @access protected
@@ -107,5 +106,4 @@ class CCDNMessageMessageExtension extends Extension
     {
         $container->setParameter('ccdn_message_message.quotas.max_messages', $config['quotas']['max_messages']);
     }
-
 }

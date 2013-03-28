@@ -28,43 +28,8 @@ use CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface;
  * @version 1.0
  * @abstract
  */
-abstract class BaseManager implements BaseManagerInterface
+interface BaseManagerInterface
 {
-	/**
-	 *
-	 * @access protected
-	 * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-	 */
-    protected $doctrine;
-
-	/**
-	 *
-	 * @access protected
-	 * @var \Doctrine\ORM\EntityManager $em
-	 */
-    protected $em;
-
-	/**
-	 *
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 */
-    protected $securityContext;
-
-	/**
-	 *
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $gateway
-	 */
-    protected $gateway;
-
-	/**
-	 *
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\Bag\ManagerBagInterface $managerBag
-	 */
-    protected $managerBag;
-
 	/**
 	 *
 	 * @access public
@@ -73,18 +38,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
 	 * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
 	 */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag)
-    {
-        $this->doctrine = $doctrine;
-
-        $this->em = $doctrine->getEntityManager();
-		
-		$this->securityContext = $securityContext;
-		
-		$this->gateway = $gateway;
-		
-		$this->managerBag = $managerBag;
-    }
+    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag);
 
 	/**
 	 *
@@ -92,40 +46,28 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param string $role
 	 * @return bool
 	 */
-	public function isGranted($role)
-	{
-		return $this->securityContext->isGranted($role);
-	}
+	public function isGranted($role);
 
 	/**
 	 *
 	 * @access public
 	 * @return \Symfony\Component\Security\Core\User\UserInterface
 	 */	
-	public function getUser()
-	{
-		return $this->securityContext->getToken()->getUser();
-	}
+	public function getUser();
 
 	/**
 	 *
 	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
 	 */
-	public function getGateway()
-	{
-		return $this->gateway;
-	}
+	public function getGateway();
 
 	/**
 	 *
 	 * @access public
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */	
-	public function getQueryBuilder()
-	{
-		return $this->gateway->getQueryBuilder();
-	}
+	public function getQueryBuilder();
 	
 	/**
 	 *
@@ -134,10 +76,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param Array $aliases = null
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */	
-	public function createCountQuery($column = null, Array $aliases = null)
-	{
-		return $this->gateway->createCountQuery($column, $aliases);
-	}
+	public function createCountQuery($column = null, Array $aliases = null);
 		
 	/**
 	 *
@@ -145,10 +84,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param Array $aliases = null
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */	
-	public function createSelectQuery(Array $aliases = null)
-	{
-		return $this->gateway->createSelectQuery($aliases);
-	}
+	public function createSelectQuery(Array $aliases = null);
 	
 	/**
 	 *
@@ -156,10 +92,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param \Doctrine\ORM\QueryBuilder $qb
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */	
-	public function one(QueryBuilder $qb)
-	{
-		return $this->gateway->one($qb);
-	}
+	public function one(QueryBuilder $qb);
 	
 	/**
 	 *
@@ -167,10 +100,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param \Doctrine\ORM\QueryBuilder $qb
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */	
-	public function all(QueryBuilder $qb)
-	{
-		return $this->gateway->all($qb);
-	}
+	public function all(QueryBuilder $qb);
 	
 	/**
 	 *
@@ -178,12 +108,7 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param $entity
 	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
 	 */
-    public function persist($entity)
-    {
-        $this->em->persist($entity);
-
-        return $this;
-    }
+    public function persist($entity);
 
 	/**
 	 *
@@ -191,24 +116,14 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param $entity
 	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
 	 */
-    public function remove($entity)
-    {
-        $this->em->remove($entity);
-
-        return $this;
-    }
+    public function remove($entity);
 
 	/**
 	 *
 	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
 	 */
-    public function flush()
-    {
-        $this->em->flush();
-
-        return $this;
-    }
+    public function flush();
 
 	/**
 	 *
@@ -216,20 +131,12 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @param $entity
 	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
 	 */
-    public function refresh($entity)
-    {
-        $this->em->refresh($entity);
-
-        return $this;
-    }
+    public function refresh($entity);
 	
 	/**
 	 *
 	 * @access public
 	 * @return int
 	 */
-	public function getMessagesPerPageOnFolders()
-	{
-		return $this->managerBag->getMessagesPerPageOnFolders();
-	}
+	public function getMessagesPerPageOnFolders();
 }

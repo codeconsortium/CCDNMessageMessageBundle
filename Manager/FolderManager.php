@@ -13,7 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Manager;
 
-use CCDNMessage\MessageBundle\Manager\ManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
 use CCDNMessage\MessageBundle\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
@@ -23,21 +25,140 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class FolderManager extends BaseManager implements ManagerInterface
+class FolderManager extends BaseManager implements BaseManagerInterface
 {
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getMessagesPerPageOnFolders()
+	{
+		return $this->managerBag->getMessagesPerPageOnFolders();
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $userId
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function findAllFoldersForUserById($userId)
+	{
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
+		
+		$params = array(':userId' => $userId);
+		
+		$qb = $this->createSelectQuery(array('f'));
+		
+		$qb
+			->where('f.ownedBy = :userId')
+			->orderBy('f.specialType', 'ASC');
+		
+		$folders = $this->gateway->findFolders($qb, $params);
+		
+		if (null == $folders || count($folders) < 1) {
+			$this->setupDefaults($userId)->flush();
+		
+			$folders = $this->findAllFoldersForUserById($userId);
+		}
+		
+		return $folders;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $folderId
+	 * @param int $userId
+	 * @return Array()
+	 */	
+	public function getReadCounterForFolderById($folderId, $userId)
+	{
+		if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
+			throw new \Exception('Folder id "' . $folderId . '" is invalid!');
+		}
+		
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
+		
+		$qb = $this->getQueryBuilder();
 
+		$messageEntityClass = $this->managerBag->getMessageManager()->getGateway()->getEntityClass();
+			
+		$qb
+			->select('COUNT(DISTINCT m.id) AS readCount')
+			->from($messageEntityClass, 'm')
+			->where('m.folder = :folderId')
+			->andWhere('m.ownedBy = :userId')
+			->andWhere('m.isRead = TRUE')
+			->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('readCount' => null);
+		} catch (\Exception $e) {
+			return array('readCount' => null);			
+		}
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $folderId
+	 * @param int $userId
+	 * @return Array()
+	 */	
+	public function getUnreadCounterForFolderById($folderId, $userId)
+	{
+		if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
+			throw new \Exception('Folder id "' . $folderId . '" is invalid!');
+		}
+		
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
+		
+		$qb = $this->getQueryBuilder();
+
+		$messageEntityClass = $this->managerBag->getMessageManager()->getGateway()->getEntityClass();
+			
+		$qb
+			->select('COUNT(DISTINCT m.id) AS unreadCount')
+			->from($messageEntityClass, 'm')
+			->where('m.folder = :folderId')
+			->andWhere('m.ownedBy = :userId')
+			->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('unreadCount' => null);
+		} catch (\Exception $e) {
+			return array('unreadCount' => null);			
+		}
+	}
+	
     /**
      *
      * @access public
-     * @param int $userId
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return self
      */
-    public function setupDefaults($userId)
+    public function setupDefaults($user)
     {
-        $user = $this->container->get('ccdn_user_user.repository.user')->findOneById($userId);
-
-        if (! $user) {
-            echo "error, cannot setup PM folders for non-user.";
+        if (! is_object($user) || ! $user instanceof UserInterface) {
+			$userId = $user;
+			
+			if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+				throw new \Exception('User id "' . $userId . '" is invalid!');
+			}
+			
+			$user = $this->managerBag->getUserProvider()->findOneUserById($userId);
         }
 
         $folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
@@ -65,11 +186,12 @@ class FolderManager extends BaseManager implements ManagerInterface
      */
     public function updateFolderCounterCaches($folder)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
-        $readCount = $this->container->get('ccdn_message_message.repository.folder')->getReadCounterForFolderById($folder->getId(), $user->getId());
+        $readCount = $this->getReadCounterForFolderById($folder->getId(), $user->getId());
         $readCount = $readCount['readCount'];
-        $unreadCount = $this->container->get('ccdn_message_message.repository.folder')->getUnreadCounterForFolderById($folder->getId(), $user->getId());
+        $unreadCount = $this->getUnreadCounterForFolderById($folder->getId(), $user->getId());
+
         $unreadCount = $unreadCount['unreadCount'];
         $totalCount = ($readCount + $unreadCount);
 
@@ -142,5 +264,4 @@ class FolderManager extends BaseManager implements ManagerInterface
 
         return array('used_allowance' => $usedAllowance, 'total_message_count' => $totalMessageCount);
     }
-
 }

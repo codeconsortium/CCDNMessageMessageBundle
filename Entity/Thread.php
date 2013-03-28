@@ -15,15 +15,12 @@ namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use CCDNMessage\MessageBundle\Model\RegistryModel;
+use CCDNMessage\MessageBundle\Model\ThreadModel;
 
-class Registry extends RegistryModel
+class Thread extends ThreadModel
 {
 	/** @var integer $id */
     protected $id;
-
-	/** @var integer $cachedUnreadMessageCount */
-    protected $cachedUnreadMessagesCount = 0;
 
 	/**
 	 *
@@ -43,28 +40,5 @@ class Registry extends RegistryModel
     public function getId()
     {
         return $this->id;
-    }
-	
-    /**
-     * Get cachedUnreadMessagesCount
-     *
-     * @return integer
-     */
-    public function getCachedUnreadMessagesCount()
-    {
-        return $this->cachedUnreadMessagesCount;
-    }
-	
-    /**
-     * Set cachedUnreadMessagesCount
-     *
-     * @param integer $cachedUnreadMessagesCount
-	 * @return Registry
-     */
-    public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
-    {
-        $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
-		
-		return $this;
     }
 }

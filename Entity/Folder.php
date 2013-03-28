@@ -15,9 +15,9 @@ namespace CCDNMessage\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use CCDNMessage\MessageBundle\Model\Folder as AbstractFolder;
+use CCDNMessage\MessageBundle\Model\FolderModel;
 
-class Folder extends AbstractFolder
+class Folder extends FolderModel
 {
 	/** @var integer $id */
     protected $id;

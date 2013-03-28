@@ -13,172 +13,64 @@
 
 namespace CCDNMessage\MessageBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use CCDNMessage\MessageBundle\Controller\FolderBaseController;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class FolderController extends ContainerAware
+class FolderController extends FolderBaseController
 {
-
     /**
      *
      * @access protected
-     * @param string $folderName, int $page
+     * @param string $folderName
+	 * @param int $page
      * @return RenderResponse
      */
     public function showFolderByNameAction($folderName, $page)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have access to this section.');
+        $this->isAuthorised('ROLE_USER');
+
+        if ($folderName != 'inbox' && $folderName != 'sent' && $folderName != 'drafts' && $folderName != 'junk' && $folderName != 'trash') {
+            $this->isFound(false, 'Folder not found.');
         }
 
-        if ($folderName != 'inbox' && $folderName != 'sent'
-        && $folderName != 'drafts' && $folderName != 'junk' && $folderName != 'trash')
-        {
-            throw new NotFoundHttpExceptin('Folder not found.');
-        }
+        $folders = $this->getFolderManager()->findAllFoldersForUserById($this->getUser()->getId());
+        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $folderName);
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $messagesPager = $this->getMessageManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
 
-        $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'));
 
-        $folderManager = $this->container->get('ccdn_message_message.manager.folder');
-
-        if (! $folders) {
-            $folderManager->setupDefaults($user->getId())->flush();
-
-            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-        }
-
-        $currentFolder = $folderManager->getCurrentFolder($folders, $folderName);
-
-        $messagesPager = $this->container->get('ccdn_message_message.repository.message')->findAllPaginatedForFolderById($currentFolder, $user->getId());
-
-        $messagesPerPage = $this->container->getParameter('ccdn_message_message.folder.show.messages_per_page');
-        $messagesPager->setMaxPerPage($messagesPerPage);
-        $messagesPager->setCurrentPage($page, false, true);
-
-        $messages = $messagesPager->getCurrentPageResults();
-
-        $quota = $this->container->getParameter('ccdn_message_message.quotas.max_messages');
-
-        $stats = $folderManager->getUsedAllowance($folders, $quota);
-
-		//$formHandler = $this->container->get('ccdn_message_message.message_manager.form.handler');
-		//$formHandler->setDefaultValues(array('messages' => $messages));
-		
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_message_message.crumbs.message_index', array(), 'CCDNMessageMessageBundle'), $this->container->get('router')->generate('ccdn_message_message_index'), "home");
-
-        return $this->container->get('templating')->renderResponse('CCDNMessageMessageBundle:Folder:show.html.' . $this->getEngine(), array(
-            'crumbs' => $crumbs,
-			//'form'	=> $formHandler->getForm()->createView(),
-            'pager' => $messagesPager,
-            'folders' => $folders,
-            'current_folder' => $currentFolder,
-            'messages' => $messages,
-            'quota' => $quota,
-            'used_allowance' => $stats['used_allowance'],
-            'total_message_count' => $stats['total_message_count'],
-        ));
+        return $this->renderResponse('CCDNMessageMessageBundle:Folder:show.html.',
+			array(
+	            'crumbs' => $crumbs,
+	            'folders' => $folders,
+	            'current_folder' => $currentFolder,
+	            'pager' => $messagesPager,
+	        )
+		);
     }
 
     /**
      *
      * @access public
+	 * @param string $folderName
      * @return RedirectResponse
      */
-    public function bulkAction()
+    public function folderBulkAction($folderName)
     {
+        $this->isAuthorised('ROLE_USER');
 
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+		$this->bulkAction();
 
-        //
-        // Get all the message id's.
-        //
-        $messageIds = array();
-        $ids = $_POST;
-        foreach ($ids as $messageKey => $messageId) {
-            if (substr($messageKey, 0, 14) == 'check_message_') {
-                //
-                // Cast the key values to int upon extraction.
-                //
-                $id = (int) substr($messageKey, 14, (strlen($messageKey) - 14));
-
-                if (is_int($id) == true) {
-                    $messageIds[] = $id;
-                }
-            }
-        }
-
-        //
-        // Don't bother if there are no messages to process.
-        //
-        if (count($messageIds) < 1) {
-            return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_index'));
-        }
-
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        $messages = $this->container->get('ccdn_message_message.repository.message')->findTheseMessagesByUserId($messageIds, $user->getId());
-
-        if ( ! $messages || empty($messages)) {
-            throw new NotFoundHttpException('No messages found!');
-        }
-
-        $folder = $messages[0]->getFolder();
-
-        $action = $_POST['submit_action'];
-
-        if ($action == 'submit_delete' || isset($_POST['submit_delete'])) {
-            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-
-            $this->container->get('ccdn_message_message.manager.message')->bulkDelete($messages, $folders)->flush();
-        }
-        if ($action == 'submit_mark_as_read' || isset($_POST['submit_mark_as_read'])) {
-            $this->container->get('ccdn_message_message.manager.message')->bulkMarkAsRead($messages)->flush();
-        }
-        if ($action == 'submit_mark_as_unread' || isset($_POST['submit_mark_as_unread'])) {
-            $this->container->get('ccdn_message_message.manager.message')->bulkMarkAsUnread($messages)->flush();
-        }
-        if ($action == 'submit_move_to' || isset($_POST['submit_move_to'])) {
-            $moveTo = $this->container->get('ccdn_message_message.repository.folder')->findOneById($_POST['select_move_to']);
-            $this->container->get('ccdn_message_message.manager.message')->bulkMoveToFolder($messages, $moveTo)->flush();
-        }
-        if ($action == 'submit_send' || isset($_POST['submit_send'])) {
-            $this->container->get('ccdn_message_message.manager.message')->sendDraft($messages)->flush();
-        }
-
-        $this->container->get('ccdn_message_message.manager.message')->updateAllFolderCachesForUser($user);
-
-        return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_folder_show', array('folder_name' => $folder->getName())));
-
-//		$session = $this->container->get('request')->getSession();
-//
-//		if ($session->has('referer'))
-//		{
-//			return new RedirectResponse($session->get('referer'));
-//		} else {
-//			return new RedirectResponse($this->container->get('router')->generate('ccdn_message_message_index')); // if no referer then go to inbox
-//		}
+        return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
+			array(
+				'folderName' => $folderName)
+			)
+		);
     }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_message_message.template.engine');
-    }
-
 }

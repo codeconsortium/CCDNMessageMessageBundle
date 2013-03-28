@@ -35,8 +35,17 @@ CCDNMessage\MessageBundle\Entity\Message:
             column: is_flagged
             nullable: false
     manyToOne:
+        thread:
+            targetEntity: CCDNMessage\MessageBundle\Entity\Thread
+            inversedBy: messages
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_thread_id
+                referencedColumnName: id
+                onDelete: SET NULL
         folder:
             targetEntity: CCDNMessage\MessageBundle\Entity\Folder
+            inversedBy: messages
             cascade: ["persist"]
             joinColumn:
                 name: fk_folder_id

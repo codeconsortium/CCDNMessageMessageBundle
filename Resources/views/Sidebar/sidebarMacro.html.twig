@@ -1,0 +1,75 @@
+{%- spaceless -%}
+	{%- macro folder(folder) -%}
+		<li 
+			{%- if folder.getCachedUnreadCount %}
+				 class="marked_unread"
+			{%- endif -%}
+		>
+			<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
+				{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
+					{%- set icon = "icon-inbox" -%}
+				{%- else -%}
+					{%- if folder.name == 'drafts' -%}
+						{%- set icon = "icon-share-alt" -%}
+					{%- else -%}
+						{%- if folder.name == 'trash' -%}
+							{%- set icon = "icon-trash" -%}
+						{%- else -%}
+							{%- set icon = "icon-folder-close" -%}
+						{%- endif -%}
+					{%- endif -%}
+				{%- endif -%}
+
+				<i class="{{- icon -}}"></i>
+				
+				{{- folder.getName|title -}}
+
+				{%- if folder.getCachedUnreadCount %}
+					<span class="label pull-right" style="vertical-align:top;background-color:#fff;color:#000;">{{- folder.getCachedUnreadCount -}}</span>
+				{%- endif -%}
+			</a>
+		</li>	
+	{%- endmacro -%}
+
+	{%- macro folderWithCurrentFolder(folder, current_folder) -%}
+		<li 
+			{%- if current_folder is defined -%}
+				{%- if folder.name == current_folder.name or folder.getCachedUnreadCount %}
+					 class="
+						{%- if folder.name == current_folder.name -%}active {% endif -%}
+						{%- if folder.getCachedUnreadCount -%}marked_unread{%- endif -%}
+					"
+				{%- endif -%}
+			{%- else -%}
+				{%- if folder.getCachedUnreadCount -%}
+					class="{%- if folder.getCachedUnreadCount -%}marked_unread{%- endif -%}"
+				{%- endif -%}			
+			{%- endif -%}
+		>
+			<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
+				{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
+					{%- set icon = "icon-inbox" -%}
+				{%- else -%}
+					{%- if folder.name == 'drafts' -%}
+						{%- set icon = "icon-share-alt" -%}
+					{%- else -%}
+						{%- if folder.name == 'trash' -%}
+							{%- set icon = "icon-trash" -%}
+						{%- else -%}
+							{%- set icon = "icon-folder-close" -%}
+						{%- endif -%}
+					{%- endif -%}
+				{%- endif -%}
+	
+				<i class="{{- icon -}}{%- if folder.name == current_folder %} icon-white{%- endif -%}"></i>
+				
+				{{- folder.getName|title -}}
+	
+				{%- if folder.getCachedUnreadCount %}
+					<span class="label pull-right" style="vertical-align:top;background-color:#fff;color:#000;">{{- folder.getCachedUnreadCount -}}</span>
+				{%- endif -%}
+			</a>
+		</li>
+	{%- endmacro -%}
+
+{%- endspaceless -%}

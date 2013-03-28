@@ -25,6 +25,10 @@ ccdn_message_message_folder_show_by_id_paginated:
     pattern: /{_locale}/message/folder/{folderId}/page/{page}
     defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en, page: 0 }
 
+ccdn_message_message_folder_mail_bulk_action:
+    pattern: /{_locale}/message/{folderName}/action/checked
+    defaults: { _controller: CCDNMessageMessageBundle:Folder:folderBulk, _locale: en }
+
 #
 # Messages.
 #
@@ -64,6 +68,3 @@ ccdn_message_message_mail_delete:
     pattern: /{_locale}/message/{messageId}/delete
     defaults: { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }
 
-ccdn_message_message_mail_bulk_action:
-    pattern: /{_locale}/message/action/checked
-    defaults: { _controller: CCDNMessageMessageBundle:Folder:bulk, _locale: en }

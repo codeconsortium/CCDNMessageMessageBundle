@@ -13,13 +13,20 @@
 
 namespace CCDNMessage\MessageBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class Folder
+abstract class FolderModel
 {
-    /** @var UserInterface $ownedBy */
+    /**
+	 * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+	 */
     protected $ownedBy = null;
+	
+    /**
+	 * @var \Doctrine\Common\Collections\ArrayCollection $messages
+	 */
+	protected $messages;
 	
 	/**
 	 *
@@ -33,7 +40,7 @@ abstract class Folder
     /**
      * Get ownedBy
      *
-     * @return UserInterface
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function getOwnedBy()
     {
@@ -43,13 +50,23 @@ abstract class Folder
     /**
      * Set ownedBy
      *
-     * @param UserInterface $ownedBy
-	 * @return Folder
+     * @param \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+	 * @return \CCDNMessage\MessageBundle\Entity\Folder
      */
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
 		
 		return $this;
+    }
+	
+    /**
+     * Get ownedBy
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

@@ -25,42 +25,6 @@ use Symfony\Component\Form\FormBuilder;
  */
 class MessageFormType extends AbstractType
 {
-
-    /**
-     *
-     */
-    protected $container;
-
-    /**
-     *
-     * @access protected
-     */
-    protected $defaults = array();
-
-	/**
-	 *
-	 * @access public
-	 * @param $doctrine, $container
-	 */
-    public function __construct($doctrine, $container)
-    {
-        $this->container = $container;
-
-        $this->defaults = array('send_to' => '');
-    }
-
-    /**
-     *
-     * @access public
-     * @param array $defaults
-     */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
     /**
      *
      * @access public
@@ -68,27 +32,29 @@ class MessageFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('send_to', 'text', array(
-			'data' => $this->getRespondentSendTo(),
-			'label' => 'ccdn_message_message.form.label.message.to',
-			'translation_domain' => 'CCDNMessageMessageBundle',
-		));
-        $builder->add('subject', 'text', array(
-			'data' => $this->getQuotedSubject(),
-			'label' => 'ccdn_message_message.form.label.message.subject',
-			'translation_domain' => 'CCDNMessageMessageBundle',
-		));
-        $builder->add('body', 'textarea', array(
-			'data' => $this->getQuotedBody(),
-			'label' => 'ccdn_message_message.form.label.message.body',
-			'translation_domain' => 'CCDNMessageMessageBundle',
-		));
-        $builder->add('is_flagged', 'checkbox', array(
-			'data' => false,
-			'required' => false,
-			'label' => 'ccdn_message_message.form.label.message.flagged',
-			'translation_domain' => 'CCDNMessageMessageBundle',
-		));
+        $builder
+			->add('send_to', 'text', array(
+				'data' => $this->getRespondentSendTo(),
+				'label' => 'ccdn_message_message.form.label.message.to',
+				'translation_domain' => 'CCDNMessageMessageBundle',
+			))
+			->add('subject', 'text', array(
+				'data' => $this->getQuotedSubject(),
+				'label' => 'ccdn_message_message.form.label.message.subject',
+				'translation_domain' => 'CCDNMessageMessageBundle',
+			))
+			->add('body', 'textarea', array(
+				'data' => $this->getQuotedBody(),
+				'label' => 'ccdn_message_message.form.label.message.body',
+				'translation_domain' => 'CCDNMessageMessageBundle',
+			))
+			->add('is_flagged', 'checkbox', array(
+				'data' => false,
+				'required' => false,
+				'label' => 'ccdn_message_message.form.label.message.flagged',
+				'translation_domain' => 'CCDNMessageMessageBundle',
+			))
+		;
 
         //$userId = $this->defaults['sender']->getId();
         //$attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
@@ -100,7 +66,6 @@ class MessageFormType extends AbstractType
         //    'required' => false,
         //    )
         //);
-
     }
 
     /**
@@ -110,23 +75,23 @@ class MessageFormType extends AbstractType
      */
     protected function getRespondentSendTo()
     {
-        if (isset($this->defaults['send_to'])) {
-            $respondent = $this->defaults['send_to'];
-        } else {
-            if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
-                if ($this->defaults['action'] == 'reply') {
-                    if ($this->defaults['message']->getSentFrom()) {
-                        $respondent = $this->defaults['message']->getSentFrom()->getUsername();
-                    } else {
-                        $respondent = '';
-                    }
-                } else {
-                    $respondent = '';
-                }
-            } else {
+        //if (isset($this->defaults['send_to'])) {
+        //    $respondent = $this->defaults['send_to'];
+        //} else {
+        //    if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
+        //        if ($this->defaults['action'] == 'reply') {
+        //            if ($this->defaults['message']->getSentFrom()) {
+        //                $respondent = $this->defaults['message']->getSentFrom()->getUsername();
+        //            } else {
+        //                $respondent = '';
+        //            }
+        //        } else {
+        //            $respondent = '';
+        //        }
+        //    } else {
                 $respondent = '';
-            }
-        }
+        //    }
+        //}
 
         return $respondent;
     }
@@ -138,15 +103,15 @@ class MessageFormType extends AbstractType
      */
     public function getQuotedSubject()
     {
-        if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
-            if ($this->defaults['action'] == 'reply') {
-                $subject = 'Re: ' . $this->defaults['message']->getSubject();
-            } else {
-                $subject = $this->defaults['message']->getSubject();
-            }
-        } else {
+        //if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
+        //    if ($this->defaults['action'] == 'reply') {
+        //        $subject = 'Re: ' . $this->defaults['message']->getSubject();
+        //    } else {
+        //        $subject = $this->defaults['message']->getSubject();
+        //    }
+        //} else {
             $subject = '';
-        }
+        //}
 
         return $subject;
     }
@@ -158,21 +123,21 @@ class MessageFormType extends AbstractType
      */
     public function getQuotedBody()
     {
-        if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
-            if ($this->defaults['action'] == 'reply') {
-                if ($this->defaults['message']->getSentFrom()) {
-                    $from = $this->defaults['message']->getSentFrom()->getUsername();
-                } else {
-                    $from = 'guest';
-                }
-
-                $message = '[QUOTE=' . $from . ']' . $this->defaults['message']->getBody() . '[/QUOTE]';
-            } else {
-                $message = $this->defaults['message']->getBody();
-            }
-        } else {
+        //if (isset($this->defaults['action']) && isset($this->defaults['message'])) {
+        //    if ($this->defaults['action'] == 'reply') {
+        //        if ($this->defaults['message']->getSentFrom()) {
+        //            $from = $this->defaults['message']->getSentFrom()->getUsername();
+        //        } else {
+        //            $from = 'guest';
+        //        }
+        //
+        //        $message = '[QUOTE=' . $from . ']' . $this->defaults['message']->getBody() . '[/QUOTE]';
+        //    } else {
+        //        $message = $this->defaults['message']->getBody();
+        //    }
+        //} else {
             $message = '';
-        }
+        //}
 
         return $message;
     }
@@ -186,12 +151,13 @@ class MessageFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'CCDNMessage\MessageBundle\Entity\Message',
+            'data_class'      => 'CCDNMessage\MessageBundle\Entity\Message',
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
             'intention'       => 'message_item',
             //'validation_groups' => '',
+			'send_to'         => '',
         );
     }
 
@@ -204,5 +170,4 @@ class MessageFormType extends AbstractType
     {
         return 'Message';
     }
-
 }

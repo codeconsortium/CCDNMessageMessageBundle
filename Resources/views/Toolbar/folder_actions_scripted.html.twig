@@ -61,12 +61,12 @@
 		
 		<ul class="dropdown-menu">
 			<li>
-				<a href="#" data-action="submit_mark_as_read">
+				<a href="#" data-submit-action="submit[mark_as_read]">
 					{{- 'ccdn_message_message.link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 			<li>
-				<a href="#" data-action="submit_mark_as_unread">
+				<a href="#" data-submit-action="submit[mark_as_unread]">
 					{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
@@ -90,7 +90,7 @@
 			
 			{%- for row, folder in folders -%}
 				<li>
-					<a href="#" data-action="submit_move_to" data-value="{{- folder.getId -}}">
+					<a href="#" data-submit-action="submit[move_to]" data-value="{{- folder.getId -}}">
 						{{- folder.getName|title -}}
 					</a>
 				</li>
@@ -99,12 +99,12 @@
 	</div>
 
 	{%- if current_folder.getName == 'drafts' -%}
-		<button type="submit" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_send" class="btn btn-primary disabled hidden">
+		<button type="submit" name="submit[send]" class="btn btn-primary disabled hidden" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
 			{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 		</button>
 	{%- endif -%}
 
-	<button type="submit" style="vertical-align:top;" disabled data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" name="submit_delete" class="btn btn-danger disabled hidden">
+	<button type="submit" name="submit[delete]" class="btn btn-danger disabled hidden" style="vertical-align:top;" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
 		<i class="icon-trash icon-white"></i>
 		{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>
