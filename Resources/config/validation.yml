@@ -18,6 +18,6 @@ CCDNMessage\MessageBundle\Entity\Message:
             - NotBlank: ~
             - MinLength: { limit: 5 }
             - MaxLength: { limit: 5000 }
-        isFlagged:
-            - Type: bool
-            - NotNull: ~
+        #isFlagged:
+        #    - Type: bool
+        #    - NotNull: ~

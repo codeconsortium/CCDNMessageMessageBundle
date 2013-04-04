@@ -41,30 +41,30 @@ ccdn_message_message_mail_compose_to:
     defaults: { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, userId: null }
 
 ccdn_message_message_mail_compose_reply:
-    pattern: /{_locale}/message/{messageId}/reply
+    pattern: /{_locale}/message/{envelopeId}/reply
     defaults: { _controller: CCDNMessageMessageBundle:Message:reply, _locale: en }
 
 ccdn_message_message_mail_compose_forward:
-    pattern: /{_locale}/message/{messageId}/forward
+    pattern: /{_locale}/message/{envelopeId}/forward
     defaults: { _controller: CCDNMessageMessageBundle:Message:forward, _locale: en }
 
 ccdn_message_message_mail_draft_send:
-    pattern: /{_locale}/message/{messageId}/send
+    pattern: /{_locale}/message/{envelopeId}/send
     defaults: { _controller: CCDNMessageMessageBundle:Message:sendDraft, _locale: en }
 
 ccdn_message_message_mail_show_by_id:
-    pattern: /{_locale}/message/{messageId}/show
+    pattern: /{_locale}/message/{envelopeId}/show
     defaults: { _controller: CCDNMessageMessageBundle:Message:showMessage, _locale: en }
 
 ccdn_message_message_mail_mark_as_read:
-    pattern: /{_locale}/message/{messageId}/mark/as/read
+    pattern: /{_locale}/message/{envelopeId}/mark/as/read
     defaults: { _controller: CCDNMessageMessageBundle:Message:markAsRead, _locale: en }
 
 ccdn_message_message_mail_mark_as_unread:
-    pattern: /{_locale}/message/{messageId}/mark/as/unread
+    pattern: /{_locale}/message/{envelopeId}/mark/as/unread
     defaults: { _controller: CCDNMessageMessageBundle:Message:markAsUnread, _locale: en }
 
 ccdn_message_message_mail_delete:
-    pattern: /{_locale}/message/{messageId}/delete
+    pattern: /{_locale}/message/{envelopeId}/delete
     defaults: { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }
 

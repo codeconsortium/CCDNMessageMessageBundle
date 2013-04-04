@@ -99,12 +99,12 @@
 	</div>
 
 	{%- if current_folder.getName == 'drafts' -%}
-		<button type="submit" name="submit[send]" class="btn btn-primary disabled hidden" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
+		<button data-submit-action="submit[send]" class="btn btn-primary disabled hidden" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
 			{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 		</button>
 	{%- endif -%}
 
-	<button type="submit" name="submit[delete]" class="btn btn-danger disabled hidden" style="vertical-align:top;" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
+	<button data-submit-action="submit[delete]" class="btn btn-danger disabled hidden" style="vertical-align:top;" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
 		<i class="icon-trash icon-white"></i>
 		{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>

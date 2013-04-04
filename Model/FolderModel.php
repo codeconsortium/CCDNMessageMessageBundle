@@ -21,12 +21,12 @@ abstract class FolderModel
     /**
 	 * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
 	 */
-    protected $ownedBy = null;
+    protected $ownedByUser = null;
 	
     /**
-	 * @var \Doctrine\Common\Collections\ArrayCollection $messages
+	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
 	 */
-	protected $messages;
+	protected $envelopes;
 	
 	/**
 	 *
@@ -38,35 +38,35 @@ abstract class FolderModel
     }
 
     /**
-     * Get ownedBy
+     * Get ownedByUser
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function getOwnedBy()
+    public function getOwnedByUser()
     {
-        return $this->ownedBy;
+        return $this->ownedByUser;
     }
 	
     /**
-     * Set ownedBy
+     * Set ownedByUser
      *
      * @param \Symfony\Component\Security\Core\User\UserInterface $ownedBy
 	 * @return \CCDNMessage\MessageBundle\Entity\Folder
      */
-    public function setOwnedBy(UserInterface $ownedBy = null)
+    public function setOwnedByUser(UserInterface $ownedByUser = null)
     {
-        $this->ownedBy = $ownedBy;
+        $this->ownedByUser = $ownedByUser;
 		
 		return $this;
     }
 	
     /**
-     * Get ownedBy
+     * Get envelopes
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getMessages()
+    public function getEnvelopes()
     {
-        return $this->messages;
+        return $this->envelopes;
     }
 }

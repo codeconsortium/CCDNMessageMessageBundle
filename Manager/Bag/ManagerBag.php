@@ -34,7 +34,7 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Component\Provider\UserProviderInterface $userProvider
+	 * @var \CCDNComponent\CommonBundle\Component\Provider\UserProviderInterface $userProvider
 	 */
 	protected $userProvider;
 	
@@ -48,6 +48,13 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Manager\EnvelopeManager $envelopeManager
+	 */
+	protected $envelopeManager;
+	
+	/**
+	 *
+	 * @access protected
 	 * @var \CCDNMessage\MessageBundle\Manager\MessageManager $messageManager
 	 */
 	protected $messageManager;
@@ -55,16 +62,16 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\RegistryManager $registryManager
+	 * @var \CCDNMessage\MessageBundle\Manager\ThreadManager $threadManager
 	 */
-	protected $registryManager;
+	protected $threadManager;
 	
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\ThreadManager $threadManager
+	 * @var \CCDNMessage\MessageBundle\Manager\RegistryManager $registryManager
 	 */
-	protected $threadManager;
+	protected $registryManager;
 	
 	/**
 	 *
@@ -121,6 +128,20 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+	 */
+	public function getEnvelopeManager()
+	{
+		if (null == $this->envelopeManager) {
+			$this->envelopeManager = $this->container->get('ccdn_message_message.manager.envelope');
+		}
+		
+		return $this->envelopeManager;
+	}
+	
+	/**
+	 *
+	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Manager\MessageManager
 	 */
 	public function getMessageManager()
@@ -135,20 +156,6 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\RegistryManager
-	 */
-	public function getRegistryManager()
-	{
-		if (null == $this->registryManager) {
-			$this->registryManager = $this->container->get('ccdn_message_message.manager.registry');
-		}
-		
-		return $this->registryManager;		
-	}
-	
-	/**
-	 *
-	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
 	 */
 	public function getThreadManager()
@@ -158,6 +165,20 @@ class ManagerBag implements ManagerBagInterface
 		}
 		
 		return $this->threadManager;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Manager\RegistryManager
+	 */
+	public function getRegistryManager()
+	{
+		if (null == $this->registryManager) {
+			$this->registryManager = $this->container->get('ccdn_message_message.manager.registry');
+		}
+		
+		return $this->registryManager;		
 	}
 	
 	/**

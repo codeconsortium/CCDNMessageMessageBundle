@@ -26,7 +26,7 @@ use CCDNMessage\MessageBundle\Entity\Message;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class MessageFormHandler
+class MessageForwardFormHandler
 {
     /**
 	 *
@@ -71,6 +71,13 @@ class MessageFormHandler
     protected $recipient;
 	
     /**
+	 * 
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Entity\Message $forwardingMessage 
+	 */
+	protected $forwardingMessage;
+	
+    /**
      *
      * @access public
      * @param \Symfony\Component\Form\FormFactory $factory
@@ -107,6 +114,19 @@ class MessageFormHandler
 	public function setRecipient(UserInterface $recipient)
 	{
 		$this->recipient = $recipient;
+		
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNMessage\MessageBundle\Entity\Message $forwardingMessage
+	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+	 */	
+	public function setMessageToForward(Message $forwardingMessage)
+	{
+		$this->forwardingMessage = $forwardingMessage;
 		
 		return $this;
 	}
@@ -175,9 +195,22 @@ class MessageFormHandler
     {
         if (null == $this->form) {
             $defaultValues = array();
-
-            if ($this->recipient) {
-                $defaultValues['send_to'] = $this->recipient->getUsername();
+            
+			if (is_object($this->forwardingMessage) && $this->forwardingMessage instanceof Message) {
+				if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
+					$defaultValues['send_to'] = $this->recipient->getUsername();
+				} else {
+					if ($this->forwardingMessage->getSentFromUser()) {
+		                $defaultValues['send_to'] = $this->forwardingMessage->getSentFromUser()->getUsername();					
+					}
+				}
+				
+				$defaultValues['subject'] = $this->forwardingMessage->getSubject();
+				$defaultValues['body'] = $this->forwardingMessage->getBody();
+            } else {
+				if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
+					$defaultValues['send_to'] = $this->recipient->getUsername();
+				}
             }
 
 			$this->form = $this->factory->create($this->messageFormType, null, $defaultValues);
@@ -194,6 +227,6 @@ class MessageFormHandler
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        return $this->manager->sendMessage($message, $isFlagged)->flush();
+		return $this->manager->sendForwardMessage($message, $this->forwardingMessage, $isFlagged)->flush();
     }
 }

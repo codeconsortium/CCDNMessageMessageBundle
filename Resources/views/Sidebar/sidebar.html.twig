@@ -2,8 +2,8 @@
 	{%- set route = app.request.attributes.get('_route') -%}
 
 	{%- if current_folder.name is not defined -%}
-		{%- if message is defined -%}
-			{%- set current_folder = message.getFolder -%}
+		{%- if envelope is defined -%}
+			{%- set current_folder = envelope.getFolder -%}
 		{%- endif -%}
 	{%- endif -%}
 
@@ -40,7 +40,12 @@
 		{%- import 'CCDNMessageMessageBundle:Sidebar:sidebarMacro.html.twig' as format -%}
 		
 		{%- for folder in folders['folders'] -%}
-			{%- if current_folder is defined -%}
+			{%- if current_folder is defined 
+				and route != 'ccdn_message_message_mail_compose'
+				and route != 'ccdn_message_message_mail_compose_to'
+				and route != 'ccdn_message_message_mail_compose_reply'
+				and route != 'ccdn_message_message_mail_compose_forward'
+			-%}
 				{{- format.folderWithCurrentFolder(folder, current_folder) -}}
 			{%- else -%}
 				{{- format.folder(folder) -}}

@@ -34,16 +34,16 @@ class GatewayBag implements GatewayBagInterface
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Gateway\MessageGateway $messageGateway
+	 * @var \CCDNMessage\MessageBundle\Gateway\EnvelopeGateway $envelopeGateway
 	 */
-	protected $messageGateway;
+	protected $envelopeGateway;
 	
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Gateway\RegistryGateway $registryGateway
+	 * @var \CCDNMessage\MessageBundle\Gateway\MessageGateway $messageGateway
 	 */
-	protected $registryGateway;
+	protected $messageGateway;
 	
 	/**
 	 *
@@ -52,6 +52,13 @@ class GatewayBag implements GatewayBagInterface
 	 */
 	protected $threadGateway;
 	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Gateway\RegistryGateway $registryGateway
+	 */
+	protected $registryGateway;
+		
 	/**
 	 *
 	 * @access protected
@@ -86,6 +93,20 @@ class GatewayBag implements GatewayBagInterface
 	/**
 	 *
 	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Gateway\EnvelopeGateway
+	 */
+	public function getEnvelopeGateway()
+	{
+		if (null == $this->envelopeGateway) {
+			$this->envelopeGateway = $this->container->get('ccdn_message_message.gateway.envelope');
+		}
+		
+		return $this->envelopeGateway;
+	}
+	
+	/**
+	 *
+	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Gateway\MessageGateway
 	 */
 	public function getMessageGateway()
@@ -100,20 +121,6 @@ class GatewayBag implements GatewayBagInterface
 	/**
 	 *
 	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Gateway\RegistryGateway
-	 */
-	public function getRegistryGateway()
-	{
-		if (null == $this->registryGateway) {
-			$this->registryGateway = $this->container->get('ccdn_message_message.gateway.registry');
-		}
-		
-		return $this->registryGateway;		
-	}
-	
-	/**
-	 *
-	 * @access public
 	 * @return \CCDNMessage\MessageBundle\Gateway\ThreadGateway
 	 */
 	public function getThreadGateway()
@@ -123,5 +130,19 @@ class GatewayBag implements GatewayBagInterface
 		}
 		
 		return $this->threadGateway;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Gateway\RegistryGateway
+	 */
+	public function getRegistryGateway()
+	{
+		if (null == $this->registryGateway) {
+			$this->registryGateway = $this->container->get('ccdn_message_message.gateway.registry');
+		}
+		
+		return $this->registryGateway;		
 	}
 }

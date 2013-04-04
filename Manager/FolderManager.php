@@ -54,7 +54,7 @@ class FolderManager extends BaseManager implements BaseManagerInterface
 		$qb = $this->createSelectQuery(array('f'));
 		
 		$qb
-			->where('f.ownedBy = :userId')
+			->where('f.ownedByUser = :userId')
 			->orderBy('f.specialType', 'ASC');
 		
 		$folders = $this->gateway->findFolders($qb, $params);
@@ -66,6 +66,36 @@ class FolderManager extends BaseManager implements BaseManagerInterface
 		}
 		
 		return $folders;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $folderId
+	 * @param int $userId
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function findOneFolderByIdAndUserById($folderId, $userId)
+	{
+		if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
+			throw new \Exception('Folder id "' . $folderId . '" is invalid!');
+		}
+		
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
+		
+		$params = array(':folderId' => $folderId, ':userId' => $userId);
+		
+		$qb = $this->createSelectQuery(array('f'));
+		
+		$qb
+			->where('f.id = :folderId')
+			->andWhere('f.ownedByUser = :userId')
+			->orderBy('f.specialType', 'ASC')
+		;
+		
+		return $this->gateway->findFolder($qb, $params);
 	}
 	
 	/**
@@ -87,14 +117,14 @@ class FolderManager extends BaseManager implements BaseManagerInterface
 		
 		$qb = $this->getQueryBuilder();
 
-		$messageEntityClass = $this->managerBag->getMessageManager()->getGateway()->getEntityClass();
+		$envelopeEntityClass = $this->managerBag->getEnvelopeManager()->getGateway()->getEntityClass();
 			
 		$qb
-			->select('COUNT(DISTINCT m.id) AS readCount')
-			->from($messageEntityClass, 'm')
-			->where('m.folder = :folderId')
-			->andWhere('m.ownedBy = :userId')
-			->andWhere('m.isRead = TRUE')
+			->select('COUNT(DISTINCT e.id) AS readCount')
+			->from($envelopeEntityClass, 'e')
+			->where('e.folder = :folderId')
+			->andWhere('e.ownedByUser = :userId')
+			->andWhere('e.isRead = TRUE')
 			->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
 		
 		try {
@@ -125,13 +155,14 @@ class FolderManager extends BaseManager implements BaseManagerInterface
 		
 		$qb = $this->getQueryBuilder();
 
-		$messageEntityClass = $this->managerBag->getMessageManager()->getGateway()->getEntityClass();
+		$envelopeEntityClass = $this->managerBag->getEnvelopeManager()->getGateway()->getEntityClass();
 			
 		$qb
-			->select('COUNT(DISTINCT m.id) AS unreadCount')
-			->from($messageEntityClass, 'm')
-			->where('m.folder = :folderId')
-			->andWhere('m.ownedBy = :userId')
+			->select('COUNT(DISTINCT e.id) AS unreadCount')
+			->from($envelopeEntityClass, 'e')
+			->where('e.folder = :folderId')
+			->andWhere('e.ownedByUser = :userId')
+			->andWhere('e.isRead = FALSE')
 			->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
 		
 		try {
@@ -147,9 +178,9 @@ class FolderManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return self
+     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
      */
-    public function setupDefaults($user)
+    public function setupDefaults(UserInterface $user)
     {
         if (! is_object($user) || ! $user instanceof UserInterface) {
 			$userId = $user;
@@ -181,16 +212,34 @@ class FolderManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param $folder
-     * @return self
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+	 * @param Array() $folders
+     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
      */
-    public function updateFolderCounterCaches($folder)
+    public function updateAllFolderCachesForUser(UserInterface $user, $folders)
     {
-        $user = $this->getUser();
+        foreach ($folders as $folder) {
+            $this->updateFolderCounterCaches($folder);
+        }
 
-        $readCount = $this->getReadCounterForFolderById($folder->getId(), $user->getId());
+        $this->flush();
+
+        $this->managerBag->getRegistryManager()->updateCacheUnreadMessagesForUser($user, null, $folders)->flush();
+
+        return $this;
+    }
+	
+    /**
+     *
+     * @access public
+     * @param \CCDNMessage\MessageBundle\Entity\Folder $folder
+     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     */
+    public function updateFolderCounterCaches(Folder $folder)
+    {
+        $readCount = $this->getReadCounterForFolderById($folder->getId(), $folder->getOwnedByUser()->getId());
         $readCount = $readCount['readCount'];
-        $unreadCount = $this->getUnreadCounterForFolderById($folder->getId(), $user->getId());
+        $unreadCount = $this->getUnreadCounterForFolderById($folder->getId(), $folder->getOwnedByUser()->getId());
 
         $unreadCount = $unreadCount['unreadCount'];
         $totalCount = ($readCount + $unreadCount);
@@ -208,6 +257,7 @@ class FolderManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param array $folders
+	 * @return int
      */
     public function checkQuotaAllowanceUsed($folders)
     {
@@ -223,7 +273,9 @@ class FolderManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param array $folders, $folderName
+     * @param array $folders
+	 * @param string $folderName
+	 * @return \CCDNMessage\MessageBundle\Entity\Folder
      */
     public function getCurrentFolder($folders, $folderName)
     {
@@ -244,7 +296,8 @@ class FolderManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param array $folders, int $quota
+     * @param array $folders
+	 * @param int $quota
 	 * @return array
      */
     public function getUsedAllowance($folders, $quota)
@@ -258,10 +311,13 @@ class FolderManager extends BaseManager implements BaseManagerInterface
         $usedAllowance = ($totalMessageCount / $quota) * 100;
 
         // where 100 represents 100%, if the number should exceed then reset it to 100%
-        if ($usedAllowance > 99) {
+        if ($usedAllowance > 100) {
             $usedAllowance = 100;
         }
 
-        return array('used_allowance' => $usedAllowance, 'total_message_count' => $totalMessageCount);
+        return array(
+			'used_allowance' => $usedAllowance,
+			'total_message_count' => $totalMessageCount
+		);
     }
 }

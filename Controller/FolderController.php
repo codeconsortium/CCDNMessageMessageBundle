@@ -40,7 +40,7 @@ class FolderController extends FolderBaseController
         $folders = $this->getFolderManager()->findAllFoldersForUserById($this->getUser()->getId());
         $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $folderName);
 
-        $messagesPager = $this->getMessageManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
+        $messagesPager = $this->getEnvelopeManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
 
         $crumbs = $this->getCrumbs()
             ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'));
@@ -66,7 +66,7 @@ class FolderController extends FolderBaseController
         $this->isAuthorised('ROLE_USER');
 
 		$this->bulkAction();
-
+		
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
 			array(
 				'folderName' => $folderName)

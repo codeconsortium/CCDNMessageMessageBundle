@@ -10,3 +10,6 @@ CCDNMessage\MessageBundle\Entity\Thread:
         messages:
             targetEntity: CCDNMessage\MessageBundle\Entity\Message
             mappedBy: thread
+        envelopes:
+            targetEntity: CCDNMessage\MessageBundle\Entity\Envelope
+            mappedBy: thread

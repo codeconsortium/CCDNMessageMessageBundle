@@ -1,23 +1,29 @@
 parameters:
 
     ccdn_message_message.repository.folder.class:                               CCDNMessage\MessageBundle\Repository\FolderRepository
+    ccdn_message_message.repository.envelope.class:                             CCDNMessage\MessageBundle\Repository\EnvelopeRepository
     ccdn_message_message.repository.message.class:                              CCDNMessage\MessageBundle\Repository\MessageRepository
     ccdn_message_message.repository.registry.class:                             CCDNMessage\MessageBundle\Repository\RegistryRepository
     ccdn_message_message.repository.thread.class:                               CCDNMessage\MessageBundle\Repository\ThreadRepository
 
     ccdn_message_message.manager_bag.class:                                     CCDNMessage\MessageBundle\Manager\Bag\ManagerBag
     ccdn_message_message.manager.folder.class:                                  CCDNMessage\MessageBundle\Manager\FolderManager
+    ccdn_message_message.manager.envelope.class:                                CCDNMessage\MessageBundle\Manager\EnvelopeManager
     ccdn_message_message.manager.message.class:                                 CCDNMessage\MessageBundle\Manager\MessageManager
     ccdn_message_message.manager.thread.class:                                  CCDNMessage\MessageBundle\Manager\ThreadManager
     ccdn_message_message.manager.registry.class:                                CCDNMessage\MessageBundle\Manager\RegistryManager
+
     ccdn_message_message.gateway_bag.class:                                     CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag
     ccdn_message_message.gateway.folder.class:                                  CCDNMessage\MessageBundle\Gateway\FolderGateway
+    ccdn_message_message.gateway.envelope.class:                                CCDNMessage\MessageBundle\Gateway\EnvelopeGateway
     ccdn_message_message.gateway.message.class:                                 CCDNMessage\MessageBundle\Gateway\MessageGateway
     ccdn_message_message.gateway.thread.class:                                  CCDNMessage\MessageBundle\Gateway\ThreadGateway
     ccdn_message_message.gateway.registry.class:                                CCDNMessage\MessageBundle\Gateway\RegistryGateway
 
     ccdn_message_message.form.type.message.class:                               CCDNMessage\MessageBundle\Form\Type\MessageFormType
     ccdn_message_message.form.handler.message.class:                            CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+    ccdn_message_message.form.handler.message_reply.class:                      CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler
+    ccdn_message_message.form.handler.message_forward.class:                    CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler
     ccdn_message_message.form.validator.send_to.class:                          CCDNMessage\MessageBundle\Form\Validator\SendToValidator
 
     ccdn_message_message.component.twig_extension.unread_message_count.class:   CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension
@@ -31,18 +37,24 @@ services:
     #
     # Repositories.
     #
-    ccdn_message_message.repository.message:
-        class: %ccdn_message_message.repository.message.class%
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
-        arguments:
-            - 'CCDNMessage\MessageBundle\Entity\Message'
     ccdn_message_message.repository.folder:
         class: %ccdn_message_message.repository.folder.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments:
             - 'CCDNMessage\MessageBundle\Entity\Folder'
+    ccdn_message_message.repository.envelope:
+        class: %ccdn_message_message.repository.envelope.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - 'CCDNMessage\MessageBundle\Entity\Envelope'
+    ccdn_message_message.repository.message:
+        class: %ccdn_message_message.repository.message.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - 'CCDNMessage\MessageBundle\Entity\Message'
     ccdn_message_message.repository.thread:
         class: %ccdn_message_message.repository.thread.class%
         factory_service: doctrine.orm.default_entity_manager
@@ -68,6 +80,13 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.folder
+            - @ccdn_message_message.manager_bag
+    ccdn_message_message.manager.envelope:
+        class: %ccdn_message_message.manager.envelope.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.envelope
             - @ccdn_message_message.manager_bag
     ccdn_message_message.manager.message:
         class: %ccdn_message_message.manager.message.class%
@@ -103,6 +122,12 @@ services:
             - @doctrine
             - @ccdn_message_message.repository.folder
             - @ccdn_message_message.gateway_bag
+    ccdn_message_message.gateway.envelope:
+        class: %ccdn_message_message.gateway.envelope.class%
+        arguments:
+            - @doctrine
+            - @ccdn_message_message.repository.envelope
+            - @ccdn_message_message.gateway_bag
     ccdn_message_message.gateway.message:
         class: %ccdn_message_message.gateway.message.class%
         arguments:
@@ -130,6 +155,18 @@ services:
         arguments:  [@doctrine]
     ccdn_message_message.form.handler.message:
         class: %ccdn_message_message.form.handler.message.class%
+        arguments:
+            - @form.factory
+            - @ccdn_message_message.form.type.message
+            - @ccdn_message_message.manager.message
+    ccdn_message_message.form.handler.message_reply:
+        class: %ccdn_message_message.form.handler.message_reply.class%
+        arguments:
+            - @form.factory
+            - @ccdn_message_message.form.type.message
+            - @ccdn_message_message.manager.message
+    ccdn_message_message.form.handler.message_forward:
+        class: %ccdn_message_message.form.handler.message_forward.class%
         arguments:
             - @form.factory
             - @ccdn_message_message.form.type.message

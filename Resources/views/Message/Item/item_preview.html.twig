@@ -1,6 +1,5 @@
 {%- spaceless -%}
-	{%- set sender = create_profile(message.getSentFrom) -%}
-	{%- set recipient = create_profile(message.getSentTo) -%}
+	{%- set sender = create_profile(app.user) -%}
 
 	<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
 		<tbody>
@@ -12,18 +11,14 @@
 					{{- sender.getProfilePath() |raw -}}
 				</td>
 			</tr>
-			{%- if message.getSentFrom -%}
-				{%- if message.getSentFrom.getId == app.user.id -%}
-				<tr>
-					<td class="right" style="width: 80px;">
-						<b>{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
-					</td>
-					<td class="left" colspan="3">
-						{{- message.getSendTo |title -}}
-					</td>
-				</tr>
-				{%- endif -%}
-			{%- endif -%}
+			<tr>
+				<td class="right" style="width: 80px;">
+					<b>{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
+				</td>
+				<td class="left" colspan="3">
+					{{- message.getSendto |title -}}
+				</td>
+			</tr>
 			<tr>
 				<td class="right" style="width: 80px;">
 					<b>{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
@@ -37,7 +32,7 @@
 					<b>{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left">
-					{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
+					{{- message.getCreatedDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
 				</td>
 			</tr>
 			{#

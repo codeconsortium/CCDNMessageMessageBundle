@@ -26,7 +26,7 @@ use CCDNMessage\MessageBundle\Entity\Message;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class MessageFormHandler
+class MessageReplyFormHandler
 {
     /**
 	 *
@@ -71,6 +71,13 @@ class MessageFormHandler
     protected $recipient;
 	
     /**
+	 * 
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Entity\Message $regardingMessage 
+	 */
+	protected $regardingMessage;
+	
+    /**
      *
      * @access public
      * @param \Symfony\Component\Form\FormFactory $factory
@@ -107,6 +114,19 @@ class MessageFormHandler
 	public function setRecipient(UserInterface $recipient)
 	{
 		$this->recipient = $recipient;
+		
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNMessage\MessageBundle\Entity\Message $regardingMessage
+	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+	 */	
+	public function setInResponseToMessage(Message $regardingMessage)
+	{
+		$this->regardingMessage = $regardingMessage;
 		
 		return $this;
 	}
@@ -168,6 +188,42 @@ class MessageFormHandler
 
     /**
      *
+     * @access protected
+     * @return string
+     */
+    public function getQuotedSubject($subject)
+    {
+		if (strlen($subject) > 0) {
+			$subject = 'Re: ' . $subject;
+		} else {
+			$subject = '';
+		}
+
+        return $subject;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return string
+     */
+    public function getQuotedBody($body, $sendTo)
+    {
+		if (strlen($body) > 0) {
+			if (!strlen($sendTo) > 0) {
+				$sendTo = 'Guest';
+			}
+			
+			$message = '[QUOTE="' . $sendTo . '"]' . $body . '[/QUOTE]';
+		} else {
+			$message = '';
+		}
+		
+        return $message;
+    }
+	
+    /**
+     *
      * @access public
      * @return Form
      */
@@ -175,9 +231,24 @@ class MessageFormHandler
     {
         if (null == $this->form) {
             $defaultValues = array();
-
-            if ($this->recipient) {
-                $defaultValues['send_to'] = $this->recipient->getUsername();
+            
+			if (is_object($this->regardingMessage) && $this->regardingMessage instanceof Message) {
+				if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
+					$defaultValues['send_to'] = $this->recipient->getUsername();
+				} else {
+					if ($this->regardingMessage->getSentFromUser()) {
+		                $defaultValues['send_to'] = $this->regardingMessage->getSentFromUser()->getUsername();					
+					} else {
+						$defaultValues['send_to'] = '';
+					}
+				}
+				
+				$defaultValues['subject'] = $this->getQuotedSubject($this->regardingMessage->getSubject());
+				$defaultValues['body'] = $this->getQuotedBody($this->regardingMessage->getBody(), $defaultValues['send_to']);
+            } else {
+				if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
+					$defaultValues['send_to'] = $this->recipient->getUsername();
+				}
             }
 
 			$this->form = $this->factory->create($this->messageFormType, null, $defaultValues);
@@ -194,6 +265,6 @@ class MessageFormHandler
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        return $this->manager->sendMessage($message, $isFlagged)->flush();
+		return $this->manager->sendReplyToMessage($message, $this->regardingMessage, $isFlagged)->flush();
     }
 }

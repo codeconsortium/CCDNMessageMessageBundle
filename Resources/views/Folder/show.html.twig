@@ -5,6 +5,49 @@
 {% block javascripts_extra %}
 	{{ parent() }}
 	<script src="{{- asset('bundles/ccdncomponentcommon/js/ccdn/jquery.checkboxes.js') -}}" type="text/javascript"></script>
+	
+	<script type='text/javascript'>
+	<!--
+	
+		$(document).ready(function() {
+			$("[data-submit-action='submit[mark_as_read]']").click(function() {
+				$('input#submit_action').attr('name', $(this).attr('data-submit-action'));
+				$('input#submit_action').attr('value', $(this).attr('data-submit-action'));
+				$('input#submit_action').parent('form').submit();
+			});
+
+			$("[data-submit-action='submit[mark_as_unread]']").click(function() {
+				$('input#submit_action').attr('name', $(this).attr('data-submit-action'));
+				$('input#submit_action').attr('value', $(this).attr('data-submit-action'));
+				$('input#submit_action').parent('form').submit();
+			});
+
+			$("[data-submit-action='submit[send]']").click(function() {
+				$('input#submit_action').attr('name', $(this).attr('data-submit-action'));
+				$('input#submit_action').attr('value', $(this).attr('data-submit-action'));
+				$('input#submit_action').parent('form').submit();
+			});
+			
+			$("[data-submit-action='submit[delete]']").click(function() {
+				$('input#submit_action').attr('name', $(this).attr('data-submit-action'));
+				$('input#submit_action').attr('value', $(this).attr('data-submit-action'));
+				$('input#submit_action').parent('form').submit();
+			});
+			
+			$("[data-submit-action='submit[move_to]']").click(function() {
+				// set the hidden textbox to action its action type
+				$('input#submit_action').attr('name', $(this).attr('data-submit-action'));
+				$('input#submit_action').attr('value', $(this).attr('data-submit-action'));
+
+				// set the select box val to match the data-value of the faux combo box
+				$("select[name='select_move_to']").val($(this).attr('data-value'));
+				
+				$('input#submit_action').parent('form').submit();
+			});			
+		});
+	
+	//-->
+	</script>
 {% endblock javascripts_extra %}
 
 {% block title %}{{- truncDot('ccdn_message_message.title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
@@ -20,9 +63,9 @@
 
 				<div class="btn-toolbar">
 					<div class="span6">
-						<noscript data-compat="interactive-non-js-compat">
+						<div data-compat="interactive-non-js-compat">
 							{%- include 'CCDNMessageMessageBundle:Toolbar:folder_actions_no_script.html.twig' -%}
-						</noscript>
+						</div>
 
 						<div data-compat="interactive-js-compat">
 							{%- include 'CCDNMessageMessageBundle:Toolbar:folder_actions_scripted.html.twig' -%}
@@ -52,7 +95,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						{%- for row, message in pager.getCurrentPageResults() -%}
+						{%- for row, envelope in pager.getCurrentPageResults() -%}
+							{%- set message = envelope.getMessage() -%}
 							{%- include 'CCDNMessageMessageBundle:Folder:Item/item_message.html.twig' with {'message': message} -%}
 						{%- else -%}
 							<tr>
@@ -88,35 +132,6 @@
 			</section>
 			#}
 		</section>
-		
-		<script type='text/javascript'>
-		<!--
-			$(document).ready(function() {
-
-				$("[data-submit-action='submit[mark_as_read]']").click(function() {
-					$('input#submit_action').attr('name', $(this).attr('data-action'));
-					$('input#submit_action').attr('value', $(this).attr('data-action'));
-					$('input#submit_action').parent('form').submit();
-				});
-
-				$("[data-submit-action='submit[mark_as_unread]']").click(function() {
-					$('input#submit_action').attr('name', $(this).attr('data-action'));
-					$('input#submit_action').attr('value', $(this).attr('data-action'));
-					$('input#submit_action').parent('form').submit();
-				});
-
-				$("[data-action='submit[move_to]']").click(function() {
-					// set the hidden textbox to action its action type
-					$('input#submit_action').attr('name', $(this).attr('data-action'));
-					$('input#submit_action').attr('value', $(this).attr('data-action'));
-
-					// set the select box val to match the data-value of the faux combo box
-					$("select[name='select_move_to']").val($(this).attr('data-value'));
-					$('input#submit_action').parent('form').submit();
-				});
-			});
-		//-->
-		</script>
 		
 	{%- endspaceless -%}
 

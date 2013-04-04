@@ -13,6 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Manager;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
 use CCDNMessage\MessageBundle\Manager\BaseManager;
 
@@ -54,9 +56,11 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param $user
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+	 * @param \CCDNMessage\MessageBundle\Entity\Registry
+	 * @param Array() $folders
      */
-    public function updateCacheUnreadMessagesForUser($user, Registry $registry = null, $folders = null)
+    public function updateCacheUnreadMessagesForUser(UserInterface $user, Registry $registry = null, $folders = null)
     {
 		if (null == $registry) {
 	        $registry = $this->findRegistryForUserById($user->getId());			

@@ -1,14 +1,14 @@
 {%- spaceless -%}
 
-	{%- set sender = create_profile(message.getSentFrom) -%}
-	{%- set recipient = create_profile(message.getSentTo) -%}
+	{%- set sender = create_profile(message.getSentFromUser) -%}
+	{%- set recipient = create_profile(message.getSentToUser) -%}
 					
-	<tr class="{{- (message.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (message.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- message.id -}}">
+	<tr class="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- envelope.id -}}">
 		<td>
-			<input type="checkbox" id="message_{{- message.id -}}" name="check_message_{{- message.id -}}" data-check-all-responds="true" data-identifier="{{- current_folder.name -}}" data-qualifier="all {{- (message.isRead) ? 'read ' : 'unread ' -}}{{- (message.isDraft) ? 'draft ' : '' -}}{{- (message.isFlagged) ? 'flagged ' : '' -}}{#{- (message.attachment) ? 'attached ' : '' -}#}">
+			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true" data-identifier="{{- current_folder.name -}}" data-qualifier="all {{- (envelope.isRead) ? 'read ' : 'unread ' -}}{{- (envelope.isDraft) ? 'draft ' : '' -}}{{- (envelope.isFlagged) ? 'flagged ' : '' -}}{#{- (message.attachment) ? 'attached ' : '' -}#}">
 		</td>
 		<td>
-			{%- if message.isFlagged -%}
+			{%- if envelope.isFlagged -%}
 				<i class="icon-flag"></i>
 			{%- endif -%}
 		</td>
@@ -20,9 +20,9 @@
 		</td>
 		#}
 		<td>
-			{%- if message.isDraft -%}
-				{%- if message.sentFrom -%}
-					{%- if message.sentFrom.getId == app.user.id -%}
+			{%- if envelope.isDraft -%}
+				{%- if message.sentFromUser -%}
+					{%- if message.sentFromUser.getId == app.user.id -%}
 						<i class="icon-repeat"></i>
 					{%- else -%}
 						<i class="icon-share-alt"></i>
@@ -31,8 +31,8 @@
 					<i class="icon-pencil"></i>
 				{%- endif -%}
 			{%- else -%}
-				{%- if message.sentFrom -%}
-					{%- if message.sentFrom.getId == app.user.id -%}
+				{%- if message.sentFromUser -%}
+					{%- if message.sentFromUser.getId == app.user.id -%}
 						<i class="icon-repeat"></i>
 					{%- else -%}
 						<i class="icon-share-alt"></i>
@@ -41,7 +41,7 @@
 			{%- endif -%}
 		</td>
 		<td>
-			{{- (message.isRead) ? '' : '<i class="icon-envelope"></i>' -}}
+			{{- (envelope.isRead) ? '' : '<i class="icon-envelope"></i>' -}}
 		</td>
 		<td>
 			{%- if current_folder.name == "sent" -%}
@@ -55,15 +55,15 @@
 			{%- endif -%}
 		</td>
 		<td>
-			<a href="{{- path('ccdn_message_message_mail_show_by_id', {'messageId': message.getId }) -}}" title="{{- message.getSubject -}}">{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}</a>
+			<a href="{{- path('ccdn_message_message_mail_show_by_id', {'envelopeId': envelope.getId }) -}}#{{- envelope.id -}}" title="{{- message.getSubject -}}">
+				{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}
+			</a>
 		</td>
 		<td>
-			{%- if message.sentTo -%}
-				{%- if message.getSentDate -%}
-					<abbr class="timestamper" title="{{- message.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-						{{- message.getSentDate |date(ccdn_message_message.folder.show.sent_datetime_format) -}}
-					</abbr>
-				{%- endif -%}
+			{%- if envelope.getSentDate -%}
+				<abbr class="timestamper" title="{{- envelope.getSentDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+					{{- envelope.getSentDate |date(ccdn_message_message.folder.show.sent_datetime_format) -}}
+				</abbr>
 			{%- endif -%}
 		</td>
 	</tr>

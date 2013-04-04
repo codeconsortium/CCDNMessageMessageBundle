@@ -25,34 +25,38 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RenderResponse
      */
-    public function showMessageAction($messageId)
+    public function showMessageAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
 		$user = $this->getUser();
 		
         // Get the message.
-        $message = $this->getMessageManager()->findMessageByIdForUser($messageId, $user->getId());
-        $this->isFound($message);
+        $envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $user->getId());
+        $this->isFound($envelope);
+		
+		// Get message thread.
+		$thread = $this->getThreadManager()->findThreadWithAllEnvelopesByThreadIDAndUserId($envelope->getThread()->getId(), $user->getId());
 
         $folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
-        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $message->getFolder()->getName());
+        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $envelope->getFolder()->getName());
 
-        $this->getMessageManager()->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
-
+        $this->getEnvelopeManager()->markAsRead($envelope, $folders)->flush();
+		$message = $envelope->getMessage();
+					
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
-            ->add($message->getFolder()->getName(), $this->path('ccdn_message_message_folder_show', array('folderName' => $message->getFolder()->getName())))
-            ->add($message->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)));
+            ->add($envelope->getFolder()->getName(), $this->path('ccdn_message_message_folder_show', array('folderName' => $envelope->getFolder()->getName())))
+            ->add($message->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)));
 
         return $this->renderResponse('CCDNMessageMessageBundle:Message:show.html.',
 			array(
 	            'crumbs' => $crumbs,
 	            'folders' => $folders,
-	            'message' => $message,
+				'envelope' => $envelope,
+				'thread' => $thread,
 	        )
 		);
     }
@@ -97,14 +101,17 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RedirectResponse|RenderResponse
      */
-    public function replyAction($messageId)
+    public function replyAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
-		$formHandler = $this->getFormHandlerToSendMessage(null, $messageId);
+		$envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $this->getUser()->getId());
+		$this->isFound($envelope, 'Message could not be found.');
+			
+		$formHandler = $this->getFormHandlerToReplyToMessage(null, $envelope);
 		
 		// Flood Control.
 		if (! $this->getFloodControl()->isFlooded()) {
@@ -113,7 +120,7 @@ class MessageController extends MessageBaseController
 	       		
 				$this->setFlash('notice', $this->trans('ccdn_message_message.flash.message.sent.success'));
 
-	            return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
+	            return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folderName' => 'sent')));
 	        }
 		} else {
 			$this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
@@ -122,14 +129,15 @@ class MessageController extends MessageBaseController
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
             ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
-            ->add($message->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)))
-            ->add($this->trans('ccdn_message_message.crumbs.compose_reply'), $this->path('ccdn_message_message_mail_compose_reply', array('messageId' => $messageId)));
+            ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
+            ->add($this->trans('ccdn_message_message.crumbs.compose_reply'), $this->path('ccdn_message_message_mail_compose_reply', array('envelopeId' => $envelopeId)));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Message:compose.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:Message:composeReply.html.',
 			array(
 	            'crumbs' => $crumbs,
 	            'form' => $formHandler->getForm()->createView(),
 	            'preview' => $formHandler->getForm()->getData(),
+				'envelope' => $envelope,
 	        )
 		);
     }
@@ -137,14 +145,17 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RedirectResponse|RenderResponse
      */
-    public function forwardAction($messageId)
+    public function forwardAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
-		$formHandler = $this->getFormHandlerToSendMessage(null, null, $messageId);
+		$envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $this->getUser()->getId());
+		$this->isFound($envelope, 'Message could not be found.');
+		
+		$formHandler = $this->getFormHandlerToForwardMessage(null, $envelope);
 
 		// Flood Control.
 		if (! $this->getFloodControl()->isFlooded()) {
@@ -153,7 +164,7 @@ class MessageController extends MessageBaseController
 				
 	            $this->setFlash('notice', $this->trans('ccdn_message_message.flash.message.sent.success'));
 
-	            return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folder_name' => 'sent')));
+	            return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folderName' => 'sent')));
 	        }
 		} else {
 			$this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
@@ -162,14 +173,15 @@ class MessageController extends MessageBaseController
 		// setup crumb trail.
 		$crumbs = $this->getCrumbs()
 		    ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
-		    ->add($message->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('messageId' => $messageId)))
-		    ->add($this->trans('ccdn_message_message.crumbs.compose_forward'), $this->path('ccdn_message_message_mail_compose_forward', array('messageId' => $messageId)));
+            ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
+		    ->add($this->trans('ccdn_message_message.crumbs.compose_forward'), $this->path('ccdn_message_message_mail_compose_forward', array('envelopeId' => $envelopeId)));
 
-		return $this->renderResponse('CCDNMessageMessageBundle:Message:compose.html.',
+		return $this->renderResponse('CCDNMessageMessageBundle:Message:composeForward.html.',
 			array(
 			    'crumbs' => $crumbs,
 			    'form' => $formHandler->getForm()->createView(),
 			    'preview' => $formHandler->getForm()->getData(),
+				'envelope' => $envelope,
 			)
 		);
     }
@@ -199,7 +211,7 @@ class MessageController extends MessageBaseController
 		
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
 			array(
-				'folder_name' => 'sent'
+				'folderName' => 'sent'
 			)
 		));
     }
@@ -207,23 +219,26 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RedirectResponse
      */
-    public function markAsReadAction($messageId)
+    public function markAsReadAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
 		$user = $this->getUser();
 
-        $message = $this->getMessageManager()->findMessageByIdForUser($messageId, $user->getId());
-        $this->isFound($message);
+        $envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $user->getId());
+        $this->isFound($envelope);
 
-        $this->getMessageManager()->markAsRead($message)->flush()->updateAllFolderCachesForUser($user);
+        $folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
+        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+		
+        $this->getEnvelopeManager()->markAsRead($envelope, $folders)->flush();
 
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
 			array(
-				'folder_name' => $message->getFolder()->getName()
+				'folderName' => $currentFolder->getName()
 			)
 		));
     }
@@ -231,23 +246,26 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RedirectResponse
      */
-    public function markAsUnreadAction($messageId)
+    public function markAsUnreadAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
 		$user = $this->getUser();
 		
-        $message = $this->getMessageManager()->findMessageByIdForUser($messageId, $user->getId());
-        $this->isFound($message);
+        $envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $user->getId());
+        $this->isFound($envelope);
 
-        $this->getMessageManager()->markAsUnread($message)->flush()->updateAllFolderCachesForUser($user);
+        $folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
+        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+		
+        $this->getEnvelopeManager()->markAsUnread($envelope, $folders)->flush();
 
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
 			array(
-				'folder_name' => $message->getFolder()->getName()
+				'folderName' => $currentFolder->getName()
 			)
 		));
     }
@@ -255,25 +273,26 @@ class MessageController extends MessageBaseController
     /**
      *
      * @access public
-     * @param  int $messageId
+     * @param  int $envelopeId
      * @return RedirectResponse
      */
-    public function deleteAction($messageId)
+    public function deleteAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();
 
-        $message = $this->getMessageManager()->findMessageByIdForUser($messageId, $user->getId());
-        $this->isFound($message);
+        $envelope = $this->getEnvelopeManager()->findEnvelopeByIdForUser($envelopeId, $user->getId());
+        $this->isFound($envelope);
 
         $folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
-
-        $this->getMessageManager()->delete($message, $folders)->flush()->updateAllFolderCachesForUser($user);
+        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+		
+        $this->getEnvelopeManager()->delete($envelope, $folders)->flush();
 
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
 			array(
-				'folder_name' => $message->getFolder()->getName()
+				'folderName' => $currentFolder->getName()
 			)
 		));
     }

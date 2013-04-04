@@ -16,6 +16,7 @@ namespace CCDNMessage\MessageBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use CCDNMessage\MessageBundle\Entity\Envelope;
 use CCDNMessage\MessageBundle\Entity\Message;
 
 abstract class ThreadModel
@@ -24,6 +25,11 @@ abstract class ThreadModel
 	 * @var \Doctrine\Common\Collections\ArrayCollection $messages
 	 */
     protected $messages = null;
+	
+    /**
+	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
+	 */
+    protected $envelopes = null;
 	
 	/**
 	 *
@@ -48,7 +54,7 @@ abstract class ThreadModel
      * Set messages
      *
      * @param \Doctrine\Common\Collections\ArrayCollection|Array $messages
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
+	 * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function setMessages($messages = null)
     {
@@ -61,11 +67,47 @@ abstract class ThreadModel
      * Add message
      *
 	 * @param \CCDNMessage\MessageBundle\Entity\Message $message
-     * @return \CCDNMessage\MessageBundle\Entity\Message
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function addMessage(Message $message)
     {
         $this->messages[] = $message;
+		
+		return $this;
+    }
+	
+    /**
+     * Get envelopes
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getEnvelopes()
+    {
+        return $this->envelopes;
+    }
+	
+    /**
+     * Set envelopes
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection|Array $envelopes
+	 * @return \CCDNMessage\MessageBundle\Entity\Thread
+     */
+    public function setEnvelopes($envelopes = null)
+    {
+        $this->envelopes = $envelopes;
+		
+		return $this;
+    }
+	
+    /**
+     * Add envelope
+     *
+	 * @param \CCDNMessage\MessageBundle\Entity\Envelope $envelope
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
+     */
+    public function addEnvelope(Envelope $envelope)
+    {
+        $this->envelopes[] = $envelope;
 		
 		return $this;
     }

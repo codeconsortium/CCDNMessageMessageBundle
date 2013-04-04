@@ -16,41 +16,29 @@ namespace CCDNMessage\MessageBundle\Model;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNMessage\MessageBundle\Entity\Folder;	
 use CCDNMessage\MessageBundle\Entity\Thread;
-use CCDNMessage\MessageBundle\Entity\Message;
 
 abstract class MessageModel
 {
 	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Folder $folder
+	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
 	 */
-    protected $folder = null;
-
-	/**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentTo
-	 */
-    protected $sentTo = null;
-	
-	/**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentFrom
-	 */
-    protected $sentFrom = null;
-	
-	/** 
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $owmedBy
-	 */
-    protected $ownedBy = null;
-
-	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Message $inResponseTo
-	 */
-    protected $inResponseTo = null;
+    protected $envelopes = null;
 	
 	/**
 	 * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
 	 */
     protected $thread = null;
+	
+	/**
+	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+	 */
+    protected $sentToUser = null;
+	
+	/**
+	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
+	 */
+    protected $sentFromUser = null;
 	
 	/**
 	 *
@@ -62,119 +50,28 @@ abstract class MessageModel
     }
 
     /**
-     * Get folder
+     * Get envelopes
      *
-     * @return \CCDNMessage\MessageBundle\Entity\Folder
+     * @return array
      */
-    public function getFolder()
+    public function getEnvelopes()
     {
-        return $this->folder;
+        return $this->envelopes;
     }
 		
     /**
-     * Set folder
+     * Set envelopes
      *
-     * @param \CCDNMessage\MessageBundle\Entity\Folder $folder
+     * @param $envelopes
 	 * @return \CCDNMessage\MessageBundle\Entity\Message
      */
-    public function setFolder(Folder $folder = null)
+    public function setEnvelopes($envelopes = null)
     {
-        $this->folder = $folder;
+        $this->envelopes = $envelopes;
 		
 		return $this;
     }
 
-    /**
-     * Get sentTo
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getSentTo()
-    {
-        return $this->sentTo;
-    }
-	
-    /**
-     * Set sentTo
-     *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $sentTo
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-    public function setSentTo(UserInterface $sentTo = null)
-    {
-        $this->sentTo = $sentTo;
-		
-		return $this;
-    }
-
-    /**
-     * Get sentFrom
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getSentFrom()
-    {
-        return $this->sentFrom;
-    }
-
-    /**
-     * Set sentFrom
-     *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $sentFrom
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-    public function setSentFrom(UserInterface $sentFrom = null)
-    {
-        $this->sentFrom = $sentFrom;
-		
-		return $this;
-    }
-
-    /**
-     * Get ownedBy
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getOwnedBy()
-    {
-        return $this->ownedBy;
-    }
-	
-    /**
-     * Set ownedBy
-     *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $ownedBy
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-    public function setOwnedBy(UserInterface $ownedBy = null)
-    {
-        $this->ownedBy = $ownedBy;
-		
-		return $this;
-    }
-	
-    /**
-     * Get inResponseTo
-     *
-     * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-	public function getInResponseTo()
-	{
-		return $this->inResponseTo;
-	}
-	
-    /**
-     * Set inResponseTo
-     *
-     * @param \CCDNMessage\MessageBundle\Entity\Message $inResponseTo
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-	public function setInResponseTo(Message $inResponseTo)
-	{
-		$this->inResponseTo = $inResponseTo;
-		
-		return $this;
-	}
     /**
      * Get thread
      *
@@ -197,4 +94,50 @@ abstract class MessageModel
 		
 		return $this;
 	}
+	
+    /**
+     * Get sentToUser
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getSentToUser()
+    {
+        return $this->sentToUser;
+    }
+	
+    /**
+     * Set sentToUser
+     *
+     * @param \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function setSentToUser(UserInterface $sentToUser = null)
+    {
+        $this->sentToUser = $sentToUser;
+		
+		return $this;
+    }
+
+    /**
+     * Get sentFromUser
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getSentFromUser()
+    {
+        return $this->sentFromUser;
+    }
+
+    /**
+     * Set sentFromUser
+     *
+     * @param \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
+	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function setSentFromUser(UserInterface $sentFromUser = null)
+    {
+        $this->sentFromUser = $sentFromUser;
+		
+		return $this;
+    }
 }

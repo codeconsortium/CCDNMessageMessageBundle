@@ -19,33 +19,30 @@ use CCDNMessage\MessageBundle\Model\MessageModel;
 
 class Message extends MessageModel
 {
-    /** @var integer $id */
+    /**
+	 * @var integer $id
+	 */
     protected $id;
 
-    /** @var string $name */
+    /**
+	 * @var string $sendTo
+	 */
+    protected $sendTo;
+	
+    /**
+	 * @var string $name
+	 */
     protected $subject;
 
-    /** @var string $name */
+    /**
+	 * @var string $name
+	 */
     protected $body;
 
-    /** @var \DateTime $sentDate */
-    protected $sentDate;
-
-    /** @var \DateTime $createdDate */
+    /**
+	 * @var \DateTime $createdDate
+	 */
     protected $createdDate;
-
-    /** @var string $sendTo */
-    protected $sendTo;
-
-    /** @var Boolean $isDraft */
-    protected $isDraft = false;
-
-    /** @var Boolean $isRead */
-    protected $isRead = false;
-
-    /** @var Boolean $isFlagged */
-    protected $isFlagged = false;
-
 
     /**
      * Get id
@@ -57,6 +54,29 @@ class Message extends MessageModel
         return $this->id;
     }
 
+    /**
+     * Get sendTo
+     *
+     * @return text
+     */
+    public function getSendTo()
+    {
+        return $this->sendTo;
+    }
+	
+    /**
+     * Set sendTo
+     *
+     * @param text $sendTo
+	 * @return Message
+     */
+    public function setSendTo($sendTo)
+    {
+        $this->sendTo = $sendTo;
+		
+		return $this;
+    }
+	
     /**
      * Get subject
      *
@@ -104,29 +124,6 @@ class Message extends MessageModel
     }
 
     /**
-     * Get sentDate
-     *
-     * @return datetime
-     */
-    public function getSentDate()
-    {
-        return $this->sentDate;
-    }
-
-    /**
-     * Set sentDate
-     *
-     * @param datetime $sentDate
-	 * @return Message
-     */
-    public function setSentDate($sentDate)
-    {
-        $this->sentDate = $sentDate;
-		
-		return $this;
-    }
-
-    /**
      * Get createdDate
      *
      * @return datetime
@@ -145,98 +142,6 @@ class Message extends MessageModel
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-		
-		return $this;
-    }
-
-    /**
-     * Get sendTo
-     *
-     * @return text
-     */
-    public function getSendTo()
-    {
-        return $this->sendTo;
-    }
-	
-    /**
-     * Set sendTo
-     *
-     * @param text $sendTo
-	 * @return Message
-     */
-    public function setSendTo($sendTo)
-    {
-        $this->sendTo = $sendTo;
-		
-		return $this;
-    }
-
-    /**
-     * Get isDraft
-     *
-     * @return boolean
-     */
-    public function getIsDraft()
-    {
-        return $this->isDraft;
-    }
-	
-    /**
-     * Set isDraft
-     *
-     * @param boolean $isDraft
-	 * @return Message
-     */
-    public function setIsDraft($isDraft)
-    {
-        $this->isDraft = $isDraft;
-		
-		return $this;
-    }
-
-    /**
-     * Get isRead
-     *
-     * @return boolean
-     */
-    public function getIsRead()
-    {
-        return $this->isRead;
-    }
-
-    /**
-     * Set isRead
-     *
-     * @param boolean $isRead
-	 * @return Message
-     */
-    public function setIsRead($isRead)
-    {
-        $this->isRead = $isRead;
-		
-		return $this;
-    }
-
-    /**
-     * Get isFlagged
-     *
-     * @return boolean
-     */
-    public function getIsFlagged()
-    {
-        return $this->isFlagged;
-    }
-	
-    /**
-     * Set isFlagged
-     *
-     * @param boolean $isFlagged
-	 * @return Message
-     */
-    public function setIsFlagged($isFlagged)
-    {
-        $this->isFlagged = $isFlagged;
 		
 		return $this;
     }

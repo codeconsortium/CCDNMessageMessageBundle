@@ -15,6 +15,9 @@ namespace CCDNMessage\MessageBundle\Controller;
 
 use CCDNMessage\MessageBundle\Controller\BaseController;
 
+use CCDNMessage\MessageBundle\Entity\Message;
+use CCDNMessage\MessageBundle\Entity\Envelope;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -22,35 +25,74 @@ use CCDNMessage\MessageBundle\Controller\BaseController;
  */
 class MessageBaseController extends BaseController
 {
-	protected function getFormHandlerToSendMessage($userId = null, $inResponseMessageId = null, $forwardMessageId = null)
+	/**
+	 *
+	 * @access protected
+	 * @param int $userId
+	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+	 */
+	protected function getFormHandlerToSendMessage($userId = null)
 	{
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message');
 			
 		$formHandler->setSender($this->getUser());	
 
         // Are we sending this to someone who's 'send message' button we clicked?
-		/** 
-		 * @todo add a user provider
-		 */
         if (null != $userId) {
-            $sendToUser = $this->container->get('ccdn_user_user.repository.user')->findOneById($userId);
+            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
 
             $formHandler->setRecipient($sendToUser);
         }
 		
-		if (null != $inResponseMessageId) {
-			$inResponseMessage = $this->getMessageManager()->findMessageByIdForUser($inResponseMessageId, $this->getUser()->getId());
-			$this->isFound($inResponseMessage, 'Message could not be found.');
+		return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param int $userId
+	 * @param \CCDNMessage\MessageBundle\Entity\Envelope
+	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler
+	 */
+	protected function getFormHandlerToReplyToMessage($userId = null, Envelope $inResponseEnvelope)
+	{
+        $formHandler = $this->container->get('ccdn_message_message.form.handler.message_reply');
 			
-			$formHandler->setInResponseToMessage($inResponseMessage);
-		}
+		$formHandler->setSender($this->getUser());
 
-		if (null != $forwardMessageId) {
-			$forwardMessage = $this->getMessageManager()->findMessageByIdForUser($forwardMessageId, $this->getUser()->getId());		
-	        $this->isFound($forwardMessage, 'Message could not be found.');
+        // Are we sending this to someone who's 'send message' button we clicked?
+        if (null != $userId) {
+            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
+
+            $formHandler->setRecipient($sendToUser);
+        }
+		
+		$formHandler->setInResponseToMessage($inResponseEnvelope->getMessage());
+		
+		return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param int $userId
+	 * @param \CCDNMessage\MessageBundle\Entity\Envelope
+	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler
+	 */
+	protected function getFormHandlerToForwardMessage($userId = null, Envelope $envelopeToForward)
+	{
+        $formHandler = $this->container->get('ccdn_message_message.form.handler.message_forward');
 			
-			$formHandler->setMessageToForward($forwardMessage);
-		}
+		$formHandler->setSender($this->getUser());
+
+        // Are we sending this to someone who's 'send message' button we clicked?
+        if (null != $userId) {
+            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
+
+            $formHandler->setRecipient($sendToUser);
+        }
+		
+		$formHandler->setMessageToForward($envelopeToForward->getMessage());
 		
 		return $formHandler;
 	}

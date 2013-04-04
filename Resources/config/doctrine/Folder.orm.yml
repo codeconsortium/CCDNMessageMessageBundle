@@ -26,7 +26,7 @@ CCDNMessage\MessageBundle\Entity\Folder:
             column: cached_total_message_count
             nullable: true
     manyToOne:
-        ownedBy:
+        ownedByUser:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: ["persist"]
             nullable: true
@@ -35,6 +35,6 @@ CCDNMessage\MessageBundle\Entity\Folder:
                 referencedColumnName: id
                 onDelete: SET NULL
     oneToMany:
-        messages:
-            targetEntity: CCDNMessage\MessageBundle\Entity\Message
-            mappedBy: folder	
+        envelopes:
+            targetEntity: CCDNMessage\MessageBundle\Entity\Envelope
+            mappedBy: folder

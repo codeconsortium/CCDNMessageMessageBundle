@@ -61,6 +61,11 @@ class BaseController extends ContainerAware
 	 * @var \CCDNMessage\MessageBundle\Manager\FolderManager $folderManager
 	 */
 	private $folderManager;
+
+	/** 
+	 * @var \CCDNMessage\MessageBundle\Manager\EnvelopeManager $envelopeManager;
+	 */
+	private $envelopeManager;
 	
 	/**
 	 *
@@ -68,6 +73,11 @@ class BaseController extends ContainerAware
 	 */
 	private $messageManager;
 	
+	/** 
+	 * @var \CCDNMessage\MessageBundle\Manager\ThreadManager $threadManager;
+	 */
+	private $threadManager;
+		
 	/** 
 	 * 
 	 * @var \CCDNMessage\MessageBundle\Manager\RegistryManager $registryManager;
@@ -79,6 +89,13 @@ class BaseController extends ContainerAware
 	 * @var \CCDNMessage\MessageBundle\Component\FloodControl $floodControl;
 	 */
 	private $floodControl;
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNComponent\CommonBundle\Component\Provider\User\UserProviderInterface $userProvider
+	 */
+	protected $userProvider;
 	
 	/**
 	 *
@@ -349,6 +366,20 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+	 */
+	protected function getEnvelopeManager()
+	{
+		if (null == $this->envelopeManager) {
+			$this->envelopeManager = $this->container->get('ccdn_message_message.manager.envelope');
+		}
+		
+		return $this->envelopeManager;
+	}
+	
+	/**
+	 *
+	 * @access protected
 	 * @return \CCDNMessage\MessageBundle\Manager\MessageManager
 	 */
 	protected function getMessageManager()
@@ -358,6 +389,20 @@ class BaseController extends ContainerAware
 		}
 		
 		return $this->messageManager;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
+	 */
+	protected function getThreadManager()
+	{
+		if (null == $this->threadManager) {
+			$this->threadManager = $this->container->get('ccdn_message_message.manager.thread');
+		}
+		
+		return $this->threadManager;
 	}
 	
 	/**
@@ -386,6 +431,20 @@ class BaseController extends ContainerAware
 		}
 		
 		return $this->floodControl;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNComponent\CommonBundle\Component\Provider\UserProviderInterface
+	 */
+	public function getUserProvider()
+	{
+		if (null == $this->userProvider) {
+			$this->userProvider = $this->container->get('ccdn_component_common.component.provider.user_provider');
+		}
+	
+		return $this->userProvider;
 	}
 	
 	/**

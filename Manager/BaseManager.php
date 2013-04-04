@@ -70,8 +70,8 @@ abstract class BaseManager implements BaseManagerInterface
 	 * @access public
 	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
 	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
-	 * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+	 * @param \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface $gateway
+	 * @param \CCDNMessage\MessageBundle\Manager\Bag\ManagerBagInterface $managerBag
 	 */
     public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag)
     {

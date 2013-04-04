@@ -1,8 +1,8 @@
 {%- spaceless -%}
-	{%- set sender = create_profile(message.getSentFrom) -%}
-	{%- set recipient = create_profile(message.getSentTo) -%}
+	{%- set sender = create_profile(envelope.getMessage.getSentFromUser) -%}
+	{%- set recipient = create_profile(envelope.getMessage.getSentToUser) -%}
 
-	<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
+	<table class="table table-striped table-bordered table-hover table-no-vertical-borders" id="{{- envelope.id -}}">
 		<tbody>
 			<tr>
 				<td class="right" style="width: 80px;">
@@ -14,8 +14,8 @@
 					{{- sender.getProfilePath() |raw -}}
 				</td>
 			</tr>
-			{%- if message.getSentFrom -%}
-				{%- if message.getSentFrom.getId == app.user.id -%}
+			{%- if envelope.getMessage.getSentFromUser -%}
+				{%- if envelope.getMessage.getSentFromUser.getId == app.user.id -%}
 					<tr>
 						<td class="right" style="width: 80px;">
 							<b>
@@ -23,10 +23,21 @@
 							</b>
 						</td>
 						<td class="left" colspan="3">
-							{{- message.getSendTo |title -}}
+							{{- envelope.getMessage.getSendTo |title -}}
 						</td>
 					</tr>
 				{%- endif -%}
+			{%- else -%}
+				<tr>
+					<td class="right" style="width: 80px;">
+						<b>
+							{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}
+						</b>
+					</td>
+					<td class="left" colspan="3">
+						{{- envelope.getMessage.getSendTo |title -}}
+					</td>
+				</tr>
 			{%- endif -%}
 			<tr>
 				<td class="right" style="width: 80px;">
@@ -35,7 +46,7 @@
 					</b>
 				</td>
 				<td class="left" colspan="3">
-					{{- message.getSubject -}}
+					{{- envelope.getMessage.getSubject -}}
 				</td>
 			</tr>
 			<tr>
@@ -45,7 +56,7 @@
 					</b>
 				</td>
 				<td class="left">
-					{{- message.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
+					{{- envelope.getSentDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}
 				</td>
 			</tr>
 			{#
@@ -63,7 +74,7 @@
 			<tr>
 				<td class="left" colspan="4" style="overflow: hidden; padding: 25px;">
 					<article>
-						{{- BBCode(message.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
+						{{- BBCode(envelope.getMessage.getBody | raw, ccdn_message_message.message.show.enable_bb_parser) | raw -}}
 						<br>
 					</article>
 				</td>

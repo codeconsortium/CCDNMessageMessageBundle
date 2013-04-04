@@ -15,6 +15,8 @@ namespace CCDNMessage\MessageBundle\Controller;
 
 use CCDNMessage\MessageBundle\Controller\BaseController;
 
+use CCDNMessage\MessageBundle\Entity\Folder;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -28,45 +30,52 @@ class FolderBaseController extends BaseController
      */
     protected function bulkAction()
     {
-		$messageIds = $this->getCheckedItemIds('message_');
+		$envelopeIds = $this->getCheckedItemIds('envelope');
 		
         // Don't bother if there are no checkboxes to process.
-        if (count($messageIds) < 1) {
+        if (count($envelopeIds) < 1) {
             return;
         }
 
         $user = $this->getUser();
 
-        //$posts = $this->getPostManager()->findThesePostsById($itemIds);
-		$messages = $this->container->get('ccdn_message_message.repository.message')->findTheseMessagesByUserId($messageIds, $user->getId());
+		$envelopes = $this->getEnvelopeManager()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $user->getId());
 
-        if ( ! $messages || empty($messages)) {
+        if ( ! $envelopes || empty($envelopes)) {
             $this->setFlash('notice', $this->trans('flash.post.no_messages_found'));
 
             return;
         }
 
+		$folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
+
 		$submitAction = $this->getSubmitAction();
 		
         if ($submitAction == 'delete') {
-            $folders = $this->container->get('ccdn_message_message.repository.folder')->findAllFoldersForUser($user->getId());
-
-            $this->getMessageManager()->bulkDelete($messages, $folders)->flush();
+            $this->getEnvelopeManager()->bulkDelete($envelopes, $folders, $user)->flush();
         }
+		
         if ($submitAction == 'mark_as_read') {
-			$this->getMessageManager()->bulkMarkAsRead($messages)->flush();
+			$this->getEnvelopeManager()->bulkMarkAsRead($envelopes, $folders, $user)->flush();
         }
+		
         if ($submitAction == 'mark_as_unread') {
-			$this->getMessageManager()->bulkMarkAsUnread($messages)->flush();
+			$this->getEnvelopeManager()->bulkMarkAsUnread($envelopes, $folders, $user)->flush();
         }
+		
         if ($submitAction == 'move_to') {
-            $moveTo = $this->container->get('ccdn_message_message.repository.folder')->findOneById($_POST['select_move_to']);
-            $this->getMessageManager()->bulkMoveToFolder($messages, $moveTo)->flush();
-        }
-        if ($submitAction == 'send') {
-			$this->getMessageManager()->sendDraft($messages)->flush();
+			$moveToFolderId = $this->request->get('select_move_to');
+            $moveToFolder = $this->getFolderManager()->findOneFolderByIdAndUserById($moveToFolderId, $user->getId());
+
+			if (! is_object($moveToFolder) || ! $moveToFolder instanceof Folder) {
+				throw new \Exception('Folder not found.');
+			}
+			
+            $this->getEnvelopeManager()->bulkMoveToFolder($envelopes, $folders, $moveToFolder, $user)->flush();
         }
 
-        $this->container->get('ccdn_message_message.manager.message')->updateAllFolderCachesForUser($user);
+        if ($submitAction == 'send') {
+			$this->getMessageManager()->bulkSendDraft($envelopes)->flush();
+        }
     }
 }
