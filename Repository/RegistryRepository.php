@@ -25,26 +25,4 @@ use Doctrine\ORM\EntityRepository;
 class RegistryRepository extends EntityRepository
 {
 
-    /**
-     *
-     * @access public
-     * @param int $folderId
-     */
-    public function findRegistryRecordForUser($userId)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT r
-                FROM CCDNMessageMessageBundle:Registry r
-                WHERE r.ownedBy = :userId
-                ')
-            ->setParameter('userId', $userId);
-
-        try {
-            return $query->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return;
-        }
-    }
-
 }
