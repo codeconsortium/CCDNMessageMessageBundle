@@ -65,4 +65,11 @@ interface ManagerBagInterface
 	 * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
 	 */
 	public function getThreadManager();
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Manager\UserManager
+	 */
+	public function getUserManager();
 }

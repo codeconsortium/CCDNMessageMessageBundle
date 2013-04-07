@@ -273,11 +273,11 @@ class MessageManager extends BaseManager implements BaseManagerInterface
                 }
             }
 
-            $users = $this->managerBag->getUserProvider()->findTheseUsersByUsername($recipients);
+            $users = $this->managerBag->getUserManager()->findTheseUsersByUsername($recipients);
         } else {
             $recipients = array($recipients);
 
-            $users = $this->managerBag->getUserProvider()->findOneUserByUsername($recipients);
+            $users = $this->managerBag->getUserManager()->findOneUserByUsername($recipients);
         }
 		
 		return $users;

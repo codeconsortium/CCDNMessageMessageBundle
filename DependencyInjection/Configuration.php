@@ -52,6 +52,9 @@ class Configuration implements ConfigurationInterface
         $this->addSEOSection($rootNode);
         $this->addFolderSection($rootNode);
         $this->addMessageSection($rootNode);
+		$this->addEntitySection($rootNode);
+		$this->addGatewaySection($rootNode);
+		$this->addManagerSection($rootNode);
         $this->addQuotasSection($rootNode);
 
         return $treeBuilder;
@@ -151,6 +154,201 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     *
+     * @access private
+     * @param ArrayNodeDefinition $node
+     */
+    private function addEntitySection(ArrayNodeDefinition $node)
+	{
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('entity')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+				        ->arrayNode('folder')
+				            ->addDefaultsIfNotSet()
+				            ->canBeUnset()
+				            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Folder')->end()
+							->end()
+						->end()
+				        ->arrayNode('message')
+				            ->addDefaultsIfNotSet()
+				            ->canBeUnset()
+				            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Message')->end()
+							->end()
+						->end()
+				        ->arrayNode('envelope')
+				            ->addDefaultsIfNotSet()
+				            ->canBeUnset()
+				            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Envelope')->end()
+							->end()
+						->end()
+				        ->arrayNode('registry')
+				            ->addDefaultsIfNotSet()
+				            ->canBeUnset()
+				            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Registry')->end()
+							->end()
+						->end()
+				        ->arrayNode('thread')
+				            ->addDefaultsIfNotSet()
+				            ->canBeUnset()
+				            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Thread')->end()
+							->end()
+						->end()
+				        ->arrayNode('user')
+				            ->children()
+								->scalarNode('class')->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+    /**
+     *
+     * @access private
+     * @param ArrayNodeDefinition $node
+     */
+    private function addGatewaySection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('gateway')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('bag')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag')->end()							
+							->end()
+						->end()
+                        ->arrayNode('message')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\MessageGateway')->end()							
+							->end()
+						->end()
+                        ->arrayNode('folder')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\FolderGateway')->end()							
+							->end()
+						->end()
+                        ->arrayNode('envelope')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\EnvelopeGateway')->end()							
+							->end()
+						->end()
+                        ->arrayNode('registry')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\RegistryGateway')->end()							
+							->end()
+						->end()
+                        ->arrayNode('thread')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\ThreadGateway')->end()							
+							->end()
+						->end()
+                        ->arrayNode('user')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\UserGateway')->end()							
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+    /**
+     *
+     * @access private
+     * @param ArrayNodeDefinition $node
+     */
+    private function addManagerSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('manager')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('bag')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\Bag\ManagerBag')->end()							
+							->end()
+						->end()
+                        ->arrayNode('message')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\MessageManager')->end()							
+							->end()
+						->end()
+                        ->arrayNode('folder')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\FolderManager')->end()							
+							->end()
+						->end()
+                        ->arrayNode('envelope')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\EnvelopeManager')->end()							
+							->end()
+						->end()
+                        ->arrayNode('registry')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\RegistryManager')->end()							
+							->end()
+						->end()
+                        ->arrayNode('thread')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\ThreadManager')->end()							
+							->end()
+						->end()
+                        ->arrayNode('user')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\UserManager')->end()							
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+	
     /**
      *
      * @access private

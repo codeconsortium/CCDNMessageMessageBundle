@@ -44,7 +44,7 @@ class SendTo extends Constraint
 
             $this->message = str_replace("%users%", $usernames, $this->message);
         } else {
-            $this->message = "You must provide a valid username to receive the message.";
+            $this->message = "You must provide a valid username to send the message.";
         }
     }
 
@@ -57,5 +57,4 @@ class SendTo extends Constraint
     {
         return 'send_to';
     }
-
 }

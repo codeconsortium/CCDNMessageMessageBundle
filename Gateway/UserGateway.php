@@ -15,25 +15,25 @@ namespace CCDNMessage\MessageBundle\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface;
 use CCDNMessage\MessageBundle\Gateway\BaseGateway;
 use CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag;
-
-use CCDNMessage\MessageBundle\Entity\Message;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class MessageGateway extends BaseGateway implements BaseGatewayInterface
+class UserGateway extends BaseGateway implements BaseGatewayInterface
 {
 	/**
 	 *
 	 * @access private
 	 * @var string $queryAlias
 	 */
-	private $queryAlias = 'm';
+	private $queryAlias = 'u';
 
 	/**
 	 *
@@ -52,7 +52,7 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
 	 * @param Array $parameters
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */
-	public function findMessage(QueryBuilder $qb = null, $parameters = null)
+	public function findUser(QueryBuilder $qb = null, $parameters = null)
 	{
 		if (null == $qb) {
 			$qb = $this->createSelectQuery();
@@ -68,16 +68,11 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
 	 * @param Array $parameters
 	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */
-	public function findMessages(QueryBuilder $qb = null, $parameters = null)
+	public function findUsers(QueryBuilder $qb = null, $parameters = null)
 	{
 		if (null == $qb) {
 			$qb = $this->createSelectQuery();
 		}
-
-		$qb
-			->addOrderBy('m.createdDate', 'DESC')
-			->addOrderBy('m.sentDate', 'DESC')
-		;
 		
 		return $this->all($qb, $parameters);
 	}
@@ -89,7 +84,7 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
 	 * @param Array $parameters
 	 * @return int
 	 */
-	public function countMessages(QueryBuilder $qb = null, $parameters = null)
+	public function countUsers(QueryBuilder $qb = null, $parameters = null)
 	{
 		if (null == $qb) {
 			$qb = $this->createCountQuery();
@@ -149,44 +144,5 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
 		}
 		
 		return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNMessage\MessageBundle\Entity\Message $message
-	 * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
-	 */	
-	public function persistMessage(Message $message)
-	{
-		$this->persist($message)->flush();
-		
-		return $this;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNMessage\MessageBundle\Entity\Message $message
-	 * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
-	 */	
-	public function updateMessage(Message $message)
-	{
-		$this->persist($message)->flush();
-		
-		return $this;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNMessage\MessageBundle\Entity\Message $message
-	 * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
-	 */	
-	public function deleteMessage(Message $message)
-	{
-		$this->remove($message)->flush();
-		
-		return $this;
 	}
 }

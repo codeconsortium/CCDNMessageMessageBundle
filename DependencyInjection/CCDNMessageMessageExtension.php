@@ -44,15 +44,20 @@ class CCDNMessageMessageExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-
         $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
 
+        $this->getEntitySection($container, $config);
+        $this->getGatewaySection($container, $config);
+        $this->getManagerSection($container, $config);
+		
+        $this->getQuotasSection($container, $config);
+		
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+		
         $this->getSEOSection($container, $config);
         $this->getFolderSection($container, $config);
         $this->getMessageSection($container, $config);
-        $this->getQuotasSection($container, $config);
     }
 	
     /**
@@ -97,6 +102,60 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.message.compose.enable_bb_editor', $config['message']['compose']['enable_bb_editor']);
     }
 
+    /**
+     *
+     * @access private
+     * @param $container, $config
+     */
+    private function getEntitySection($container, $config)
+    {
+        $container->setParameter('ccdn_message_message.entity.folder.class', $config['entity']['folder']['class']);
+        $container->setParameter('ccdn_message_message.entity.message.class', $config['entity']['message']['class']);
+        $container->setParameter('ccdn_message_message.entity.envelope.class', $config['entity']['envelope']['class']);
+        $container->setParameter('ccdn_message_message.entity.registry.class', $config['entity']['registry']['class']);
+        $container->setParameter('ccdn_message_message.entity.thread.class', $config['entity']['thread']['class']);
+		
+		if (! array_key_exists('class', $config['entity']['user'])) {
+			throw new \Exception('You must set the class of the User entity.');
+		}
+
+        $container->setParameter('ccdn_message_message.entity.user.class', $config['entity']['user']['class']);		
+		
+	}
+    /**
+     *
+     * @access private
+     * @param $container, $config
+     */
+    private function getGatewaySection($container, $config)
+    {
+        $container->setParameter('ccdn_message_message.gateway_bag.class', $config['gateway']['bag']['class']);
+
+        $container->setParameter('ccdn_message_message.gateway.folder.class', $config['gateway']['folder']['class']);
+        $container->setParameter('ccdn_message_message.gateway.message.class', $config['gateway']['message']['class']);
+        $container->setParameter('ccdn_message_message.gateway.envelope.class', $config['gateway']['envelope']['class']);
+        $container->setParameter('ccdn_message_message.gateway.registry.class', $config['gateway']['registry']['class']);
+        $container->setParameter('ccdn_message_message.gateway.thread.class', $config['gateway']['thread']['class']);
+        $container->setParameter('ccdn_message_message.gateway.user.class', $config['gateway']['user']['class']);
+	}
+	
+    /**
+     *
+     * @access private
+     * @param $container, $config
+     */
+    private function getManagerSection($container, $config)
+    {
+        $container->setParameter('ccdn_message_message.manager_bag.class', $config['manager']['bag']['class']);
+
+        $container->setParameter('ccdn_message_message.manager.folder.class', $config['manager']['folder']['class']);
+        $container->setParameter('ccdn_message_message.manager.message.class', $config['manager']['message']['class']);
+        $container->setParameter('ccdn_message_message.manager.envelope.class', $config['manager']['envelope']['class']);
+        $container->setParameter('ccdn_message_message.manager.registry.class', $config['manager']['registry']['class']);
+        $container->setParameter('ccdn_message_message.manager.thread.class', $config['manager']['thread']['class']);
+        $container->setParameter('ccdn_message_message.manager.user.class', $config['manager']['user']['class']);		
+	}
+	
     /**
      *
      * @access private

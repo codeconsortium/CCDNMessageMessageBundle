@@ -62,7 +62,8 @@ class BaseController extends ContainerAware
 	 */
 	private $folderManager;
 
-	/** 
+	/**
+	 *
 	 * @var \CCDNMessage\MessageBundle\Manager\EnvelopeManager $envelopeManager;
 	 */
 	private $envelopeManager;
@@ -74,6 +75,7 @@ class BaseController extends ContainerAware
 	private $messageManager;
 	
 	/** 
+	 *
 	 * @var \CCDNMessage\MessageBundle\Manager\ThreadManager $threadManager;
 	 */
 	private $threadManager;
@@ -83,20 +85,20 @@ class BaseController extends ContainerAware
 	 * @var \CCDNMessage\MessageBundle\Manager\RegistryManager $registryManager;
 	 */
 	private $registryManager;
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Manager\UserManager $userManager
+	 */
+	protected $userManager;
 		
 	/** 
 	 * 
 	 * @var \CCDNMessage\MessageBundle\Component\FloodControl $floodControl;
 	 */
 	private $floodControl;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var \CCDNComponent\CommonBundle\Component\Provider\User\UserProviderInterface $userProvider
-	 */
-	protected $userProvider;
-	
+		
 	/**
 	 *
 	 * @access protected
@@ -421,6 +423,20 @@ class BaseController extends ContainerAware
 	
 	/**
 	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Manager\UserManager
+	 */
+	public function getUserManager()
+	{
+		if (null == $this->userManager) {
+			$this->userManager = $this->container->get('ccdn_message_message.manager.user');
+		}
+	
+		return $this->userManager;
+	}
+	
+	/**
+	 *
 	 * @access protected
 	 * @return \CCDNMessage\MessageBundle\Component\FloodControl
 	 */
@@ -431,20 +447,6 @@ class BaseController extends ContainerAware
 		}
 		
 		return $this->floodControl;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNComponent\CommonBundle\Component\Provider\UserProviderInterface
-	 */
-	public function getUserProvider()
-	{
-		if (null == $this->userProvider) {
-			$this->userProvider = $this->container->get('ccdn_component_common.component.provider.user_provider');
-		}
-	
-		return $this->userProvider;
 	}
 	
 	/**

@@ -58,7 +58,14 @@ class GatewayBag implements GatewayBagInterface
 	 * @var \CCDNMessage\MessageBundle\Gateway\RegistryGateway $registryGateway
 	 */
 	protected $registryGateway;
-		
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Gateway\UserGateway $userGateway
+	 */
+	protected $userGateway;
+	
 	/**
 	 *
 	 * @access protected
@@ -144,5 +151,19 @@ class GatewayBag implements GatewayBagInterface
 		}
 		
 		return $this->registryGateway;		
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Gateway\UserGateway
+	 */
+	public function getUserGateway()
+	{
+		if (null == $this->userGateway) {
+			$this->userGateway = $this->container->get('ccdn_message_message.gateway.user');
+		}
+		
+		return $this->userGateway;		
 	}
 }

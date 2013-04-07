@@ -34,17 +34,10 @@ interface BaseGatewayInterface
 	 *
 	 * @access public
 	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-	 * @param \Doctrine\ORM\EntityRepository $repository
 	 * @param \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+	 * @param string $entityClass
 	 */
-	public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag);
-	
-	/**
-	 *
-	 * @access public
-	 * @return \Doctrine\ORM\EntityRepository
-	 */
-	public function getRepository();
+	public function __construct(Registry $doctrine, GatewayBagInterface $gatewayBag, $entityClass);
 
 	/**
 	 *

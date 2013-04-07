@@ -47,43 +47,37 @@ abstract class BaseGateway implements BaseGatewayInterface
 	/**
 	 *
 	 * @access protected
-	 * @var \Doctrine\ORM\EntityRepository $repository
-	 */
-	protected $repository;
-	
-	/**
-	 *
-	 * @access protected
 	 * @var \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
 	 */
 	protected $gatewayBag;
 	
 	/**
 	 *
-	 * @access public
-	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-	 * @param \Doctrine\ORM\EntityRepository $repository
-	 * @param \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+	 * @access private
+	 * @var string $entityClass
 	 */
-	public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag)
-	{
-		$this->doctrine = $doctrine;
-		
-		$this->em = $doctrine->getEntityManager();
-		
-		$this->repository = $repository;
-		
-		$this->gatewayBag = $gatewayBag;
-	}
+	protected $entityClass;
 	
 	/**
 	 *
 	 * @access public
-	 * @return \Doctrine\ORM\EntityRepository
+	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+	 * @param \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+	 * @param string $entityClass
 	 */
-	public function getRepository()
+	public function __construct(Registry $doctrine, GatewayBagInterface $gatewayBag, $entityClass)
 	{
-		return $this->repository;
+		$this->doctrine = $doctrine;
+		
+		$this->em = $doctrine->getEntityManager();
+				
+		$this->gatewayBag = $gatewayBag;
+
+		if (null == $entityClass) {
+			throw new \Exception('Entity class for gateway must be specified!');
+		}
+		
+		$this->entityClass = $entityClass;
 	}
 
 	/**

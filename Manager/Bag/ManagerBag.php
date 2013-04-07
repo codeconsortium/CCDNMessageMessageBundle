@@ -34,13 +34,6 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
-	 * @var \CCDNComponent\CommonBundle\Component\Provider\UserProviderInterface $userProvider
-	 */
-	protected $userProvider;
-	
-	/**
-	 *
-	 * @access protected
 	 * @var \CCDNMessage\MessageBundle\Manager\FolderManager $folderManager
 	 */
 	protected $folderManager;
@@ -76,6 +69,13 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Manager\UserManager $userManager
+	 */
+	protected $userManager;
+	
+	/**
+	 *
+	 * @access protected
 	 * @var int $messagesPerPageOnFolders
 	 */
 	protected $messagesPerPageOnFolders;
@@ -96,20 +96,6 @@ class ManagerBag implements ManagerBagInterface
     {
         $this->container = $container;
     }
-		
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNComponent\CommonBundle\Component\Provider\UserProviderInterface
-	 */
-	public function getUserProvider()
-	{
-		if (null == $this->userProvider) {
-			$this->userProvider = $this->container->get('ccdn_component_common.component.provider.user_provider');
-		}
-	
-		return $this->userProvider;
-	}
 		
 	/**
 	 *
@@ -179,6 +165,20 @@ class ManagerBag implements ManagerBagInterface
 		}
 		
 		return $this->registryManager;		
+	}
+		
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Manager\UserManager
+	 */
+	public function getUserManager()
+	{
+		if (null == $this->userManager) {
+			$this->userManager = $this->container->get('ccdn_message_message.manager.user');
+		}
+	
+		return $this->userManager;
 	}
 	
 	/**

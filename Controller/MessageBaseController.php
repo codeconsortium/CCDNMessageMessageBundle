@@ -39,7 +39,7 @@ class MessageBaseController extends BaseController
 
         // Are we sending this to someone who's 'send message' button we clicked?
         if (null != $userId) {
-            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
+            $sendToUser = $this->getUserManager()->findOneUserById($userId);
 
             $formHandler->setRecipient($sendToUser);
         }
@@ -62,7 +62,7 @@ class MessageBaseController extends BaseController
 
         // Are we sending this to someone who's 'send message' button we clicked?
         if (null != $userId) {
-            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
+            $sendToUser = $this->getUserManager()->findOneUserById($userId);
 
             $formHandler->setRecipient($sendToUser);
         }
@@ -87,7 +87,7 @@ class MessageBaseController extends BaseController
 
         // Are we sending this to someone who's 'send message' button we clicked?
         if (null != $userId) {
-            $sendToUser = $this->getUserProvider()->findOneUserById($userId);
+            $sendToUser = $this->getUserManager()->findOneUserById($userId);
 
             $formHandler->setRecipient($sendToUser);
         }

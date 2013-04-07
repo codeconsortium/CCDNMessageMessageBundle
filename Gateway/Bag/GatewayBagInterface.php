@@ -58,4 +58,11 @@ interface GatewayBagInterface
 	 * @return \CCDNMessage\MessageBundle\Gateway\ThreadGateway
 	 */
 	public function getThreadGateway();
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Gateway\UserGateway
+	 */
+	public function getUserGateway();
 }
