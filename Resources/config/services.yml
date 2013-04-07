@@ -168,8 +168,7 @@ services:
     #
     ccdn_message_message.form.type.message:
         class: %ccdn_message_message.form.type.message.class%
-        arguments: 
-            - @doctrine
+        arguments: []
     ccdn_message_message.form.handler.message:
         class: %ccdn_message_message.form.handler.message.class%
         arguments:
@@ -191,10 +190,9 @@ services:
     ccdn_message_message.form.validator.send_to:
         class: %ccdn_message_message.form.validator.send_to.class%
         arguments:
-            - @doctrine
-            - @service_container
+            - @ccdn_message_message.manager.user
         tags:
-            - { name: validator.constraint_validator, alias: send_to }
+            - { name: validator.constraint_validator, alias: SendToValidator }
 
     #
     # Twig Extensions.

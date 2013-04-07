@@ -25,28 +25,11 @@ use Symfony\Component\Validator\Constraint;
  */
 class SendTo extends Constraint
 {
-
     /**
      *
      * @access public
      */
-    public $message = 'The users "%users%" were not found.';
-
-    /**
-     *
-     * @access public
-     * @param array $usernames
-     */
-    public function addNotFoundUsernames($usernames)
-    {
-        if (is_array($usernames) && count($usernames) > 0) {
-            $usernames = implode(", ", $usernames);
-
-            $this->message = str_replace("%users%", $usernames, $this->message);
-        } else {
-            $this->message = "You must provide a valid username to send the message.";
-        }
-    }
+    public $message = 'The user "%username%" were not found.';
 
     /**
      *
@@ -55,6 +38,6 @@ class SendTo extends Constraint
      */
     public function validatedBy()
     {
-        return 'send_to';
+        return 'SendToValidator';
     }
 }

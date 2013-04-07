@@ -15,54 +15,92 @@ namespace CCDNMessage\MessageBundle\Form\Validator;
 
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraint;
+use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.1
+ * @version 2.0
  *
  * @see http://symfony.com/doc/current/cookbook/validation/custom_constraint.html
  */
 class SendToValidator extends ConstraintValidator
 {
-
     /**
      *
      * @access protected
+	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
      */
-    protected $doctrine;
-
-    /**
-     *
-     * @access protected
-     */
-    protected $container;
+    protected $userManager;
 
     /**
      *
      * @access public
-     * @param $doctrine, $container
+	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
      */
-    public function __construct($doctrine, $container)
+    public function __construct(BaseManagerInterface $userManager)
     {
-
-        $this->doctrine = $doctrine;
-        $this->container = $container;
+        $this->userManager = $userManager;
     }
 
     /**
      *
      * @access public
-     * @param string $value, Constraint $constraint
+     * @param string $value
+	 * @param \Symfony\Component\Validator\Constraint $constraint
      * @return bool
      */
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
-
         if (strlen($value) < 1) {
-            $constraint->addNotFoundUsernames(array());
+            $this->context->addViolation($constraint->message, array('%username%' => $value));
+
+			return;
         }
 
+		$recipients = $this->getRecipients($value);
+		
+        if (count($recipients) > 0) {
+            $usersFound = $this->userManager->findTheseUsersByUsername($recipients);
+        } else {
+            $this->context->addViolation($constraint->message, array('%username%' => $value));
+			
+			return;
+        }
+
+        foreach ($recipients as $recipientKey => $recipient) {
+			if (! $this->recipientExists($recipient, $usersFound)) {
+				$this->context->addViolation($constraint->message, array('%username%' => $recipient));
+			}
+        }
+    }
+	
+    /**
+     *
+     * @access public
+     * @param array $recipient
+	 * @param array $usersFound
+     * @return bool
+     */
+	private function recipientExists($recipient, $usersFound)
+	{
+        foreach ($usersFound as $user) {
+            if ($user->getUsername() == $recipient) {
+                return true;
+            }
+        }
+		
+		return false;
+	}
+	
+    /**
+     *
+     * @access public
+     * @param string $value
+     * @return array
+     */
+	private function getRecipients($value)
+	{
         // convert either one user or mulitple users who
         // the mail will be sent to into user entities.
         if ($recipients = preg_split('/((,)|(\s))/', $value, PREG_OFFSET_CAPTURE)) {
@@ -74,42 +112,10 @@ class SendToValidator extends ConstraintValidator
                     unset($recipients[$key]);
                 }
             }
-
-            if (count($recipients) > 0) {
-                $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findTheseUsersByUsername($recipients);
-            } else {
-                $constraint->addNotFoundUsernames(array());
-            }
         } else {
             $recipients = array($value);
-
-            $sendToUsers = $this->container->get('ccdn_user_user.repository.user')->findByUsername($recipients);
         }
-
-        $notFound = array();
-        foreach ($recipients as $recipientKey => $recipient) {
-            $recipientsFound = 0;
-
-            foreach ($sendToUsers as $sendToUserkey => $sendToUser) {
-                if ($sendToUser->getUsername() == $recipient) {
-                    $recipientsFound++;
-                }
-            }
-
-            if ($recipientsFound == 0) {
-                $notFound[] = $recipient;
-            }
-        }
-
-        if (count($notFound) > 0) {
-            $constraint->addNotFoundUsernames($notFound);
-
-            $this->setMessage($constraint->message);
-
-            return false;
-        } else {
-            return true;
-        }
-    }
-
+		
+		return $recipients;
+	}
 }

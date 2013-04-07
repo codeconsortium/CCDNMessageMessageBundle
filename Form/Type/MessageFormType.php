@@ -33,28 +33,36 @@ class MessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('send_to', 'text', array(
-				'data' => $options['send_to'],
-				'label' => 'ccdn_message_message.form.label.message.to',
-				'translation_domain' => 'CCDNMessageMessageBundle',
-			))
-			->add('subject', 'text', array(
-				'data' => $options['subject'],
-				'label' => 'ccdn_message_message.form.label.message.subject',
-				'translation_domain' => 'CCDNMessageMessageBundle',
-			))
-			->add('body', 'textarea', array(
-				'data' => $options['body'],
-				'label' => 'ccdn_message_message.form.label.message.body',
-				'translation_domain' => 'CCDNMessageMessageBundle',
-			))
-			->add('is_flagged', 'checkbox', array(
-				'required' => false,
-				'mapped' => false,
-				'property_path' => false,
-				'label' => 'ccdn_message_message.form.label.message.flagged',
-				'translation_domain' => 'CCDNMessageMessageBundle',
-			))
+			->add('send_to', 'text',
+				array(
+					'data' => $options['send_to'],
+					'label' => 'ccdn_message_message.form.label.message.to',
+					'translation_domain' => 'CCDNMessageMessageBundle',
+				)
+			)
+			->add('subject', 'text',
+				array(
+					'data' => $options['subject'],
+					'label' => 'ccdn_message_message.form.label.message.subject',
+					'translation_domain' => 'CCDNMessageMessageBundle',
+				)
+			)
+			->add('body', 'textarea',
+				array(
+					'data' => $options['body'],
+					'label' => 'ccdn_message_message.form.label.message.body',
+					'translation_domain' => 'CCDNMessageMessageBundle',
+				)
+			)
+			->add('is_flagged', 'checkbox',
+				array(
+					'required' => false,
+					'mapped' => false,
+					'property_path' => false,
+					'label' => 'ccdn_message_message.form.label.message.flagged',
+					'translation_domain' => 'CCDNMessageMessageBundle',
+				)
+			)
 		;
 
         //$userId = $this->defaults['sender']->getId();

@@ -1,13 +1,13 @@
-namespaces:
-    CCDNMessageMessageBundle: CCDNMessage\MessageBundle\Form\Validator\Constraints\
-
+#namespaces:
+#    CCDNMessageMessageBundle: CCDNMessage\MessageBundle\Form\Validator\Constraints\
+#
 CCDNMessage\MessageBundle\Entity\Message:
     properties:
         sendTo:
             - Type: string
             - NotBlank: ~
             - MaxLength: { limit: 255 }
-            - "CCDNMessageMessageBundle:SendTo": ~
+            - CCDNMessage\MessageBundle\Form\Validator\Constraints\SendTo: ~
         subject:
             - Type: string
             - NotBlank: ~
