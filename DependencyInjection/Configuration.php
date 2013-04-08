@@ -49,109 +49,16 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
-        $this->addSEOSection($rootNode);
-        $this->addFolderSection($rootNode);
-        $this->addMessageSection($rootNode);
 		$this->addEntitySection($rootNode);
 		$this->addGatewaySection($rootNode);
 		$this->addManagerSection($rootNode);
+		
+        $this->addSEOSection($rootNode);
+        $this->addFolderSection($rootNode);
+        $this->addMessageSection($rootNode);
         $this->addQuotasSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    /**
-     *
-     * @access protected
-     * @param ArrayNodeDefinition $node
-     */
-    protected function addSEOSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('seo')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->scalarNode('title_length')->defaultValue('67')->end()
-                    ->end()
-                ->end()
-            ->end();
-    }
-
-    /**
-     *
-     * @access private
-     * @param ArrayNodeDefinition $node
-     */
-    private function addFolderSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('folder')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->arrayNode('show')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('messages_per_page')->defaultValue('10')->end()
-                                ->scalarNode('subject_truncate')->defaultValue('50')->end()
-                                ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
-    }
-
-    /**
-     *
-     * @access private
-     * @param ArrayNodeDefinition $node
-     */
-    private function addMessageSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('message')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-						->arrayNode('flood_control')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-							->children()
-								->scalarNode('send_limit')->defaultValue(4)->end()
-								->scalarNode('block_for_minutes')->defaultValue(1)->end()
-							->end()
-						->end()
-                        ->arrayNode('show')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                                ->scalarNode('enable_bb_parser')->defaultValue(true)->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('compose')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
-                                ->scalarNode('enable_bb_editor')->defaultValue(true)->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
     }
 
     /**
@@ -348,6 +255,100 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end();
 	}
+	
+    /**
+     *
+     * @access protected
+     * @param ArrayNodeDefinition $node
+     */
+    protected function addSEOSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('seo')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('title_length')->defaultValue('67')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     *
+     * @access private
+     * @param ArrayNodeDefinition $node
+     */
+    private function addFolderSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('folder')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('show')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('messages_per_page')->defaultValue('10')->end()
+                                ->scalarNode('subject_truncate')->defaultValue('50')->end()
+                                ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     *
+     * @access private
+     * @param ArrayNodeDefinition $node
+     */
+    private function addMessageSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('message')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+						->arrayNode('flood_control')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+							->children()
+								->scalarNode('send_limit')->defaultValue(4)->end()
+								->scalarNode('block_for_minutes')->defaultValue(1)->end()
+							->end()
+						->end()
+                        ->arrayNode('show')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                                ->scalarNode('enable_bb_parser')->defaultValue(true)->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('compose')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('form_theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
+                                ->scalarNode('enable_bb_editor')->defaultValue(true)->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
 	
     /**
      *
