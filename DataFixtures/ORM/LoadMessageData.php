@@ -28,7 +28,6 @@ use CCDNMessage\MessageBundle\Entity\Message;
  */
 class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 {
-
 	/**
 	 *
 	 * @access public
@@ -36,63 +35,61 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 	 */
     public function load(ObjectManager $manager)
     {
-		
-		//
-		// Registry.
-		//
-		$registry = new Registry();
-		
-		$registry->setOwnedBy($manager->merge($this->getReference('user-admin')));
-		$registry->setCachedUnreadMessagesCount(1);
-
-		$manager->persist($registry);
-		$manager->flush();
-		
-		//
-		// Setup Folders.
-		//
-		$folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
-		$inbox = null;
-		
-        foreach ($folderNames as $key => $folderName) {
-            $folder = new Folder();
-            $folder->setOwnedBy($manager->merge($this->getReference('user-admin')));
-            $folder->setName($folderName);
-            $folder->setSpecialType($key);
-            $folder->setCachedReadCount(0);
-            $folder->setCachedUnreadCount(($folderName == 'inbox') ? 1 : 0);
-            $folder->setCachedTotalMessageCount(($folderName == 'inbox') ? 1 : 0);
-
-            $manager->persist($folder);
-
-			if ($folderName == 'inbox') { $inbox = $folder; }
-        }
-		
-		$manager->flush();
-		$manager->refresh($inbox);
-		
-		//
-		// Message.
-		//
-		$message = new Message();
-		
-		$message->setFolder($inbox);
-		$message->setOwnedBy($manager->merge($this->getReference('user-admin')));
-		$message->setSentTo($manager->merge($this->getReference('user-admin')));
-		$message->setSendTo($manager->merge($this->getReference('user-admin')));
-		$message->setSentFrom($manager->merge($this->getReference('user-test')));
-		$message->setCreatedDate(new \DateTime());
-		$message->setSentDate(new \DateTime());
-		
-		$message->setSubject('Welcome Message.');
-		$message->setBody('Welcome to CodeConsortium! This is the private messaging system, use this to send and receive messages to other users.<br><br>Check back here from time to time to see if you have any new messages.');
-		$message->setIsRead(false);
-		$message->setIsFlagged(true);
-		$message->setIsDraft(false);
-		
-		$manager->persist($message);
-		$manager->flush();
-		
+//		//
+//		// Registry.
+//		//
+//		$registry = new Registry();
+//		
+//		$registry->setOwnedBy($manager->merge($this->getReference('user-admin')));
+//		$registry->setCachedUnreadMessagesCount(1);
+//
+//		$manager->persist($registry);
+//		$manager->flush();
+//		
+//		//
+//		// Setup Folders.
+//		//
+//		$folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
+//		$inbox = null;
+//		
+//        foreach ($folderNames as $key => $folderName) {
+//            $folder = new Folder();
+//            $folder->setOwnedBy($manager->merge($this->getReference('user-admin')));
+//            $folder->setName($folderName);
+//            $folder->setSpecialType($key);
+//            $folder->setCachedReadCount(0);
+//            $folder->setCachedUnreadCount(($folderName == 'inbox') ? 1 : 0);
+//            $folder->setCachedTotalMessageCount(($folderName == 'inbox') ? 1 : 0);
+//
+//            $manager->persist($folder);
+//
+//			if ($folderName == 'inbox') { $inbox = $folder; }
+//        }
+//		
+//		$manager->flush();
+//		$manager->refresh($inbox);
+//		
+//		//
+//		// Message.
+//		//
+//		$message = new Message();
+//		
+//		$message->setFolder($inbox);
+//		$message->setOwnedBy($manager->merge($this->getReference('user-admin')));
+//		$message->setSentTo($manager->merge($this->getReference('user-admin')));
+//		$message->setSendTo($manager->merge($this->getReference('user-admin')));
+//		$message->setSentFrom($manager->merge($this->getReference('user-test')));
+//		$message->setCreatedDate(new \DateTime());
+//		$message->setSentDate(new \DateTime());
+//		
+//		$message->setSubject('Welcome Message.');
+//		$message->setBody('Welcome to CodeConsortium! This is the private messaging system, use this to send and receive messages to other users.<br><br>Check back here from time to time to see if you have any new messages.');
+//		$message->setIsRead(false);
+//		$message->setIsFlagged(true);
+//		$message->setIsDraft(false);
+//		
+//		$manager->persist($message);
+//		$manager->flush();
     }
 
 	/**
@@ -104,5 +101,4 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 	{
 		return 3;
 	}
-	
 }

@@ -1,39 +1,6 @@
 parameters:
 
-    ccdn_message_message.repository.folder.class:                               CCDNMessage\MessageBundle\Repository\FolderRepository
-    ccdn_message_message.repository.envelope.class:                             CCDNMessage\MessageBundle\Repository\EnvelopeRepository
-    ccdn_message_message.repository.message.class:                              CCDNMessage\MessageBundle\Repository\MessageRepository
-    ccdn_message_message.repository.registry.class:                             CCDNMessage\MessageBundle\Repository\RegistryRepository
-    ccdn_message_message.repository.thread.class:                               CCDNMessage\MessageBundle\Repository\ThreadRepository
-
-#    ccdn_message_message.gateway_bag.class:                                     CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag
-#    ccdn_message_message.gateway.folder.class:                                  CCDNMessage\MessageBundle\Gateway\FolderGateway
-#    ccdn_message_message.gateway.envelope.class:                                CCDNMessage\MessageBundle\Gateway\EnvelopeGateway
-#    ccdn_message_message.gateway.message.class:                                 CCDNMessage\MessageBundle\Gateway\MessageGateway
-#    ccdn_message_message.gateway.thread.class:                                  CCDNMessage\MessageBundle\Gateway\ThreadGateway
-#    ccdn_message_message.gateway.registry.class:                                CCDNMessage\MessageBundle\Gateway\RegistryGateway
-#    ccdn_message_message.gateway.user.class:                                    CCDNMessage\MessageBundle\Gateway\UserGateway
-#
-#    ccdn_message_message.manager_bag.class:                                     CCDNMessage\MessageBundle\Manager\Bag\ManagerBag
-#    ccdn_message_message.manager.folder.class:                                  CCDNMessage\MessageBundle\Manager\FolderManager
-#    ccdn_message_message.manager.envelope.class:                                CCDNMessage\MessageBundle\Manager\EnvelopeManager
-#    ccdn_message_message.manager.message.class:                                 CCDNMessage\MessageBundle\Manager\MessageManager
-#    ccdn_message_message.manager.thread.class:                                  CCDNMessage\MessageBundle\Manager\ThreadManager
-#    ccdn_message_message.manager.registry.class:                                CCDNMessage\MessageBundle\Manager\RegistryManager
-#    ccdn_message_message.manager.user.class:                                    CCDNMessage\MessageBundle\Manager\UserManager
-
-    ccdn_message_message.form.type.message.class:                               CCDNMessage\MessageBundle\Form\Type\MessageFormType
-    ccdn_message_message.form.handler.message.class:                            CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
-    ccdn_message_message.form.handler.message_reply.class:                      CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler
-    ccdn_message_message.form.handler.message_forward.class:                    CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler
-    ccdn_message_message.form.validator.send_to.class:                          CCDNMessage\MessageBundle\Form\Validator\SendToValidator
-
-    ccdn_message_message.component.twig_extension.unread_message_count.class:   CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension
-    ccdn_message_message.component.twig_extension.folder_list.class:            CCDNMessage\MessageBundle\Component\TwigExtension\FolderListExtension
-
-    ccdn_message_message.component.dashboard.integrator.class:                  CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator
-
-    ccdn_message_message.component.flood_control.class:                         CCDNMessage\MessageBundle\Component\FloodControl
+    # Service Parameters defined in app/config
 
 services:
 
@@ -46,24 +13,28 @@ services:
         factory_method: getRepository
         arguments:
             - %ccdn_message_message.entity.folder.class%
+
     ccdn_message_message.repository.envelope:
         class: %ccdn_message_message.repository.envelope.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments:
             - %ccdn_message_message.entity.envelope.class%
+
     ccdn_message_message.repository.message:
         class: %ccdn_message_message.repository.message.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments:
             - %ccdn_message_message.entity.message.class%
+
     ccdn_message_message.repository.thread:
         class: %ccdn_message_message.repository.thread.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments:
             - %ccdn_message_message.entity.thread.class%
+
     ccdn_message_message.repository.registry:
         class: %ccdn_message_message.repository.registry.class%
         factory_service: doctrine.orm.default_entity_manager
@@ -77,36 +48,42 @@ services:
     ccdn_message_message.gateway_bag:
         class: %ccdn_message_message.gateway_bag.class%
         arguments: [@service_container]
+
     ccdn_message_message.gateway.folder:
         class: %ccdn_message_message.gateway.folder.class%
         arguments:
             - @doctrine
             - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.folder.class%
+
     ccdn_message_message.gateway.envelope:
         class: %ccdn_message_message.gateway.envelope.class%
         arguments:
             - @doctrine
             - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.envelope.class%
+
     ccdn_message_message.gateway.message:
         class: %ccdn_message_message.gateway.message.class%
         arguments:
             - @doctrine
             - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.message.class%
+
     ccdn_message_message.gateway.thread:
         class: %ccdn_message_message.gateway.thread.class%
         arguments:
             - @doctrine
             - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.thread.class%
+
     ccdn_message_message.gateway.registry:
         class: %ccdn_message_message.gateway.registry.class%
         arguments:
             - @doctrine
             - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.registry.class%
+
     ccdn_message_message.gateway.user:
         class: %ccdn_message_message.gateway.user.class%
         arguments:
@@ -120,6 +97,7 @@ services:
     ccdn_message_message.manager_bag:
         class: %ccdn_message_message.manager_bag.class%
         arguments: [@service_container]
+
     ccdn_message_message.manager.folder:
         class: %ccdn_message_message.manager.folder.class%
         arguments:
@@ -127,6 +105,7 @@ services:
             - @security.context
             - @ccdn_message_message.gateway.folder
             - @ccdn_message_message.manager_bag
+
     ccdn_message_message.manager.envelope:
         class: %ccdn_message_message.manager.envelope.class%
         arguments:
@@ -134,6 +113,7 @@ services:
             - @security.context
             - @ccdn_message_message.gateway.envelope
             - @ccdn_message_message.manager_bag
+
     ccdn_message_message.manager.message:
         class: %ccdn_message_message.manager.message.class%
         arguments:
@@ -141,6 +121,7 @@ services:
             - @security.context
             - @ccdn_message_message.gateway.message
             - @ccdn_message_message.manager_bag
+
     ccdn_message_message.manager.thread:
         class: %ccdn_message_message.manager.thread.class%
         arguments:
@@ -148,6 +129,7 @@ services:
             - @security.context
             - @ccdn_message_message.gateway.thread
             - @ccdn_message_message.manager_bag
+
     ccdn_message_message.manager.registry:
         class: %ccdn_message_message.manager.registry.class%
         arguments:
@@ -155,6 +137,7 @@ services:
             - @security.context
             - @ccdn_message_message.gateway.registry
             - @ccdn_message_message.manager_bag
+
     ccdn_message_message.manager.user:
         class: %ccdn_message_message.manager.user.class%
         arguments:
@@ -169,24 +152,28 @@ services:
     ccdn_message_message.form.type.message:
         class: %ccdn_message_message.form.type.message.class%
         arguments: []
+
     ccdn_message_message.form.handler.message:
         class: %ccdn_message_message.form.handler.message.class%
         arguments:
             - @form.factory
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.manager.message
+
     ccdn_message_message.form.handler.message_reply:
         class: %ccdn_message_message.form.handler.message_reply.class%
         arguments:
             - @form.factory
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.manager.message
+ 
     ccdn_message_message.form.handler.message_forward:
         class: %ccdn_message_message.form.handler.message_forward.class%
         arguments:
             - @form.factory
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.manager.message
+
     ccdn_message_message.form.validator.send_to:
         class: %ccdn_message_message.form.validator.send_to.class%
         arguments:
@@ -204,6 +191,7 @@ services:
             - @security.context
         tags:
             - { name: twig.extension }
+
     ccdn_message_message.component.twig_extension.folder_list:
         class: %ccdn_message_message.component.twig_extension.folder_list.class%
         arguments:

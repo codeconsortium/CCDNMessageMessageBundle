@@ -35,9 +35,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ccdn_message_message');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
         $rootNode
             ->children()
                 ->arrayNode('template')
@@ -49,10 +46,15 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
+		// Class file namespaces.
 		$this->addEntitySection($rootNode);
+		$this->addRepositorySection($rootNode);
 		$this->addGatewaySection($rootNode);
 		$this->addManagerSection($rootNode);
+		$this->addFormSection($rootNode);
+		$this->addComponentSection($rootNode);
 		
+		// Configuration stuff.
         $this->addSEOSection($rootNode);
         $this->addFolderSection($rootNode);
         $this->addMessageSection($rootNode);
@@ -64,7 +66,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addEntitySection(ArrayNodeDefinition $node)
 	{
@@ -119,11 +121,65 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end();
 	}
-	
+
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addRepositorySection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('repository')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('message')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\MessageRepository')->end()							
+							->end()
+						->end()
+                        ->arrayNode('folder')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\FolderRepository')->end()							
+							->end()
+						->end()
+                        ->arrayNode('envelope')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\EnvelopeRepository')->end()							
+							->end()
+						->end()
+                        ->arrayNode('registry')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\RegistryRepository')->end()							
+							->end()
+						->end()
+                        ->arrayNode('thread')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\ThreadRepository')->end()							
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+		
+    /**
+     *
+     * @access private
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addGatewaySection(ArrayNodeDefinition $node)
     {
@@ -191,7 +247,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addManagerSection(ArrayNodeDefinition $node)
     {
@@ -258,8 +314,139 @@ class Configuration implements ConfigurationInterface
 	
     /**
      *
+     * @access private
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addFormSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('type')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+		                        ->arrayNode('message')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+		                            ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Type\MessageFormType')->end()							
+									->end()
+								->end()
+							->end()
+						->end()
+                        ->arrayNode('handler')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+		                        ->arrayNode('message')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+		                            ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler')->end()					
+									->end()
+								->end()
+		                        ->arrayNode('message_reply')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+		                            ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler')->end()					
+									->end()
+								->end()
+		                        ->arrayNode('message_forward')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+		                            ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler')->end()					
+									->end()
+								->end()
+							->end()
+						->end()
+                        ->arrayNode('validator')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+                            ->children()
+		                        ->arrayNode('send_to')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+		                            ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Validator\SendToValidator')->end()							
+									->end()
+								->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+    /**
+     *
+     * @access private
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addComponentSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('component')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+		                ->arrayNode('dashboard')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+		                    ->children()
+				                ->arrayNode('integrator')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+				                    ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator')->end()							
+									->end()		
+								->end()
+							->end()
+						->end()
+		                ->arrayNode('twig_extension')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+		                    ->children()
+				                ->arrayNode('unread_message_count')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+				                    ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension')->end()							
+									->end()		
+								->end()
+				                ->arrayNode('folder_list')
+				                    ->addDefaultsIfNotSet()
+				                    ->canBeUnset()
+				                    ->children()
+										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\FolderListExtension')->end()							
+									->end()		
+								->end()
+							->end()
+						->end()
+		                ->arrayNode('flood_control')
+		                    ->addDefaultsIfNotSet()
+		                    ->canBeUnset()
+		                    ->children()
+								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\FloodControl')->end()							
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+                      
+    /**
+     *
      * @access protected
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     protected function addSEOSection(ArrayNodeDefinition $node)
     {
@@ -279,7 +466,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addFolderSection(ArrayNodeDefinition $node)
     {
@@ -308,7 +495,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addMessageSection(ArrayNodeDefinition $node)
     {
@@ -353,7 +540,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param ArrayNodeDefinition $node
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      */
     private function addQuotasSection(ArrayNodeDefinition $node)
     {
