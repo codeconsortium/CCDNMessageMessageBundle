@@ -13,6 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
+use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
+use Symfony\Component\Security\Core\SecurityContext;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -20,21 +23,30 @@ namespace CCDNMessage\MessageBundle\Component\TwigExtension;
  */
 class UnreadMessageCountExtension extends \Twig_Extension
 {
-
     /**
      *
      * @access protected
+	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
      */
-    protected $container;
+    protected $registryManager;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
+	 */
+	protected $securityContext;
+	
     /**
-     *
- 	 * @access public
-	 * @param $container
+     * 
+	 * @access public
+	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
+	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
      */
-    public function __construct($container)
+    public function __construct(BaseManagerInterface $registryManager, SecurityContext $securityContext)
     {
-        $this->container = $container;
+        $this->registryManager = $registryManager;
+		$this->securityContext = $securityContext;
     }
 
     /**
@@ -57,9 +69,9 @@ class UnreadMessageCountExtension extends \Twig_Extension
      */
     public function unreadMessageCount()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->securityContext->getToken()->getUser();
 
-        $unreadMessageCount = $this->container->get('ccdn_message_message.repository.registry')->findRegistryRecordForUser($user->getId());
+        $unreadMessageCount = $this->registryManager->findRegistryForUserById($user->getId());
 
         if ($unreadMessageCount == null) {
             return 0;
@@ -77,5 +89,4 @@ class UnreadMessageCountExtension extends \Twig_Extension
     {
         return 'unreadMessageCount';
     }
-
 }

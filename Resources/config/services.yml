@@ -199,7 +199,9 @@ services:
     #
     ccdn_message_message.component.twig_extension.unread_message_count:
         class: %ccdn_message_message.component.twig_extension.unread_message_count.class%
-        arguments: [@service_container]
+        arguments:
+            - @ccdn_message_message.manager.registry
+            - @security.context
         tags:
             - { name: twig.extension }
     ccdn_message_message.component.twig_extension.folder_list:
