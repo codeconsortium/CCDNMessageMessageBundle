@@ -34,16 +34,6 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'r';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

@@ -34,16 +34,6 @@ class ThreadGateway extends BaseGateway implements BaseGatewayInterface
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 't';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

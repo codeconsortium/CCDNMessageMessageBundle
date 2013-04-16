@@ -34,16 +34,6 @@ class UserGateway extends BaseGateway implements BaseGatewayInterface
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'u';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

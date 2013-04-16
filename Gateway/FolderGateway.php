@@ -34,16 +34,6 @@ class FolderGateway extends BaseGateway implements BaseGatewayInterface
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'f';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

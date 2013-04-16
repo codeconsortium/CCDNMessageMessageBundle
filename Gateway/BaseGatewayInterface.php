@@ -42,6 +42,13 @@ interface BaseGatewayInterface
 	/**
 	 *
 	 * @access public
+	 * @return string
+	 */
+	public function getEntityClass();
+	
+	/**
+	 *
+	 * @access public
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */	
 	public function getQueryBuilder();

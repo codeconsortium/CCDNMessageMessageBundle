@@ -29,7 +29,9 @@ use Symfony\Component\Config\FileLocator;
 class CCDNMessageMessageExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+	 *
+     * @access public
+	 * @return string
      */
     public function getAlias()
     {
@@ -38,7 +40,7 @@ class CCDNMessageMessageExtension extends Extension
 
     /**
      *
-     * @access private
+     * @access public
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
@@ -50,18 +52,22 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
 
 		// Class file namespaces.
-        $this->getEntitySection($config, $container);
-        $this->getRepositorySection($config, $container);
-        $this->getGatewaySection($config, $container);
-        $this->getManagerSection($config, $container);
-        $this->getFormSection($config, $container);
-		$this->getComponentSection($config, $container);
+        $this
+			->getEntitySection($config, $container)
+	        ->getRepositorySection($config, $container)
+	        ->getGatewaySection($config, $container)
+	        ->getManagerSection($config, $container)
+	        ->getFormSection($config, $container)
+			->getComponentSection($config, $container)
+		;
 			
 		// Configuration stuff.
-        $this->getQuotasSection($config, $container);
-        $this->getSEOSection($config, $container);
-        $this->getFolderSection($config, $container);
-        $this->getMessageSection($config, $container);
+        $this
+			->getQuotasSection($config, $container)
+	        ->getSEOSection($config, $container)
+	        ->getFolderSection($config, $container)
+	        ->getMessageSection($config, $container)
+		;
 
 		// Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -73,6 +79,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getEntitySection(array $config, ContainerBuilder $container)
     {
@@ -87,6 +94,8 @@ class CCDNMessageMessageExtension extends Extension
 		}
 
         $container->setParameter('ccdn_message_message.entity.user.class', $config['entity']['user']['class']);				
+		
+		return $this;
 	}
 	
     /**
@@ -94,6 +103,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getRepositorySection(array $config, ContainerBuilder $container)
     {
@@ -102,6 +112,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.repository.envelope.class', $config['repository']['envelope']['class']);
         $container->setParameter('ccdn_message_message.repository.registry.class', $config['repository']['registry']['class']);
         $container->setParameter('ccdn_message_message.repository.thread.class', $config['repository']['thread']['class']);		
+		
+		return $this;
 	}
 	
     /**
@@ -109,6 +121,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getGatewaySection(array $config, ContainerBuilder $container)
     {
@@ -120,6 +133,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.gateway.registry.class', $config['gateway']['registry']['class']);
         $container->setParameter('ccdn_message_message.gateway.thread.class', $config['gateway']['thread']['class']);
         $container->setParameter('ccdn_message_message.gateway.user.class', $config['gateway']['user']['class']);
+		
+		return $this;
 	}
 	
     /**
@@ -127,6 +142,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getManagerSection(array $config, ContainerBuilder $container)
     {
@@ -138,6 +154,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.manager.registry.class', $config['manager']['registry']['class']);
         $container->setParameter('ccdn_message_message.manager.thread.class', $config['manager']['thread']['class']);
         $container->setParameter('ccdn_message_message.manager.user.class', $config['manager']['user']['class']);		
+		
+		return $this;
 	}
 	
     /**
@@ -145,6 +163,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getFormSection(array $config, ContainerBuilder $container)
     {
@@ -153,6 +172,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.form.handler.message_reply.class', $config['form']['handler']['message_reply']['class']);
         $container->setParameter('ccdn_message_message.form.handler.message_forward.class', $config['form']['handler']['message_forward']['class']);
         $container->setParameter('ccdn_message_message.form.validator.send_to.class', $config['form']['validator']['send_to']['class']);
+		
+		return $this;
 	}
 
     /**
@@ -160,6 +181,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getComponentSection(array $config, ContainerBuilder $container)
     {
@@ -169,6 +191,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.component.twig_extension.folder_list.class', $config['component']['twig_extension']['folder_list']['class']);		
 
         $container->setParameter('ccdn_message_message.component.flood_control.class', $config['component']['flood_control']['class']);		
+		
+		return $this;
 	}
 	
     /**
@@ -176,10 +200,13 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
-    protected function getSEOSection(array $config, ContainerBuilder $container)
+    private function getSEOSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_message_message.seo.title_length', $config['seo']['title_length']);
+		
+		return $this;
     }
 
     /**
@@ -187,6 +214,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getFolderSection(array $config, ContainerBuilder $container)
     {
@@ -194,6 +222,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.folder.show.messages_per_page', $config['folder']['show']['messages_per_page']);
         $container->setParameter('ccdn_message_message.folder.show.subject_truncate', $config['folder']['show']['subject_truncate']);
         $container->setParameter('ccdn_message_message.folder.show.sent_datetime_format', $config['folder']['show']['sent_datetime_format']);
+		
+		return $this;
     }
 
     /**
@@ -201,6 +231,7 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getMessageSection(array $config, ContainerBuilder $container)
     {
@@ -214,6 +245,8 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.message.compose.layout_template', $config['message']['compose']['layout_template']);
         $container->setParameter('ccdn_message_message.message.compose.form_theme', $config['message']['compose']['form_theme']);
         $container->setParameter('ccdn_message_message.message.compose.enable_bb_editor', $config['message']['compose']['enable_bb_editor']);
+		
+		return $this;
     }
 	
     /**
@@ -221,9 +254,12 @@ class CCDNMessageMessageExtension extends Extension
      * @access private
 	 * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+	 * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
      */
     private function getQuotasSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_message_message.quotas.max_messages', $config['quotas']['max_messages']);
+		
+		return $this;
     }
 }
