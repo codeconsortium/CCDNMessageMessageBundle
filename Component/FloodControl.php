@@ -13,43 +13,51 @@
 
 namespace CCDNMessage\MessageBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class FloodControl extends ContainerAware
+class FloodControl
 {
-
 	/**
 	 *
 	 * @access protected
+	 * @var $session
 	 */
 	protected $session;
 	
 	/**
 	 *
 	 * @access protected
+	 * @var int $sendLimit
 	 */
-	protected $container;
+	protected $sendLimit;
+	
+	/**
+	 *
+	 * @access protected
+	 * @var int $blockForMinutes
+	 */
+	protected $blockForMinutes;
 	
 	/**
 	 *
 	 * @access public
 	 * @param $session
 	 */
-	public function __construct($session, $container)
+	public function __construct($session, $sendLimit, $blockForMinutes)
 	{
 		$this->session = $session;
+		
+		$this->sendLimit = $sendLimit;
+		
+		$this->blockForMinutes = $blockForMinutes;
 		
 		if ( ! $this->session->has('flood_control_message_send_count'))
 		{
 			$this->session->set('flood_control_message_send_count', array());
-		}
-		
-		$this->container = $container;
+		}		
 	}
 	
 	/**
@@ -72,9 +80,7 @@ class FloodControl extends ContainerAware
 	 */
 	public function isFlooded()
 	{
-        $blockInMinutes = $this->container->getParameter('ccdn_message_message.message.flood_control.block_for_minutes');
-
-        $timeLimit = new \DateTime('-' . $blockInMinutes . ' minutes');
+        $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
 
         if ($this->session->has('flood_control_message_send_count')) {
             $attempts = $this->session->get('flood_control_message_send_count');
@@ -92,7 +98,7 @@ class FloodControl extends ContainerAware
                 }
             }
 
-            if (count($freshenedAttempts) > $this->container->getParameter('ccdn_message_message.message.flood_control.send_limit'))
+            if (count($freshenedAttempts) > $this->sendLimit)
 			{
 				return true;
 			}
