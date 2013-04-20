@@ -14,11 +14,10 @@
 namespace CCDNMessage\MessageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 
 /**
  * MessageRepository
+ *
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
