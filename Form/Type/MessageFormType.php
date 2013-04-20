@@ -25,6 +25,23 @@ use Symfony\Component\Form\FormBuilder;
  */
 class MessageFormType extends AbstractType
 {
+	/**
+	 *
+	 * @access protected
+	 * @var string $messageClass
+	 */
+	protected $messageClass;
+	
+	/**
+	 *
+	 * @access public
+	 * @var string $messageClass
+	 */
+	public function __construct($messageClass)
+	{
+		$this->messageClass = $messageClass;
+	}
+	
     /**
      *
      * @access public
@@ -35,31 +52,31 @@ class MessageFormType extends AbstractType
         $builder
 			->add('send_to', 'text',
 				array(
-					'data' => $options['send_to'],
-					'label' => 'ccdn_message_message.form.label.message.to',
+					'data'               => $options['send_to'],
+					'label'              => 'ccdn_message_message.form.label.message.to',
 					'translation_domain' => 'CCDNMessageMessageBundle',
 				)
 			)
 			->add('subject', 'text',
 				array(
-					'data' => $options['subject'],
-					'label' => 'ccdn_message_message.form.label.message.subject',
+					'data'               => $options['subject'],
+					'label'              => 'ccdn_message_message.form.label.message.subject',
 					'translation_domain' => 'CCDNMessageMessageBundle',
 				)
 			)
 			->add('body', 'textarea',
 				array(
-					'data' => $options['body'],
-					'label' => 'ccdn_message_message.form.label.message.body',
+					'data'               => $options['body'],
+					'label'              => 'ccdn_message_message.form.label.message.body',
 					'translation_domain' => 'CCDNMessageMessageBundle',
 				)
 			)
 			->add('is_flagged', 'checkbox',
 				array(
-					'required' => false,
-					'mapped' => false,
-					'property_path' => false,
-					'label' => 'ccdn_message_message.form.label.message.flagged',
+					'required'           => false,
+					'mapped'             => false,
+					'property_path'      => false,
+					'label'              => 'ccdn_message_message.form.label.message.flagged',
 					'translation_domain' => 'CCDNMessageMessageBundle',
 				)
 			)
@@ -86,15 +103,15 @@ class MessageFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'      => 'CCDNMessage\MessageBundle\Entity\Message',
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
+            'data_class'         => $this->messageClass,
+            'csrf_protection'    => true,
+            'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
-            'intention'       => 'message_item',
-            //'validation_groups' => '',
-			'send_to'         => '',
-			'subject'         => '',
-			'body'            => '',
+            'intention'          => 'message_item',
+            'validation_groups'  => array('message_send'),
+			'send_to'            => '',
+			'subject'            => '',
+			'body'               => '',
         );
     }
 

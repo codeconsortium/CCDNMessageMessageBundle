@@ -151,7 +151,8 @@ services:
     #
     ccdn_message_message.form.type.message:
         class: %ccdn_message_message.form.type.message.class%
-        arguments: []
+        arguments:
+            - %ccdn_message_message.entity.message.class%
 
     ccdn_message_message.form.handler.message:
         class: %ccdn_message_message.form.handler.message.class%

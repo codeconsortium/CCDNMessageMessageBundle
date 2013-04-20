@@ -1,23 +1,22 @@
 #namespaces:
 #    CCDNMessageMessageBundle: CCDNMessage\MessageBundle\Form\Validator\Constraints\
 #
-CCDNMessage\MessageBundle\Entity\Message:
+%ccdn_message_message.entity.message.class%:
     properties:
         sendTo:
-            - Type: string
-            - NotBlank: ~
-            - MaxLength: { limit: 255 }
-            - CCDNMessage\MessageBundle\Form\Validator\Constraints\SendTo: ~
+            - Type: { type: string, groups: [message_send] }
+            - NotBlank: { groups: [message_send] }
+            - MaxLength: { limit: 255, groups: [message_send] }
+            - CCDNMessage\MessageBundle\Form\Validator\Constraints\SendTo: {  groups: [message_send] }
         subject:
-            - Type: string
-            - NotBlank: ~
-            - MinLength: { limit: 5 }
-            - MaxLength: { limit: 255 }
+            - Type: { type: string, groups: [message_send] }
+            - NotBlank: { groups: [message_send] }
+            - MinLength: { limit: 5, groups: [message_send] }
+            - MaxLength: { limit: 255, groups: [message_send] }
         body:
-            - Type: string
-            - NotBlank: ~
-            - MinLength: { limit: 5 }
-            - MaxLength: { limit: 5000 }
+            - Type: { type: string, groups: [message_send] }
+            - NotBlank: { groups: [message_send] }
+            - MinLength: { limit: 5, groups: [message_send] }
+            - MaxLength: { limit: 5000, groups: [message_send] }
         #isFlagged:
         #    - Type: bool
-        #    - NotNull: ~
