@@ -1,7 +1,15 @@
+ccdn_message_message:
+    dashboard:
+        pages:
+            account: Account
+        categories:
+            account: Account
+
 #
 # Page Titles.
 #
-ccdn_message_message.title.message.index: 'Messages - %folder_name%.'
+ccdn_message_message.title.folder.index: 'Message Inbox'
+ccdn_message_message.title.folder.show: 'Messages - %folderName%'
 ccdn_message_message.title.message.show: 'Message: %message_subject%.'
 ccdn_message_message.title.message.compose: 'Compose Message.'
 

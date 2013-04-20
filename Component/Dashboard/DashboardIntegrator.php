@@ -13,42 +13,39 @@
 
 namespace CCDNMessage\MessageBundle\Component\Dashboard;
 
-use CCDNComponent\DashboardBundle\Component\Integrator\BaseIntegrator;
-use CCDNComponent\DashboardBundle\Component\Integrator\IntegratorInterface;
+use CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @version 2.0
  */
-class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
+class DashboardIntegrator
 {
-
     /**
-     *
-     * Structure of $resources
-     * 	[DASHBOARD_PAGE <string>]
-     * 		[CATEGORY_NAME <string>]
-     *			[ROUTE_FOR_LINK <string>]
-     *				[AUTH <string>] (optional)
-     *				[URL_LINK <string>]
-     *				[URL_NAME <string>]
 	 * 
 	 * @access public
-	 * @return array $resources
+     * @param CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface $builder
      */
-    public function getResources()
+    public function build(BuilderInterface $builder)
     {
-        $resources = array(
-            'user' => array(
-                'Account' => array(
-                    'ccdn_message_message_index' => array('auth' => 'ROLE_USER', 'name' => 'Messages', 'icon' => $this->basePath . '/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png'),
-                ),
-            ),
-
-        );
-
-        return $resources;
+		$builder
+			->addCategory('account')
+				->setLabel('ccdn_message_message.dashboard.categories.account', array(), 'CCDNMessageMessageBundle')
+				->addPages()
+					->addPage('account')
+						->setLabel('ccdn_message_message.dashboard.pages.account', array(), 'CCDNMessageMessageBundle')
+					->end()
+				->end()
+				->addLinks()	
+					->addLink('messages')
+						->setAuthRole('ROLE_USER')
+						->setRoute('ccdn_message_message_index')
+						->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png')
+						->setLabel('ccdn_message_message.title.folder.index', array(), 'CCDNMessageMessageBundle')
+					->end()
+				->end()
+			->end()
+		;
     }
-
 }
