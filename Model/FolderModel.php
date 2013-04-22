@@ -16,22 +16,37 @@ namespace CCDNMessage\MessageBundle\Model;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ * @abstract
+ *
+ */
 abstract class FolderModel
 {
     /**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
-	 */
+     *
+     * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     */
     protected $ownedByUser = null;
-	
+
     /**
-	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
-	 */
-	protected $envelopes;
-	
-	/**
-	 *
-	 * @access public
-	 */
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
+     */
+    protected $envelopes;
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -46,20 +61,20 @@ abstract class FolderModel
     {
         return $this->ownedByUser;
     }
-	
+
     /**
      * Set ownedByUser
      *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $ownedBy
-	 * @return \CCDNMessage\MessageBundle\Entity\Folder
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     * @return \CCDNMessage\MessageBundle\Entity\Folder
      */
     public function setOwnedByUser(UserInterface $ownedByUser = null)
     {
         $this->ownedByUser = $ownedByUser;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get envelopes
      *

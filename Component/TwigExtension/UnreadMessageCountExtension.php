@@ -26,27 +26,27 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
+     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
      */
     protected $registryManager;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 */
-	protected $securityContext;
-	
     /**
-     * 
-	 * @access public
-	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
-	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
+     */
+    protected $securityContext;
+
+    /**
+     *
+     * @access public
+     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
+     * @param \Symfony\Component\Security\Core\SecurityContext        $securityContext
      */
     public function __construct(BaseManagerInterface $registryManager, SecurityContext $securityContext)
     {
         $this->registryManager = $registryManager;
-		$this->securityContext = $securityContext;
+        $this->securityContext = $securityContext;
     }
 
     /**

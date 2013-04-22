@@ -18,11 +18,15 @@ use Doctrine\ORM\EntityRepository;
 /**
  * FolderRepository
  *
+ * @category CCDNMessage
+ * @package  MessageBundle
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class FolderRepository extends EntityRepository
 {
-
 }

@@ -19,24 +19,30 @@ use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 2.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  * @see http://symfony.com/doc/current/cookbook/validation/custom_constraint.html
+ *
  */
 class SendToValidator extends ConstraintValidator
 {
     /**
      *
      * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
+     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
      */
     protected $userManager;
 
     /**
      *
      * @access public
-	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
+     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
      */
     public function __construct(BaseManagerInterface $userManager)
     {
@@ -46,8 +52,8 @@ class SendToValidator extends ConstraintValidator
     /**
      *
      * @access public
-     * @param string $value
-	 * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param  string                                  $value
+     * @param  \Symfony\Component\Validator\Constraint $constraint
      * @return bool
      */
     public function validate($value, Constraint $constraint)
@@ -55,52 +61,52 @@ class SendToValidator extends ConstraintValidator
         if (strlen($value) < 1) {
             $this->context->addViolation($constraint->message, array('%username%' => $value));
 
-			return;
+            return;
         }
 
-		$recipients = $this->getRecipients($value);
-		
+        $recipients = $this->getRecipients($value);
+
         if (count($recipients) > 0) {
             $usersFound = $this->userManager->findTheseUsersByUsername($recipients);
         } else {
             $this->context->addViolation($constraint->message, array('%username%' => $value));
-			
-			return;
+
+            return;
         }
 
         foreach ($recipients as $recipientKey => $recipient) {
-			if (! $this->recipientExists($recipient, $usersFound)) {
-				$this->context->addViolation($constraint->message, array('%username%' => $recipient));
-			}
+            if (! $this->recipientExists($recipient, $usersFound)) {
+                $this->context->addViolation($constraint->message, array('%username%' => $recipient));
+            }
         }
     }
-	
+
     /**
      *
      * @access public
-     * @param array $recipient
-	 * @param array $usersFound
+     * @param  array $recipient
+     * @param  array $usersFound
      * @return bool
      */
-	private function recipientExists($recipient, $usersFound)
-	{
+    private function recipientExists($recipient, $usersFound)
+    {
         foreach ($usersFound as $user) {
             if ($user->getUsername() == $recipient) {
                 return true;
             }
         }
-		
-		return false;
-	}
-	
+
+        return false;
+    }
+
     /**
      *
      * @access public
-     * @param string $value
+     * @param  string $value
      * @return array
      */
-	private function getRecipients($value)
-	{
+    private function getRecipients($value)
+    {
         // convert either one user or mulitple users who
         // the mail will be sent to into user entities.
         if ($recipients = preg_split('/((,)|(\s))/', $value, PREG_OFFSET_CAPTURE)) {
@@ -115,7 +121,7 @@ class SendToValidator extends ConstraintValidator
         } else {
             $recipients = array($value);
         }
-		
-		return $recipients;
-	}
+
+        return $recipients;
+    }
 }

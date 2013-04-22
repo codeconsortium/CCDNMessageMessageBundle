@@ -13,28 +13,43 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNMessage\MessageBundle\Model\RegistryModel;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ */
 class Registry extends RegistryModel
 {
-	/** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-	/** @var integer $cachedUnreadMessageCount */
+    /**
+     *
+     * @var integer $cachedUnreadMessageCount
+     */
     protected $cachedUnreadMessagesCount = 0;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -44,7 +59,7 @@ class Registry extends RegistryModel
     {
         return $this->id;
     }
-	
+
     /**
      * Get cachedUnreadMessagesCount
      *
@@ -54,17 +69,17 @@ class Registry extends RegistryModel
     {
         return $this->cachedUnreadMessagesCount;
     }
-	
+
     /**
      * Set cachedUnreadMessagesCount
      *
-     * @param integer $cachedUnreadMessagesCount
-	 * @return Registry
+     * @param  integer  $cachedUnreadMessagesCount
+     * @return Registry
      */
     public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
     {
         $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
-		
-		return $this;
+
+        return $this;
     }
 }

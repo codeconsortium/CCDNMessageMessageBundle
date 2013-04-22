@@ -14,19 +14,32 @@
 namespace CCDNMessage\MessageBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ * @abstract
+ *
+ */
 abstract class RegistryModel
 {
-	/**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
-	 */
+    /**
+     *
+     * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     */
     protected $ownedBy = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -41,17 +54,17 @@ abstract class RegistryModel
     {
         return $this->ownedBy;
     }
-	
+
     /**
      * Set ownedBy
      *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $ownedBy
-	 * @return \CCDNMessage\MessageBundle\Entity\Registry
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
-		
-		return $this;
+
+        return $this;
     }
 }

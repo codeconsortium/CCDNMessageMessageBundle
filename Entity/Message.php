@@ -13,35 +13,44 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNMessage\MessageBundle\Model\MessageModel;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ */
 class Message extends MessageModel
 {
     /**
-	 * @var integer $id
-	 */
+     * @var integer $id
+     */
     protected $id;
 
     /**
-	 * @var string $sendTo
-	 */
+     * @var string $sendTo
+     */
     protected $sendTo;
-	
+
     /**
-	 * @var string $name
-	 */
+     * @var string $name
+     */
     protected $subject;
 
     /**
-	 * @var string $name
-	 */
+     * @var string $name
+     */
     protected $body;
 
     /**
-	 * @var \DateTime $createdDate
-	 */
+     * @var \DateTime $createdDate
+     */
     protected $createdDate;
 
     /**
@@ -63,20 +72,20 @@ class Message extends MessageModel
     {
         return $this->sendTo;
     }
-	
+
     /**
      * Set sendTo
      *
-     * @param text $sendTo
-	 * @return Message
+     * @param  text    $sendTo
+     * @return Message
      */
     public function setSendTo($sendTo)
     {
         $this->sendTo = $sendTo;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get subject
      *
@@ -86,18 +95,18 @@ class Message extends MessageModel
     {
         return $this->subject;
     }
-	
+
     /**
      * Set subject
      *
-     * @param string $subject
-	 * @return Message
+     * @param  string  $subject
+     * @return Message
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -109,18 +118,18 @@ class Message extends MessageModel
     {
         return $this->body;
     }
-	
+
     /**
      * Set body
      *
-     * @param text $body
-	 * @return Message
+     * @param  text    $body
+     * @return Message
      */
     public function setBody($body)
     {
         $this->body = $body;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -132,17 +141,17 @@ class Message extends MessageModel
     {
         return $this->createdDate;
     }
-	
+
     /**
      * Set createdDate
      *
-     * @param datetime $createdDate
-	 * @return Message
+     * @param  datetime $createdDate
+     * @return Message
      */
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-		
-		return $this;
+
+        return $this;
     }
 }

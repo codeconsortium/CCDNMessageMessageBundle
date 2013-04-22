@@ -167,7 +167,7 @@ services:
             - @form.factory
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.manager.message
- 
+
     ccdn_message_message.form.handler.message_forward:
         class: %ccdn_message_message.form.handler.message_forward.class%
         arguments:

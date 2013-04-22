@@ -18,32 +18,45 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNMessage\MessageBundle\Entity\Thread;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ * @abstract
+ *
+ */
 abstract class MessageModel
 {
-	/**
-	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
-	 */
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
+     */
     protected $envelopes = null;
-	
-	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
-	 */
+
+    /**
+     * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
+     */
     protected $thread = null;
-	
-	/**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentToUser
-	 */
+
+    /**
+     * @var \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+     */
     protected $sentToUser = null;
-	
-	/**
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
-	 */
+
+    /**
+     * @var \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
+     */
     protected $sentFromUser = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -58,18 +71,18 @@ abstract class MessageModel
     {
         return $this->envelopes;
     }
-		
+
     /**
      * Set envelopes
      *
      * @param $envelopes
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
+     * @return \CCDNMessage\MessageBundle\Entity\Message
      */
     public function setEnvelopes($envelopes = null)
     {
         $this->envelopes = $envelopes;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -77,24 +90,24 @@ abstract class MessageModel
      *
      * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
-	public function getThread()
-	{
-		return $this->thread;
-	}
-	
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
     /**
      * Set thread
      *
-     * @param \CCDNMessage\MessageBundle\Entity\Thread $thread
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread  $thread
+     * @return \CCDNMessage\MessageBundle\Entity\Message
      */
-	public function setThread(Thread $thread)
-	{
-		$this->thread = $thread;
-		
-		return $this;
-	}
-	
+    public function setThread(Thread $thread)
+    {
+        $this->thread = $thread;
+
+        return $this;
+    }
+
     /**
      * Get sentToUser
      *
@@ -104,18 +117,18 @@ abstract class MessageModel
     {
         return $this->sentToUser;
     }
-	
+
     /**
      * Set sentToUser
      *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $sentToUser
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
     public function setSentToUser(UserInterface $sentToUser = null)
     {
         $this->sentToUser = $sentToUser;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -131,13 +144,13 @@ abstract class MessageModel
     /**
      * Set sentFromUser
      *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
     public function setSentFromUser(UserInterface $sentFromUser = null)
     {
         $this->sentFromUser = $sentFromUser;
-		
-		return $this;
+
+        return $this;
     }
 }

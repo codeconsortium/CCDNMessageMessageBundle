@@ -13,25 +13,37 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNMessage\MessageBundle\Model\ThreadModel;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ */
 class Thread extends ThreadModel
 {
-	/** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *

@@ -9,16 +9,16 @@
 			<i class="icon-check"></i>
 			<span class="caret"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu">
 			<li>
 				<a href="#" data-action="select_none" data-identifier="{{- current_folder.name -}}">
 					{{- 'ccdn_message_message.link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
-			
+
 			<li class="divider"></li>
-			
+
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="read">
 					{{- 'ccdn_message_message.link.message.select_all_read' |trans({}, 'CCDNMessageMessageBundle') -}}
@@ -29,9 +29,9 @@
 					{{- 'ccdn_message_message.link.message.select_all_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
-			
+
 			<li class="divider"></li>
-			
+
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="draft">
 					{{- 'ccdn_message_message.link.message.select_all_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
@@ -42,9 +42,9 @@
 					{{- 'ccdn_message_message.link.message.select_all_flagged' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
-			
+
 			<li class="divider"></li>
-			
+
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="attached">
 					{{- 'ccdn_message_message.link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') -}}
@@ -58,7 +58,7 @@
 			<i class="icon-eye-close"></i>
 			<span class="caret"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu">
 			<li>
 				<a href="#" data-submit-action="submit[mark_as_read]">
@@ -78,16 +78,16 @@
 			<i class="icon-folder-close"></i>
 			<span class="caret"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu">
 			<li style="padding-left:15px;">
 				<h4>
 					{{- 'ccdn_message_message.link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</h4>
 			</li>
-			
+
 			<li class="divider"></li>
-			
+
 			{%- for row, folder in folders -%}
 				<li>
 					<a href="#" data-submit-action="submit[move_to]" data-value="{{- folder.getId -}}">

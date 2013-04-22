@@ -14,38 +14,54 @@
 namespace CCDNMessage\MessageBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNMessage\MessageBundle\Entity\Message;
 use CCDNMessage\MessageBundle\Entity\Thread;
 use CCDNMessage\MessageBundle\Entity\Folder;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ * @abstract
+ *
+ */
 abstract class EnvelopeModel
 {
-	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Folder $folder
-	 */
+    /**
+     *
+     * @var \CCDNMessage\MessageBundle\Entity\Folder $folder
+     */
     protected $folder = null;
-	
-	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Message $message
-	 */
+
+    /**
+     *
+     * @var \CCDNMessage\MessageBundle\Entity\Message $message
+     */
     protected $message = null;
-	
-	/** 
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $owmedByUser
-	 */
+
+    /**
+     *
+     * @var \Symfony\Component\Security\Core\User\UserInterface $owmedByUser
+     */
     protected $ownedByUser = null;
 
-	/**
-	 * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
-	 */
+    /**
+     *
+     * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
+     */
     protected $thread = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -60,65 +76,65 @@ abstract class EnvelopeModel
     {
         return $this->folder;
     }
-		
+
     /**
      * Set folder
      *
-     * @param \CCDNMessage\MessageBundle\Entity\Folder $folder
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder   $folder
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
     public function setFolder(Folder $folder = null)
     {
         $this->folder = $folder;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get message
      *
      * @return \CCDNMessage\MessageBundle\Entity\Message
      */
-	public function getMessage()
-	{
-		return $this->message;
-	}
-	
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
     /**
      * Set message
      *
-     * @param \CCDNMessage\MessageBundle\Entity\Message $message
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Message  $message
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
-	public function setMessage(Message $message)
-	{
-		$this->message = $message;
-		
-		return $this;
-	}
+    public function setMessage(Message $message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
 
     /**
      * Get thread
      *
      * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
-	public function getThread()
-	{
-		return $this->thread;
-	}
-	
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
     /**
      * Set thread
      *
-     * @param \CCDNMessage\MessageBundle\Entity\Thread $thread
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread  $thread
+     * @return \CCDNMessage\MessageBundle\Entity\Message
      */
-	public function setThread(Thread $thread)
-	{
-		$this->thread = $thread;
-		
-		return $this;
-	}
+    public function setThread(Thread $thread)
+    {
+        $this->thread = $thread;
+
+        return $this;
+    }
 
     /**
      * Get ownedByUser
@@ -129,17 +145,17 @@ abstract class EnvelopeModel
     {
         return $this->ownedByUser;
     }
-	
+
     /**
      * Set ownedByUser
      *
-     * @param \Symfony\Component\Security\Core\User\UserInterface $ownedByUser
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedByUser
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
     public function setOwnedByUser(UserInterface $ownedByUser = null)
     {
         $this->ownedByUser = $ownedByUser;
-		
-		return $this;
+
+        return $this;
     }
 }

@@ -22,15 +22,21 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class Configuration implements ConfigurationInterface
 {
     /**
      *
-	 * @access public
-	 * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
+     * @access public
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
@@ -48,23 +54,23 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
-		// Class file namespaces.
-		$this
-			->addEntitySection($rootNode)
-			->addRepositorySection($rootNode)
-			->addGatewaySection($rootNode)
-			->addManagerSection($rootNode)
-			->addFormSection($rootNode)
-			->addComponentSection($rootNode)
-		;
-		
-		// Configuration stuff.
+        // Class file namespaces.
         $this
-			->addSEOSection($rootNode)
-	        ->addFolderSection($rootNode)
-	        ->addMessageSection($rootNode)
-	        ->addQuotasSection($rootNode)
-		;
+            ->addEntitySection($rootNode)
+            ->addRepositorySection($rootNode)
+            ->addGatewaySection($rootNode)
+            ->addManagerSection($rootNode)
+            ->addFormSection($rootNode)
+            ->addComponentSection($rootNode)
+        ;
+
+        // Configuration stuff.
+        $this
+            ->addSEOSection($rootNode)
+            ->addFolderSection($rootNode)
+            ->addMessageSection($rootNode)
+            ->addQuotasSection($rootNode)
+        ;
 
         return $treeBuilder;
     }
@@ -72,11 +78,11 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addEntitySection(ArrayNodeDefinition $node)
-	{
+    {
         $node
             ->addDefaultsIfNotSet()
             ->children()
@@ -84,59 +90,59 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-				        ->arrayNode('folder')
-				            ->addDefaultsIfNotSet()
-				            ->canBeUnset()
-				            ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Folder')->end()
-							->end()
-						->end()
-				        ->arrayNode('message')
-				            ->addDefaultsIfNotSet()
-				            ->canBeUnset()
-				            ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Message')->end()
-							->end()
-						->end()
-				        ->arrayNode('envelope')
-				            ->addDefaultsIfNotSet()
-				            ->canBeUnset()
-				            ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Envelope')->end()
-							->end()
-						->end()
-				        ->arrayNode('registry')
-				            ->addDefaultsIfNotSet()
-				            ->canBeUnset()
-				            ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Registry')->end()
-							->end()
-						->end()
-				        ->arrayNode('thread')
-				            ->addDefaultsIfNotSet()
-				            ->canBeUnset()
-				            ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Thread')->end()
-							->end()
-						->end()
-				        ->arrayNode('user')
-				            ->children()
-								->scalarNode('class')->end()
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
+                        ->arrayNode('folder')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Folder')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('message')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Message')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('envelope')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Envelope')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('registry')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Registry')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('thread')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Entity\Thread')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('user')
+                            ->children()
+                                ->scalarNode('class')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
 
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addRepositorySection(ArrayNodeDefinition $node)
     {
@@ -148,53 +154,53 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->arrayNode('message')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\MessageRepository')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\MessageRepository')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('folder')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\FolderRepository')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\FolderRepository')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('envelope')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\EnvelopeRepository')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\EnvelopeRepository')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('registry')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\RegistryRepository')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\RegistryRepository')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('thread')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\ThreadRepository')->end()							
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
-		
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Repository\ThreadRepository')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addGatewaySection(ArrayNodeDefinition $node)
     {
@@ -206,67 +212,67 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->arrayNode('bag')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\Bag\GatewayBag')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('message')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\MessageGateway')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\MessageGateway')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('folder')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\FolderGateway')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\FolderGateway')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('envelope')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\EnvelopeGateway')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\EnvelopeGateway')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('registry')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\RegistryGateway')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\RegistryGateway')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('thread')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\ThreadGateway')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\ThreadGateway')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('user')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\UserGateway')->end()							
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
-	
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Gateway\UserGateway')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addManagerSection(ArrayNodeDefinition $node)
     {
@@ -278,67 +284,67 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->arrayNode('bag')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\Bag\ManagerBag')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\Bag\ManagerBag')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('message')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\MessageManager')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\MessageManager')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('folder')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\FolderManager')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\FolderManager')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('envelope')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\EnvelopeManager')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\EnvelopeManager')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('registry')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\RegistryManager')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\RegistryManager')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('thread')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\ThreadManager')->end()							
-							->end()
-						->end()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\ThreadManager')->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('user')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\UserManager')->end()							
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
-	
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Manager\UserManager')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addFormSection(ArrayNodeDefinition $node)
     {
@@ -350,71 +356,71 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->arrayNode('type')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-		                        ->arrayNode('message')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-		                            ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Type\MessageFormType')->end()							
-									->end()
-								->end()
-							->end()
-						->end()
+                                ->arrayNode('message')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Type\MessageFormType')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('handler')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-		                        ->arrayNode('message')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-		                            ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler')->end()					
-									->end()
-								->end()
-		                        ->arrayNode('message_reply')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-		                            ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler')->end()					
-									->end()
-								->end()
-		                        ->arrayNode('message_forward')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-		                            ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler')->end()					
-									->end()
-								->end()
-							->end()
-						->end()
+                                ->arrayNode('message')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler')->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('message_reply')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler')->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('message_forward')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('validator')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
-		                        ->arrayNode('send_to')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-		                            ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Validator\SendToValidator')->end()							
-									->end()
-								->end()
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
-	
+                                ->arrayNode('send_to')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Form\Validator\SendToValidator')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addComponentSection(ArrayNodeDefinition $node)
     {
@@ -425,59 +431,59 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-		                ->arrayNode('dashboard')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-		                    ->children()
-				                ->arrayNode('integrator')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-				                    ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator')->end()							
-									->end()		
-								->end()
-							->end()
-						->end()
-		                ->arrayNode('twig_extension')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-		                    ->children()
-				                ->arrayNode('unread_message_count')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-				                    ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension')->end()							
-									->end()		
-								->end()
-				                ->arrayNode('folder_list')
-				                    ->addDefaultsIfNotSet()
-				                    ->canBeUnset()
-				                    ->children()
-										->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\FolderListExtension')->end()							
-									->end()		
-								->end()
-							->end()
-						->end()
-		                ->arrayNode('flood_control')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-		                    ->children()
-								->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\FloodControl')->end()							
-							->end()
-						->end()
-					->end()
-				->end()
-			->end()
-		;
-		
-		return $this;
-	}
-                      
+                        ->arrayNode('dashboard')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->arrayNode('integrator')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\Dashboard\DashboardIntegrator')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('twig_extension')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->arrayNode('unread_message_count')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\UnreadMessageCountExtension')->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('folder_list')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\TwigExtension\FolderListExtension')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('flood_control')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('class')->defaultValue('CCDNMessage\MessageBundle\Component\FloodControl')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
     /**
      *
      * @access protected
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     protected function addSEOSection(ArrayNodeDefinition $node)
     {
@@ -492,16 +498,16 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-		;
-		
-		return $this;
+        ;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addFolderSection(ArrayNodeDefinition $node)
     {
@@ -513,8 +519,8 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->arrayNode('show')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
                                 ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
                                 ->scalarNode('messages_per_page')->defaultValue('10')->end()
@@ -525,16 +531,16 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-		;
-		
-		return $this;
+        ;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addMessageSection(ArrayNodeDefinition $node)
     {
@@ -545,17 +551,17 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-						->arrayNode('flood_control')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
-							->children()
-								->scalarNode('send_limit')->defaultValue(4)->end()
-								->scalarNode('block_for_minutes')->defaultValue(1)->end()
-							->end()
-						->end()
+                        ->arrayNode('flood_control')
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
+                            ->children()
+                                ->scalarNode('send_limit')->defaultValue(4)->end()
+                                ->scalarNode('block_for_minutes')->defaultValue(1)->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('show')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
                                 ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
                                 ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
@@ -563,8 +569,8 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('compose')
-		                    ->addDefaultsIfNotSet()
-		                    ->canBeUnset()
+                            ->addDefaultsIfNotSet()
+                            ->canBeUnset()
                             ->children()
                                 ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
                                 ->scalarNode('form_theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
@@ -574,16 +580,16 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-		;
-		
-		return $this;
+        ;
+
+        return $this;
     }
-	
+
     /**
      *
      * @access private
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-	 * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\Configuration
      */
     private function addQuotasSection(ArrayNodeDefinition $node)
     {
@@ -598,8 +604,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-		;
-		
-		return $this;
+        ;
+
+        return $this;
     }
 }

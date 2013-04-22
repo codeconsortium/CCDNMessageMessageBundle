@@ -14,27 +14,41 @@
 namespace CCDNMessage\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 use CCDNMessage\MessageBundle\Entity\Envelope;
 use CCDNMessage\MessageBundle\Entity\Message;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ * @abstract
+ *
+ */
 abstract class ThreadModel
 {
     /**
-	 * @var \Doctrine\Common\Collections\ArrayCollection $messages
-	 */
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $messages
+     */
     protected $messages = null;
-	
+
     /**
-	 * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
-	 */
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $envelopes
+     */
     protected $envelopes = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -49,33 +63,33 @@ abstract class ThreadModel
     {
         return $this->messages;
     }
-	
+
     /**
      * Set messages
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection|Array $messages
-	 * @return \CCDNMessage\MessageBundle\Entity\Thread
+     * @param  \Doctrine\Common\Collections\ArrayCollection|Array $messages
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function setMessages($messages = null)
     {
         $this->messages = $messages;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Add message
      *
-	 * @param \CCDNMessage\MessageBundle\Entity\Message $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message $message
      * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function addMessage(Message $message)
     {
         $this->messages[] = $message;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get envelopes
      *
@@ -85,30 +99,30 @@ abstract class ThreadModel
     {
         return $this->envelopes;
     }
-	
+
     /**
      * Set envelopes
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection|Array $envelopes
-	 * @return \CCDNMessage\MessageBundle\Entity\Thread
+     * @param  \Doctrine\Common\Collections\ArrayCollection|Array $envelopes
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function setEnvelopes($envelopes = null)
     {
         $this->envelopes = $envelopes;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Add envelope
      *
-	 * @param \CCDNMessage\MessageBundle\Entity\Envelope $envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope $envelope
      * @return \CCDNMessage\MessageBundle\Entity\Thread
      */
     public function addEnvelope(Envelope $envelope)
     {
         $this->envelopes[] = $envelope;
-		
-		return $this;
+
+        return $this;
     }
 }

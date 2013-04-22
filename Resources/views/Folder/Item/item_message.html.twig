@@ -2,7 +2,7 @@
 
 	{%- set sender = create_profile(message.getSentFromUser) -%}
 	{%- set recipient = create_profile(message.getSentToUser) -%}
-					
+
 	<tr class="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- envelope.id -}}">
 		<td>
 			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true" data-identifier="{{- current_folder.name -}}" data-qualifier="all {{- (envelope.isRead) ? 'read ' : 'unread ' -}}{{- (envelope.isDraft) ? 'draft ' : '' -}}{{- (envelope.isFlagged) ? 'flagged ' : '' -}}{#{- (message.attachment) ? 'attached ' : '' -}#}">
@@ -67,5 +67,5 @@
 			{%- endif -%}
 		</td>
 	</tr>
-	
+
 {%- endspaceless -%}

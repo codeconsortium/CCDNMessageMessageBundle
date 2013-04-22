@@ -23,35 +23,41 @@ use CCDNMessage\MessageBundle\Entity\Message;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @param ObjectManager $manager
-	 */
+    /**
+     *
+     * @access public
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
 //		//
 //		// Registry.
 //		//
 //		$registry = new Registry();
-//		
+//
 //		$registry->setOwnedBy($manager->merge($this->getReference('user-admin')));
 //		$registry->setCachedUnreadMessagesCount(1);
 //
 //		$manager->persist($registry);
 //		$manager->flush();
-//		
+//
 //		//
 //		// Setup Folders.
 //		//
 //		$folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
 //		$inbox = null;
-//		
+//
 //        foreach ($folderNames as $key => $folderName) {
 //            $folder = new Folder();
 //            $folder->setOwnedBy($manager->merge($this->getReference('user-admin')));
@@ -65,15 +71,15 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //
 //			if ($folderName == 'inbox') { $inbox = $folder; }
 //        }
-//		
+//
 //		$manager->flush();
 //		$manager->refresh($inbox);
-//		
+//
 //		//
 //		// Message.
 //		//
 //		$message = new Message();
-//		
+//
 //		$message->setFolder($inbox);
 //		$message->setOwnedBy($manager->merge($this->getReference('user-admin')));
 //		$message->setSentTo($manager->merge($this->getReference('user-admin')));
@@ -81,24 +87,24 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //		$message->setSentFrom($manager->merge($this->getReference('user-test')));
 //		$message->setCreatedDate(new \DateTime());
 //		$message->setSentDate(new \DateTime());
-//		
+//
 //		$message->setSubject('Welcome Message.');
 //		$message->setBody('Welcome to CodeConsortium! This is the private messaging system, use this to send and receive messages to other users.<br><br>Check back here from time to time to see if you have any new messages.');
 //		$message->setIsRead(false);
 //		$message->setIsFlagged(true);
 //		$message->setIsDraft(false);
-//		
+//
 //		$manager->persist($message);
 //		$manager->flush();
     }
 
-	/**
-	 *
-	 * @access public
-	 * @return int
-	 */
-	public function getOrder()
-	{
-		return 3;
-	}
+    /**
+     *
+     * @access public
+     * @return int
+     */
+    public function getOrder()
+    {
+        return 3;
+    }
 }

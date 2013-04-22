@@ -24,119 +24,124 @@ use CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
- * @abstract
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 interface BaseManagerInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 * @param \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface $gateway
-	 * @param \CCDNMessage\MessageBundle\Manager\Bag\ManagerBagInterface $managerBag
-	 */
+    /**
+     *
+     * @access public
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
+     * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
+     * @param \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface    $gateway
+     * @param \CCDNMessage\MessageBundle\Manager\Bag\ManagerBagInterface $managerBag
+     */
     public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag);
 
-	/**
-	 *
-	 * @access public
-	 * @param string $role
-	 * @return bool
-	 */
-	public function isGranted($role);
+    /**
+     *
+     * @access public
+     * @param  string $role
+     * @return bool
+     */
+    public function isGranted($role);
 
-	/**
-	 *
-	 * @access public
-	 * @return \Symfony\Component\Security\Core\User\UserInterface
-	 */	
-	public function getUser();
+    /**
+     *
+     * @access public
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getUser();
 
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
-	 */
-	public function getGateway();
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     */
+    public function getGateway();
 
-	/**
-	 *
-	 * @access public
-	 * @return \Doctrine\ORM\QueryBuilder
-	 */	
-	public function getQueryBuilder();
-	
-	/**
-	 *
-	 * @access public
-	 * @param string $column = null
-	 * @param Array $aliases = null
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
-	public function createCountQuery($column = null, Array $aliases = null);
-		
-	/**
-	 *
-	 * @access public
-	 * @param Array $aliases = null
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
-	public function createSelectQuery(Array $aliases = null);
-	
-	/**
-	 *
-	 * @access public
-	 * @param \Doctrine\ORM\QueryBuilder $qb
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
-	public function one(QueryBuilder $qb);
-	
-	/**
-	 *
-	 * @access public
-	 * @param \Doctrine\ORM\QueryBuilder $qb
-	 * @return \Doctrine\ORM\QueryBuilder
-	 */	
-	public function all(QueryBuilder $qb);
-	
-	/**
-	 *
-	 * @access public
-	 * @param $entity
-	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilder();
+
+    /**
+     *
+     * @access public
+     * @param  string                                       $column  = null
+     * @param  Array                                        $aliases = null
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function createCountQuery($column = null, Array $aliases = null);
+
+    /**
+     *
+     * @access public
+     * @param  Array                                        $aliases = null
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function createSelectQuery(Array $aliases = null);
+
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\ORM\QueryBuilder                   $qb
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function one(QueryBuilder $qb);
+
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\ORM\QueryBuilder $qb
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function all(QueryBuilder $qb);
+
+    /**
+     *
+     * @access public
+     * @param $entity
+     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     */
     public function persist($entity);
 
-	/**
-	 *
-	 * @access public
-	 * @param $entity
-	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @param $entity
+     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     */
     public function remove($entity);
 
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     */
     public function flush();
 
-	/**
-	 *
-	 * @access public
-	 * @param $entity
-	 * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @param $entity
+     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     */
     public function refresh($entity);
-	
-	/**
-	 *
-	 * @access public
-	 * @return int
-	 */
-	public function getMessagesPerPageOnFolders();
+
+    /**
+     *
+     * @access public
+     * @return int
+     */
+    public function getMessagesPerPageOnFolders();
 }

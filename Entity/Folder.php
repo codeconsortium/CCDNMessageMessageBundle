@@ -13,40 +13,67 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNMessage\MessageBundle\Model\FolderModel;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ */
 class Folder extends FolderModel
 {
-	/** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string $name */
+    /**
+     *
+     * @var string $name
+     */
     protected $name;
-    
-    /** @var integer $specialType */
+
+    /**
+     *
+     * @var integer $specialType
+     */
     protected $specialType; // either 1=Inbox, 2=Sent, 3=Drafts or 4=Junk, 5=Deleted.
 
-    /** @var integer $cachedReadCount */
+    /**
+     *
+     * @var integer $cachedReadCount
+     */
     protected $cachedReadCount = 0;
 
-    /** @var integer $cachedUnreadCount */
+    /**
+     *
+     * @var integer $cachedUnreadCount
+     */
     protected $cachedUnreadCount = 0;
 
-    /** @var integer $cachedTotalMessageCount */
+    /**
+     *
+     * @var integer $cachedTotalMessageCount
+     */
     protected $cachedTotalMessageCount = 0;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -66,18 +93,18 @@ class Folder extends FolderModel
     {
         return $this->name;
     }
-	
+
     /**
      * Set name
      *
-     * @param text $name
-	 * @return Folder
+     * @param  text   $name
+     * @return Folder
      */
     public function setName($name)
     {
         $this->name = $name;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -93,16 +120,16 @@ class Folder extends FolderModel
     /**
      * Set specialType
      *
-     * @param integer $specialType
-	 * @return Folder
+     * @param  integer $specialType
+     * @return Folder
      */
     public function setSpecialType($specialType)
     {
         $this->specialType = $specialType;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get cachedReadCount
      *
@@ -112,18 +139,18 @@ class Folder extends FolderModel
     {
         return $this->cachedReadCount;
     }
-	
+
     /**
      * Set cachedReadCount
      *
-     * @param integer $cachedReadCount
-	 * @return Folder
+     * @param  integer $cachedReadCount
+     * @return Folder
      */
     public function setCachedReadCount($cachedReadCount)
     {
         $this->cachedReadCount = $cachedReadCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -139,14 +166,14 @@ class Folder extends FolderModel
     /**
      * Set cachedUnreadCount
      *
-     * @param integer $cachedUnreadCount
-	 * @return Folder
+     * @param  integer $cachedUnreadCount
+     * @return Folder
      */
     public function setCachedUnreadCount($cachedUnreadCount)
     {
         $this->cachedUnreadCount = $cachedUnreadCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -158,17 +185,17 @@ class Folder extends FolderModel
     {
         return $this->cachedTotalMessageCount;
     }
-	
+
     /**
      * Set cachedTotalMessageCount
      *
-     * @param integer $cachedTotalMessageCount
-	 * @return Folder
+     * @param  integer $cachedTotalMessageCount
+     * @return Folder
      */
     public function setCachedTotalMessageCount($cachedTotalMessageCount)
     {
         $this->cachedTotalMessageCount = $cachedTotalMessageCount;
-		
-		return $this;
+
+        return $this;
     }
 }

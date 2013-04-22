@@ -15,71 +15,76 @@ namespace CCDNMessage\MessageBundle\Component;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class FloodControl
 {
-	/**
-	 *
-	 * @access protected
-	 * @var $session
-	 */
-	protected $session;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var int $sendLimit
-	 */
-	protected $sendLimit;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var int $blockForMinutes
-	 */
-	protected $blockForMinutes;
-	
-	/**
-	 *
-	 * @access public
-	 * @param $session
-	 */
-	public function __construct($session, $sendLimit, $blockForMinutes)
-	{
-		$this->session = $session;
-		
-		$this->sendLimit = $sendLimit;
-		
-		$this->blockForMinutes = $blockForMinutes;
-		
-		if ( ! $this->session->has('flood_control_message_send_count'))
-		{
-			$this->session->set('flood_control_message_send_count', array());
-		}		
-	}
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function incrementCounter()
-	{
-		$sendCount = $this->session->get('flood_control_message_send_count');
-		
-		$sendCount[] = new \DateTime('now');
-		
-		$this->session->set('flood_control_message_send_count', $sendCount);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return bool
-	 */
-	public function isFlooded()
-	{
+    /**
+     *
+     * @access protected
+     * @var $session
+     */
+    protected $session;
+
+    /**
+     *
+     * @access protected
+     * @var int $sendLimit
+     */
+    protected $sendLimit;
+
+    /**
+     *
+     * @access protected
+     * @var int $blockForMinutes
+     */
+    protected $blockForMinutes;
+
+    /**
+     *
+     * @access public
+     * @param $session
+     */
+    public function __construct($session, $sendLimit, $blockForMinutes)
+    {
+        $this->session = $session;
+
+        $this->sendLimit = $sendLimit;
+
+        $this->blockForMinutes = $blockForMinutes;
+
+        if ( ! $this->session->has('flood_control_message_send_count')) {
+            $this->session->set('flood_control_message_send_count', array());
+        }
+    }
+
+    /**
+     *
+     * @access public
+     */
+    public function incrementCounter()
+    {
+        $sendCount = $this->session->get('flood_control_message_send_count');
+
+        $sendCount[] = new \DateTime('now');
+
+        $this->session->set('flood_control_message_send_count', $sendCount);
+    }
+
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function isFlooded()
+    {
         $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
 
         if ($this->session->has('flood_control_message_send_count')) {
@@ -98,13 +103,12 @@ class FloodControl
                 }
             }
 
-            if (count($freshenedAttempts) > $this->sendLimit)
-			{
-				return true;
-			}
-        }		
+            if (count($freshenedAttempts) > $this->sendLimit) {
+                return true;
+            }
+        }
 
-		return false;
-	}
-	
+        return false;
+    }
+
 }

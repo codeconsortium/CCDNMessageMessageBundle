@@ -17,35 +17,41 @@ use CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 2.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class DashboardIntegrator
 {
     /**
-	 * 
-	 * @access public
+     *
+     * @access public
      * @param CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface $builder
      */
     public function build(BuilderInterface $builder)
     {
-		$builder
-			->addCategory('account')
-				->setLabel('ccdn_message_message.dashboard.categories.account', array(), 'CCDNMessageMessageBundle')
-				->addPages()
-					->addPage('account')
-						->setLabel('ccdn_message_message.dashboard.pages.account', array(), 'CCDNMessageMessageBundle')
-					->end()
-				->end()
-				->addLinks()	
-					->addLink('messages')
-						->setAuthRole('ROLE_USER')
-						->setRoute('ccdn_message_message_index')
-						->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png')
-						->setLabel('ccdn_message_message.title.folder.index', array(), 'CCDNMessageMessageBundle')
-					->end()
-				->end()
-			->end()
-		;
+        $builder
+            ->addCategory('account')
+                ->setLabel('ccdn_message_message.dashboard.categories.account', array(), 'CCDNMessageMessageBundle')
+                ->addPages()
+                    ->addPage('account')
+                        ->setLabel('ccdn_message_message.dashboard.pages.account', array(), 'CCDNMessageMessageBundle')
+                    ->end()
+                ->end()
+                ->addLinks()
+                    ->addLink('messages')
+                        ->setAuthRole('ROLE_USER')
+                        ->setRoute('ccdn_message_message_index')
+                        ->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png')
+                        ->setLabel('ccdn_message_message.title.folder.index', array(), 'CCDNMessageMessageBundle')
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

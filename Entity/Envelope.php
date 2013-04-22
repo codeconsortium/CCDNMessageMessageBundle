@@ -13,41 +13,55 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNMessage\MessageBundle\Model\EnvelopeModel;
 
+/**
+ *
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
+ */
 class Envelope extends EnvelopeModel
 {
-	/** 
-	 * @var integer $id
-	 */
-    protected $id;
-	
     /**
-	 * @var \DateTime $sentDate
-	 */
+     *
+     * @var integer $id
+     */
+    protected $id;
+
+    /**
+     *
+     * @var \DateTime $sentDate
+     */
     protected $sentDate;
-    
-	/**
-	 * @var Boolean $isDraft
-	 */
+
+    /**
+     *
+     * @var Boolean $isDraft
+     */
     protected $isDraft = false;
 
     /**
-	 * @var Boolean $isRead
-	 */
+     *
+     * @var Boolean $isRead
+     */
     protected $isRead = false;
 
     /**
-	 * @var Boolean $isFlagged
-	 */
+     *
+     * @var Boolean $isFlagged
+     */
     protected $isFlagged = false;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
@@ -63,7 +77,7 @@ class Envelope extends EnvelopeModel
     {
         return $this->id;
     }
-	
+
     /**
      * Get sentDate
      *
@@ -77,14 +91,14 @@ class Envelope extends EnvelopeModel
     /**
      * Set sentDate
      *
-     * @param datetime $sentDate
-	 * @return Message
+     * @param  datetime $sentDate
+     * @return Message
      */
     public function setSentDate($sentDate)
     {
         $this->sentDate = $sentDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -96,18 +110,18 @@ class Envelope extends EnvelopeModel
     {
         return $this->isDraft;
     }
-	
+
     /**
      * Set isDraft
      *
-     * @param boolean $isDraft
-	 * @return Message
+     * @param  boolean $isDraft
+     * @return Message
      */
     public function setIsDraft($isDraft)
     {
         $this->isDraft = $isDraft;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -123,14 +137,14 @@ class Envelope extends EnvelopeModel
     /**
      * Set isRead
      *
-     * @param boolean $isRead
-	 * @return Message
+     * @param  boolean $isRead
+     * @return Message
      */
     public function setIsRead($isRead)
     {
         $this->isRead = $isRead;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -142,17 +156,17 @@ class Envelope extends EnvelopeModel
     {
         return $this->isFlagged;
     }
-	
+
     /**
      * Set isFlagged
      *
-     * @param boolean $isFlagged
-	 * @return Message
+     * @param  boolean $isFlagged
+     * @return Message
      */
     public function setIsFlagged($isFlagged)
     {
         $this->isFlagged = $isFlagged;
-		
-		return $this;
+
+        return $this;
     }
 }

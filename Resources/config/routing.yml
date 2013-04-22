@@ -67,4 +67,3 @@ ccdn_message_message_mail_mark_as_unread:
 ccdn_message_message_mail_delete:
     pattern: /{_locale}/message/{envelopeId}/delete
     defaults: { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }
-

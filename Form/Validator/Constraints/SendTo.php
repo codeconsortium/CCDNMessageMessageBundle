@@ -16,12 +16,17 @@ namespace CCDNMessage\MessageBundle\Form\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * @Annotation
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.1
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  * @see http://symfony.com/doc/current/cookbook/validation/custom_constraint.html
+ *
  */
 class SendTo extends Constraint
 {

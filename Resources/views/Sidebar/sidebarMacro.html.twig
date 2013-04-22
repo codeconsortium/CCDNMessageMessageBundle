@@ -1,6 +1,6 @@
 {%- spaceless -%}
 	{%- macro folder(folder) -%}
-		<li 
+		<li
 			{%- if folder.getCachedUnreadCount %}
 				 class="marked_unread"
 			{%- endif -%}
@@ -21,18 +21,18 @@
 				{%- endif -%}
 
 				<i class="{{- icon -}}"></i>
-				
+
 				{{- folder.getName|title -}}
 
 				{%- if folder.getCachedUnreadCount %}
 					<span class="label pull-right" style="vertical-align:top;background-color:#fff;color:#000;">{{- folder.getCachedUnreadCount -}}</span>
 				{%- endif -%}
 			</a>
-		</li>	
+		</li>
 	{%- endmacro -%}
 
 	{%- macro folderWithCurrentFolder(folder, current_folder) -%}
-		<li 
+		<li
 			{%- if current_folder is defined -%}
 				{%- if folder.name == current_folder.name or folder.getCachedUnreadCount %}
 					 class="
@@ -43,7 +43,7 @@
 			{%- else -%}
 				{%- if folder.getCachedUnreadCount -%}
 					class="{%- if folder.getCachedUnreadCount -%}marked_unread{%- endif -%}"
-				{%- endif -%}			
+				{%- endif -%}
 			{%- endif -%}
 		>
 			<a href="{{- path('ccdn_message_message_folder_show', {'folderName': folder.getName }) -}}">
@@ -60,11 +60,11 @@
 						{%- endif -%}
 					{%- endif -%}
 				{%- endif -%}
-	
+
 				<i class="{{- icon -}}{%- if folder.name == current_folder %} icon-white{%- endif -%}"></i>
-				
+
 				{{- folder.getName|title -}}
-	
+
 				{%- if folder.getCachedUnreadCount %}
 					<span class="label pull-right" style="vertical-align:top;background-color:#fff;color:#000;">{{- folder.getCachedUnreadCount -}}</span>
 				{%- endif -%}

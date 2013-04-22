@@ -26,27 +26,27 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
+     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
      */
     protected $folderManager;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 */
-	protected $securityContext;
-	
     /**
-     * 
-	 * @access public
-	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
-	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
+     */
+    protected $securityContext;
+
+    /**
+     *
+     * @access public
+     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
+     * @param \Symfony\Component\Security\Core\SecurityContext        $securityContext
      */
     public function __construct(BaseManagerInterface $folderManager, SecurityContext $securityContext)
     {
         $this->folderManager = $folderManager;
-		$this->securityContext = $securityContext;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -69,25 +69,25 @@ class FolderListExtension extends \Twig_Extension
      */
     public function folderList()
     {
-		$userId = $this->securityContext->getToken()->getUser()->getId();
-		
-		if (null == $userId) {
-			return array(
-				'quota' => array(
-					'allowed' => '0',
-					'used'    => '0',
-				),
-				'folders' => array(),
-			);
-		}
-		
-		return array(
-			'quota' => array(
-				'allowed' => '0',
-				'used'    => '0',
-			),
-			'folders' => $this->folderManager->findAllFoldersForUserById($userId),
-		);
+        $userId = $this->securityContext->getToken()->getUser()->getId();
+
+        if (null == $userId) {
+            return array(
+                'quota' => array(
+                    'allowed' => '0',
+                    'used'    => '0',
+                ),
+                'folders' => array(),
+            );
+        }
+
+        return array(
+            'quota' => array(
+                'allowed' => '0',
+                'used'    => '0',
+            ),
+            'folders' => $this->folderManager->findAllFoldersForUserById($userId),
+        );
     }
 
     /**

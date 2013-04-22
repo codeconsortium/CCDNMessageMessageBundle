@@ -23,115 +23,121 @@ use CCDNMessage\MessageBundle\Entity\Message;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 class MessageFormHandler
 {
     /**
-	 *
-	 * @access protected
-	 * @var \Symfony\Component\Form\FormFactory $factory
-	 */
+     *
+     * @access protected
+     * @var \Symfony\Component\Form\FormFactory $factory
+     */
     protected $factory;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Form\Type\MessageFormType $messageFormType
-	 */
-	protected $messageFormType;
-	
+
     /**
-	 *
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
-	 */
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Form\Type\MessageFormType $messageFormType
+     */
+    protected $messageFormType;
+
+    /**
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     */
     protected $manager;
 
     /**
-	 * 
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Form\Type\MessageFornType $form 
-	 */
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Form\Type\MessageFornType $form
+     */
     protected $form;
 
     /**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $sender 
-	 */
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface $sender
+     */
     protected $sender;
 
     /**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface $recipient 
-	 */
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface $recipient
+     */
     protected $recipient;
-	
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory $factory
-	 * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType $messageFormType
-	 * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory                     $factory
+     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType    $messageFormType
+     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
      */
     public function __construct(FormFactory $factory, $messageFormType, BaseManagerInterface $manager)
     {
         $this->factory = $factory;
-		$this->messageFormType = $messageFormType;
-		
+        $this->messageFormType = $messageFormType;
+
         $this->manager = $manager;
     }
 
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $sender
-	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
-	 */
-	public function setSender(UserInterface $sender)
-	{
-		$this->sender = $sender;
-		
-		return $this;
-	}
-
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $sender
-	 * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
-	 */	
-	public function setRecipient(UserInterface $recipient)
-	{
-		$this->recipient = $recipient;
-		
-		return $this;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
-	 * @return string
-	 */
-	public function getSubmitAction(Request $request)
-	{
-		if ($request->request->has('submit')) {
-			$action = key($request->request->get('submit'));
-		} else {
-			$action = 'post';
-		}
-		
-		return $action;
-	}
-	
     /**
      *
      * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param  \Symfony\Component\Security\Core\User\UserInterface        $sender
+     * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+     */
+    public function setSender(UserInterface $sender)
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface        $sender
+     * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
+     */
+    public function setRecipient(UserInterface $recipient)
+    {
+        $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @return string
+     */
+    public function getSubmitAction(Request $request)
+    {
+        if ($request->request->has('submit')) {
+            $action = key($request->request->get('submit'));
+        } else {
+            $action = 'post';
+        }
+
+        return $action;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     public function process(Request $request)
@@ -139,27 +145,27 @@ class MessageFormHandler
         $this->getForm();
 
         if ($request->getMethod() == 'POST') {
-			$this->form->bindRequest($request);
+            $this->form->bindRequest($request);
 
             if ($this->form->isValid()) {
-	            $message = $this->form->getData();
+                $message = $this->form->getData();
 
-		        $message->setSentFromUser($this->sender);
-				$message->setCreatedDate(new \DateTime());
-				
-				$isFlagged = $this->form->get('is_flagged')->getData();
-				
-				if ($this->getSubmitAction($request) == 'save_draft') {
-					$this->manager->saveDraft($message, $isFlagged)->flush();
-					
-					return false;
-				}
+                $message->setSentFromUser($this->sender);
+                $message->setCreatedDate(new \DateTime());
 
-				if ($this->getSubmitAction($request) == 'send') {
-	                $this->onSuccess($message, $isFlagged);
+                $isFlagged = $this->form->get('is_flagged')->getData();
 
-	                return true;					
-				}
+                if ($this->getSubmitAction($request) == 'save_draft') {
+                    $this->manager->saveDraft($message, $isFlagged)->flush();
+
+                    return false;
+                }
+
+                if ($this->getSubmitAction($request) == 'send') {
+                    $this->onSuccess($message, $isFlagged);
+
+                    return true;
+                }
             }
         }
 
@@ -180,7 +186,7 @@ class MessageFormHandler
                 $defaultValues['send_to'] = $this->recipient->getUsername();
             }
 
-			$this->form = $this->factory->create($this->messageFormType, null, $defaultValues);
+            $this->form = $this->factory->create($this->messageFormType, null, $defaultValues);
         }
 
         return $this->form;
@@ -189,7 +195,7 @@ class MessageFormHandler
     /**
      *
      * @access protected
-     * @param \CCDNMessage\MessageBundle\Entity\Message $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message $message
      * @return MessageManager
      */
     protected function onSuccess(Message $message, $isFlagged)

@@ -19,57 +19,63 @@ use Symfony\Component\DependencyInjection\Container;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNMessage
+ * @package  MessageBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
+ *
  */
 interface ManagerBagInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\DependencyInjection\Container $container
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\DependencyInjection\Container $container
+     */
     public function __construct(Container $container);
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\FolderManager
-	 */
-	public function getFolderManager();
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\MessageManager
-	 */
-	public function getMessageManager();
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\RegistryManager
-	 */
-	public function getRegistryManager();
-	
-	/**
-	 *
-	 * @access public
-	 * @return int
-	 */
-	public function getMessagesPerPageOnFolders();
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
-	 */
-	public function getThreadManager();
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Manager\UserManager
-	 */
-	public function getUserManager();
+
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     */
+    public function getFolderManager();
+
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     */
+    public function getMessageManager();
+
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\RegistryManager
+     */
+    public function getRegistryManager();
+
+    /**
+     *
+     * @access public
+     * @return int
+     */
+    public function getMessagesPerPageOnFolders();
+
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
+     */
+    public function getThreadManager();
+
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Manager\UserManager
+     */
+    public function getUserManager();
 }
