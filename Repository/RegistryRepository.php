@@ -26,6 +26,8 @@ use Doctrine\ORM\EntityRepository;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
+ *
+ * @deprecated (use managers instead)
  */
 class RegistryRepository extends EntityRepository
 {
