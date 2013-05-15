@@ -1,20 +1,20 @@
 {%- spaceless -%}
 	<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_compose') -}}">
-		{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+		{{- 'link.message.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 	</a>
 
 	{%- if current_folder.getName == 'drafts' -%}
-		<input type="submit" name="submit[send]" class="btn btn-primary" value="{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}">
+		<input type="submit" name="submit[send]" class="btn btn-primary" value="{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}">
 	{%- endif -%}
 
 	<button type="submit" name="submit[delete]" class="btn btn-danger">
 		<i class="icon-trash icon-white"></i>
-		{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
+		{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>
 
-	<input type="submit" name="submit[mark_as_read]" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[mark_as_read]" class="btn" value="{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}">
 
-	<input type="submit" name="submit[mark_as_unread]" class="btn" value="{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[mark_as_unread]" class="btn" value="{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}">
 
 	<select name="select_move_to">
 		{%- for row, folder in folders -%}
@@ -22,5 +22,5 @@
 		{%- endfor -%}
 	</select>
 
-	<input type="submit" name="submit[move_to]" class="btn" value="{{- 'ccdn_message_message.link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[move_to]" class="btn" value="{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}">
 {%- endspaceless -%}

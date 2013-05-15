@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_message_message.message.show.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_message_message.title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -16,24 +16,24 @@
 
 					{%- if envelope.isDraft -%}
 						<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'envelopeId': envelope.id }) -}}">
-							{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
+							{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 						</a>
 					{%- endif -%}
 
 					<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'envelopeId': envelope.id }) -}}">
-						{{- 'ccdn_message_message.link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}
+						{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
 					<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'envelopeId': envelope.id }) -}}">
-						{{- 'ccdn_message_message.link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}
+						{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
 					<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'envelopeId': envelope.id }) -}}">
-						{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
+						{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
 					<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'envelopeId': envelope.id }) -}}">
-						{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
+						{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 				</div>
 

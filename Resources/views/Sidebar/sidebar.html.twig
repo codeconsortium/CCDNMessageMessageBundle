@@ -7,7 +7,7 @@
 		{%- endif -%}
 	{%- endif -%}
 
-	<li class="nav-header">{{- 'ccdn_message_message.sidebar.header.tools' | trans({}, 'CCDNMessageMessageBundle') -}}</li>
+	<li class="nav-header">{{- 'sidebar.header.tools' | trans({}, 'CCDNMessageMessageBundle') -}}</li>
 
 	{%- if
 		route == 'ccdn_message_message_mail_compose' or
@@ -18,14 +18,14 @@
 		<li class="active">
 			<a href="{{- path('ccdn_message_message_mail_compose') -}}">
 				<i class="icon-pencil icon-white"></i>
-				{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'link.message.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 			</a>
 		</li>
 	{%- else -%}
 		<li>
 			<a href="{{- path('ccdn_message_message_mail_compose') -}}">
 				<i class="icon-pencil"></i>
-				{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+				{{- 'link.message.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 			</a>
 		</li>
 	{%- endif -%}
@@ -34,7 +34,7 @@
 
 	{%- if folders['folders'] is defined -%}
 		<li class="nav-header">
-			{{- 'ccdn_message_message.label.folders' |trans({}, 'CCDNMessageMessageBundle') -}}
+			{{- 'sidebar.header.folders' |trans({}, 'CCDNMessageMessageBundle') -}}
 		</li>
 
 		{%- import 'CCDNMessageMessageBundle:Sidebar:sidebarMacro.html.twig' as format -%}

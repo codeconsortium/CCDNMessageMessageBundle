@@ -49,7 +49,7 @@ class FolderController extends FolderBaseController
         $messagesPager = $this->getEnvelopeManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'));
+            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'));
 
         return $this->renderResponse('CCDNMessageMessageBundle:Folder:show.html.',
             array(

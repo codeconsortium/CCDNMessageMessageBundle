@@ -59,21 +59,21 @@ class MessageFormType extends AbstractType
             ->add('send_to', 'text',
                 array(
                     'data'               => $options['send_to'],
-                    'label'              => 'ccdn_message_message.form.label.message.to',
+                    'label'              => 'form.label.to',
                     'translation_domain' => 'CCDNMessageMessageBundle',
                 )
             )
             ->add('subject', 'text',
                 array(
                     'data'               => $options['subject'],
-                    'label'              => 'ccdn_message_message.form.label.message.subject',
+                    'label'              => 'form.label.subject',
                     'translation_domain' => 'CCDNMessageMessageBundle',
                 )
             )
             ->add('body', 'textarea',
                 array(
                     'data'               => $options['body'],
-                    'label'              => 'ccdn_message_message.form.label.message.body',
+                    'label'              => 'form.label.body',
                     'translation_domain' => 'CCDNMessageMessageBundle',
                 )
             )
@@ -82,7 +82,7 @@ class MessageFormType extends AbstractType
                     'required'           => false,
                     'mapped'             => false,
                     'property_path'      => false,
-                    'label'              => 'ccdn_message_message.form.label.message.flagged',
+                    'label'              => 'form.label.flagged',
                     'translation_domain' => 'CCDNMessageMessageBundle',
                 )
             )

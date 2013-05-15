@@ -37,10 +37,10 @@ class DashboardIntegrator
     {
         $builder
             ->addCategory('account')
-                ->setLabel('ccdn_message_message.dashboard.categories.account', array(), 'CCDNMessageMessageBundle')
+                ->setLabel('dashboard.categories.account', array(), 'CCDNMessageMessageBundle')
                 ->addPages()
                     ->addPage('account')
-                        ->setLabel('ccdn_message_message.dashboard.pages.account', array(), 'CCDNMessageMessageBundle')
+                        ->setLabel('dashboard.pages.account', array(), 'CCDNMessageMessageBundle')
                     ->end()
                 ->end()
                 ->addLinks()
@@ -48,7 +48,7 @@ class DashboardIntegrator
                         ->setAuthRole('ROLE_USER')
                         ->setRoute('ccdn_message_message_index')
                         ->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png')
-                        ->setLabel('ccdn_message_message.title.folder.index', array(), 'CCDNMessageMessageBundle')
+                        ->setLabel('title.folder.index', array(), 'CCDNMessageMessageBundle')
                     ->end()
                 ->end()
             ->end()

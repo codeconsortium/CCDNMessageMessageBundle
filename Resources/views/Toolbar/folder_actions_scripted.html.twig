@@ -1,7 +1,7 @@
 {%- spaceless -%}
 
 	<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_compose') -}}">
-		{{- 'ccdn_message_message.sidebar.link.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
+		{{- 'link.message.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 	</a>
 
 	<div class="btn-group">
@@ -13,7 +13,7 @@
 		<ul class="dropdown-menu">
 			<li>
 				<a href="#" data-action="select_none" data-identifier="{{- current_folder.name -}}">
-					{{- 'ccdn_message_message.link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_none' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 
@@ -21,12 +21,12 @@
 
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="read">
-					{{- 'ccdn_message_message.link.message.select_all_read' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_all_read' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="unread">
-					{{- 'ccdn_message_message.link.message.select_all_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_all_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 
@@ -34,12 +34,12 @@
 
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="draft">
-					{{- 'ccdn_message_message.link.message.select_all_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_all_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="flagged">
-					{{- 'ccdn_message_message.link.message.select_all_flagged' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_all_flagged' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 
@@ -47,7 +47,7 @@
 
 			<li>
 				<a href="#" data-action="select_all" data-identifier="{{- current_folder.name -}}" data-qualifier="attached">
-					{{- 'ccdn_message_message.link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.select_all_attached' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 		</ul>
@@ -62,12 +62,12 @@
 		<ul class="dropdown-menu">
 			<li>
 				<a href="#" data-submit-action="submit[mark_as_read]">
-					{{- 'ccdn_message_message.link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 			<li>
 				<a href="#" data-submit-action="submit[mark_as_unread]">
-					{{- 'ccdn_message_message.link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</a>
 			</li>
 		</ul>
@@ -82,7 +82,7 @@
 		<ul class="dropdown-menu">
 			<li style="padding-left:15px;">
 				<h4>
-					{{- 'ccdn_message_message.link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}
+					{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}
 				</h4>
 			</li>
 
@@ -100,13 +100,13 @@
 
 	{%- if current_folder.getName == 'drafts' -%}
 		<button data-submit-action="submit[send]" class="btn btn-primary disabled hidden" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
-			{{- 'ccdn_message_message.link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
+			{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 		</button>
 	{%- endif -%}
 
 	<button data-submit-action="submit[delete]" class="btn btn-danger disabled hidden" style="vertical-align:top;" data-responds-disabled="{{- current_folder.name -}}" data-responds-hidden="{{- current_folder.name -}}" disabled>
 		<i class="icon-trash icon-white"></i>
-		{{- 'ccdn_message_message.link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
+		{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>
 
 {%- endspaceless -%}

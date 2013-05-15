@@ -50,7 +50,7 @@
 	</script>
 {% endblock javascripts_extra %}
 
-{% block title %}{{- truncDot('ccdn_message_message.title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -79,7 +79,7 @@
 					{%- endif -%}
 				</div>
 
-				<table class="table table-striped table-bordered table-hover table-no-vertical-borders">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th style="width: 16px;">
@@ -89,9 +89,9 @@
 							{#<th style="width: 16px;"><i class="icon-file"></i></th>#}
 							<th style="width: 16px;"><i class="icon-inbox"></i></th>
 							<th style="width: 16px;"><i class="icon-eye-open"></i></th>
-							<th style="width: 60px;">{{- ((current_folder.name == 'sent') ? 'ccdn_message_message.inbox.table.head.to' :'ccdn_message_message.inbox.table.head.from') | trans({}, 'CCDNMessageMessageBundle') -}}</th>
-							<th>{{- 'ccdn_message_message.inbox.table.head.subject' | trans({}, 'CCDNMessageMessageBundle') -}}</th>
-							<th style="width: 140px;">{{- 'ccdn_message_message.inbox.table.head.sent' | trans({}, 'CCDNMessageMessageBundle') -}}</th>
+							<th style="width: 60px;">{{- ((current_folder.name == 'sent') ? 'generic.thead.to' :'generic.thead.from') | trans({}, 'CCDNMessageMessageBundle') -}}</th>
+							<th>{{- 'generic.thead.subject' | trans({}, 'CCDNMessageMessageBundle') -}}</th>
+							<th style="width: 140px;">{{- 'generic.thead.sent' | trans({}, 'CCDNMessageMessageBundle') -}}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -101,7 +101,7 @@
 						{%- else -%}
 							<tr>
 								<td colspan="8" class="center">
-									{{- 'ccdn_message_message.inbox.table.empty' | trans({}, 'CCDNMessageMessageBundle') -}}
+									{{- 'generic.message.none' | trans({}, 'CCDNMessageMessageBundle') -}}
 								</td>
 							</tr>
 						{%- endfor -%}

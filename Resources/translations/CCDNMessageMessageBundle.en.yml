@@ -1,91 +1,81 @@
 ccdn_message_message:
     dashboard:
         pages:
-            account: Account
+            account:         "Account"
         categories:
-            account: Account
+            account:         "Account"
 
-#
-# Page Titles.
-#
-ccdn_message_message.title.folder.index: 'Message Inbox'
-ccdn_message_message.title.folder.show: 'Messages - %folderName%'
-ccdn_message_message.title.message.show: 'Message: %message_subject%.'
-ccdn_message_message.title.message.compose: 'Compose Message.'
+title:
+    folder:
+        index:               "Message Inbox"
+        show:                "Messages - %folderName%"
+    message:
+        show:                "Message: %message_subject%"
+        compose:             "Compose Message"
 
-#
-# Crumbs.
-#
-ccdn_message_message.crumbs.message_index: 'Inbox'
-ccdn_message_message.crumbs.compose_message: 'Compose New Message'
-ccdn_message_message.crumbs.compose_reply: 'Compose Reply'
-ccdn_message_message.crumbs.compose_forward: 'Forward Message'
+crumbs:
+    folder:
+        index:               "Inbox"
+    message:
+        compose:
+            new:             "Compose New Message"
+            reply:           "Compose Reply"
+            forward:         "Forward Message"
 
-#
-# Flash Messages.
-#
-ccdn_message_message.flash.message.sent.success: 'Message sent to %user%.'
-ccdn_message_message.flash.message.send.inbox_full: 'The inbox for %user% is full and could not receive your message.'
-ccdn_message_message.flash.message.draft.saved: 'Draft message saved.'
-ccdn_message_message.flash.send.flood_control: 'Flood Control - You have sent too much at once, take a break before sending again.'
+sidebar:
+    header:
+        tools:               "Tools"
+        folders:             "Folders"
 
-#
-# Sidebar.
-#
-ccdn_message_message.sidebar.header.tools: 'Tools'
-ccdn_message_message.sidebar.link.messages: 'Messages'
-ccdn_message_message.sidebar.link.compose: 'Compose Message'
+link:
+    message:
+        messages:            "Messages"
+        compose:             "Compose New"
+        reply:               "Reply"
+        forward:             "Forward"
+        delete:              "Delete"
+        mark_as_read:        "Mark as Read"
+        mark_as_unread:      "Mark as Unread"
+        move_to:             "Move to folder"
+        send_draft:          "Send"
+        select_none:         "None"
+        select_all:          "All"
+        select_all_read:     "Read"
+        select_all_unread:   "Unread"
+        select_all_flagged:  "Flagged"
+        select_all_attached: "Attached"
+        select_all_draft:    "Draft"
 
-#
-# Link Labels.
-#
-ccdn_message_message.link.message.reply: 'Reply'
-ccdn_message_message.link.message.forward: 'Forward'
-ccdn_message_message.link.message.delete: 'Delete'
-ccdn_message_message.link.message.mark_as_read: 'Mark as Read'
-ccdn_message_message.link.message.mark_as_unread: 'Mark as Unread'
-ccdn_message_message.link.message.move_to: 'Move to folder'
-ccdn_message_message.link.message.send_draft: 'Send'
-ccdn_message_message.link.message.select_none: 'None'
-ccdn_message_message.link.message.select_all: 'All'
-ccdn_message_message.link.message.select_all_read: 'Read'
-ccdn_message_message.link.message.select_all_unread: 'Unread'
-ccdn_message_message.link.message.select_all_flagged: 'Flagged'
-ccdn_message_message.link.message.select_all_attached: 'Attached'
-ccdn_message_message.link.message.select_all_draft: 'Draft'
+form:
+    required:                "This field is required"
+    label:
+        to:                  "To"
+        subject:             "Subject"
+        body:                "Message"
+        flagged:             "Flag as important"
+    button:
+        send:                "Send Message"
+        preview:             "Preview"
+        save_draft:          "Save Draft"
+        cancel:              "Cancel"
 
-#
-# Forms.
-#
-ccdn_message_message.form.field.required: 'This field is required'
-ccdn_message_message.form.label.message.to: 'To: '
-ccdn_message_message.form.label.message.subject: 'Subject: '
-ccdn_message_message.form.label.message.body: 'Message: '
-ccdn_message_message.form.label.message.flagged: 'Flag as important: '
-ccdn_message_message.form.label.message.attachment: 'Attachment: '
-ccdn_message_message.form.button.message.preview: 'Preview'
-ccdn_message_message.form.button.message.save_draft: 'Save Draft'
-ccdn_message_message.form.button.message.send: 'Send Message'
-ccdn_message_message.form.button.message.cancel: 'Cancel'
+generic:
+    thead:
+        from:                "From"
+        to:                  "To"
+        subject:             "Subject"
+        sent:                "Sent"
+    message:
+        inbox_status:        "You have %message_count% messages"
+        none:                "You have no messages in this folder."
 
-#
-# Table Labels.
-#
-ccdn_message_message.inbox.table.head.from: 'From'
-ccdn_message_message.inbox.table.head.to: 'To'
-ccdn_message_message.inbox.table.head.subject: 'Subject'
-ccdn_message_message.inbox.table.head.sent: 'Sent'
-ccdn_message_message.inbox.table.empty: 'You have no messages in this folder.'
-
-#
-# Generic.
-#
-ccdn_message_message.label.folders: 'Folders'
-
-ccdn_message_message.message.inbox_status: 'You have %message_count% messages.'
-
-ccdn_message_message.item_message.send.to: 'To: '
-ccdn_message_message.item_message.sent.from: 'From: '
-ccdn_message_message.item_message.subject: 'Subject: '
-ccdn_message_message.item_message.sent_datetime: 'Sent On: '
-ccdn_message_message.item_message.attachment: 'Attachment: '
+flash:
+    success:
+        message:
+            sent:            "Message sent to %user%."
+        draft:
+            saved:           "Draft message saved."
+    error:
+        message:
+            inbox_full:      "The inbox for %user% is full and could not receive your message."
+            flood_control:   "Flood Control - You have sent too much at once, take a break before sending again."

@@ -87,13 +87,13 @@ class MessageController extends MessageBaseController
                 return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folderName' => 'sent')));
             }
         } else {
-            $this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
+            $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
         }
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
-            ->add($this->trans('ccdn_message_message.crumbs.compose_message'), $this->path('ccdn_message_message_mail_compose'));
+            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'))
+            ->add($this->trans('crumbs.message.compose.new'), $this->path('ccdn_message_message_mail_compose'));
 
         return $this->renderResponse('CCDNMessageMessageBundle:Message:compose.html.',
             array(
@@ -124,19 +124,19 @@ class MessageController extends MessageBaseController
             if ($formHandler->process($this->getRequest())) {
                  $this->getFloodControl()->incrementCounter();
 
-                $this->setFlash('notice', $this->trans('ccdn_message_message.flash.message.sent.success'));
+                $this->setFlash('notice', $this->trans('flash.success.message.sent'));
 
                 return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folderName' => 'sent')));
             }
         } else {
-            $this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
+            $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
         }
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
+            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'))
             ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
-            ->add($this->trans('ccdn_message_message.crumbs.compose_reply'), $this->path('ccdn_message_message_mail_compose_reply', array('envelopeId' => $envelopeId)));
+            ->add($this->trans('crumbs.message.compose.reply'), $this->path('ccdn_message_message_mail_compose_reply', array('envelopeId' => $envelopeId)));
 
         return $this->renderResponse('CCDNMessageMessageBundle:Message:composeReply.html.',
             array(
@@ -168,19 +168,19 @@ class MessageController extends MessageBaseController
             if ($formHandler->process($this->getRequest())) {
                 $this->getFloodControl()->incrementCounter();
 
-                $this->setFlash('notice', $this->trans('ccdn_message_message.flash.message.sent.success'));
+                $this->setFlash('notice', $this->trans('flash.success.message.sent'));
 
                 return $this->redirectResponse($this->path('ccdn_message_message_folder_show', array('folderName' => 'sent')));
             }
         } else {
-            $this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
+            $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
         }
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_message_message.crumbs.message_index'), $this->path('ccdn_message_message_index'))
+            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'))
             ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
-            ->add($this->trans('ccdn_message_message.crumbs.compose_forward'), $this->path('ccdn_message_message_mail_compose_forward', array('envelopeId' => $envelopeId)));
+            ->add($this->trans('crumbs.message.compose.forward'), $this->path('ccdn_message_message_mail_compose_forward', array('envelopeId' => $envelopeId)));
 
         return $this->renderResponse('CCDNMessageMessageBundle:Message:composeForward.html.',
             array(
@@ -213,7 +213,7 @@ class MessageController extends MessageBaseController
 
             $this->getMessageManager()->sendDraft(array($message))->flush();
         } else {
-            $this->setFlash('warning', $this->trans('ccdn_message_message.flash.send.flood_control'));
+            $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
         }
 
         return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
