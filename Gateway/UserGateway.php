@@ -36,7 +36,7 @@ class UserGateway extends BaseGateway implements BaseGatewayInterface
      * @access private
      * @var string $queryAlias
      */
-    private $queryAlias = 'u';
+    protected $queryAlias = 'u';
 
     /**
      *
@@ -94,48 +94,5 @@ class UserGateway extends BaseGateway implements BaseGatewayInterface
         } catch (\Doctrine\ORM\NoResultException $e) {
             return 0;
         }
-    }
-
-    /**
-     *
-     * @access public
-     * @param  string                     $column  = null
-     * @param  Array                      $aliases = null
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function createCountQuery($column = null, Array $aliases = null)
-    {
-        if (null == $column) {
-            $column = 'count(' . $this->queryAlias . '.id)';
-        }
-
-        if (null == $aliases || ! is_array($aliases)) {
-            $aliases = array($column);
-        }
-
-        if (! in_array($column, $aliases)) {
-            $aliases = array($column) + $aliases;
-        }
-
-        return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array                      $aliases = null
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function createSelectQuery(Array $aliases = null)
-    {
-        if (null == $aliases || ! is_array($aliases)) {
-            $aliases = array($this->queryAlias);
-        }
-
-        if (! in_array($this->queryAlias, $aliases)) {
-            $aliases = array($this->queryAlias) + $aliases;
-        }
-
-        return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
     }
 }

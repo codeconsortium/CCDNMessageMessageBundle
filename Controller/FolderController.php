@@ -32,19 +32,20 @@ class FolderController extends FolderBaseController
      *
      * @access protected
      * @param  string         $folderName
-     * @param  int            $page
      * @return RenderResponse
      */
-    public function showFolderByNameAction($folderName, $page)
+    public function showFolderByNameAction($folderName)
     {
         $this->isAuthorised('ROLE_USER');
 
         if ($folderName != 'inbox' && $folderName != 'sent' && $folderName != 'drafts' && $folderName != 'junk' && $folderName != 'trash') {
             $this->isFound(false, 'Folder not found.');
         }
-
+		
         $folders = $this->getFolderManager()->findAllFoldersForUserById($this->getUser()->getId());
         $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $folderName);
+
+		$page = $this->getQuery('page', 1);
 
         $messagesPager = $this->getEnvelopeManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
 

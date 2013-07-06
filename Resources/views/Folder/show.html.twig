@@ -18,11 +18,9 @@
 
 					</div>
 
-					{%- if pager.haveToPaginate -%}
-						<nav class="span6 btn-right paginate">
-					    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName': 'ccdn_message_message_folder_show_paginated', 'routeParams':{'folder_name':current_folder.getName} }) -}}
-						</nav>
-					{%- endif -%}
+					<nav class="span6 btn-right paginate">
+						{{- knp_pagination_render(pager) -}}
+					</nav>
 				</div>
 
 				<table class="table table-striped table-hover">
@@ -39,7 +37,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{%- for row, envelope in pager.getCurrentPageResults() -%}
+						{%- for row, envelope in pager.getItems() -%}
 							{%- set message = envelope.getMessage() -%}
 							{%- include 'CCDNMessageMessageBundle:Folder:Item/item_message.html.twig' with {'message': message} -%}
 						{%- else -%}
@@ -51,16 +49,12 @@
 						{%- endfor -%}
 					</tbody>
 				</table>
-
-
-				{%- if pager.haveToPaginate -%}
-					<div class="btn-toolbar">
-						<nav class="span12 btn-right paginate">
-					    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName': 'ccdn_message_message_folder_show_paginated', 'routeParams':{'folder_name':current_folder.getName} }) -}}
-						</nav>
-					</div>
-				{%- endif -%}
-
+				
+				<div class="btn-toolbar">
+					<nav class="span12 btn-right paginate">
+						{{- knp_pagination_render(pager) -}}
+					</nav>
+				</div>
 			</form>
 
 			{#
