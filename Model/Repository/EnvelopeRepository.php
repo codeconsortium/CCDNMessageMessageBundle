@@ -11,11 +11,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Entity;
+namespace CCDNMessage\MessageBundle\Model\Repository;
 
-use CCDNMessage\MessageBundle\Entity\Model\ThreadModel;
+use Doctrine\ORM\EntityRepository;
 
 /**
+ * EnvelopeRepository
  *
  * @category CCDNMessage
  * @package  MessageBundle
@@ -25,32 +26,9 @@ use CCDNMessage\MessageBundle\Entity\Model\ThreadModel;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
+ *
+ * @deprecated (use managers instead)
  */
-class Thread extends ThreadModel
+class EnvelopeRepository extends EntityRepository
 {
-    /**
-     *
-     * @var integer $id
-     */
-    protected $id;
-
-    /**
-     *
-     * @access public
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }

@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use CCDNMessage\MessageBundle\Model\EnvelopeModel;
+use CCDNMessage\MessageBundle\Entity\Model\EnvelopeModel;
 
 /**
  *

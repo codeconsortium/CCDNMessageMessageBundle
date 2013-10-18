@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use CCDNMessage\MessageBundle\Model\FolderModel;
+use CCDNMessage\MessageBundle\Entity\Model\FolderModel;
 
 /**
  *

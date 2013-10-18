@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Entity;
 
-use CCDNMessage\MessageBundle\Model\MessageModel;
+use CCDNMessage\MessageBundle\Entity\Model\MessageModel;
 
 /**
  *

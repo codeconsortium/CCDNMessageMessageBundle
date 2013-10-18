@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**

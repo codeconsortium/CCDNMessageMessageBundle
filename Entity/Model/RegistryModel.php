@@ -11,9 +11,9 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Entity;
+namespace CCDNMessage\MessageBundle\Entity\Model;
 
-use CCDNMessage\MessageBundle\Entity\Model\ThreadModel;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  *
@@ -25,14 +25,16 @@ use CCDNMessage\MessageBundle\Entity\Model\ThreadModel;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
+ * @abstract
+ *
  */
-class Thread extends ThreadModel
+abstract class RegistryModel
 {
     /**
      *
-     * @var integer $id
+     * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
      */
-    protected $id;
+    protected $ownedBy = null;
 
     /**
      *
@@ -40,17 +42,29 @@ class Thread extends ThreadModel
      */
     public function __construct()
     {
-        parent::__construct();
         // your own logic
     }
 
     /**
-     * Get id
+     * Get ownedBy
      *
-     * @return integer
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function getId()
+    public function getOwnedBy()
     {
-        return $this->id;
+        return $this->ownedBy;
+    }
+
+    /**
+     * Set ownedBy
+     *
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
+     */
+    public function setOwnedBy(UserInterface $ownedBy = null)
+    {
+        $this->ownedBy = $ownedBy;
+
+        return $this;
     }
 }
