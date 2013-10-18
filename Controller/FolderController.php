@@ -52,7 +52,7 @@ class FolderController extends FolderBaseController
         $crumbs = $this->getCrumbs()
             ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Folder:show.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Folder/show.html.',
             array(
                 'crumbs' => $crumbs,
                 'folders' => $folders,

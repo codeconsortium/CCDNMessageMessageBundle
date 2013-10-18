@@ -35,6 +35,20 @@ class Configuration implements ConfigurationInterface
 {
     /**
      *
+     * @access protected
+     * @var string $defaultValueLayoutTemplate
+     */
+    protected $defaultValueLayoutTemplate = 'CCDNMessageMessageBundle::base.html.twig';
+
+    /**
+     *
+     * @access protected
+     * @var string $defaultValueFormTheme
+     */
+    protected $defaultValueFormTheme = 'CCDNMessageMessageBundle:Common:Form/fields.html.twig';
+
+    /**
+     *
      * @access public
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
@@ -522,7 +536,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
                             ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('layout_template')->defaultValue($this->defaultValueLayoutTemplate)->end()
                                 ->scalarNode('messages_per_page')->defaultValue('10')->end()
                                 ->scalarNode('subject_truncate')->defaultValue('50')->end()
                                 ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
@@ -563,7 +577,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
                             ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('layout_template')->defaultValue($this->defaultValueLayoutTemplate)->end()
                                 ->scalarNode('sent_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                             ->end()
                         ->end()
@@ -571,8 +585,8 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
                             ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNMessageMessageBundle:Form:fields.html.twig')->end()
+                                ->scalarNode('layout_template')->defaultValue($this->defaultValueLayoutTemplate)->end()
+                                ->scalarNode('form_theme')->defaultValue($this->defaultValueFormTheme)->end()
                             ->end()
                         ->end()
                     ->end()

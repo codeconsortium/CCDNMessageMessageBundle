@@ -1,0 +1,84 @@
+{% extends LayoutTemplate %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{- asset('bundles/ccdnmessagemessage/css/theme.css') -}}" rel="stylesheet" type="text/css">
+	{% block stylesheets_extra %}
+	{% endblock stylesheets_extra %}
+{% endblock stylesheets %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+	{% block javascripts_extra %}
+	{% endblock javascripts_extra %}
+{% endblock javascripts %}
+
+
+
+{% block tool_bar %}
+	{%- spaceless -%}
+
+		<header class="clearfix">
+			<nav class="navbar navbar-default" style="background-color:#fff;">
+
+				<div class="container clearfix">
+					<div class="row" style="padding:10px 0;">
+						<div class="col-md-2">
+							{% block sub_title %}
+								{#
+								{%- include 'CCDNMessageMessageBundle:Common:Layout/SubTitle/sub_title_default.html.twig' -%}
+								#}
+							{% endblock sub_title %}
+						</div>
+
+						<div class="col-md-10">
+							<div class="row">
+								{%- if crumbs is defined -%}
+									{%- block crumb_trail -%}
+										{%- include 'CCDNMessageMessageBundle:Common:Layout/crumbs.html.twig' with {'crumbs': crumbs } -%}
+									{%- endblock crumb_trail -%}
+								{%- endif -%}
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</nav>
+		</header>
+
+	{%- endspaceless -%}
+{% endblock tool_bar %}
+
+
+
+{% block sidebar %}
+	{%- spaceless -%}
+
+    {{ parent() }}
+    {%- include 'CCDNMessageMessageBundle:Common:Layout/Sidebar/sidebar.html.twig' -%}
+
+	{%- endspaceless -%}
+{% endblock %}
+
+
+
+{% block body %}
+	{%- spaceless -%}
+
+    {%- include 'CCDNMessageMessageBundle:Common:Layout/flashes.html.twig' -%}
+
+	{%- block body_content -%}
+	{%- endblock body_content -%}
+
+	{%- block body_footer -%}
+		<hr>
+
+		{%- include 'CCDNMessageMessageBundle:Common:Layout/footer.html.twig' -%}
+	{%- endblock body_footer -%}
+
+	{%- endspaceless -%}
+{% endblock body %}

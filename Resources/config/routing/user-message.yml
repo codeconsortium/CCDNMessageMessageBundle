@@ -1,0 +1,35 @@
+ccdn_message_message_mail_compose:
+    pattern:  /compose
+    defaults: { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, userId: null }
+
+ccdn_message_message_mail_compose_to:
+    pattern:  /compose-to/{userId}
+    defaults: { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, userId: null }
+
+ccdn_message_message_mail_compose_reply:
+    pattern:  /{envelopeId}/reply
+    defaults: { _controller: CCDNMessageMessageBundle:Message:reply, _locale: en }
+
+ccdn_message_message_mail_compose_forward:
+    pattern:  /{envelopeId}/forward
+    defaults: { _controller: CCDNMessageMessageBundle:Message:forward, _locale: en }
+
+ccdn_message_message_mail_draft_send:
+    pattern:  /{envelopeId}/send
+    defaults: { _controller: CCDNMessageMessageBundle:Message:sendDraft, _locale: en }
+
+ccdn_message_message_mail_show_by_id:
+    pattern:  /{envelopeId}/show
+    defaults: { _controller: CCDNMessageMessageBundle:Message:showMessage, _locale: en }
+
+ccdn_message_message_mail_mark_as_read:
+    pattern:  /{envelopeId}/mark-as-read
+    defaults: { _controller: CCDNMessageMessageBundle:Message:markAsRead, _locale: en }
+
+ccdn_message_message_mail_mark_as_unread:
+    pattern:  /{envelopeId}/mark-as-unread
+    defaults: { _controller: CCDNMessageMessageBundle:Message:markAsUnread, _locale: en }
+
+ccdn_message_message_mail_delete:
+    pattern:  /{envelopeId}/delete
+    defaults: { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }

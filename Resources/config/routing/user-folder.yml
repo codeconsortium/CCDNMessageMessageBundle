@@ -1,0 +1,20 @@
+ccdn_message_message_index:
+    pattern:  /
+    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox, page: 1 }
+
+#
+# Folders.
+#
+ccdn_message_message_folder_show:
+    pattern:  /folder/{folderName}
+    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox }
+    requirements:
+        folder_name: inbox|sent|drafts|junk|trash
+
+ccdn_message_message_folder_show_by_id:
+    pattern:  /folder/{folderId}
+    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en }
+
+ccdn_message_message_folder_mail_bulk_action:
+    pattern:  /folder/{folderName}/process-checked
+    defaults: { _controller: CCDNMessageMessageBundle:Folder:folderBulk, _locale: en }

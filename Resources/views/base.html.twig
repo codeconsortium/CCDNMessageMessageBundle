@@ -1,80 +1,114 @@
-{% extends LayoutTemplate %}
+<!DOCTYPE html>
+<html lang="{{- app.request.locale -}}">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <title>{%- block title -%}{%- endblock -%}</title>
 
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+		{%- block stylesheets -%}
+		{%- endblock -%}
+    </head>
+    <body>
 
-{% block stylesheets %}
-    {{ parent() }}
-	{% block stylesheets_extra %}
-	{% endblock stylesheets_extra %}
-	<style type="text/css">
-		.marked_unread{font-weight:bold;}
-	</style>
-{% endblock stylesheets %}
+		{%- spaceless -%}
 
+		<div id="page-wrap">
+			<div id="page-main">
 
+				{%- block navbar -%}
+					<header class="navbar navbar-default navbar-fixed-top clearfix" role="navigation">
+						<a target="_blank" class="navbar-brand" href="http://www.codeconsortium.com/">Code Consortium</a>
 
-{% block javascripts %}
-	{{ parent() }}
-	{% block javascripts_extra %}
-	{% endblock javascripts_extra %}
-{% endblock javascripts %}
+						<p class="navbar-text pull-right">
+							<i class="glyphicon glyphicon-user"></i>
+							&nbsp;
+							{%- if app.user -%}
+								{{- app.user.email -}}
+							{%- endif -%}
+						</p>
+					</header>
 
+					{%- block tool_bar -%}
+					{%- endblock tool_bar -%}
+				{%- endblock navbar -%}
 
+				<div class="container clearfix">
+					<br>
+					<div class="row">
+				        <aside class="col-md-2 page-sidebar-left">
+							{%- block sidebar -%}
+				            {%- endblock sidebar -%}
+						</aside>
 
-{% block tool_bar %}
-	{%- spaceless -%}
-		<header>
-			<div class="container-fluid clear-top crumb-bar-container">
-				<div class="row-fluid">
-				    <div class="span2">
-						<h3>
-							{% block sub_title %}
-								<a href="{{ path('ccdn_message_message_index') }}">
-									Messages
-								</a>
-							{% endblock sub_title %}
-						</h3>
-					</div>
-
-					{%- if crumbs is defined -%}
-						<nav class="span10">
-							{%- block crumb_trail -%}
-								{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-							{%- endblock crumb_trail -%}
-						</nav>
-					{%- endif -%}
+				        <div class="col-md-10 page-body-right">
+							<div id="top clearfix"></div>
+				            {%- block body -%}
+							{%- endblock body -%}
+				        </div>
+			        </div>
 				</div>
 			</div>
-		</header>
-	{%- endspaceless -%}
-{% endblock tool_bar %}
+		</div>
 
+		<br>
 
+		<footer class="footer site-footer">
 
-{% block sidebar %}
-	{%- spaceless -%}
+			<div class="navbar navbar-default clearfix">
+				<p class="navbar-text pull-right content-right">
+					Copyright <a target="_blank" class="navbar-link" href="http://www.codeconsortium.com/">Code Consortium</a> 2011 - {{ 'now'|date("Y") }}.
+				</p>
+			</div>
 
-    {{ parent() }}
+			<nav class="navbar navbar-inverse clearfix" style="bottom:0px;margin-bottom:0px;">
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				    <ul class="nav navbar-nav">
+						<li>
+							<a href="http://www.codeconsortium.com">
+								Code Consortium
+							</a>
+						</li>
 
-	{%- block sidebar_extra_top -%}{%- endblock sidebar_extra_top -%}
-	{%- include 'CCDNMessageMessageBundle:Sidebar:sidebar.html.twig' -%}
-	{%- block sidebar_extra_bottom -%}{%- endblock sidebar_extra_bottom -%}
+						<li>
+							<a rel="friend" target="_blank" href="http://github.com/codeconsortium">Contribute</a>
+						</li>
+				    </ul>
+				</div>
+			</nav>
 
-	{%- endspaceless -%}
-{% endblock %}
+		</footer>
 
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		{%- block javascripts -%}
+		{%- endblock -%}
 
-{% block body %}
-	{%- spaceless -%}
+		<script type='text/javascript'>
+		<!--
+			$(document).ready(function() {
+				// make visible js compat toolbars site wide
+				$("[data-js-non-compat]").each(function(i, el) {
+					$(el).addClass('collapse').addClass('hidden');
+				});
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+				$("[data-js-compat]").each(function(i, el) {
+					$(el).removeClass('collapse').removeClass('hidden');
+				});
 
-	{%- block body_content -%}
-	{%- endblock body_content -%}
+				$('[data-tip]').each(function() {
+					$(this).tooltip({
+						html: true,
+						placement: $(this).data('tip')
+					});
+				});
 
-	{%- block body_footer -%}
-		{%- include 'CCDNMessageMessageBundle:Footer:footer.html.twig' -%}
-	{%- endblock body_footer -%}
+				$('[data-toggle="dropdown"]').dropdown();
+			});
+		//-->
+		</script>
 
-	{%- endspaceless -%}
-{% endblock body %}
+		{%- endspaceless -%}
+    </body>
+</html>

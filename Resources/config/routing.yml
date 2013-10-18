@@ -1,59 +1,9 @@
-ccdn_message_message_index:
-    pattern: /{_locale}/message
-    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox, page: 1 }
 
-#
-# Folders.
-#
-ccdn_message_message_folder_show:
-    pattern: /{_locale}/message/folder/{folderName}
-    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox }
-    requirements:
-        folder_name: inbox|sent|drafts|junk|trash
+CCDNMessageMessageBundle-User-Folder:
+    resource: "@CCDNMessageMessageBundle/Resources/config/routing/user-folder.yml"
+    prefix: /{_locale}/messages
 
-ccdn_message_message_folder_show_by_id:
-    pattern: /{_locale}/message/folder/{folderId}
-    defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en }
+CCDNMessageMessageBundle-User-Message:
+    resource: "@CCDNMessageMessageBundle/Resources/config/routing/user-message.yml"
+    prefix: /{_locale}/messages
 
-ccdn_message_message_folder_mail_bulk_action:
-    pattern: /{_locale}/message/{folderName}/action/checked
-    defaults: { _controller: CCDNMessageMessageBundle:Folder:folderBulk, _locale: en }
-
-#
-# Messages.
-#
-ccdn_message_message_mail_compose:
-    pattern: /{_locale}/message/compose
-    defaults: { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, userId: null }
-
-ccdn_message_message_mail_compose_to:
-    pattern: /{_locale}/message/compose/to/{userId}
-    defaults: { _controller: CCDNMessageMessageBundle:Message:compose, _locale: en, userId: null }
-
-ccdn_message_message_mail_compose_reply:
-    pattern: /{_locale}/message/{envelopeId}/reply
-    defaults: { _controller: CCDNMessageMessageBundle:Message:reply, _locale: en }
-
-ccdn_message_message_mail_compose_forward:
-    pattern: /{_locale}/message/{envelopeId}/forward
-    defaults: { _controller: CCDNMessageMessageBundle:Message:forward, _locale: en }
-
-ccdn_message_message_mail_draft_send:
-    pattern: /{_locale}/message/{envelopeId}/send
-    defaults: { _controller: CCDNMessageMessageBundle:Message:sendDraft, _locale: en }
-
-ccdn_message_message_mail_show_by_id:
-    pattern: /{_locale}/message/{envelopeId}/show
-    defaults: { _controller: CCDNMessageMessageBundle:Message:showMessage, _locale: en }
-
-ccdn_message_message_mail_mark_as_read:
-    pattern: /{_locale}/message/{envelopeId}/mark/as/read
-    defaults: { _controller: CCDNMessageMessageBundle:Message:markAsRead, _locale: en }
-
-ccdn_message_message_mail_mark_as_unread:
-    pattern: /{_locale}/message/{envelopeId}/mark/as/unread
-    defaults: { _controller: CCDNMessageMessageBundle:Message:markAsUnread, _locale: en }
-
-ccdn_message_message_mail_delete:
-    pattern: /{_locale}/message/{envelopeId}/delete
-    defaults: { _controller: CCDNMessageMessageBundle:Message:delete, _locale: en }

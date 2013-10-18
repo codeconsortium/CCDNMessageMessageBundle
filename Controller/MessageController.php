@@ -57,7 +57,7 @@ class MessageController extends MessageBaseController
             ->add($envelope->getFolder()->getName(), $this->path('ccdn_message_message_folder_show', array('folderName' => $envelope->getFolder()->getName())))
             ->add($message->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Message:show.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Message/show.html.',
             array(
                 'crumbs' => $crumbs,
                 'folders' => $folders,
@@ -95,7 +95,7 @@ class MessageController extends MessageBaseController
             ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'))
             ->add($this->trans('crumbs.message.compose.new'), $this->path('ccdn_message_message_mail_compose'));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Message:compose.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose.html.',
             array(
                 'crumbs' => $crumbs,
                 'form' => $formHandler->getForm()->createView(),
@@ -138,7 +138,7 @@ class MessageController extends MessageBaseController
             ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
             ->add($this->trans('crumbs.message.compose.reply'), $this->path('ccdn_message_message_mail_compose_reply', array('envelopeId' => $envelopeId)));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Message:composeReply.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_reply.html.',
             array(
                 'crumbs' => $crumbs,
                 'form' => $formHandler->getForm()->createView(),
@@ -182,7 +182,7 @@ class MessageController extends MessageBaseController
             ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_mail_show_by_id', array('envelopeId' => $envelopeId)))
             ->add($this->trans('crumbs.message.compose.forward'), $this->path('ccdn_message_message_mail_compose_forward', array('envelopeId' => $envelopeId)));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:Message:composeForward.html.',
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_forward.html.',
             array(
                 'crumbs' => $crumbs,
                 'form' => $formHandler->getForm()->createView(),

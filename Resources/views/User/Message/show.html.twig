@@ -1,4 +1,4 @@
-{% extends 'CCDNMessageMessageBundle::base.html.twig' %}
+{% extends 'CCDNMessageMessageBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_message_message.message.show.layout_template %}
 
@@ -37,7 +37,7 @@
 					</a>
 				</div>
 
-				{%- include 'CCDNMessageMessageBundle:Message:Item/item_message.html.twig' with {'envelope': envelope} -%}
+				{%- include 'CCDNMessageMessageBundle:User:Message/Partial/item_message.html.twig' with {'envelope': envelope} -%}
 			{%- endfor -%}
 		{%- endif -%}
 	</section>

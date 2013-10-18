@@ -1,4 +1,4 @@
-{% extends 'CCDNMessageMessageBundle::base.html.twig' %}
+{% extends 'CCDNMessageMessageBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_message_message.folder.show.layout_template %}
 
@@ -14,7 +14,7 @@
 				<div class="btn-toolbar">
 					<div class="span6">
 						
-						{%- include 'CCDNMessageMessageBundle:Toolbar:folder_actions.html.twig' -%}
+						{%- include 'CCDNMessageMessageBundle:User:Toolbar/folder_actions.html.twig' -%}
 
 					</div>
 
@@ -39,7 +39,7 @@
 					<tbody>
 						{%- for row, envelope in pager.getItems() -%}
 							{%- set message = envelope.getMessage() -%}
-							{%- include 'CCDNMessageMessageBundle:Folder:Item/item_message.html.twig' with {'message': message} -%}
+							{%- include 'CCDNMessageMessageBundle:User:Folder/Partial/item_message.html.twig' with {'message': message} -%}
 						{%- else -%}
 							<tr>
 								<td colspan="8" class="center">
