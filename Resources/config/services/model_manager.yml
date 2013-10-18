@@ -1,0 +1,60 @@
+parameters:
+
+    # Service Parameters defined in app/config
+
+services:
+
+    #
+    # Managers.
+    #
+    ccdn_message_message.manager_bag:
+        class: %ccdn_message_message.manager_bag.class%
+        arguments: [@service_container]
+
+    ccdn_message_message.manager.folder:
+        class: %ccdn_message_message.manager.folder.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.folder
+            - @ccdn_message_message.manager_bag
+
+    ccdn_message_message.manager.envelope:
+        class: %ccdn_message_message.manager.envelope.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.envelope
+            - @ccdn_message_message.manager_bag
+
+    ccdn_message_message.manager.message:
+        class: %ccdn_message_message.manager.message.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.message
+            - @ccdn_message_message.manager_bag
+
+    ccdn_message_message.manager.thread:
+        class: %ccdn_message_message.manager.thread.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.thread
+            - @ccdn_message_message.manager_bag
+
+    ccdn_message_message.manager.registry:
+        class: %ccdn_message_message.manager.registry.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.registry
+            - @ccdn_message_message.manager_bag
+
+    ccdn_message_message.manager.user:
+        class: %ccdn_message_message.manager.user.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_message_message.gateway.user
+            - @ccdn_message_message.manager_bag

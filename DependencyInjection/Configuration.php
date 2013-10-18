@@ -64,6 +64,7 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->scalarNode('engine')->defaultValue('twig')->end()
+                        ->scalarNode('pager_theme')->defaultValue('CCDNMessageMessageBundle:Common:Paginator/twitter_bootstrap.html.twig')->end()
                     ->end()
                 ->end()
             ->end();

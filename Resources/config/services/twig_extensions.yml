@@ -1,0 +1,24 @@
+parameters:
+
+    # Service Parameters defined in app/config
+
+services:
+
+    #
+    # Twig Extensions.
+    #
+    ccdn_message_message.component.twig_extension.unread_message_count:
+        class: %ccdn_message_message.component.twig_extension.unread_message_count.class%
+        arguments:
+            - @ccdn_message_message.manager.registry
+            - @security.context
+        tags:
+            - { name: twig.extension }
+
+    ccdn_message_message.component.twig_extension.folder_list:
+        class: %ccdn_message_message.component.twig_extension.folder_list.class%
+        arguments:
+            - @ccdn_message_message.manager.folder
+            - @security.context
+        tags:
+            - { name: twig.extension }

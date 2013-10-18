@@ -1,0 +1,41 @@
+parameters:
+
+    # Service Parameters defined in app/config
+
+services:
+
+    #
+    # Message Forms.
+    #
+    ccdn_message_message.form.type.message:
+        class: %ccdn_message_message.form.type.message.class%
+        arguments:
+            - %ccdn_message_message.entity.message.class%
+
+    ccdn_message_message.form.handler.message:
+        class: %ccdn_message_message.form.handler.message.class%
+        arguments:
+            - @form.factory
+            - @ccdn_message_message.form.type.message
+            - @ccdn_message_message.manager.message
+
+    ccdn_message_message.form.handler.message_reply:
+        class: %ccdn_message_message.form.handler.message_reply.class%
+        arguments:
+            - @form.factory
+            - @ccdn_message_message.form.type.message
+            - @ccdn_message_message.manager.message
+
+    ccdn_message_message.form.handler.message_forward:
+        class: %ccdn_message_message.form.handler.message_forward.class%
+        arguments:
+            - @form.factory
+            - @ccdn_message_message.form.type.message
+            - @ccdn_message_message.manager.message
+
+    ccdn_message_message.form.validator.send_to:
+        class: %ccdn_message_message.form.validator.send_to.class%
+        arguments:
+            - @ccdn_message_message.manager.user
+        tags:
+            - { name: validator.constraint_validator, alias: SendToValidator }

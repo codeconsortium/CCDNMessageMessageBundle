@@ -35,11 +35,12 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
-     * @param string                                                     $entityClass
+     * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
+     * @param  \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+     * @param  string                                                     $entityClass
+     * @param  string                                                     $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass);
+    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass, $pagerTheme);
 
     /**
      *

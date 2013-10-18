@@ -1,0 +1,43 @@
+parameters:
+
+    # Service Parameters defined in app/config
+
+services:
+
+    #
+    # Repositories.
+    #
+    ccdn_message_message.repository.folder:
+        class: %ccdn_message_message.repository.folder.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %ccdn_message_message.entity.folder.class%
+
+    ccdn_message_message.repository.envelope:
+        class: %ccdn_message_message.repository.envelope.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %ccdn_message_message.entity.envelope.class%
+
+    ccdn_message_message.repository.message:
+        class: %ccdn_message_message.repository.message.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %ccdn_message_message.entity.message.class%
+
+    ccdn_message_message.repository.thread:
+        class: %ccdn_message_message.repository.thread.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %ccdn_message_message.entity.thread.class%
+
+    ccdn_message_message.repository.registry:
+        class: %ccdn_message_message.repository.registry.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %ccdn_message_message.entity.registry.class%

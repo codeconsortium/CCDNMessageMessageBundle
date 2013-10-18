@@ -71,19 +71,24 @@ abstract class BaseGateway implements BaseGatewayInterface
 
     /**
      *
-     * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
-     * @param string                                                     $entityClass
+     * @access private
+     * @var string $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass)
+    protected $pagerTheme;
+
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
+     * @param  \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+     * @param  string                                                     $entityClass
+     * @param  string                                                     $pagerTheme
+     */
+    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass, $pagerTheme)
     {
         $this->doctrine = $doctrine;
-
 		$this->paginator = $paginator;
-		
         $this->em = $doctrine->getEntityManager();
-
         $this->gatewayBag = $gatewayBag;
 
         if (null == $entityClass) {
@@ -91,6 +96,7 @@ abstract class BaseGateway implements BaseGatewayInterface
         }
 
         $this->entityClass = $entityClass;
+		$this->pagerTheme = $pagerTheme;
     }
 
     /**
@@ -206,7 +212,10 @@ abstract class BaseGateway implements BaseGatewayInterface
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
-		return $this->paginator->paginate($qb, $page, $itemsPerPage);
+		$pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
+        $pager->setTemplate($this->pagerTheme);
+		
+		return $pager;
     }
 
     /**

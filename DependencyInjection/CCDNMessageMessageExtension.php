@@ -56,6 +56,7 @@ class CCDNMessageMessageExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
+        $container->setParameter('ccdn_message_message.template.pager_theme', $config['template']['pager_theme']);
 
         // Class file namespaces.
         $this
@@ -78,6 +79,12 @@ class CCDNMessageMessageExtension extends Extension
         // Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('services/components.yml');
+		$loader->load('services/model_gateway.yml');
+        $loader->load('services/model_manager.yml');
+        $loader->load('services/model_repository.yml');
+        $loader->load('services/forms_message.yml');
+        $loader->load('services/twig_extensions.yml');
     }
 
     /**

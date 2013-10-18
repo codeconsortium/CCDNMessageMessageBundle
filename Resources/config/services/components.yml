@@ -1,0 +1,27 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+    ccdn_message_message.component.helper.pagination_config.class: CCDNMessage\MessageBundle\Component\Helper\PaginationConfigHelper
+
+services:
+
+    ccdn_message_message.component.helper.pagination_config:
+        class: %ccdn_message_message.component.helper.pagination_config.class%
+        arguments:
+            - %ccdn_message_message.folder.show.messages_per_page%
+
+    #
+    # Dashboard Integrator.
+    #
+    ccdn_message_message.component.dashboard.integrator:
+        class: %ccdn_message_message.component.dashboard.integrator.class%
+        tags:
+            - { name: ccdn_component_dashboard.integrator }
+
+    ccdn_message_message.component.flood_control:
+        class: %ccdn_message_message.component.flood_control.class%
+        arguments:
+            - @session
+            - %ccdn_message_message.message.flood_control.send_limit%
+            - %ccdn_message_message.message.flood_control.block_for_minutes%
+
