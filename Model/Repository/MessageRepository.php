@@ -13,7 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Model\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use CCDNMessage\MessageBundle\Model\Repository\BaseRepository;
+use CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface;
 
 /**
  * MessageRepository
@@ -26,9 +27,34 @@ use Doctrine\ORM\EntityRepository;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
- *
- * @deprecated (use managers instead)
  */
-class MessageRepository extends EntityRepository
+class MessageRepository extends BaseRepository implements RepositoryInterface
 {
+    /**
+     *
+     * @access public
+     * @param  int                                       $messageId
+     * @return \CCDNMessage\MessageBundle\Entity\Message
+     */
+    public function getAllEnvelopesForMessageById($messageId)
+    {
+        if (null == $messageId || ! is_numeric($messageId) || $messageId == 0) {
+            throw new \Exception('Message id "' . $messageId . '" is invalid!');
+        }
+
+        $params = array(':messageId' => $messageId);
+
+        $qb = $this->createSelectQuery(array('m', 'm_e', 'm_t', 'm_t_messages'));
+
+        $qb
+            ->leftJoin('m.envelopes', 'm_e')
+            ->leftJoin('m.thread', 'm_t')
+            ->leftJoin('m_t.messages', 'm_t_messages')
+            ->where('m.id = :messageId')
+            ->setParameters($params)
+            ->addOrderBy('m.createdDate', 'DESC')
+        ;
+
+        return $this->gateway->findMessage($qb, $params);
+    }
 }

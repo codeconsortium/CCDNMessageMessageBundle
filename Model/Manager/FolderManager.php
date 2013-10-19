@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
@@ -31,160 +31,13 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class FolderManager extends BaseManager implements BaseManagerInterface
+class FolderManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders()
-    {
-        return $this->managerBag->getMessagesPerPageOnFolders();
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                          $userId
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findAllFoldersForUserById($userId)
-    {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('f'));
-
-        $qb
-            ->where('f.ownedByUser = :userId')
-            ->orderBy('f.specialType', 'ASC');
-
-        $folders = $this->gateway->findFolders($qb, $params);
-
-        if (null == $folders || count($folders) < 1) {
-            $this->setupDefaults($userId)->flush();
-
-            $folders = $this->findAllFoldersForUserById($userId);
-        }
-
-        return $folders;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                          $folderId
-     * @param  int                                          $userId
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findOneFolderByIdAndUserById($folderId, $userId)
-    {
-        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
-            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
-        }
-
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':folderId' => $folderId, ':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('f'));
-
-        $qb
-            ->where('f.id = :folderId')
-            ->andWhere('f.ownedByUser = :userId')
-            ->orderBy('f.specialType', 'ASC')
-        ;
-
-        return $this->gateway->findFolder($qb, $params);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
-     * @return Array()
-     */
-    public function getReadCounterForFolderById($folderId, $userId)
-    {
-        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
-            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
-        }
-
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $qb = $this->getQueryBuilder();
-
-        $envelopeEntityClass = $this->managerBag->getEnvelopeManager()->getGateway()->getEntityClass();
-
-        $qb
-            ->select('COUNT(DISTINCT e.id) AS readCount')
-            ->from($envelopeEntityClass, 'e')
-            ->where('e.folder = :folderId')
-            ->andWhere('e.ownedByUser = :userId')
-            ->andWhere('e.isRead = TRUE')
-            ->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('readCount' => null);
-        } catch (\Exception $e) {
-            return array('readCount' => null);
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
-     * @return Array()
-     */
-    public function getUnreadCounterForFolderById($folderId, $userId)
-    {
-        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
-            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
-        }
-
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $qb = $this->getQueryBuilder();
-
-        $envelopeEntityClass = $this->managerBag->getEnvelopeManager()->getGateway()->getEntityClass();
-
-        $qb
-            ->select('COUNT(DISTINCT e.id) AS unreadCount')
-            ->from($envelopeEntityClass, 'e')
-            ->where('e.folder = :folderId')
-            ->andWhere('e.ownedByUser = :userId')
-            ->andWhere('e.isRead = FALSE')
-            ->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('unreadCount' => null);
-        } catch (\Exception $e) {
-            return array('unreadCount' => null);
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
      */
     public function setupDefaults(UserInterface $user)
     {
@@ -218,9 +71,9 @@ class FolderManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @param  Array()                                             $folders
-     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @param  Array()                                                $folders
+     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
      */
     public function updateAllFolderCachesForUser(UserInterface $user, $folders)
     {
@@ -238,8 +91,8 @@ class FolderManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder         $folder
-     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
+     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
      */
     public function updateFolderCounterCaches(Folder $folder)
     {

@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
@@ -31,7 +31,7 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class FolderGateway extends BaseGateway implements BaseGatewayInterface
+class FolderGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -104,7 +104,7 @@ class FolderGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNMessage\MessageBundle\Entity\Folder                $folder
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function persistFolder(Folder $folder)
     {
@@ -116,8 +116,8 @@ class FolderGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                $folder
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                  $folder
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function updateFolder(Folder $folder)
     {
@@ -129,8 +129,8 @@ class FolderGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                $folder
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                  $folder
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function deleteFolder(Folder $folder)
     {

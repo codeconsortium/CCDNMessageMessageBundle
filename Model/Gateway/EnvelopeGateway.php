@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 use CCDNMessage\MessageBundle\Entity\Envelope;
@@ -31,7 +31,7 @@ use CCDNMessage\MessageBundle\Entity\Envelope;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class EnvelopeGateway extends BaseGateway implements BaseGatewayInterface
+class EnvelopeGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -105,8 +105,8 @@ class EnvelopeGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope              $envelope
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function persistEnvelope(Envelope $envelope)
     {
@@ -118,8 +118,8 @@ class EnvelopeGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope              $envelope
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function updateEnvelope(Envelope $envelope)
     {
@@ -131,8 +131,8 @@ class EnvelopeGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope              $envelope
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function deleteEnvelope(Envelope $envelope)
     {

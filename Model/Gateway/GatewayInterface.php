@@ -16,9 +16,6 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
-use CCDNMessage\MessageBundle\Model\Gateway\Bag\GatewayBagInterface;
-
 /**
  *
  * @category CCDNMessage
@@ -30,17 +27,16 @@ use CCDNMessage\MessageBundle\Model\Gateway\Bag\GatewayBagInterface;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-interface BaseGatewayInterface
+interface GatewayInterface
 {
     /**
      *
      * @access public
      * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param  \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
      * @param  string                                                     $entityClass
      * @param  string                                                     $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass, $pagerTheme);
+    public function __construct(Registry $doctrine, $paginator, $entityClass, $pagerTheme);
 
     /**
      *
@@ -104,7 +100,7 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function flush();
 }

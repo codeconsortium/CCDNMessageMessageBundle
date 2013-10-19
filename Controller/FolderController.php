@@ -42,12 +42,12 @@ class FolderController extends FolderBaseController
             $this->isFound(false, 'Folder not found.');
         }
 		
-        $folders = $this->getFolderManager()->findAllFoldersForUserById($this->getUser()->getId());
-        $currentFolder = $this->getFolderManager()->getCurrentFolder($folders, $folderName);
+        $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
+        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $folderName);
 
 		$page = $this->getQuery('page', 1);
 
-        $messagesPager = $this->getEnvelopeManager()->findAllPaginatedForFolderById($currentFolder->getId(), $this->getUser()->getId(), $page);
+        $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $page, 25);
 
         $crumbs = $this->getCrumbs()
             ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'));

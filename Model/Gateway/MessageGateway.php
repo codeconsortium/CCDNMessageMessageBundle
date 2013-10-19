@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 use CCDNMessage\MessageBundle\Entity\Message;
@@ -31,7 +31,7 @@ use CCDNMessage\MessageBundle\Entity\Message;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class MessageGateway extends BaseGateway implements BaseGatewayInterface
+class MessageGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -106,8 +106,8 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function persistMessage(Message $message)
     {
@@ -119,8 +119,8 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function updateMessage(Message $message)
     {
@@ -132,8 +132,8 @@ class MessageGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function deleteMessage(Message $message)
     {

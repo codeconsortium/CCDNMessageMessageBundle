@@ -64,40 +64,40 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Manager\FolderManager $folderManager
+     * @var \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
      */
-    private $folderManager;
+    private $folderModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Manager\EnvelopeManager $envelopeManager;
+     * @var \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel $envelopeModel
      */
-    private $envelopeManager;
+    private $envelopeModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Manager\MessageManager $messageManager
+     * @var \CCDNMessage\MessageBundle\Model\Model\MessageModel $messageModel
      */
-    private $messageManager;
+    private $messageModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Manager\ThreadManager $threadManager;
+     * @var \CCDNMessage\MessageBundle\Model\Model\ThreadModel $threadModel
      */
-    private $threadManager;
+    private $threadModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Manager\RegistryManager $registryManager;
+     * @var \CCDNMessage\MessageBundle\Model\Model\RegistryModel $registryModel
      */
-    private $registryManager;
+    private $registryModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\UserManager $userManager
+     * @var \CCDNMessage\MessageBundle\Model\Model\UserModel $userModel
      */
-    protected $userManager;
+    protected $userModel;
 
     /**
      *
@@ -365,85 +365,85 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Manager\FolderManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\FolderModel
      */
-    protected function getFolderManager()
+    protected function getFolderModel()
     {
-        if (null == $this->folderManager) {
-            $this->folderManager = $this->container->get('ccdn_message_message.manager.folder');
+        if (null == $this->folderModel) {
+            $this->folderModel = $this->container->get('ccdn_message_message.model.folder');
         }
 
-        return $this->folderManager;
+        return $this->folderModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel
      */
-    protected function getEnvelopeManager()
+    protected function getEnvelopeModel()
     {
-        if (null == $this->envelopeManager) {
-            $this->envelopeManager = $this->container->get('ccdn_message_message.manager.envelope');
+        if (null == $this->envelopeModel) {
+            $this->envelopeModel = $this->container->get('ccdn_message_message.model.envelope');
         }
 
-        return $this->envelopeManager;
+        return $this->envelopeModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\MessageModel
      */
-    protected function getMessageManager()
+    protected function getMessageModel()
     {
-        if (null == $this->messageManager) {
-            $this->messageManager = $this->container->get('ccdn_message_message.manager.message');
+        if (null == $this->messageModel) {
+            $this->messageModel = $this->container->get('ccdn_message_message.model.message');
         }
 
-        return $this->messageManager;
+        return $this->messageModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Manager\ThreadManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\ThreadModel
      */
-    protected function getThreadManager()
+    protected function getThreadModel()
     {
-        if (null == $this->threadManager) {
-            $this->threadManager = $this->container->get('ccdn_message_message.manager.thread');
+        if (null == $this->threadModel) {
+            $this->threadModel = $this->container->get('ccdn_message_message.model.thread');
         }
 
-        return $this->threadManager;
+        return $this->threadModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Manager\RegistryManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\RegistryModel
      */
-    protected function getRegistryManager()
+    protected function getRegistryModel()
     {
-        if (null == $this->registryManager) {
-            $this->registryManager = $this->container->get('ccdn_message_message.manager.registry');
+        if (null == $this->registryModel) {
+            $this->registryModel = $this->container->get('ccdn_message_message.model.registry');
         }
 
-        return $this->registryManager;
+        return $this->registryModel;
     }
 
     /**
      *
      * @access public
-     * @return \CCDNMessage\MessageBundle\Manager\UserManager
+     * @return \CCDNMessage\MessageBundle\Model\Model\UserModel
      */
-    public function getUserManager()
+    public function getUserModel()
     {
-        if (null == $this->userManager) {
-            $this->userManager = $this->container->get('ccdn_message_message.manager.user');
+        if (null == $this->userModel) {
+            $this->userModel = $this->container->get('ccdn_message_message.model.user');
         }
 
-        return $this->userManager;
+        return $this->userModel;
     }
 
     /**

@@ -1,0 +1,45 @@
+parameters:
+
+    # Service Parameters defined in app/config
+
+services:
+
+    #
+    # Repositories.
+    #
+
+    ccdn_message_message.repository.folder:
+        class: %ccdn_message_message.repository.folder.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.folder
+
+    ccdn_message_message.repository.envelope:
+        class: %ccdn_message_message.repository.envelope.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.envelope
+
+    ccdn_message_message.repository.message:
+        class: %ccdn_message_message.repository.message.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.message
+
+    ccdn_message_message.repository.thread:
+        class: %ccdn_message_message.repository.thread.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.thread
+
+    ccdn_message_message.repository.registry:
+        class: %ccdn_message_message.repository.registry.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.registry
+
+    ccdn_message_message.repository.user:
+        class: %ccdn_message_message.repository.user.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ccdn_message_message.gateway.user

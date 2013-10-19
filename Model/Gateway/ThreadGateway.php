@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 use CCDNMessage\MessageBundle\Entity\Thread;
@@ -31,7 +31,7 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class ThreadGateway extends BaseGateway implements BaseGatewayInterface
+class ThreadGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -101,8 +101,8 @@ class ThreadGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function persistThread(Thread $thread)
     {
@@ -114,8 +114,8 @@ class ThreadGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function updateThread(Thread $thread)
     {
@@ -127,8 +127,8 @@ class ThreadGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function deleteThread(Thread $thread)
     {

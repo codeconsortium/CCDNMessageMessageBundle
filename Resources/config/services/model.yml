@@ -1,0 +1,45 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Models.
+    #
+
+    ccdn_message_message.model.folder:
+        class: %ccdn_message_message.model.folder.class%
+        arguments:
+            - @ccdn_message_message.repository.folder
+            - @ccdn_message_message.manager.folder
+
+    ccdn_message_message.model.envelope:
+        class: %ccdn_message_message.model.envelope.class%
+        arguments:
+            - @ccdn_message_message.repository.envelope
+            - @ccdn_message_message.manager.envelope
+
+    ccdn_message_message.model.message:
+        class: %ccdn_message_message.model.message.class%
+        arguments:
+            - @ccdn_message_message.repository.message
+            - @ccdn_message_message.manager.message
+
+    ccdn_message_message.model.thread:
+        class: %ccdn_message_message.model.thread.class%
+        arguments:
+            - @ccdn_message_message.repository.thread
+            - @ccdn_message_message.manager.thread
+
+    ccdn_message_message.model.user:
+        class: %ccdn_message_message.model.user.class%
+        arguments:
+            - @ccdn_message_message.repository.user
+            - @ccdn_message_message.manager.user
+
+    ccdn_message_message.model.registry:
+        class: %ccdn_message_message.model.registry.class%
+        arguments:
+            - @ccdn_message_message.repository.registry
+            - @ccdn_message_message.manager.registry

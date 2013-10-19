@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
@@ -32,39 +32,14 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class RegistryManager extends BaseManager implements BaseManagerInterface
+class RegistryManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @param  int                                        $userId
-     * @return \CCDNMessage\MessageBundle\Entity\Registry
-     */
-    public function findRegistryForUserById($userId)
-    {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('r', 'r_owned_by'));
-
-        $qb
-            ->leftJoin('r.ownedBy', 'r_owned_by')
-            ->where('r.ownedBy = :userId')
-            ->setParameters($params)
-            ->setMaxResults(1);
-
-        return $this->gateway->findRegistry($qb, $params);
-    }
-
-    /**
-     *
-     * @access public
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     * @param \CCDNMessage\MessageBundle\Entity\Registry
-     * @param Array() $folders
+     * @param \CCDNMessage\MessageBundle\Entity\Registry          $registry
+     * @param array                                               $folders
      */
     public function updateCacheUnreadMessagesForUser(UserInterface $user, Registry $registry = null, $folders = null)
     {

@@ -59,32 +59,30 @@ class CCDNMessageMessageExtension extends Extension
         $container->setParameter('ccdn_message_message.template.pager_theme', $config['template']['pager_theme']);
 
         // Class file namespaces.
-        $this
-            ->getEntitySection($config, $container)
-            ->getRepositorySection($config, $container)
-            ->getGatewaySection($config, $container)
-            ->getManagerSection($config, $container)
-            ->getFormSection($config, $container)
-            ->getComponentSection($config, $container)
-        ;
+        $this->getEntitySection($config, $container);
+        $this->getRepositorySection($config, $container);
+        $this->getGatewaySection($config, $container);
+        $this->getManagerSection($config, $container);
+		$this->getModelSection($config, $container);
+        $this->getFormSection($config, $container);
+        $this->getComponentSection($config, $container);
 
         // Configuration stuff.
-        $this
-            ->getQuotasSection($config, $container)
-            ->getSEOSection($config, $container)
-            ->getFolderSection($config, $container)
-            ->getMessageSection($config, $container)
-        ;
+        $this->getQuotasSection($config, $container);
+        $this->getSEOSection($config, $container);
+        $this->getFolderSection($config, $container);
+        $this->getMessageSection($config, $container);
 
         // Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('services/model.yml');
+		$loader->load('services/model-gateway.yml');
+        $loader->load('services/model-manager.yml');
+        $loader->load('services/model-repository.yml');
+        $loader->load('services/forms-message.yml');
         $loader->load('services/components.yml');
-		$loader->load('services/model_gateway.yml');
-        $loader->load('services/model_manager.yml');
-        $loader->load('services/model_repository.yml');
-        $loader->load('services/forms_message.yml');
-        $loader->load('services/twig_extensions.yml');
+        $loader->load('services/twig-extensions.yml');
     }
 
     /**
@@ -121,10 +119,11 @@ class CCDNMessageMessageExtension extends Extension
     private function getRepositorySection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_message_message.repository.folder.class', $config['repository']['folder']['class']);
-        $container->setParameter('ccdn_message_message.repository.message.class', $config['repository']['message']['class']);
         $container->setParameter('ccdn_message_message.repository.envelope.class', $config['repository']['envelope']['class']);
-        $container->setParameter('ccdn_message_message.repository.registry.class', $config['repository']['registry']['class']);
+        $container->setParameter('ccdn_message_message.repository.message.class', $config['repository']['message']['class']);
         $container->setParameter('ccdn_message_message.repository.thread.class', $config['repository']['thread']['class']);
+        $container->setParameter('ccdn_message_message.repository.registry.class', $config['repository']['registry']['class']);
+        $container->setParameter('ccdn_message_message.repository.user.class', $config['repository']['user']['class']);
 
         return $this;
     }
@@ -138,13 +137,11 @@ class CCDNMessageMessageExtension extends Extension
      */
     private function getGatewaySection(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('ccdn_message_message.gateway_bag.class', $config['gateway']['bag']['class']);
-
         $container->setParameter('ccdn_message_message.gateway.folder.class', $config['gateway']['folder']['class']);
-        $container->setParameter('ccdn_message_message.gateway.message.class', $config['gateway']['message']['class']);
         $container->setParameter('ccdn_message_message.gateway.envelope.class', $config['gateway']['envelope']['class']);
-        $container->setParameter('ccdn_message_message.gateway.registry.class', $config['gateway']['registry']['class']);
+        $container->setParameter('ccdn_message_message.gateway.message.class', $config['gateway']['message']['class']);
         $container->setParameter('ccdn_message_message.gateway.thread.class', $config['gateway']['thread']['class']);
+        $container->setParameter('ccdn_message_message.gateway.registry.class', $config['gateway']['registry']['class']);
         $container->setParameter('ccdn_message_message.gateway.user.class', $config['gateway']['user']['class']);
 
         return $this;
@@ -159,18 +156,41 @@ class CCDNMessageMessageExtension extends Extension
      */
     private function getManagerSection(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('ccdn_message_message.manager_bag.class', $config['manager']['bag']['class']);
-
         $container->setParameter('ccdn_message_message.manager.folder.class', $config['manager']['folder']['class']);
-        $container->setParameter('ccdn_message_message.manager.message.class', $config['manager']['message']['class']);
         $container->setParameter('ccdn_message_message.manager.envelope.class', $config['manager']['envelope']['class']);
-        $container->setParameter('ccdn_message_message.manager.registry.class', $config['manager']['registry']['class']);
+        $container->setParameter('ccdn_message_message.manager.message.class', $config['manager']['message']['class']);
         $container->setParameter('ccdn_message_message.manager.thread.class', $config['manager']['thread']['class']);
+        $container->setParameter('ccdn_message_message.manager.registry.class', $config['manager']['registry']['class']);
         $container->setParameter('ccdn_message_message.manager.user.class', $config['manager']['user']['class']);
 
         return $this;
     }
 
+    /**
+     *
+     * @access private
+     * @param  array                                                                      $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder                    $container
+     * @return \CCDNMessage\MessageBundle\DependencyInjection\CCDNMessageMessageExtension
+     */
+    private function getModelSection(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ccdn_message_message.model.folder.class', $config['model']['folder']['class']);
+        $container->setParameter('ccdn_message_message.model.envelope.class', $config['model']['envelope']['class']);
+        $container->setParameter('ccdn_message_message.model.message.class', $config['model']['message']['class']);
+        $container->setParameter('ccdn_message_message.model.thread.class', $config['model']['thread']['class']);
+        $container->setParameter('ccdn_message_message.model.registry.class', $config['model']['registry']['class']);
+        $container->setParameter('ccdn_message_message.model.user.class', $config['model']['user']['class']);
+
+        return $this;
+    }
+    
+    
+    
+    
+    
+    
+	
     /**
      *
      * @access private

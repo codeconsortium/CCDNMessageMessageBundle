@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
@@ -26,7 +26,7 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
+     * @var \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $folderManager
      */
     protected $folderManager;
 
@@ -40,10 +40,10 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $folderManager
-     * @param \Symfony\Component\Security\Core\SecurityContext        $securityContext
+     * @param \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $folderManager
+     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
      */
-    public function __construct(BaseManagerInterface $folderManager, SecurityContext $securityContext)
+    public function __construct(ManagerInterface $folderManager, SecurityContext $securityContext)
     {
         $this->folderManager = $folderManager;
         $this->securityContext = $securityContext;

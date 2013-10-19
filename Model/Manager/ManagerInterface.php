@@ -17,9 +17,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
-use CCDNMessage\MessageBundle\Model\Manager\Bag\ManagerBagInterface;
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 
 /**
  *
@@ -32,17 +30,16 @@ use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-interface BaseManagerInterface
+interface ManagerInterface
 {
     /**
      *
      * @access public
      * @param \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
      * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
-     * @param \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface    $gateway
-     * @param \CCDNMessage\MessageBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface  $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag);
+    public function __construct(Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway);
 
     /**
      *
@@ -62,7 +59,7 @@ interface BaseManagerInterface
     /**
      *
      * @access public
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function getGateway();
 
@@ -110,7 +107,7 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function persist($entity);
 
@@ -118,14 +115,14 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function remove($entity);
 
     /**
      *
      * @access public
-     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function flush();
 
@@ -133,7 +130,7 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNMessage\MessageBundle\Manager\BaseManagerInterface
+     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function refresh($entity);
 

@@ -7,16 +7,12 @@ services:
     #
     # Gateways.
     #
-    ccdn_message_message.gateway_bag:
-        class: %ccdn_message_message.gateway_bag.class%
-        arguments: [@service_container]
 
     ccdn_message_message.gateway.folder:
         class: %ccdn_message_message.gateway.folder.class%
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.folder.class%
             - %ccdn_message_message.template.pager_theme%
 
@@ -25,7 +21,6 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.envelope.class%
             - %ccdn_message_message.template.pager_theme%
 
@@ -34,7 +29,6 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.message.class%
             - %ccdn_message_message.template.pager_theme%
 
@@ -43,7 +37,6 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.thread.class%
             - %ccdn_message_message.template.pager_theme%
 
@@ -52,7 +45,6 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.registry.class%
             - %ccdn_message_message.template.pager_theme%
 
@@ -61,6 +53,5 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_message_message.gateway_bag
             - %ccdn_message_message.entity.user.class%
             - %ccdn_message_message.template.pager_theme%

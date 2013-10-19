@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
@@ -26,7 +26,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
+     * @var \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $registryManager
      */
     protected $registryManager;
 
@@ -40,10 +40,10 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $registryManager
-     * @param \Symfony\Component\Security\Core\SecurityContext        $securityContext
+     * @param \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $registryManager
+     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
      */
-    public function __construct(BaseManagerInterface $registryManager, SecurityContext $securityContext)
+    public function __construct(ManagerInterface $registryManager, SecurityContext $securityContext)
     {
         $this->registryManager = $registryManager;
         $this->securityContext = $securityContext;

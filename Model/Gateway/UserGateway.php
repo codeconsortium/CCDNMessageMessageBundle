@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 /**
@@ -29,7 +29,7 @@ use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class UserGateway extends BaseGateway implements BaseGatewayInterface
+class UserGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *

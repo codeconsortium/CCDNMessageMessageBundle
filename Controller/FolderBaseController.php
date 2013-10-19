@@ -45,7 +45,7 @@ class FolderBaseController extends BaseController
 
         $user = $this->getUser();
 
-        $envelopes = $this->getEnvelopeManager()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $user->getId());
+        $envelopes = $this->getEnvelopeModel()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $user->getId());
 
         if ( ! $envelopes || empty($envelopes)) {
             $this->setFlash('notice', $this->trans('flash.post.no_messages_found'));
@@ -53,35 +53,35 @@ class FolderBaseController extends BaseController
             return;
         }
 
-        $folders = $this->getFolderManager()->findAllFoldersForUserById($user->getId());
+        $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
 
         $submitAction = $this->getSubmitAction();
 
         if ($submitAction == 'delete') {
-            $this->getEnvelopeManager()->bulkDelete($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkDelete($envelopes, $folders, $user)->flush();
         }
 
         if ($submitAction == 'mark_as_read') {
-            $this->getEnvelopeManager()->bulkMarkAsRead($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsRead($envelopes, $folders, $user)->flush();
         }
 
         if ($submitAction == 'mark_as_unread') {
-            $this->getEnvelopeManager()->bulkMarkAsUnread($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsUnread($envelopes, $folders, $user)->flush();
         }
 
         if ($submitAction == 'move_to') {
             $moveToFolderId = $this->request->get('select_move_to');
-            $moveToFolder = $this->getFolderManager()->findOneFolderByIdAndUserById($moveToFolderId, $user->getId());
+            $moveToFolder = $this->getFolderModel()->findOneFolderByIdAndUserById($moveToFolderId, $user->getId());
 
             if (! is_object($moveToFolder) || ! $moveToFolder instanceof Folder) {
                 throw new \Exception('Folder not found.');
             }
 
-            $this->getEnvelopeManager()->bulkMoveToFolder($envelopes, $folders, $moveToFolder, $user)->flush();
+            $this->getEnvelopeModel()->bulkMoveToFolder($envelopes, $folders, $moveToFolder, $user)->flush();
         }
 
         if ($submitAction == 'send') {
-            $this->getMessageManager()->bulkSendDraft($envelopes)->flush();
+            $this->getMessageModel()->bulkSendDraft($envelopes)->flush();
         }
     }
 }

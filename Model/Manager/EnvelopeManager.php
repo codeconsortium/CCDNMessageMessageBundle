@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
@@ -34,136 +34,8 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class EnvelopeManager extends BaseManager implements BaseManagerInterface
+class EnvelopeManager extends BaseManager implements ManagerInterface
 {
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders()
-    {
-        return $this->managerBag->getMessagesPerPageOnFolders();
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getQuotaMaxAllowanceForMessages()
-    {
-        return $this->managerBag->getQuotaMaxAllowanceForMessages();
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                        $envelopeId
-     * @param  int                                        $userId
-     * @return \CCDNMessage\MessageBundle\Entity\Envelope
-     */
-    public function findEnvelopeByIdForUser($envelopeId, $userId)
-    {
-        if (null == $envelopeId || ! is_numeric($envelopeId) || $envelopeId == 0) {
-            throw new \Exception('Envelope id "' . $envelopeId . '" is invalid!');
-        }
-
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':envelopeId' => $envelopeId, ':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
-
-        $qb
-            ->join('e.message', 'm')
-            ->leftJoin('e.folder', 'e_folder')
-            ->leftJoin('e.ownedByUser', 'e_owned_by')
-            ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
-            ->where('e.id = :envelopeId')
-            ->andWhere('e.ownedByUser = :userId')
-            ->setParameters($params)
-            ->addOrderBy('e.sentDate', 'DESC')
-            ->addOrderBy('m.createdDate', 'DESC')
-        ;
-
-        return $this->gateway->findEnvelope($qb, $params);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                    $folderId
-     * @param  int                    $userId
-     * @param  int                    $page
-     * @return \Pagerfanta\Pagerfanta
-     */
-    public function findAllPaginatedForFolderById($folderId, $userId, $page)
-    {
-        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
-            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
-        }
-
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':folderId' => $folderId, ':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
-
-        $qb
-            ->join('e.message', 'm')
-            ->leftJoin('e.folder', 'e_folder')
-            ->leftJoin('e.ownedByUser', 'e_owned_by')
-            ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
-            ->where('e.folder = :folderId')
-            ->andWhere('e.ownedByUser = :userId')
-            ->setParameters($params)
-            ->addOrderBy('e.sentDate', 'DESC')
-            ->addOrderBy('m.createdDate', 'DESC');
-
-        return $this->gateway->paginateQuery($qb, $this->getMessagesPerPageOnFolders(), $page);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                          $envelopeId
-     * @param  int                                          $userId
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     *
-     */
-    public function findTheseEnvelopesByIdAndByUserId($envelopeIds, $userId)
-    {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
-
-        $params = array(':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
-
-        $qb
-            ->join('e.message', 'm')
-            ->leftJoin('e.folder', 'e_folder')
-            ->leftJoin('e.ownedByUser', 'e_owned_by')
-            ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
-            ->where($qb->expr()->in('e.id', $envelopeIds))
-            ->andWhere('e.ownedByUser = :userId')
-            ->setParameters($params)
-            ->addOrderBy('e.sentDate', 'DESC')
-            ->addOrderBy('m.createdDate', 'DESC')
-        ;
-
-        return $this->gateway->findEnvelopes($qb, $params);
-    }
-
     const MESSAGE_SEND = 0;
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
@@ -177,12 +49,12 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message           $message
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread            $thread
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedByUser
-     * @param  int                                                 $mode
-     * @param  bool                                                $isFlagged
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
+     * @param  \Symfony\Component\Security\Core\User\UserInterface     $ownedByUser
+     * @param  int                                                     $mode
+     * @param  bool                                                    $isFlagged
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function receiveMessage(Message $message, Thread $thread, UserInterface $ownedByUser, $mode, $isFlagged = false)
     {
@@ -248,9 +120,9 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope         $envelope
-     * @param  array                                              $folders
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope
+     * @param  array                                                    $folders
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function markAsRead(Envelope $envelope, $folders)
     {
@@ -268,10 +140,10 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  array                                               $envelopes
-     * @param  array                                               $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  array                                                    $envelopes
+     * @param  array                                                    $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function bulkMarkAsRead($envelopes, $folders, UserInterface $user)
     {
@@ -291,9 +163,9 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  Envelope                                           $envelope
-     * @param  array                                              $folders
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  Envelope                                                 $envelope
+     * @param  array                                                    $folders
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function markAsUnread(Envelope $envelope, $folders)
     {
@@ -311,10 +183,10 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  array                                               $envelopes
-     * @param  array                                               $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  array                                                    $envelopes
+     * @param  array                                                    $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function bulkMarkAsUnread($envelopes, $folders, UserInterface $user)
     {
@@ -333,8 +205,8 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope         $envelope,
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope,
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     protected function hardDelete(Envelope $envelope)
     {
@@ -354,9 +226,9 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope         $envelope,
-     * @param  array                                              $folders
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope,
+     * @param  array                                                    $folders
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function delete(Envelope $envelope, $folders)
     {
@@ -384,10 +256,10 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  array                                                $envelopes
-     * @param  array                                                $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterfaces $user
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  array                                                    $envelopes
+     * @param  array                                                    $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterfaces     $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function bulkDelete($envelopes, $folders, UserInterface $user)
     {
@@ -421,11 +293,11 @@ class EnvelopeManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  array                                              $envelopes
-     * @param  array                                              $folders
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder           $moveTo
-     * @param  \Symfony\Component\Core\User\UserInterface         $user
-     * @return \CCDNMessage\MessageBundle\Manager\EnvelopeManager
+     * @param  array                                                    $envelopes
+     * @param  array                                                    $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                 $moveTo
+     * @param  \Symfony\Component\Core\User\UserInterface               $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
     public function bulkMoveToFolder($envelopes, $folders, Folder $moveTo, UserInterface $user)
     {

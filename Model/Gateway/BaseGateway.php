@@ -16,9 +16,6 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
-use CCDNMessage\MessageBundle\Model\Gateway\Bag\GatewayBagInterface;
-
 /**
  *
  * @category CCDNMessage
@@ -32,7 +29,7 @@ use CCDNMessage\MessageBundle\Model\Gateway\Bag\GatewayBagInterface;
  * @abstract
  *
  */
-abstract class BaseGateway implements BaseGatewayInterface
+abstract class BaseGateway
 {
     /**
      *
@@ -57,13 +54,6 @@ abstract class BaseGateway implements BaseGatewayInterface
 
     /**
      *
-     * @access protected
-     * @var \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
-     */
-    protected $gatewayBag;
-
-    /**
-     *
      * @access private
      * @var string $entityClass
      */
@@ -80,16 +70,14 @@ abstract class BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param  \CCDNMessage\MessageBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
      * @param  string                                                     $entityClass
      * @param  string                                                     $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass, $pagerTheme)
+    public function __construct(Registry $doctrine, $paginator, $entityClass, $pagerTheme)
     {
         $this->doctrine = $doctrine;
 		$this->paginator = $paginator;
         $this->em = $doctrine->getEntityManager();
-        $this->gatewayBag = $gatewayBag;
 
         if (null == $entityClass) {
             throw new \Exception('Entity class for gateway must be specified!');
@@ -221,8 +209,8 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @param $item
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  $item
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     protected function persist($item)
     {
@@ -235,7 +223,7 @@ abstract class BaseGateway implements BaseGatewayInterface
      *
      * @access protected
      * @param $item
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     protected function remove($item)
     {
@@ -247,7 +235,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function flush()
     {

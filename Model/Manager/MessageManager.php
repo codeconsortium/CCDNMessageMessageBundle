@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\Manager;
 
-use CCDNMessage\MessageBundle\Model\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Envelope;
@@ -31,61 +31,13 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class MessageManager extends BaseManager implements BaseManagerInterface
+class MessageManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders()
-    {
-        return $this->managerBag->getMessagesPerPageOnFolders();
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getQuotaMaxAllowanceForMessages()
-    {
-        return $this->managerBag->getQuotaMaxAllowanceForMessages();
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                       $messageId
-     * @return \CCDNMessage\MessageBundle\Entity\Message
-     */
-    public function getAllEnvelopesForMessageById($messageId)
-    {
-        if (null == $messageId || ! is_numeric($messageId) || $messageId == 0) {
-            throw new \Exception('Message id "' . $messageId . '" is invalid!');
-        }
-
-        $params = array(':messageId' => $messageId);
-
-        $qb = $this->createSelectQuery(array('m', 'm_e', 'm_t', 'm_t_messages'));
-
-        $qb
-            ->leftJoin('m.envelopes', 'm_e')
-            ->leftJoin('m.thread', 'm_t')
-            ->leftJoin('m_t.messages', 'm_t_messages')
-            ->where('m.id = :messageId')
-            ->setParameters($params)
-            ->addOrderBy('m.createdDate', 'DESC')
-        ;
-
-        return $this->gateway->findMessage($qb, $params);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  array                                             $envelopes
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  array                                                   $envelopes
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function bulkSendDraft(array $envelopes)
     {
@@ -101,8 +53,8 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope        $envelope
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope              $envelope
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function sendDraft(Envelope $envelope)
     {
@@ -136,9 +88,9 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $message
-     * @param  bool                                              $isFlagged
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @param  bool                                                    $isFlagged
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function saveDraft(Message $message, $isFlagged)
     {
@@ -165,9 +117,9 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $message
-     * @param  bool                                              $isFlagged
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @param  bool                                                    $isFlagged
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function sendMessage(Message $message, $isFlagged)
     {
@@ -196,10 +148,10 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $message
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $regardingMessage
-     * @param  bool                                              $isFlagged
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $regardingMessage
+     * @param  bool                                                    $isFlagged
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function sendReplyToMessage(Message $message, Message $regardingMessage, $isFlagged)
     {
@@ -228,10 +180,10 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $message
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $forwardingMessage
-     * @param  bool                                              $isFlagged
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $forwardingMessage
+     * @param  bool                                                    $isFlagged
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function sendForwardMessage(Message $message, Message $forwardingMessage, $isFlagged)
     {
@@ -260,8 +212,8 @@ class MessageManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message         $message
-     * @return \CCDNMessage\MessageBundle\Manager\MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
      */
     public function getRecipients(Message $message)
     {

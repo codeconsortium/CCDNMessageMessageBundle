@@ -7,9 +7,6 @@ services:
     #
     # Managers.
     #
-    ccdn_message_message.manager_bag:
-        class: %ccdn_message_message.manager_bag.class%
-        arguments: [@service_container]
 
     ccdn_message_message.manager.folder:
         class: %ccdn_message_message.manager.folder.class%
@@ -17,7 +14,6 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.folder
-            - @ccdn_message_message.manager_bag
 
     ccdn_message_message.manager.envelope:
         class: %ccdn_message_message.manager.envelope.class%
@@ -25,7 +21,6 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.envelope
-            - @ccdn_message_message.manager_bag
 
     ccdn_message_message.manager.message:
         class: %ccdn_message_message.manager.message.class%
@@ -33,7 +28,6 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.message
-            - @ccdn_message_message.manager_bag
 
     ccdn_message_message.manager.thread:
         class: %ccdn_message_message.manager.thread.class%
@@ -41,7 +35,6 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.thread
-            - @ccdn_message_message.manager_bag
 
     ccdn_message_message.manager.registry:
         class: %ccdn_message_message.manager.registry.class%
@@ -49,7 +42,6 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.registry
-            - @ccdn_message_message.manager_bag
 
     ccdn_message_message.manager.user:
         class: %ccdn_message_message.manager.user.class%
@@ -57,4 +49,3 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.user
-            - @ccdn_message_message.manager_bag

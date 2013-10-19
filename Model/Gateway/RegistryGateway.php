@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNMessage\MessageBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Gateway\BaseGateway;
 
 use CCDNMessage\MessageBundle\Entity\Registry;
@@ -31,7 +31,7 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class RegistryGateway extends BaseGateway implements BaseGatewayInterface
+class RegistryGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -103,8 +103,8 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry              $registry
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function persistRegistry(Registry $registry)
     {
@@ -116,8 +116,8 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry              $registry
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function updateRegistry(Registry $registry)
     {
@@ -129,8 +129,8 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry              $registry
-     * @return \CCDNMessage\MessageBundle\Gateway\BaseGatewayInterface
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
     public function deleteRegistry(Registry $registry)
     {

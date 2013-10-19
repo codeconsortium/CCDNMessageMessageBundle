@@ -11,10 +11,9 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Model\Manager;
+namespace CCDNMessage\MessageBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
@@ -32,15 +31,8 @@ use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
  * @abstract
  *
  */
-abstract class BaseManager
+abstract class BaseRepository
 {
-    /**
-     *
-     * @access protected
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     */
-    protected $doctrine;
-
     /**
      *
      * @access protected
@@ -51,14 +43,7 @@ abstract class BaseManager
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-     */
-    protected $securityContext;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $gateway
+     * @var \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface $gateway
      */
     protected $gateway;
 
@@ -72,15 +57,12 @@ abstract class BaseManager
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                  $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
+     * @param \Doctrine\Common\Persistence\ObjectManager                $em
      * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway)
+    public function __construct(ObjectManager $em, GatewayInterface $gateway)
     {
-        $this->doctrine = $doctrine;
-        $this->em = $doctrine->getEntityManager();
-        $this->securityContext = $securityContext;
+        $this->em = $em;
         $this->gateway = $gateway;
     }
 
@@ -95,27 +77,6 @@ abstract class BaseManager
         $this->model = $model;
 
         return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  string $role
-     * @return bool
-     */
-    public function isGranted($role)
-    {
-        return $this->securityContext->isGranted($role);
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getUser()
-    {
-        return $this->securityContext->getToken()->getUser();
     }
 
     /**
@@ -181,66 +142,5 @@ abstract class BaseManager
     public function all(QueryBuilder $qb)
     {
         return $this->gateway->all($qb);
-    }
-
-    /**
-     *
-     * @access public
-     * @param $entity
-     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
-     */
-    public function persist($entity)
-    {
-        $this->em->persist($entity);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param $entity
-     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
-     */
-    public function remove($entity)
-    {
-        $this->em->remove($entity);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
-     */
-    public function flush()
-    {
-        $this->em->flush();
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param $entity
-     * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
-     */
-    public function refresh($entity)
-    {
-        $this->em->refresh($entity);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders()
-    {
-        return $this->managerBag->getMessagesPerPageOnFolders();
     }
 }

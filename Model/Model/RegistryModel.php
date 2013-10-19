@@ -11,13 +11,16 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Model\Repository;
+namespace CCDNMessage\MessageBundle\Model\Model;
 
-use CCDNMessage\MessageBundle\Model\Repository\BaseRepository;
-use CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use CCDNMessage\MessageBundle\Model\Model\BaseModel;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
+
+use CCDNMessage\MessageBundle\Entity\Registry;
 
 /**
- * RegistryRepository
  *
  * @category CCDNMessage
  * @package  MessageBundle
@@ -28,7 +31,7 @@ use CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class RegistryRepository extends BaseRepository implements RepositoryInterface
+class RegistryModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -38,20 +41,18 @@ class RegistryRepository extends BaseRepository implements RepositoryInterface
      */
     public function findRegistryForUserById($userId)
     {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
-        }
+		return $this->getRepository()->findRegistryForUserById($userId);
+    }
 
-        $params = array(':userId' => $userId);
-
-        $qb = $this->createSelectQuery(array('r', 'r_owned_by'));
-
-        $qb
-            ->leftJoin('r.ownedBy', 'r_owned_by')
-            ->where('r.ownedBy = :userId')
-            ->setParameters($params)
-            ->setMaxResults(1);
-
-        return $this->gateway->findRegistry($qb, $params);
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param \CCDNMessage\MessageBundle\Entity\Registry
+     * @param array
+     */
+    public function updateCacheUnreadMessagesForUser(UserInterface $user, Registry $registry = null, $folders = null)
+    {
+		return $this->getManager()->updateCacheUnreadMessagesForUser($user, $registry, $folders);
     }
 }
