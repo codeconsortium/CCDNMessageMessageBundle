@@ -2,7 +2,9 @@
 
 {% set LayoutTemplate = ccdn_message_message.message.show.layout_template %}
 
-{% block title %}{{- truncDot('title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
+{% block title %}
+	{{- truncDot('title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}
+{% endblock %}
 
 
 {% block body_content %}
@@ -13,28 +15,7 @@
 		{%- if thread |length -%}
 			{%- for envelope in thread.getEnvelopes() -%}
 				<div class="btn-toolbar">
-
-					{%- if envelope.isDraft -%}
-						<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_draft_send', {'envelopeId': envelope.id }) -}}">
-							{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
-						</a>
-					{%- endif -%}
-
-					<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_compose_reply', {'envelopeId': envelope.id }) -}}">
-						{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</a>
-
-					<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_compose_forward', {'envelopeId': envelope.id }) -}}">
-						{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</a>
-
-					<a class="btn btn-default" href="{{- path('ccdn_message_message_user_mail_mark_as_unread', {'envelopeId': envelope.id }) -}}">
-						{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</a>
-
-					<a class="btn btn-danger" href="{{- path('ccdn_message_message_user_mail_delete', {'envelopeId': envelope.id }) -}}">
-						{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</a>
+					{%- include 'CCDNMessageMessageBundle:User:Message/Partial/message_actions.html.twig' -%}
 				</div>
 
 				{%- include 'CCDNMessageMessageBundle:User:Message/Partial/item_message.html.twig' with {'envelope': envelope} -%}

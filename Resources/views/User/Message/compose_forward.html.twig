@@ -17,12 +17,13 @@
 
 	<section>
 		{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
-		<form action="{{- path('ccdn_message_message_user_mail_compose_forward', {'envelopeId': envelope.id }) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<form action="{{- path('ccdn_message_message_user_mail_compose_forward', {'envelopeId': envelope.id }) -}}"
+		 method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
 			<fieldset>
 
-				<div class="control-group form-title">
-					<div class="controls">
-						<h3>{{- 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h3>
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<h4>{{- 'title.message.compose' |trans({}, 'CCDNMessageMessageBundle') -}}</h4>
 					</div>
 				</div>
 
@@ -30,22 +31,24 @@
 
 				{{- form_widget(form) -}}
 
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary" name="submit[send]">
-						{{- 'form.button.send' | trans({}, 'CCDNMessageMessageBundle') -}}
-					</button>
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<button type="submit" class="btn btn-primary" name="submit[send]">
+							{{- 'form.button.send' | trans({}, 'CCDNMessageMessageBundle') -}}
+						</button>
 
-					<button type="submit" class="btn btn-default" name="submit[preview]">
-						{{- 'form.button.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
-					</button>
+						<button type="submit" class="btn btn-default" name="submit[preview]">
+							{{- 'form.button.preview' | trans({}, 'CCDNMessageMessageBundle') -}}
+						</button>
 
-					<button type="submit" class="btn btn-default" name="submit[save_draft]">
-						{{- 'form.button.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
-					</button>
+						<button type="submit" class="btn btn-default" name="submit[save_draft]">
+							{{- 'form.button.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
+						</button>
 
-					<a href="{{- path('ccdn_message_message_user_folder_show', {'folderName': 'inbox' }) -}}" class="btn btn-default">
-						{{- 'form.button.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
-					</a>
+						<a href="{{- path('ccdn_message_message_user_folder_show', {'folderName': 'inbox' }) -}}" class="btn btn-default">
+							{{- 'form.button.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
+						</a>
+					</div>
 				</div>
 			</fieldset>
 		</form>

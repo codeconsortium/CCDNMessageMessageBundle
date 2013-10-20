@@ -82,31 +82,39 @@
 			{{- form_widget(form) -}}
 
 		{%- else -%}
-			<div class="control-group{{- (form.vars.errors|length > 0) ? ' error': '' -}}">
+			<div class="form-group{{- (form.vars.errors|length > 0) ? ' error': '' -}}">
 				{% if 'repeated' in form.vars.block_prefixes %}
 					{% if form.vars.block_prefixes[1] == 'checkbox' %}
-						<div class="controls">
-							{{- form_errors(form) -}}
-							{{- form_widget(form) -}}
-							{{- form_label(form) -}}
+						<div class="col-lg-offset-2 col-lg-10">
+							<div class="checkbox">
+								{{- form_errors(form) -}}
+								<label for="{{- id -}}" class="">
+									{{- form_widget(form) -}}
+									{{- label |trans({}, translation_domain) | raw -}}
+								</label>
+							</div>
 						</div>
 					{% else %}
 						{{- form_label(form) -}}
-						<div class="controls">
+						<div class="col-lg-10">
 							{{- form_errors(form) -}}
 							{{- form_widget(form) -}}
 						</div>
 					{% endif %}
 				{% else %}
 					{% if form.vars.block_prefixes[2] == 'checkbox' %}
-						<div class="controls">
-							{{- form_errors(form) -}}
-							{{- form_widget(form) -}}
-							{{- form_label(form) -}}
+						<div class="col-lg-offset-2 col-lg-10">
+							<div class="checkbox">
+								{{- form_errors(form) -}}
+								<label for="{{- id -}}" class="">
+									{{- form_widget(form) -}}
+									{{- label |trans({}, translation_domain) | raw -}}
+								</label>
+							</div>
 						</div>
 					{% else %}
 						{{- form_label(form) -}}
-						<div class="controls">
+						<div class="col-lg-10">
 							{{- form_errors(form) -}}
 							{{- form_widget(form) -}}
 						</div>
@@ -121,8 +129,8 @@
 
 {% block field_label %}
 	{%- spaceless -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' control-label' ~ (required ? ' control-label-required':'')}) -%}
-	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>
+		{%- set attr = attr|merge({'id': 'label[' ~ id ~ ']', 'class': attr.class|default('') ~ ' col-lg-2 control-label' ~ (required ? ' control-label-required':'')}) -%}
+	    <label for="{{- id -}}" class="{{ attr['class'] -}}">
 			{%- if required -%}
 				<span title="{{- 'form.required' |trans({}, 'CCDNMessageMessageBundle') -}}">*</span>
 			{%- endif -%}
@@ -136,7 +144,7 @@
 {% block field_widget %}
 	{%- spaceless -%}
 	    {%- set type = type|default('text') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control'}) -%}
 	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock field_widget %}
@@ -146,7 +154,7 @@
 {% block email_widget %}
 	{%- spaceless -%}
 	    {%- set type = type|default('text') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control'}) -%}
 	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock email_widget %}
@@ -156,7 +164,7 @@
 {% block password_widget %}
 	{%- spaceless -%}
 	    {%- set type = type|default('password') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control'}) -%}
 	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock password_widget %}
@@ -165,7 +173,7 @@
 
 {% block textarea_widget %}
 	{%- spaceless -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xxlarge span12', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
 	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
 	{%- endspaceless -%}
 {% endblock textarea_widget %}
@@ -177,11 +185,11 @@
 	{%- endspaceless -%}
 {% endblock checkbox_widget %}
 
-
+{#
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded %}
-            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' span12'}) -%}
+            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' col-md-12'}) -%}
             <div {{ block('widget_container_attributes') }}>
                 <table class="table table-condensed">
                     <tbody>
@@ -212,6 +220,75 @@
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
+#}
+
+
+
+
+{% block choice_widget %}
+	{% spaceless %}
+	    {% if expanded %}
+	        {{ block('choice_widget_expanded') }}
+	    {% else %}
+	        {{ block('choice_widget_collapsed') }}
+	    {% endif %}
+	{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+	{% spaceless %}
+		{%- set attr = attr|merge({'class': attr.class|default('')}) -%}
+		<div {{ block('widget_container_attributes') }}>
+		    <table class="table table-condensed">
+		        <tbody>
+		            {% for child in form %}
+		                <tr>
+		                    <td>{{ form_widget(child) }}</td>
+		                    <td>{{ form_label(child) }}</td>
+		                </tr>
+		            {% endfor %}
+		        </tbody>
+		    </table>
+		</div>
+	{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block choice_widget_collapsed %}
+	{% spaceless %}
+	    <select {{ block('widget_attributes') }} {% if multiple %} multiple="multiple"{% endif %} class="form-control">
+	        {% if empty_value is not none %}
+	            <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% else %} value=""{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+	        {% endif %}
+
+	        {% if preferred_choices|length > 0 %}
+	            {% set options = preferred_choices %}
+	            {{ block('choice_widget_options') }}
+	            {% if choices|length > 0 and separator is not none %}
+	                <option disabled="disabled">{{- separator -}}</option>
+	            {% endif %}
+	        {% endif %}
+
+	        {% set options = choices %}
+	        {{ block('choice_widget_options') }}
+	    </select>
+	{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block choice_widget_options %}
+	{% spaceless %}
+	    {% for group_label, choice in options %}
+	        {% if choice is iterable %}
+	            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+	                {% set options = choice %}
+	                {{ block('choice_widget_options') }}
+	            </optgroup>
+	        {% else %}
+	            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+	        {% endif %}
+	    {% endfor %}
+	{% endspaceless %}
+{% endblock choice_widget_options %}
+
 
 
 

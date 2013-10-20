@@ -31,7 +31,7 @@
 		</td>
 		<td>
 			{%- if envelope.isFlagged -%}
-				<i class="icon-flag"></i>
+				<i class="glyphicon glyphicon-flag"></i>
 			{%- endif -%}
 		</td>
 		{#
@@ -45,25 +45,25 @@
 			{%- if envelope.isDraft -%}
 				{%- if message.sentFromUser -%}
 					{%- if message.sentFromUser.getId == app.user.id -%}
-						<i class="icon-repeat"></i>
+						<i class="glyphicon glyphicon-repeat"></i>
 					{%- else -%}
-						<i class="icon-share-alt"></i>
+						<i class="glyphicon glyphicon-share-alt"></i>
 					{%- endif -%}
 				{%- else -%}
-					<i class="icon-pencil"></i>
+					<i class="glyphicon glyphicon-pencil"></i>
 				{%- endif -%}
 			{%- else -%}
 				{%- if message.sentFromUser -%}
 					{%- if message.sentFromUser.getId == app.user.id -%}
-						<i class="icon-repeat"></i>
+						<i class="glyphicon glyphicon-repeat"></i>
 					{%- else -%}
-						<i class="icon-share-alt"></i>
+						<i class="glyphicon glyphicon-share-alt"></i>
 					{%- endif -%}
 				{%- endif -%}
 			{%- endif -%}
 		</td>
 		<td>
-			{{- (envelope.isRead) ? '' : '<i class="icon-envelope"></i>' -}}
+			{{- (envelope.isRead) ? '' : '<i class="glyphicon glyphicon-envelope"></i>' -}}
 		</td>
 		<td>
 			{%- if current_folder.name == "sent" -%}
