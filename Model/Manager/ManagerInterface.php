@@ -133,11 +133,4 @@ interface ManagerInterface
      * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function refresh($entity);
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders();
 }

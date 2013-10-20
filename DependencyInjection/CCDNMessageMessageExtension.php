@@ -184,13 +184,7 @@ class CCDNMessageMessageExtension extends Extension
 
         return $this;
     }
-    
-    
-    
-    
-    
-    
-	
+
     /**
      *
      * @access private

@@ -28,7 +28,7 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class FolderBaseController extends BaseController
+class UserFolderBaseController extends BaseController
 {
     /**
      *

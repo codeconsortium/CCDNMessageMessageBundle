@@ -77,7 +77,7 @@
 			{%- endif -%}
 		</td>
 		<td>
-			<a href="{{- path('ccdn_message_message_mail_show_by_id', {'envelopeId': envelope.getId }) -}}#{{- envelope.id -}}" title="{{- message.getSubject -}}">
+			<a href="{{- path('ccdn_message_message_user_mail_show_by_id', {'envelopeId': envelope.getId }) -}}#{{- envelope.id -}}" title="{{- message.getSubject -}}">
 				{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}
 			</a>
 		</td>

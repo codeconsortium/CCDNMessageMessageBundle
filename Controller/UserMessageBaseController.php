@@ -29,7 +29,7 @@ use CCDNMessage\MessageBundle\Entity\Envelope;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class MessageBaseController extends BaseController
+class UserMessageBaseController extends BaseController
 {
     /**
      *
@@ -40,9 +40,10 @@ class MessageBaseController extends BaseController
     protected function getFormHandlerToSendMessage($userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message');
+		$formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
-
+		
         // Are we sending this to someone who's 'send message' button we clicked?
         if (null != $userId) {
             $sendToUser = $this->getUserModel()->findOneUserById($userId);
@@ -63,6 +64,7 @@ class MessageBaseController extends BaseController
     protected function getFormHandlerToReplyToMessage(Envelope $inResponseEnvelope, $userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message_reply');
+		$formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
 
@@ -88,6 +90,7 @@ class MessageBaseController extends BaseController
     protected function getFormHandlerToForwardMessage(Envelope $envelopeToForward, $userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message_forward');
+		$formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
 

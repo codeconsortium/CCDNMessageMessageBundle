@@ -58,61 +58,64 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      */
     public function receiveMessage(Message $message, Thread $thread, UserInterface $ownedByUser, $mode, $isFlagged = false)
     {
-        if ($mode != self::MESSAGE_SAVE_CARBON_COPY && (! is_object($ownedByUser) || ! $ownedByUser instanceof UserInterface)) {
-            throw new \Exception("Message Owner parameter must be set.");
-        }
-
-        if (! in_array($mode, $this->sendMode)) {
-            throw new \Exception('Invalid mode, use class constants in $sendMode');
-        }
-
-        $folderManager = $this->managerBag->getFolderManager();
-        $folders = $folderManager->findAllFoldersForUserById($ownedByUser->getId());
-
-        if (null == $folders) {
-            return false;
-        }
-
-        // Check quotas.
-        $quotaUsed = $folderManager->checkQuotaAllowanceUsed($folders);
-        $quotaAllowed = $this->getQuotaMaxAllowanceForMessages();
-
-        if ($quotaUsed >= $quotaAllowed) {
-            //$this->container->get('session')->setFlash('notice',
-            //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-            return false;
-        }
-
-        $envelope = new Envelope();
-        $envelope->setOwnedByUser($ownedByUser);
-        $envelope->setMessage($message);
-        $envelope->setThread($thread);
-        $envelope->setSentDate(new \DateTime('now'));
-        $envelope->setIsFlagged($isFlagged);
-
-        if ($mode == self::MESSAGE_SEND) {
-            $envelope->setFolder($folders[self::MESSAGE_SEND]);
-            $envelope->setIsRead(false);
-        } else {
-            if ($mode == self::MESSAGE_SAVE_CARBON_COPY) {
-                $envelope->setFolder($folders[self::MESSAGE_SAVE_CARBON_COPY]);
-                $envelope->setIsRead(true);
-            } else {
-                //$this->container->get('session')->setFlash('notice',
-                //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-
-                $envelope->setFolder($folders[self::MESSAGE_SAVE_DRAFT]);
-                $envelope->setIsRead(false);
-            }
-        }
-
-        // Update recipients folders read/unread cache counts.
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
-
-        $this
-            ->persist($envelope)
-            ->flush()
-        ;
+		/**
+		 * @TODO this method requires the manager bag, work something else out. Perhaps using the EventListener instead.
+		 */
+        //if ($mode != self::MESSAGE_SAVE_CARBON_COPY && (! is_object($ownedByUser) || ! $ownedByUser instanceof UserInterface)) {
+        //    throw new \Exception("Message Owner parameter must be set.");
+        //}
+        //
+        //if (! in_array($mode, $this->sendMode)) {
+        //    throw new \Exception('Invalid mode, use class constants in $sendMode');
+        //}
+        //
+        //$folderManager = $this->managerBag->getFolderManager();
+        //$folders = $folderManager->findAllFoldersForUserById($ownedByUser->getId());
+        //
+        //if (null == $folders) {
+        //    return false;
+        //}
+        //
+        //// Check quotas.
+        //$quotaUsed = $folderManager->checkQuotaAllowanceUsed($folders);
+        //$quotaAllowed = $this->getQuotaMaxAllowanceForMessages();
+        //
+        //if ($quotaUsed >= $quotaAllowed) {
+        //    //$this->container->get('session')->setFlash('notice',
+        //    //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+        //    return false;
+        //}
+        //
+        //$envelope = new Envelope();
+        //$envelope->setOwnedByUser($ownedByUser);
+        //$envelope->setMessage($message);
+        //$envelope->setThread($thread);
+        //$envelope->setSentDate(new \DateTime('now'));
+        //$envelope->setIsFlagged($isFlagged);
+        //
+        //if ($mode == self::MESSAGE_SEND) {
+        //    $envelope->setFolder($folders[self::MESSAGE_SEND]);
+        //    $envelope->setIsRead(false);
+        //} else {
+        //    if ($mode == self::MESSAGE_SAVE_CARBON_COPY) {
+        //        $envelope->setFolder($folders[self::MESSAGE_SAVE_CARBON_COPY]);
+        //        $envelope->setIsRead(true);
+        //    } else {
+        //        //$this->container->get('session')->setFlash('notice',
+        //        //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
+        //
+        //        $envelope->setFolder($folders[self::MESSAGE_SAVE_DRAFT]);
+        //        $envelope->setIsRead(false);
+        //    }
+        //}
+        //
+        //// Update recipients folders read/unread cache counts.
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
+        //
+        //$this
+        //    ->persist($envelope)
+        //    ->flush()
+        //;
 
         return true;
     }
@@ -132,7 +135,7 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             ->flush()
         ;
 
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
 
         return $this;
     }
@@ -155,7 +158,7 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
 
         $this->flush();
 
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
 
         return $this;
     }
@@ -175,7 +178,7 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             ->flush()
         ;
 
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
 
         return $this;
     }
@@ -197,7 +200,7 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
 
         $this->flush();
 
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
 
         return $this;
     }
@@ -210,17 +213,17 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      */
     protected function hardDelete(Envelope $envelope)
     {
-        $message = $this->managerBag->getMessageManager()->getAllEnvelopesForMessageById($envelope->getMessage()->getId());
-
-        if (count($message->getEnvelopes()) < 2) {
-            if (count($message->getThread()->getMessages()) < 2) {
-                $this->remove($envelope->getThread());
-            }
-
-            $this->remove($envelope->getMessage());
-        }
-
-        $this->remove($envelope);
+        //$message = $this->managerBag->getMessageManager()->getAllEnvelopesForMessageById($envelope->getMessage()->getId());
+        //
+        //if (count($message->getEnvelopes()) < 2) {
+        //    if (count($message->getThread()->getMessages()) < 2) {
+        //        $this->remove($envelope->getThread());
+        //    }
+        //
+        //    $this->remove($envelope->getMessage());
+        //}
+        //
+        //$this->remove($envelope);
     }
 
     /**
@@ -238,18 +241,18 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             foreach ($folders as $folder) {
                 if ($folder->getName() == 'trash') {
                     $envelope->setFolder($folder);
-
+        
                     break;
                 }
             }
-
+        
             $this->persist($envelope);
         }
-
+        
         $this->flush();
-
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
-
+        
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
+        
         return $this;
     }
 
@@ -267,26 +270,26 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         foreach ($folders as $folder) {
             if ($folder->getName() == 'trash') {
                 $trash = $folder;
-
+        
                 break;
             }
         }
-
+        
         // trash or remove each message
         foreach ($envelopes as $envelope) {
             if ($envelope->getFolder()->getName() == 'trash') {
                 $this->hardDelete($envelope);
             } else {
                 $envelope->setFolder($trash);
-
+        
                 $this->persist($envelope);
             }
         }
-
+        
         $this->flush();
-
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
-
+        
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
+        
         return $this;
     }
 
@@ -305,11 +308,11 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             $envelope->setFolder($moveTo);
             $this->persist($envelope);
         }
-
+        
         $this->flush();
-
-        $this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
-
+        
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
+        
         return $this;
     }
 }

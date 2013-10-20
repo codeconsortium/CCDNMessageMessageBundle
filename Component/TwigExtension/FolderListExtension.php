@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
@@ -26,9 +26,9 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $folderManager
+     * @var \CCDNMessage\MessageBundle\Model\Model\ModelInterface $folderModel
      */
-    protected $folderManager;
+    protected $folderModel;
 
     /**
      *
@@ -40,12 +40,12 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface $folderManager
-     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
+     * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface $folderManager
+     * @param \Symfony\Component\Security\Core\SecurityContext      $securityContext
      */
-    public function __construct(ManagerInterface $folderManager, SecurityContext $securityContext)
+    public function __construct(ModelInterface $folderModel, SecurityContext $securityContext)
     {
-        $this->folderManager = $folderManager;
+        $this->folderModel = $folderModel;
         $this->securityContext = $securityContext;
     }
 
@@ -62,7 +62,7 @@ class FolderListExtension extends \Twig_Extension
     }
 
     /**
-     * Gets all boards available with their categories.
+     * Gets all folders available with their categories.
      *
      * @access public
      * @return array
@@ -86,7 +86,7 @@ class FolderListExtension extends \Twig_Extension
                 'allowed' => '0',
                 'used'    => '0',
             ),
-            'folders' => $this->folderManager->findAllFoldersForUserById($userId),
+            'folders' => $this->folderModel->findAllFoldersForUserById($userId),
         );
     }
 

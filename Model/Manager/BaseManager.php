@@ -233,14 +233,4 @@ abstract class BaseManager
 
         return $this;
     }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getMessagesPerPageOnFolders()
-    {
-        return $this->managerBag->getMessagesPerPageOnFolders();
-    }
 }

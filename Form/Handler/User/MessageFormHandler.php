@@ -11,15 +11,21 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Form\Handler;
+namespace CCDNMessage\MessageBundle\Form\Handler\User;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use CCDNMessage\MessageBundle\Entity\Message;
+
+use CCDNMessage\MessageBundle\Component\FloodControl;
+use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
 
 /**
  *
@@ -32,15 +38,8 @@ use CCDNMessage\MessageBundle\Entity\Message;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class MessageFormHandler
+class MessageFormHandler extends BaseFormHandler
 {
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
     /**
      *
      * @access protected
@@ -51,16 +50,9 @@ class MessageFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     * @var \CCDNMessage\MessageBundle\Model\Model\ModelInterface $model
      */
-    protected $manager;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNMessage\MessageBundle\Form\Type\MessageFornType $form
-     */
-    protected $form;
+    protected $model;
 
     /**
      *
@@ -78,17 +70,27 @@ class MessageFormHandler
 
     /**
      *
-     * @access public
-     * @param \Symfony\Component\Form\FormFactory                     $factory
-     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType    $messageFormType
-     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Component\FloodControl $floodControl
      */
-    public function __construct(FormFactory $factory, $messageFormType, BaseManagerInterface $manager)
+    protected $floodControl;
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                       $messageFormType
+     * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface                      $model
+     * @param |CCDNMessage\MessageBundle\Component\FloodControl                          $floodControl
+     */
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl)
     {
+		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->messageFormType = $messageFormType;
-
-        $this->manager = $manager;
+        $this->model = $model;
+		$this->floodControl = $floodControl;
     }
 
     /**
@@ -120,48 +122,36 @@ class MessageFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
-     * @return string
-     */
-    public function getSubmitAction(Request $request)
-    {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
+		
+        if ($this->floodControl->isFlooded()) {
+            $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_FLOODED, new UserMessageFloodEvent($this->request));
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bindRequest($request);
+            return false;
+        }
+
+        $this->floodControl->incrementCounter();
+		
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bindRequest($this->request);
 
             if ($this->form->isValid()) {
                 $message = $this->form->getData();
-
                 $message->setSentFromUser($this->sender);
                 $message->setCreatedDate(new \DateTime());
-
                 $isFlagged = $this->form->get('is_flagged')->getData();
 
-                if ($this->getSubmitAction($request) == 'save_draft') {
-                    $this->manager->saveDraft($message, $isFlagged)->flush();
+                if ($this->getSubmitAction($this->request) == 'save_draft') {
+                    $this->model->saveDraft($message, $isFlagged)->flush();
 
                     return false;
                 }
 
-                if ($this->getSubmitAction($request) == 'send') {
+                if ($this->getSubmitAction($this->request) == 'send') {
                     $this->onSuccess($message, $isFlagged);
 
                     return true;
@@ -195,11 +185,11 @@ class MessageFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNMessage\MessageBundle\Entity\Message $message
-     * @return MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message           $message
+     * @return \CCDNMessage\MessageBundle\Model\Model\MessageModel
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        return $this->manager->sendMessage($message, $isFlagged)->flush();
+        return $this->model->sendMessage($message, $isFlagged)->flush();
     }
 }

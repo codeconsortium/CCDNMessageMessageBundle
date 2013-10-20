@@ -15,23 +15,29 @@ services:
     ccdn_message_message.form.handler.message:
         class: %ccdn_message_message.form.handler.message.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_message_message.form.type.message
-            - @ccdn_message_message.manager.message
+            - @ccdn_message_message.model.message
+            - @ccdn_message_message.component.flood_control
 
     ccdn_message_message.form.handler.message_reply:
         class: %ccdn_message_message.form.handler.message_reply.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_message_message.form.type.message
-            - @ccdn_message_message.manager.message
+            - @ccdn_message_message.model.message
+            - @ccdn_message_message.component.flood_control
 
     ccdn_message_message.form.handler.message_forward:
         class: %ccdn_message_message.form.handler.message_forward.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_message_message.form.type.message
-            - @ccdn_message_message.manager.message
+            - @ccdn_message_message.model.message
+            - @ccdn_message_message.component.flood_control
 
     ccdn_message_message.form.validator.send_to:
         class: %ccdn_message_message.form.validator.send_to.class%

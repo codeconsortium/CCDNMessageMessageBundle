@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Form\Type;
+namespace CCDNMessage\MessageBundle\Form\Type\User;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -87,17 +87,6 @@ class MessageFormType extends AbstractType
                 )
             )
         ;
-
-        //$userId = $this->defaults['sender']->getId();
-        //$attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
-        //
-        //$builder->add('attachment', 'entity', array(
-        //    'class' => 'CCDNComponentAttachmentBundle:Attachment',
-        //    'choices' => $attachments,
-        //    'property' => 'filename_original',
-        //    'required' => false,
-        //    )
-        //);
     }
 
     /**

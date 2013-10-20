@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Controller;
 
-use CCDNMessage\MessageBundle\Controller\FolderBaseController;
+use CCDNMessage\MessageBundle\Controller\UserFolderBaseController;
 
 /**
  *
@@ -26,7 +26,7 @@ use CCDNMessage\MessageBundle\Controller\FolderBaseController;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class FolderController extends FolderBaseController
+class UserFolderController extends UserFolderBaseController
 {
     /**
      *
@@ -44,22 +44,17 @@ class FolderController extends FolderBaseController
 		
         $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
         $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $folderName);
-
-		$page = $this->getQuery('page', 1);
-
-        $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $page, 25);
+        $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $this->getQuery('page', 1), 25);
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_index'));
+            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_user_index'));
 
-        return $this->renderResponse('CCDNMessageMessageBundle:User:Folder/show.html.',
-            array(
-                'crumbs' => $crumbs,
-                'folders' => $folders,
-                'current_folder' => $currentFolder,
-                'pager' => $messagesPager,
-            )
-        );
+        return $this->renderResponse('CCDNMessageMessageBundle:User:Folder/show.html.', array(
+            'crumbs' => $crumbs,
+            'folders' => $folders,
+            'current_folder' => $currentFolder,
+            'pager' => $messagesPager,
+        ));
     }
 
     /**
@@ -74,10 +69,6 @@ class FolderController extends FolderBaseController
 
         $this->bulkAction();
 
-        return $this->redirectResponse($this->path('ccdn_message_message_folder_show',
-            array(
-                'folderName' => $folderName)
-            )
-        );
+        return $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $folderName)));
     }
 }

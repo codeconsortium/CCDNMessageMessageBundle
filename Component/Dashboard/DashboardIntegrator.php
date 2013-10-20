@@ -46,7 +46,7 @@ class DashboardIntegrator
                 ->addLinks()
                     ->addLink('messages')
                         ->setAuthRole('ROLE_USER')
-                        ->setRoute('ccdn_message_message_index')
+                        ->setRoute('ccdn_message_message_user_index')
                         ->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_email.png')
                         ->setLabel('title.folder.index', array(), 'CCDNMessageMessageBundle')
                     ->end()

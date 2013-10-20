@@ -15,24 +15,24 @@
 				<div class="btn-toolbar">
 
 					{%- if envelope.isDraft -%}
-						<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_draft_send', {'envelopeId': envelope.id }) -}}">
+						<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_draft_send', {'envelopeId': envelope.id }) -}}">
 							{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
 						</a>
 					{%- endif -%}
 
-					<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_reply', {'envelopeId': envelope.id }) -}}">
+					<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_compose_reply', {'envelopeId': envelope.id }) -}}">
 						{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
-					<a class="btn btn-primary" href="{{- path('ccdn_message_message_mail_compose_forward', {'envelopeId': envelope.id }) -}}">
+					<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_compose_forward', {'envelopeId': envelope.id }) -}}">
 						{{- 'link.message.forward' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
-					<a class="btn" href="{{- path('ccdn_message_message_mail_mark_as_unread', {'envelopeId': envelope.id }) -}}">
+					<a class="btn" href="{{- path('ccdn_message_message_user_mail_mark_as_unread', {'envelopeId': envelope.id }) -}}">
 						{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 
-					<a class="btn btn-danger" href="{{- path('ccdn_message_message_mail_delete', {'envelopeId': envelope.id }) -}}">
+					<a class="btn btn-danger" href="{{- path('ccdn_message_message_user_mail_delete', {'envelopeId': envelope.id }) -}}">
 						{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 				</div>

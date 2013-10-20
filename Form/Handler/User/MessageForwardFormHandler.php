@@ -11,15 +11,21 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNMessage\MessageBundle\Form\Handler;
+namespace CCDNMessage\MessageBundle\Form\Handler\User;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use CCDNMessage\MessageBundle\Entity\Message;
+
+use CCDNMessage\MessageBundle\Component\FloodControl;
+use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
 
 /**
  *
@@ -32,15 +38,8 @@ use CCDNMessage\MessageBundle\Entity\Message;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class MessageReplyFormHandler
+class MessageForwardFormHandler extends BaseFormHandler
 {
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
     /**
      *
      * @access protected
@@ -51,16 +50,9 @@ class MessageReplyFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     * @var \CCDNMessage\MessageBundle\Model\Model\ModelInterface $model
      */
-    protected $manager;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNMessage\MessageBundle\Form\Type\MessageFornType $form
-     */
-    protected $form;
+    protected $model;
 
     /**
      *
@@ -79,23 +71,33 @@ class MessageReplyFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Entity\Message $regardingMessage
+     * @var \CCDNMessage\MessageBundle\Entity\Message $forwardingMessage
      */
-    protected $regardingMessage;
+    protected $forwardingMessage;
+
+    /**
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Component\FloodControl $floodControl
+     */
+    protected $floodControl;
 
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                     $factory
-     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType    $messageFormType
-     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $manager
+     * @param Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                                       $factory
+     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                      $messageFormType
+     * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface                     $model
+     * @param |CCDNMessage\MessageBundle\Component\FloodControl                         $floodControl
      */
-    public function __construct(FormFactory $factory, $messageFormType, BaseManagerInterface $manager)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl)
     {
+		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->messageFormType = $messageFormType;
-
-        $this->manager = $manager;
+        $this->model = $model;
+		$this->floodControl = $floodControl;
     }
 
     /**
@@ -127,12 +129,12 @@ class MessageReplyFormHandler
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message                  $regardingMessage
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                  $forwardingMessage
      * @return \CCDNMessage\MessageBundle\Form\Handler\MessageFormHandler
      */
-    public function setInResponseToMessage(Message $regardingMessage)
+    public function setMessageToForward(Message $forwardingMessage)
     {
-        $this->regardingMessage = $regardingMessage;
+        $this->forwardingMessage = $forwardingMessage;
 
         return $this;
     }
@@ -140,48 +142,36 @@ class MessageReplyFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
-     * @return string
-     */
-    public function getSubmitAction(Request $request)
-    {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
+        
+		if ($this->floodControl->isFlooded()) {
+            $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_FORWARD_FLOODED, new UserMessageFloodEvent($this->request));
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bindRequest($request);
+            return false;
+        }
+
+        $this->floodControl->incrementCounter();
+		
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bindRequest($this->request);
 
             if ($this->form->isValid()) {
                 $message = $this->form->getData();
-
                 $message->setSentFromUser($this->sender);
                 $message->setCreatedDate(new \DateTime());
-
                 $isFlagged = $this->form->get('is_flagged')->getData();
 
-                if ($this->getSubmitAction($request) == 'save_draft') {
-                    $this->manager->saveDraft($message, $isFlagged)->flush();
+                if ($this->getSubmitAction($this->request) == 'save_draft') {
+                    $this->model->saveDraft($message, $isFlagged)->flush();
 
                     return false;
                 }
 
-                if ($this->getSubmitAction($request) == 'send') {
+                if ($this->getSubmitAction($this->request) == 'send') {
                     $this->onSuccess($message, $isFlagged);
 
                     return true;
@@ -194,42 +184,6 @@ class MessageReplyFormHandler
 
     /**
      *
-     * @access protected
-     * @return string
-     */
-    public function getQuotedSubject($subject)
-    {
-        if (strlen($subject) > 0) {
-            $subject = 'Re: ' . $subject;
-        } else {
-            $subject = '';
-        }
-
-        return $subject;
-    }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    public function getQuotedBody($body, $sendTo)
-    {
-        if (strlen($body) > 0) {
-            if (!strlen($sendTo) > 0) {
-                $sendTo = 'Guest';
-            }
-
-            $message = '[QUOTE="' . $sendTo . '"]' . $body . '[/QUOTE]';
-        } else {
-            $message = '';
-        }
-
-        return $message;
-    }
-
-    /**
-     *
      * @access public
      * @return Form
      */
@@ -238,19 +192,17 @@ class MessageReplyFormHandler
         if (null == $this->form) {
             $defaultValues = array();
 
-            if (is_object($this->regardingMessage) && $this->regardingMessage instanceof Message) {
+            if (is_object($this->forwardingMessage) && $this->forwardingMessage instanceof Message) {
                 if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
                     $defaultValues['send_to'] = $this->recipient->getUsername();
                 } else {
-                    if ($this->regardingMessage->getSentFromUser()) {
-                        $defaultValues['send_to'] = $this->regardingMessage->getSentFromUser()->getUsername();
-                    } else {
-                        $defaultValues['send_to'] = '';
+                    if ($this->forwardingMessage->getSentFromUser()) {
+                        $defaultValues['send_to'] = $this->forwardingMessage->getSentFromUser()->getUsername();
                     }
                 }
 
-                $defaultValues['subject'] = $this->getQuotedSubject($this->regardingMessage->getSubject());
-                $defaultValues['body'] = $this->getQuotedBody($this->regardingMessage->getBody(), $defaultValues['send_to']);
+                $defaultValues['subject'] = $this->forwardingMessage->getSubject();
+                $defaultValues['body'] = $this->forwardingMessage->getBody();
             } else {
                 if (is_object($this->recipient) && $this->recipient instanceof UserInterface) {
                     $defaultValues['send_to'] = $this->recipient->getUsername();
@@ -266,11 +218,11 @@ class MessageReplyFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNMessage\MessageBundle\Entity\Message $message
-     * @return MessageManager
+     * @param  \CCDNMessage\MessageBundle\Entity\Message             $message
+     * @return \CCDNMessage\MessageBundle\Model\Model\ModelInterface
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        return $this->manager->sendReplyToMessage($message, $this->regardingMessage, $isFlagged)->flush();
+        return $this->model->sendForwardMessage($message, $this->forwardingMessage, $isFlagged)->flush();
     }
 }

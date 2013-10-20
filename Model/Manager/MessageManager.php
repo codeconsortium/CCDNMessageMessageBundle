@@ -75,12 +75,12 @@ class MessageManager extends BaseManager implements ManagerInterface
             $this->persist($message)->flush()->refresh($message)->refresh($thread);
         }
 
-        $envelopeManager = $this->managerBag->getEnvelopeManager();
-
-        foreach ($recipients as $recipientKey => $recipient) {
-            // Send.
-            $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
-        }
+        //$envelopeManager = $this->managerBag->getEnvelopeManager();
+        //
+        //foreach ($recipients as $recipientKey => $recipient) {
+        //    // Send.
+        //    $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
+        //}
 
         return $this;
     }
@@ -106,10 +106,10 @@ class MessageManager extends BaseManager implements ManagerInterface
         $message->setThread($thread);
         $this->persist($message)->flush()->refresh($message);
 
-        $envelopeManager = $this->managerBag->getEnvelopeManager();
-
-        // Save draft.
-        $envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_DRAFT, $isFlagged);
+        //$envelopeManager = $this->managerBag->getEnvelopeManager();
+        //
+        //// Save draft.
+        //$envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_DRAFT, $isFlagged);
 
         return $this;
     }
@@ -132,15 +132,15 @@ class MessageManager extends BaseManager implements ManagerInterface
         $message->setThread($thread);
         $this->persist($message)->flush()->refresh($message);
 
-        $envelopeManager = $this->managerBag->getEnvelopeManager();
-
-        foreach ($recipients as $recipientKey => $recipient) {
-            // Send.
-            $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
-        }
-
-        // Add Carbon Copy.
-        $envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
+        //$envelopeManager = $this->managerBag->getEnvelopeManager();
+        //
+        //foreach ($recipients as $recipientKey => $recipient) {
+        //    // Send.
+        //    $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
+        //}
+        //
+        //// Add Carbon Copy.
+        //$envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
 
         return $this;
     }
@@ -164,15 +164,15 @@ class MessageManager extends BaseManager implements ManagerInterface
         $message->setThread($thread);
         $this->persist($message)->flush()->refresh($message);
 
-        $envelopeManager = $this->managerBag->getEnvelopeManager();
-
-        foreach ($recipients as $recipientKey => $recipient) {
-            // Send.
-            $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
-        }
-
-        // Add Carbon Copy.
-        $envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
+        //$envelopeManager = $this->managerBag->getEnvelopeManager();
+        //
+        //foreach ($recipients as $recipientKey => $recipient) {
+        //    // Send.
+        //    $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
+        //}
+        //
+        //// Add Carbon Copy.
+        //$envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
 
         return $this;
     }
@@ -196,15 +196,15 @@ class MessageManager extends BaseManager implements ManagerInterface
         $message->setThread($thread);
         $this->persist($message)->flush()->refresh($message);
 
-        $envelopeManager = $this->managerBag->getEnvelopeManager();
-
-        foreach ($recipients as $recipientKey => $recipient) {
-            // Send.
-            $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
-        }
-
-        // Add Carbon Copy.
-        $envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
+        //$envelopeManager = $this->managerBag->getEnvelopeManager();
+        //
+        //foreach ($recipients as $recipientKey => $recipient) {
+        //    // Send.
+        //    $envelopeManager->receiveMessage($message, $thread, $recipient, $envelopeManager::MESSAGE_SEND, $isFlagged);
+        //}
+        //
+        //// Add Carbon Copy.
+        //$envelopeManager->receiveMessage($message, $thread, $sender, $envelopeManager::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
 
         return $this;
     }
@@ -229,11 +229,11 @@ class MessageManager extends BaseManager implements ManagerInterface
                 }
             }
 
-            $users = $this->managerBag->getUserManager()->findTheseUsersByUsername($recipients);
+            //$users = $this->managerBag->getUserManager()->findTheseUsersByUsername($recipients);
         } else {
             $recipients = array($recipients);
 
-            $users = $this->managerBag->getUserManager()->findOneUserByUsername($recipients);
+            //$users = $this->managerBag->getUserManager()->findOneUserByUsername($recipients);
         }
 
         return $users;

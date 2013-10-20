@@ -17,7 +17,7 @@
 
 	<section>
 		{%- form_theme form ccdn_message_message.message.compose.form_theme -%}
-		<form action="{{- path('ccdn_message_message_mail_compose_forward', {'envelopeId': envelope.id }) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<form action="{{- path('ccdn_message_message_user_mail_compose_forward', {'envelopeId': envelope.id }) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 			<fieldset>
 
 				<div class="control-group form-title">
@@ -43,7 +43,7 @@
 						{{- 'form.button.save_draft' | trans({}, 'CCDNMessageMessageBundle') -}}
 					</button>
 
-					<a href="{{- path('ccdn_message_message_folder_show', {'folderName': 'inbox' }) -}}" class="btn">
+					<a href="{{- path('ccdn_message_message_user_folder_show', {'folderName': 'inbox' }) -}}" class="btn">
 						{{- 'form.button.cancel' |trans({}, 'CCDNMessageMessageBundle') -}}
 					</a>
 				</div>

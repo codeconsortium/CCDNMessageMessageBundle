@@ -48,7 +48,7 @@ class FolderManager extends BaseManager implements ManagerInterface
                 throw new \Exception('User id "' . $userId . '" is invalid!');
             }
 
-            $user = $this->managerBag->getUserProvider()->findOneUserById($userId);
+            //$user = $this->managerBag->getUserProvider()->findOneUserById($userId);
         }
 
         $folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
@@ -83,7 +83,7 @@ class FolderManager extends BaseManager implements ManagerInterface
 
         $this->flush();
 
-        $this->managerBag->getRegistryManager()->updateCacheUnreadMessagesForUser($user, null, $folders)->flush();
+        //$this->managerBag->getRegistryManager()->updateCacheUnreadMessagesForUser($user, null, $folders)->flush();
 
         return $this;
     }

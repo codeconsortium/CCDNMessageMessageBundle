@@ -41,30 +41,30 @@ class FolderControllerTest extends WebTestCase
 	{
 		//$client = static::createClient();
 		
-		// ccdn_message_message_index:
+		// ccdn_message_message_user_index:
 	    // 	pattern: /{_locale}/message
 	    // 	defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox, page: 0 }
         // 
 		// #
 		// # Folders.
 		// #
-		// ccdn_message_message_folder_show:
+		// ccdn_message_message_user_folder_show:
 		//     pattern: /{_locale}/message/folder/{folderName}
 		//     defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox, page: 0 }
 		//     requirements:
 		//         folder_name: inbox|sent|drafts|junk|trash
         // 
-		// ccdn_message_message_folder_show_paginated:
+		// ccdn_message_message_user_folder_show_paginated:
 		//     pattern: /{_locale}/message/folder/{folderName}/page/{page}
 		//     defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderByName, _locale: en, folderName: inbox, page: 0 }
 		//     requirements:
 		//         folder_name: inbox|sent|drafts|junk|trash
         // 
-		// ccdn_message_message_folder_show_by_id:
+		// ccdn_message_message_user_folder_show_by_id:
 		//     pattern: /{_locale}/message/folder/{folderId}
 		//     defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en, page: 0 }
         // 
-		// ccdn_message_message_folder_show_by_id_paginated:
+		// ccdn_message_message_user_folder_show_by_id_paginated:
 		//     pattern: /{_locale}/message/folder/{folderId}/page/{page}
 		//     defaults: { _controller: CCDNMessageMessageBundle:Folder:showFolderById, _locale: en, page: 0 }
 		

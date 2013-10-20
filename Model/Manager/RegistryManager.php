@@ -52,19 +52,19 @@ class RegistryManager extends BaseManager implements ManagerInterface
             $registry->setOwnedBy($user);
         }
 
-        if (null == $folders) {
-            $folders = $this->managerBag->getFolderManager()->findAllFoldersForUserById($user->getId());
-        }
-
-        $totalMessageCount = 0;
-
-        foreach ($folders as $key => $folder) {
-            $totalMessageCount += $folder->getCachedUnreadCount();
-        }
-
-        $registry->setCachedUnreadMessagesCount($totalMessageCount);
-
-        $this->persist($registry)->flush();
+        //if (null == $folders) {
+        //    $folders = $this->managerBag->getFolderManager()->findAllFoldersForUserById($user->getId());
+        //}
+        //
+        //$totalMessageCount = 0;
+        //
+        //foreach ($folders as $key => $folder) {
+        //    $totalMessageCount += $folder->getCachedUnreadCount();
+        //}
+        //
+        //$registry->setCachedUnreadMessagesCount($totalMessageCount);
+        //
+        //$this->persist($registry)->flush();
 
         return $this;
     }
