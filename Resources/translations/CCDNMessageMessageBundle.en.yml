@@ -14,13 +14,12 @@ title:
         compose:             "Compose Message"
 
 crumbs:
-    folder:
-        index:               "Inbox"
-    message:
-        compose:
-            new:             "Compose New Message"
-            reply:           "Compose Reply"
-            forward:         "Forward Message"
+    user:
+        message:
+            compose:
+                new:             "Compose New Message"
+                reply:           "Compose Reply"
+                forward:         "Forward Message"
 
 sidebar:
     header:

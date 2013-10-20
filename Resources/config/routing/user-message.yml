@@ -1,3 +1,7 @@
+ccdn_message_message_user_mail_show_by_id:
+    pattern:  /{envelopeId}/show
+    defaults: { _controller: CCDNMessageMessageBundle:UserMessage:showMessage, _locale: en }
+
 ccdn_message_message_user_mail_compose:
     pattern:  /compose
     defaults: { _controller: CCDNMessageMessageBundle:UserMessage:compose, _locale: en, userId: null }
@@ -17,10 +21,6 @@ ccdn_message_message_user_mail_compose_forward:
 ccdn_message_message_user_mail_draft_send:
     pattern:  /{envelopeId}/send
     defaults: { _controller: CCDNMessageMessageBundle:UserMessage:sendDraft, _locale: en }
-
-ccdn_message_message_user_mail_show_by_id:
-    pattern:  /{envelopeId}/show
-    defaults: { _controller: CCDNMessageMessageBundle:UserMessage:showMessage, _locale: en }
 
 ccdn_message_message_user_mail_mark_as_read:
     pattern:  /{envelopeId}/mark-as-read

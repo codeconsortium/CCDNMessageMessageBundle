@@ -12,9 +12,9 @@
 		{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</button>
 
-	<input type="submit" name="submit[mark_as_read]" class="btn" value="{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[mark_as_read]" class="btn btn-default" value="{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}">
 
-	<input type="submit" name="submit[mark_as_unread]" class="btn" value="{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[mark_as_unread]" class="btn btn-default" value="{{- 'link.message.mark_as_unread' |trans({}, 'CCDNMessageMessageBundle') -}}">
 
 	<select name="select_move_to">
 		{%- for row, folder in folders -%}
@@ -22,5 +22,5 @@
 		{%- endfor -%}
 	</select>
 
-	<input type="submit" name="submit[move_to]" class="btn" value="{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}">
+	<input type="submit" name="submit[move_to]" class="btn btn-default" value="{{- 'link.message.move_to' |trans({}, 'CCDNMessageMessageBundle') -}}">
 {%- endspaceless -%}

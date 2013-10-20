@@ -2,6 +2,8 @@ parameters:
 
     # Service Parameters defined in app/config.
     ccdn_message_message.component.helper.pagination_config.class: CCDNMessage\MessageBundle\Component\Helper\PaginationConfigHelper
+    ccdn_message_message.component.crumb_builder.class: CCDNMessage\MessageBundle\Component\Crumbs\CrumbBuilder
+    ccdn_message_message.component.crumb_factory.class: CCDNMessage\MessageBundle\Component\Crumbs\Factory\CrumbFactory
 
 services:
 
@@ -25,3 +27,16 @@ services:
             - %ccdn_message_message.message.flood_control.send_limit%
             - %ccdn_message_message.message.flood_control.block_for_minutes%
 
+    #
+    # Crumbs.
+    #
+    ccdn_message_message.component.crumb_factory:
+        class: %ccdn_message_message.component.crumb_factory.class%
+        arguments:
+            - @translator
+            - @router
+
+    ccdn_message_message.component.crumb_builder:
+        class: %ccdn_message_message.component.crumb_builder.class%
+        arguments:
+            - @ccdn_message_message.component.crumb_factory

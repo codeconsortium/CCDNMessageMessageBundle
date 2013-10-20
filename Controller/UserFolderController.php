@@ -46,11 +46,8 @@ class UserFolderController extends UserFolderBaseController
         $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $folderName);
         $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $this->getQuery('page', 1), 25);
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_user_index'));
-
         return $this->renderResponse('CCDNMessageMessageBundle:User:Folder/show.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addUserFolderShow($currentFolder),
             'folders' => $folders,
             'current_folder' => $currentFolder,
             'pager' => $messagesPager,

@@ -39,9 +39,7 @@ class UserMessageController extends UserMessageBaseController
     public function showMessageAction($envelopeId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $user = $this->getUser();
-
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $thread = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIDAndUserId($envelope->getThread()->getId(), $user->getId());
         $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
@@ -50,12 +48,8 @@ class UserMessageController extends UserMessageBaseController
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
         $message = $envelope->getMessage();
 
-        $crumbs = $this->getCrumbs()
-            ->add($envelope->getFolder()->getName(), $this->path('ccdn_message_message_user_folder_show', array('folderName' => $envelope->getFolder()->getName())))
-            ->add($message->getSubject(), $this->path('ccdn_message_message_user_mail_show_by_id', array('envelopeId' => $envelopeId)));
-
         return $this->renderResponse('CCDNMessageMessageBundle:User:Message/show.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addUserMessageShow($envelope),
             'folders' => $folders,
             'envelope' => $envelope,
             'thread' => $thread,
@@ -71,18 +65,15 @@ class UserMessageController extends UserMessageBaseController
     public function composeAction($userId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $formHandler = $this->getFormHandlerToSendMessage($userId);
 
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $crumbs = $this->getCrumbs()
-	            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_user_index'))
-	            ->add($this->trans('crumbs.message.compose.new'), $this->path('ccdn_message_message_user_mail_compose'));
-
+	        $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
+	        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, 'Drafts');
 	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose.html.', array(
-	            'crumbs' => $crumbs,
+	            'crumbs' => $this->getCrumbs()->addUserMessageCreate($currentFolder),
 	            'form' => $formHandler->getForm()->createView(),
 	            'preview' => $formHandler->getForm()->getData(),
 	        ));
@@ -108,13 +99,8 @@ class UserMessageController extends UserMessageBaseController
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $crumbs = $this->getCrumbs()
-	            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_user_index'))
-	            ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_user_mail_show_by_id', array('envelopeId' => $envelopeId)))
-	            ->add($this->trans('crumbs.message.compose.reply'), $this->path('ccdn_message_message_user_mail_compose_reply', array('envelopeId' => $envelopeId)));
-
 	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_reply.html.', array(
-	            'crumbs' => $crumbs,
+	            'crumbs' => $this->getCrumbs()->addUserMessageReply($envelope),
 	            'form' => $formHandler->getForm()->createView(),
 	            'preview' => $formHandler->getForm()->getData(),
 	            'envelope' => $envelope,
@@ -141,13 +127,8 @@ class UserMessageController extends UserMessageBaseController
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $crumbs = $this->getCrumbs()
-	            ->add($this->trans('crumbs.folder.index'), $this->path('ccdn_message_message_user_index'))
-	            ->add($envelope->getMessage()->getSubject(), $this->path('ccdn_message_message_user_mail_show_by_id', array('envelopeId' => $envelopeId)))
-	            ->add($this->trans('crumbs.message.compose.forward'), $this->path('ccdn_message_message_user_mail_compose_forward', array('envelopeId' => $envelopeId)));
-
 	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_forward.html.', array(
-	            'crumbs' => $crumbs,
+	            'crumbs' => $this->getCrumbs()->addUserMessageForward($envelope),
 	            'form' => $formHandler->getForm()->createView(),
 	            'preview' => $formHandler->getForm()->getData(),
 	            'envelope' => $envelope,
@@ -172,7 +153,6 @@ class UserMessageController extends UserMessageBaseController
 
         if (! $this->getFloodControl()->isFlooded()) {
             $this->getFloodControl()->incrementCounter();
-
             $this->getMessageModel()->sendDraft(array($message))->flush();
         } else {
             $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
