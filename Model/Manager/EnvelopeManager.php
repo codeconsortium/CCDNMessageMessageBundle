@@ -46,79 +46,10 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         self::MESSAGE_SAVE_DRAFT,
     );
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
-     * @param  \Symfony\Component\Security\Core\User\UserInterface     $ownedByUser
-     * @param  int                                                     $mode
-     * @param  bool                                                    $isFlagged
-     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
-     */
-    public function receiveMessage(Message $message, Thread $thread, UserInterface $ownedByUser, $mode, $isFlagged = false)
-    {
-		/**
-		 * @TODO this method requires the manager bag, work something else out. Perhaps using the EventListener instead.
-		 */
-        //if ($mode != self::MESSAGE_SAVE_CARBON_COPY && (! is_object($ownedByUser) || ! $ownedByUser instanceof UserInterface)) {
-        //    throw new \Exception("Message Owner parameter must be set.");
-        //}
-        //
-        //if (! in_array($mode, $this->sendMode)) {
-        //    throw new \Exception('Invalid mode, use class constants in $sendMode');
-        //}
-        //
-        //$folderManager = $this->managerBag->getFolderManager();
-        //$folders = $folderManager->findAllFoldersForUserById($ownedByUser->getId());
-        //
-        //if (null == $folders) {
-        //    return false;
-        //}
-        //
-        //// Check quotas.
-        //$quotaUsed = $folderManager->checkQuotaAllowanceUsed($folders);
-        //$quotaAllowed = $this->getQuotaMaxAllowanceForMessages();
-        //
-        //if ($quotaUsed >= $quotaAllowed) {
-        //    //$this->container->get('session')->setFlash('notice',
-        //    //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-        //    return false;
-        //}
-        //
-        //$envelope = new Envelope();
-        //$envelope->setOwnedByUser($ownedByUser);
-        //$envelope->setMessage($message);
-        //$envelope->setThread($thread);
-        //$envelope->setSentDate(new \DateTime('now'));
-        //$envelope->setIsFlagged($isFlagged);
-        //
-        //if ($mode == self::MESSAGE_SEND) {
-        //    $envelope->setFolder($folders[self::MESSAGE_SEND]);
-        //    $envelope->setIsRead(false);
-        //} else {
-        //    if ($mode == self::MESSAGE_SAVE_CARBON_COPY) {
-        //        $envelope->setFolder($folders[self::MESSAGE_SAVE_CARBON_COPY]);
-        //        $envelope->setIsRead(true);
-        //    } else {
-        //        //$this->container->get('session')->setFlash('notice',
-        //        //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.sent.success', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-        //
-        //        $envelope->setFolder($folders[self::MESSAGE_SAVE_DRAFT]);
-        //        $envelope->setIsRead(false);
-        //    }
-        //}
-        //
-        //// Update recipients folders read/unread cache counts.
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
-        //
-        //$this
-        //    ->persist($envelope)
-        //    ->flush()
-        //;
-
-        return true;
-    }
+	public function saveEnvelope(Envelope $envelope)
+	{
+		return $this->persist($envelope)->flush();
+	}
 
     /**
      *

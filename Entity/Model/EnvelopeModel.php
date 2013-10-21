@@ -53,6 +53,11 @@ abstract class EnvelopeModel
     protected $ownedByUser = null;
 
     /**
+     * @var \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+     */
+    protected $sentToUser = null;
+
+    /**
      *
      * @var \CCDNMessage\MessageBundle\Entity\Thread $thread
      */
@@ -155,6 +160,29 @@ abstract class EnvelopeModel
     public function setOwnedByUser(UserInterface $ownedByUser = null)
     {
         $this->ownedByUser = $ownedByUser;
+
+        return $this;
+    }
+
+    /**
+     * Get sentToUser
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getSentToUser()
+    {
+        return $this->sentToUser;
+    }
+
+    /**
+     * Set sentToUser
+     *
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $sentToUser
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function setSentToUser(UserInterface $sentToUser = null)
+    {
+        $this->sentToUser = $sentToUser;
 
         return $this;
     }

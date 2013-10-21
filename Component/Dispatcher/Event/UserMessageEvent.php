@@ -47,23 +47,14 @@ class UserMessageEvent extends Event
 
     /**
      *
-     * @access protected
-     * @var bool $subscribe
-     */
-    protected $subscribe;
-
-    /**
-     *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \CCDNMessage\MessageBundle\Entity\Message     $message
-     * @param bool                                      $subscribe
+     * @param \CCDNMessage\MessageBundle\Entity\Message $message
      */
-    public function __construct(Request $request, Message $message = null, $subscribe = false)
+    public function __construct(Request $request, Message $message = null)
     {
         $this->request = $request;
         $this->message = $message;
-        $this->subscribe = $subscribe;
     }
 
     /**
@@ -84,15 +75,5 @@ class UserMessageEvent extends Event
     public function getMessage()
     {
         return $this->message;
-    }
-
-    /**
-     *
-     * @access public
-     * @return bool
-     */
-    public function authorWantsToSubscribe()
-    {
-        return $this->subscribe;
     }
 }

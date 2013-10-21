@@ -1,6 +1,6 @@
 {%- spaceless -%}
 	{%- set sender = create_profile(envelope.getMessage.getSentFromUser) -%}
-	{%- set recipient = create_profile(envelope.getMessage.getSentToUser) -%}
+	{%- set recipient = create_profile(envelope.getSentToUser) -%}
 
 	<table class="table table-striped table-hover" id="{{- envelope.id -}}">
 		<tbody>

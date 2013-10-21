@@ -33,6 +33,11 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderManager extends BaseManager implements ManagerInterface
 {
+	public function saveFolder(Folder $folder)
+	{
+		return $this->persist($folder)->flush();
+	}
+
     /**
      *
      * @access public
@@ -42,16 +47,10 @@ class FolderManager extends BaseManager implements ManagerInterface
     public function setupDefaults(UserInterface $user)
     {
         if (! is_object($user) || ! $user instanceof UserInterface) {
-            $userId = $user;
-
-            if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-                throw new \Exception('User id "' . $userId . '" is invalid!');
-            }
-
-            //$user = $this->managerBag->getUserProvider()->findOneUserById($userId);
+            throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
-        $folderNames = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
+        $folderNames = Folder::$defaultSpecialTypes; //array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
 
         foreach ($folderNames as $key => $folderName) {
             $folder = new Folder();
@@ -169,7 +168,7 @@ class FolderManager extends BaseManager implements ManagerInterface
 
         $usedAllowance = ($totalMessageCount / $quota) * 100;
 
-        // where 100 represents 100%, if the number should exceed then reset it to 100%
+        // where 100 represents 100%, if the number should fractionally exceed 10 then reset it to 100%
         if ($usedAllowance > 100) {
             $usedAllowance = 100;
         }

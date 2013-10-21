@@ -30,6 +30,28 @@ use CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface;
  */
 class FolderRepository extends BaseRepository implements RepositoryInterface
 {
+	public function findOneFolderForUserByNameAndUserId($folderName, $userId)
+	{
+        if (null == $folderName || ! is_string($folderName) || $folderName == '') {
+            throw new \Exception('Folder Name "' . $folderName . '" is invalid!');
+        }
+
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+        $params = array(':folderName' => $folderName, ':userId' => $userId);
+
+        $qb = $this->createSelectQuery(array('f'));
+
+        $qb
+            ->where('f.name = :folderName')
+            ->andWhere('f.ownedByUser = :userId')
+        ;
+
+        return $this->gateway->findFolder($qb, $params);
+	}
+
     /**
      *
      * @access public

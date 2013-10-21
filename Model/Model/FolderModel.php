@@ -33,6 +33,25 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderModel extends BaseModel implements ModelInterface
 {
+	public function saveFolder(Folder $folder)
+	{
+		return $this->getManager()->saveFolder($folder);
+	}
+
+	public function findOneFolderForUserByNameAndUserId($folderName, $userId)
+	{
+		return $this->getRepository()->findOneFolderForUserByNameAndUserId($folderName, $userId);
+	}
+
+
+
+
+
+
+
+
+
+
     /**
      *
      * @access public

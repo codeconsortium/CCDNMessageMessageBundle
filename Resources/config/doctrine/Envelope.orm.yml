@@ -50,6 +50,13 @@ CCDNMessage\MessageBundle\Entity\Envelope:
                 name: fk_thread_id
                 referencedColumnName: id
                 onDelete: SET NULL
+        sentToUser:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_sent_to_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
         ownedByUser:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: ["persist"]

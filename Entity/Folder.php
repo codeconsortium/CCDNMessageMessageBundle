@@ -28,6 +28,20 @@ use CCDNMessage\MessageBundle\Entity\Model\FolderModel;
  */
 class Folder extends FolderModel
 {
+	const SPECIAL_TYPE_INBOX  = 1;
+	const SPECIAL_TYPE_SENT   = 2;
+	const SPECIAL_TYPE_DRAFTS = 3;
+	const SPECIAL_TYPE_JUNK   = 4;
+	const SPECIAL_TYPE_TRASH  = 5;
+	
+	static $defaultSpecialTypes = array(
+		self::SPECIAL_TYPE_INBOX => 'inbox',
+		self::SPECIAL_TYPE_SENT => 'sent',
+		self::SPECIAL_TYPE_DRAFTS => 'drafts',
+		self::SPECIAL_TYPE_JUNK => 'junk',
+		self::SPECIAL_TYPE_TRASH => 'trash',
+	);
+
     /**
      *
      * @var integer $id

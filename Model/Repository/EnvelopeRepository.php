@@ -49,14 +49,14 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 
         $params = array(':envelopeId' => $envelopeId, ':userId' => $userId);
 
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
+        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'e_recipient', 'm_sender'));
 
         $qb
             ->join('e.message', 'm')
             ->leftJoin('e.folder', 'e_folder')
             ->leftJoin('e.ownedByUser', 'e_owned_by')
+            ->leftJoin('e.sentToUser', 'e_recipient')
             ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
             ->where('e.id = :envelopeId')
             ->andWhere('e.ownedByUser = :userId')
             ->setParameters($params)
@@ -88,14 +88,14 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 
         $params = array(':folderId' => $folderId, ':userId' => $userId);
 
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
+        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'e_recipient', 'm_sender'));
 
         $qb
             ->join('e.message', 'm')
             ->leftJoin('e.folder', 'e_folder')
             ->leftJoin('e.ownedByUser', 'e_owned_by')
+            ->leftJoin('e.sentToUser', 'e_recipient')
             ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
             ->where('e.folder = :folderId')
             ->andWhere('e.ownedByUser = :userId')
             ->setParameters($params)
@@ -121,14 +121,14 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 
         $params = array(':userId' => $userId);
 
-        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
+        $qb = $this->createSelectQuery(array('e', 'm', 'e_folder', 'e_owned_by', 'e_recipient', 'm_sender'));
 
         $qb
             ->join('e.message', 'm')
             ->leftJoin('e.folder', 'e_folder')
             ->leftJoin('e.ownedByUser', 'e_owned_by')
+            ->leftJoin('e.sentToUser', 'e_recipient')
             ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
             ->where($qb->expr()->in('e.id', $envelopeIds))
             ->andWhere('e.ownedByUser = :userId')
             ->setParameters($params)

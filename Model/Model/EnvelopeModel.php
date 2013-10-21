@@ -36,6 +36,11 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  */
 class EnvelopeModel extends BaseModel implements ModelInterface
 {
+	public function saveEnvelope(Envelope $envelope)
+	{
+		return $this->getManager()->saveEnvelope($envelope);
+	}
+
     /**
      *
      * @access public
@@ -83,21 +88,6 @@ class EnvelopeModel extends BaseModel implements ModelInterface
         self::MESSAGE_SAVE_CARBON_COPY,
         self::MESSAGE_SAVE_DRAFT,
     );
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                $thread
-     * @param  \Symfony\Component\Security\Core\User\UserInterface     $ownedByUser
-     * @param  int                                                     $mode
-     * @param  bool                                                    $isFlagged
-     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
-     */
-    public function receiveMessage(Message $message, Thread $thread, UserInterface $ownedByUser, $mode, $isFlagged = false)
-    {
-		return $this->getManager()->receiveMessage($message, $thread, $ownedByUser, $mode, $isFlagged);
-    }
 
     /**
      *

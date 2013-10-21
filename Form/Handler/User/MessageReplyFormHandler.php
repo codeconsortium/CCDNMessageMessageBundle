@@ -23,9 +23,11 @@ use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
 use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use CCDNMessage\MessageBundle\Entity\Message;
 
+use CCDNMessage\MessageBundle\Component\Server\MessageServer;
 use CCDNMessage\MessageBundle\Component\FloodControl;
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageEvent;
 
 /**
  *
@@ -84,20 +86,29 @@ class MessageReplyFormHandler extends BaseFormHandler
 
     /**
      *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Component\Server\MessageServer $messageServer
+     */
+    protected $messageServer;
+
+    /**
+     *
      * @access public
      * @param Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                       $factory
      * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                      $messageFormType
      * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface                     $model
      * @param |CCDNMessage\MessageBundle\Component\FloodControl                         $floodControl
+     * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer                  $messageServer
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
     {
 		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->messageFormType = $messageFormType;
         $this->model = $model;
 		$this->floodControl = $floodControl;
+		$this->messageServer = $messageServer;
     }
 
     /**
@@ -261,6 +272,12 @@ class MessageReplyFormHandler extends BaseFormHandler
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        return $this->model->sendReplyToMessage($message, $this->regardingMessage, $isFlagged)->flush();
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_REPLY_SUCCESS, new UserMessageEvent($this->request, $message));
+		
+		$this->messageServer->sendMessage($message, $isFlagged);
+		
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_REPLY_COMPLETE, new UserMessageEvent($this->request, $message));
+		
+		return $this->model;
     }
 }

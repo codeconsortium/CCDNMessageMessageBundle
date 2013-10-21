@@ -44,11 +44,6 @@ abstract class MessageModel
     protected $thread = null;
 
     /**
-     * @var \Symfony\Component\Security\Core\User\UserInterface $sentToUser
-     */
-    protected $sentToUser = null;
-
-    /**
      * @var \Symfony\Component\Security\Core\User\UserInterface $sentFromUser
      */
     protected $sentFromUser = null;
@@ -104,29 +99,6 @@ abstract class MessageModel
     public function setThread(Thread $thread)
     {
         $this->thread = $thread;
-
-        return $this;
-    }
-
-    /**
-     * Get sentToUser
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getSentToUser()
-    {
-        return $this->sentToUser;
-    }
-
-    /**
-     * Set sentToUser
-     *
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $sentToUser
-     * @return \CCDNMessage\MessageBundle\Entity\Envelope
-     */
-    public function setSentToUser(UserInterface $sentToUser = null)
-    {
-        $this->sentToUser = $sentToUser;
 
         return $this;
     }

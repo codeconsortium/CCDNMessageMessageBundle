@@ -49,15 +49,15 @@ class ThreadRepository extends BaseRepository implements RepositoryInterface
 
         $params = array(':threadId' => $threadId, ':userId' => $userId);
 
-        $qb = $this->createSelectQuery(array('t', 'e', 'm', 'e_folder', 'e_owned_by', 'm_sender', 'm_recipient'));
+        $qb = $this->createSelectQuery(array('t', 'e', 'm', 'e_folder', 'e_owned_by', 'e_recipient', 'm_sender'));
 
         $qb
             ->leftJoin('t.envelopes', 'e')
             ->leftJoin('e.message', 'm')
             ->leftJoin('e.folder', 'e_folder')
             ->leftJoin('e.ownedByUser', 'e_owned_by')
+            ->leftJoin('e.sentToUser', 'e_recipient')
             ->leftJoin('m.sentFromUser', 'm_sender')
-            ->leftJoin('m.sentToUser', 'm_recipient')
             ->where('t.id = :threadId')
             ->andWhere('e.ownedByUser = :userId')
             ->setParameters($params)

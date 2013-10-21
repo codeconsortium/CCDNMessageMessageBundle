@@ -1,7 +1,7 @@
 {%- spaceless -%}
 
 	{%- set sender = create_profile(message.getSentFromUser) -%}
-	{%- set recipient = create_profile(message.getSentToUser) -%}
+	{%- set recipient = create_profile(envelope.getSentToUser) -%}
 
 	<tr class="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- envelope.id -}}">
 		<td>

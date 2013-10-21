@@ -20,6 +20,7 @@ services:
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.model.message
             - @ccdn_message_message.component.flood_control
+            - @ccdn_message_message.component.server.message
 
     ccdn_message_message.form.handler.message_reply:
         class: %ccdn_message_message.form.handler.message_reply.class%
@@ -29,6 +30,7 @@ services:
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.model.message
             - @ccdn_message_message.component.flood_control
+            - @ccdn_message_message.component.server.message
 
     ccdn_message_message.form.handler.message_forward:
         class: %ccdn_message_message.form.handler.message_forward.class%
@@ -38,6 +40,7 @@ services:
             - @ccdn_message_message.form.type.message
             - @ccdn_message_message.model.message
             - @ccdn_message_message.component.flood_control
+            - @ccdn_message_message.component.server.message
 
     ccdn_message_message.form.validator.send_to:
         class: %ccdn_message_message.form.validator.send_to.class%
