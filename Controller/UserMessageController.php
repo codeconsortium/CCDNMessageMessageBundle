@@ -16,6 +16,7 @@ namespace CCDNMessage\MessageBundle\Controller;
 use CCDNMessage\MessageBundle\Controller\UserMessageBaseController;
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent;
+use CCDNMessage\MessageBundle\Entity\Folder;
 
 /**
  *
@@ -71,7 +72,7 @@ class UserMessageController extends UserMessageBaseController
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
 	        $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
-	        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, 'Drafts');
+			$currentFolder = $this->getFolderHelper()->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_DRAFTS);
 	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose.html.', array(
 	            'crumbs' => $this->getCrumbs()->addUserMessageCreate($currentFolder),
 	            'form' => $formHandler->getForm()->createView(),

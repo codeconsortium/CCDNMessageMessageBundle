@@ -136,17 +136,6 @@ class FolderModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  array $folders
-     * @return int
-     */
-    public function checkQuotaAllowanceUsed($folders)
-    {
-        return $this->getManager()->checkQuotaAllowanceUsed($folders);
-    }
-
-    /**
-     *
-     * @access public
      * @param  array                                    $folders
      * @param  string                                   $folderName
      * @return \CCDNMessage\MessageBundle\Entity\Folder
@@ -154,17 +143,5 @@ class FolderModel extends BaseModel implements ModelInterface
     public function getCurrentFolder($folders, $folderName)
     {
         return $this->getManager()->getCurrentFolder($folders, $folderName);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  array $folders
-     * @param  int   $quota
-     * @return array
-     */
-    public function getUsedAllowance($folders, $quota)
-    {
-        return $this->getManager()->getUsedAllowance($folders, $quota);
     }
 }

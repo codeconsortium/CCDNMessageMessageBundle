@@ -11,6 +11,7 @@ services:
     ccdn_message_message.manager.folder:
         class: %ccdn_message_message.manager.folder.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.folder
@@ -18,6 +19,7 @@ services:
     ccdn_message_message.manager.envelope:
         class: %ccdn_message_message.manager.envelope.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.envelope
@@ -25,6 +27,7 @@ services:
     ccdn_message_message.manager.message:
         class: %ccdn_message_message.manager.message.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.message
@@ -32,6 +35,7 @@ services:
     ccdn_message_message.manager.thread:
         class: %ccdn_message_message.manager.thread.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.thread
@@ -39,6 +43,7 @@ services:
     ccdn_message_message.manager.registry:
         class: %ccdn_message_message.manager.registry.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.registry
@@ -46,6 +51,7 @@ services:
     ccdn_message_message.manager.user:
         class: %ccdn_message_message.manager.user.class%
         arguments:
+            - @event_dispatcher
             - @doctrine
             - @security.context
             - @ccdn_message_message.gateway.user

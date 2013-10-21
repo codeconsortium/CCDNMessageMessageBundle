@@ -114,23 +114,6 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  array $folders
-     * @return int
-     */
-    public function checkQuotaAllowanceUsed($folders)
-    {
-        $totalMessageCount = 0;
-
-        foreach ($folders as $key => $folder) {
-            $totalMessageCount += $folder->getCachedTotalMessageCount();
-        }
-
-        return $totalMessageCount;
-    }
-
-    /**
-     *
-     * @access public
      * @param  array                                    $folders
      * @param  string                                   $folderName
      * @return \CCDNMessage\MessageBundle\Entity\Folder
@@ -149,33 +132,5 @@ class FolderManager extends BaseManager implements ManagerInterface
         }
 
         return $currentFolder;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  array $folders
-     * @param  int   $quota
-     * @return array
-     */
-    public function getUsedAllowance($folders, $quota)
-    {
-        $totalMessageCount = 0;
-
-        foreach ($folders as $key => $folder) {
-            $totalMessageCount += $folder->getCachedTotalMessageCount();
-        }
-
-        $usedAllowance = ($totalMessageCount / $quota) * 100;
-
-        // where 100 represents 100%, if the number should fractionally exceed 10 then reset it to 100%
-        if ($usedAllowance > 100) {
-            $usedAllowance = 100;
-        }
-
-        return array(
-            'used_allowance' => $usedAllowance,
-            'total_message_count' => $totalMessageCount
-        );
     }
 }

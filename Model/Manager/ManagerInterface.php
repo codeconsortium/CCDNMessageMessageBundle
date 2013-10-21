@@ -13,6 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\Manager;
 
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
@@ -35,11 +36,12 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
-     * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface  $gateway
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry                                   $doctrine
+     * @param \Symfony\Component\Security\Core\SecurityContext                           $securityContext
+     * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface                  $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway);
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway);
 
     /**
      *

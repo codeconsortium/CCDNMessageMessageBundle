@@ -5,6 +5,8 @@ parameters:
     ccdn_message_message.component.helper.pagination_config.class: CCDNMessage\MessageBundle\Component\Helper\PaginationConfigHelper
     ccdn_message_message.component.crumb_builder.class: CCDNMessage\MessageBundle\Component\Crumbs\CrumbBuilder
     ccdn_message_message.component.crumb_factory.class: CCDNMessage\MessageBundle\Component\Crumbs\Factory\CrumbFactory
+    ccdn_message_message.component.helper.folder.class: CCDNMessage\MessageBundle\Component\Helper\FolderHelper
+    ccdn_message_message.component.helper.quota.class:  CCDNMessage\MessageBundle\Component\Helper\QuotaHelper
 
 services:
 
@@ -16,6 +18,17 @@ services:
             - @ccdn_message_message.model.message
             - @ccdn_message_message.model.envelope
             - @ccdn_message_message.model.user
+            - @ccdn_message_message.component.helper.quota
+            - @ccdn_message_message.component.helper.folder
+
+    ccdn_message_message.component.helper.folder:
+        class: %ccdn_message_message.component.helper.folder.class%
+        arguments: []
+
+    ccdn_message_message.component.helper.quota:
+        class: %ccdn_message_message.component.helper.quota.class%
+        arguments:
+            - %ccdn_message_message.quotas.max_messages%
 
     ccdn_message_message.component.helper.pagination_config:
         class: %ccdn_message_message.component.helper.pagination_config.class%

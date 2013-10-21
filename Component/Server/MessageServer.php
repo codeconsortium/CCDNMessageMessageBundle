@@ -20,6 +20,9 @@ use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageEvent;
 
+use CCDNMessage\MessageBundle\Component\Helper\QuotaHelper;
+use CCDNMessage\MessageBundle\Component\Helper\FolderHelper;
+
 use CCDNMessage\MessageBundle\Model\Model\FolderModel;
 use CCDNMessage\MessageBundle\Model\Model\MessageModel;
 use CCDNMessage\MessageBundle\Model\Model\EnvelopeModel;
@@ -78,6 +81,20 @@ class MessageServer
 	 */
 	protected $userModel;
 	
+	/**
+	 * 
+	 * @access protected
+     * @var \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper $quotaHelper
+	 */
+	protected $quotaHelper;
+
+	/**
+	 * 
+	 * @access protected
+     * @var \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
+	 */
+	protected $folderHelper;
+
     const MESSAGE_SEND = 0;
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
@@ -96,14 +113,19 @@ class MessageServer
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\MessageModel                        $messageModel
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel                       $envelopeModel
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\UserModel                           $userModel
+	 * @param  \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper                    $quotaHelper
+	 * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper                   $folderHelper
 	 */
-	public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FolderModel $folderModel, MessageModel $messageModel, EnvelopeModel $envelopeModel, UserModel $userModel)
+	public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FolderModel $folderModel,
+	 MessageModel $messageModel, EnvelopeModel $envelopeModel, UserModel $userModel, QuotaHelper $quotaHelper, FolderHelper $folderHelper)
 	{
 		$this->dispatcher    = $dispatcher;
 		$this->envelopeModel = $envelopeModel;
 		$this->messageModel  = $messageModel;
 		$this->folderModel   = $folderModel;
 		$this->userModel     = $userModel;
+		$this->quotaHelper   = $quotaHelper;
+		$this->folderHelper  = $folderHelper;
 	}
 
 	/**
@@ -129,34 +151,6 @@ class MessageServer
         
         // Add Carbon Copy.
         $this->receiveMessage($message, $message->getSentFromUser(), self::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
-		
-        //if ($mode != self::MESSAGE_SAVE_CARBON_COPY && (! is_object($ownedByUser) || ! $ownedByUser instanceof UserInterface)) {
-        //    throw new \Exception("Message Owner parameter must be set.");
-        //}
-        //
-        //if (! in_array($mode, $this->sendMode)) {
-        //    throw new \Exception('Invalid mode, use class constants in $sendMode');
-        //}
-        //
-        //$folderManager = $this->managerBag->getFolderManager();
-        //$folders = $folderManager->findAllFoldersForUserById($ownedByUser->getId());
-        //
-        //if (null == $folders) {
-        //    return false;
-        //}
-        //
-        //// Check quotas.
-        //$quotaUsed = $folderManager->checkQuotaAllowanceUsed($folders);
-        //$quotaAllowed = $this->getQuotaMaxAllowanceForMessages();
-        //
-        //if ($quotaUsed >= $quotaAllowed) {
-        //    //$this->container->get('session')->setFlash('notice',
-        //    //    $this->container->get('translator')->trans('ccdn_message_message.flash.message.send.inbox_full', array('%user%' => $recipient->getUsername()), 'CCDNMessageMessageBundle'));
-        //    return false;
-        //}
-        //
-        //// Update recipients folders read/unread cache counts.
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
 	}
 
 	/**
@@ -190,26 +184,35 @@ class MessageServer
 		$envelope->setOwnedByUser($recipient);
 		$envelope->setIsFlagged($isFlagged);
 		$envelope->setSentDate(new \Datetime('now'));
+
+		$folders = $this->folderModel->findAllFoldersForUserById($recipient->getId());
+		
+		if ($this->quotaHelper->isQuotaAllowanceFilled($folders)) {
+			// $this->dispatcher->dispatch();
+			return false;
+		}
 		
 		// 1 find inbox for recipient
 		switch ($mode) {
 			case self::MESSAGE_SEND: 
-				$folder = $this->folderModel->findOneFolderForUserByNameAndUserId('inbox', $recipient->getId());
+				$envelope->setFolder($this->folderHelper->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_INBOX));
 				$envelope->setSentToUser($recipient);
 				break;
 			case self::MESSAGE_SAVE_CARBON_COPY:
-				$folder = $this->folderModel->findOneFolderForUserByNameAndUserId('sent', $recipient->getId());
+				$envelope->setFolder($this->folderHelper->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_SENT));
 				$envelope->setIsRead(true);
 				break;
 			case self::MESSAGE_SAVE_DRAFT:
-				$folder = $this->folderModel->findOneFolderForUserByNameAndUserId('drafts', $recipient->getId());
+				$envelope->setFolder($this->folderHelper->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_DRAFTS));
 				$envelope->setIsRead(true);
 				$envelope->setIsDraft(true);
 				break;
 		}
 
-		$envelope->setFolder($folder);
 		$this->envelopeModel->saveEnvelope($envelope);
+		
+        // Update recipients folders read/unread cache counts.
+        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
 		
 		return $envelope;
 	}

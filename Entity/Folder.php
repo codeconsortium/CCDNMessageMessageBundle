@@ -126,6 +126,20 @@ class Folder extends FolderModel
      *
      * @return integer
      */
+    public function isSpecialType($type)
+    {
+		if ($this->getSpecialType() == $type) {
+			return true;
+		}
+		
+		return false;
+    }
+
+    /**
+     * Get specialType
+     *
+     * @return integer
+     */
     public function getSpecialType()
     {
         return $this->specialType;

@@ -485,4 +485,13 @@ class BaseController extends ContainerAware
     {
         return $this->container->get('ccdn_message_message.component.crumb_builder');
     }
+
+    /**
+     *
+     * @access protected
+     */
+    protected function getFolderHelper()
+    {
+        return $this->container->get('ccdn_message_message.component.helper.folder');
+    }
 }
