@@ -78,7 +78,31 @@ class EnvelopeModel extends BaseModel implements ModelInterface
     {
 		return $this->getRepository()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $userId);
 	}
-	
+
+    /**
+     *
+     * @access public
+     * @param  int     $folderId
+     * @param  int     $userId
+     * @return array
+     */
+    public function getReadCounterForFolderById($folderId, $userId)
+    {
+		return $this->getRepository()->getReadCounterForFolderById($folderId, $userId);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int     $folderId
+     * @param  int     $userId
+     * @return array
+     */
+    public function getUnreadCounterForFolderById($folderId, $userId)
+    {
+		return $this->getRepository()->getUnreadCounterForFolderById($folderId, $userId);
+    }
+
     const MESSAGE_SEND = 0;
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;

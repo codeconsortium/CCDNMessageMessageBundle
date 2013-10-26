@@ -49,7 +49,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 
         if (null == $registry) {
             $registry = new Registry();
-            $registry->setOwnedBy($user);
+            $registry->setOwnedByUser($user);
         }
 
         //if (null == $folders) {
@@ -62,7 +62,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
         //    $totalMessageCount += $folder->getCachedUnreadCount();
         //}
         //
-        //$registry->setCachedUnreadMessagesCount($totalMessageCount);
+        //$registry->setCachedUnreadMessageCount($totalMessageCount);
         //
         //$this->persist($registry)->flush();
 

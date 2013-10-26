@@ -31,11 +31,6 @@ use CCDNMessage\MessageBundle\Entity\Message;
  */
 class MessageModel extends BaseModel implements ModelInterface
 {
-	public function saveMessage(Message $message)
-	{
-		return $this->getManager()->saveMessage($message);
-	}
-
     /**
      *
      * @access public
@@ -46,4 +41,9 @@ class MessageModel extends BaseModel implements ModelInterface
     {
 		return $this->getRepository()->getAllEnvelopesForMessageById($messageId);
     }
+
+	public function saveMessage(Message $message)
+	{
+		return $this->getManager()->saveMessage($message);
+	}
 }

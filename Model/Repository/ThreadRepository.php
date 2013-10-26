@@ -37,7 +37,7 @@ class ThreadRepository extends BaseRepository implements RepositoryInterface
      * @param  int                                        $userId
      * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
-    public function findThreadWithAllEnvelopesByThreadIDAndUserId($threadId, $userId)
+    public function findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId)
     {
         if (null == $threadId || ! is_numeric($threadId) || $threadId == 0) {
             throw new \Exception('Thread id "' . $threadId . '" is invalid!');

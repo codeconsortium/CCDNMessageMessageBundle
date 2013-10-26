@@ -43,18 +43,7 @@ class UserModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  string                                              $username
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function findOneUserByUsername($username)
-    {
-		return $this->getRepository()->findOneUserByUsername($username);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array()                                      $usernames
+     * @param  array                                        $usernames
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findTheseUsersByUsername(array $usernames = array())

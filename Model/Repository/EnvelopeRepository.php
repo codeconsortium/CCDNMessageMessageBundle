@@ -138,4 +138,74 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 
         return $this->gateway->findEnvelopes($qb, $params);
     }
+
+    /**
+     *
+     * @access public
+     * @param  int     $folderId
+     * @param  int     $userId
+     * @return array
+     */
+    public function getReadCounterForFolderById($folderId, $userId)
+    {
+        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
+            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
+        }
+
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+		$qb = $this->createSelectQuery(array('e'));
+		
+        $qb
+            ->select('COUNT(DISTINCT e.id) AS readCount')
+            ->where('e.folder = :folderId')
+            ->andWhere('e.ownedByUser = :userId')
+            ->andWhere('e.isRead = TRUE')
+            ->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('readCount' => null);
+        } catch (\Exception $e) {
+            return array('readCount' => null);
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int     $folderId
+     * @param  int     $userId
+     * @return array
+     */
+    public function getUnreadCounterForFolderById($folderId, $userId)
+    {
+        if (null == $folderId || ! is_numeric($folderId) || $folderId == 0) {
+            throw new \Exception('Folder id "' . $folderId . '" is invalid!');
+        }
+
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+		$qb = $this->createSelectQuery(array('e'));
+
+        $qb
+            ->select('COUNT(DISTINCT e.id) AS unreadCount')
+            ->where('e.folder = :folderId')
+            ->andWhere('e.ownedByUser = :userId')
+            ->andWhere('e.isRead = FALSE')
+            ->setParameters(array(':folderId' => $folderId, ':userId'=> $userId));
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('unreadCount' => null);
+        } catch (\Exception $e) {
+            return array('unreadCount' => null);
+        }
+    }
 }

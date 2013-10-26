@@ -42,12 +42,10 @@ class UserMessageController extends UserMessageBaseController
         $this->isAuthorised('ROLE_USER');
         $user = $this->getUser();
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
-        $thread = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIDAndUserId($envelope->getThread()->getId(), $user->getId());
+        $thread = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIdAndUserId($envelope->getThread()->getId(), $user->getId());
         $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
-        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $envelope->getFolder()->getName());
-
+        $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
-        $message = $envelope->getMessage();
 
         return $this->renderResponse('CCDNMessageMessageBundle:User:Message/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserMessageShow($envelope),
@@ -176,7 +174,7 @@ class UserMessageController extends UserMessageBaseController
         $user = $this->getUser();
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
-        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+        $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
 
         //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -196,7 +194,7 @@ class UserMessageController extends UserMessageBaseController
         $user = $this->getUser();
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
-        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+        $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsUnread($envelope, $folders)->flush();
 
         //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -216,7 +214,7 @@ class UserMessageController extends UserMessageBaseController
         $user = $this->getUser();
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
-        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $envelope->getFolder()->getName());
+        $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->delete($envelope, $folders)->flush();
 
         //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));

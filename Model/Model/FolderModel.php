@@ -33,25 +33,6 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderModel extends BaseModel implements ModelInterface
 {
-	public function saveFolder(Folder $folder)
-	{
-		return $this->getManager()->saveFolder($folder);
-	}
-
-	public function findOneFolderForUserByNameAndUserId($folderName, $userId)
-	{
-		return $this->getRepository()->findOneFolderForUserByNameAndUserId($folderName, $userId);
-	}
-
-
-
-
-
-
-
-
-
-
     /**
      *
      * @access public
@@ -63,42 +44,11 @@ class FolderModel extends BaseModel implements ModelInterface
 		return $this->getRepository()->findAllFoldersForUserById($userId);
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                          $folderId
-     * @param  int                                          $userId
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findOneFolderByIdAndUserById($folderId, $userId)
-    {
-		return $this->getRepository()->findOneFolderByIdAndUserById($folderId, $userId);
-    }
+	public function saveFolder(Folder $folder)
+	{
+		return $this->getManager()->saveFolder($folder);
+	}
 
-    /**
-     *
-     * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
-     * @return array
-     */
-    public function getReadCounterForFolderById($folderId, $userId)
-    {
-		return $this->getRepository()->getReadCounterForFolderById($folderId, $userId);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
-     * @return array
-     */
-    public function getUnreadCounterForFolderById($folderId, $userId)
-    {
-		return $this->getRepository()->getUnreadCounterForFolderById($folderId, $userId);
-    }
-	
     /**
      *
      * @access public
@@ -131,17 +81,5 @@ class FolderModel extends BaseModel implements ModelInterface
     public function updateFolderCounterCaches(Folder $folder)
     {
         return $this->getManager()->updateFolderCounterCaches($folder);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  array                                    $folders
-     * @param  string                                   $folderName
-     * @return \CCDNMessage\MessageBundle\Entity\Folder
-     */
-    public function getCurrentFolder($folders, $folderName)
-    {
-        return $this->getManager()->getCurrentFolder($folders, $folderName);
     }
 }

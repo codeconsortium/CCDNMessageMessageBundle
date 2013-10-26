@@ -54,7 +54,7 @@ class FolderManager extends BaseManager implements ManagerInterface
 
         foreach ($folderNames as $key => $folderName) {
             $folder = new Folder();
-            $folder->setOwnedBy($user);
+            $folder->setOwnedByUser($user);
             $folder->setName($folderName);
             $folder->setSpecialType($key);
             $folder->setCachedReadCount(0);
@@ -109,28 +109,5 @@ class FolderManager extends BaseManager implements ManagerInterface
         $this->persist($folder);
 
         return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  array                                    $folders
-     * @param  string                                   $folderName
-     * @return \CCDNMessage\MessageBundle\Entity\Folder
-     */
-    public function getCurrentFolder($folders, $folderName)
-    {
-        // find the current folder
-        $currentFolder = null;
-
-        foreach ($folders as $key => $folder) {
-            if ($folder->getName() == $folderName) {
-                $currentFolder = $folder;
-
-                break;
-            }
-        }
-
-        return $currentFolder;
     }
 }

@@ -37,13 +37,8 @@ class UserFolderController extends UserFolderBaseController
     public function showFolderByNameAction($folderName)
     {
         $this->isAuthorised('ROLE_USER');
-
-        if ($folderName != 'inbox' && $folderName != 'sent' && $folderName != 'drafts' && $folderName != 'junk' && $folderName != 'trash') {
-            $this->isFound(false, 'Folder not found.');
-        }
-		
         $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
-        $currentFolder = $this->getFolderModel()->getCurrentFolder($folders, $folderName);
+        $this->isFound($currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $folderName));
         $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $this->getQuery('page', 1), 25);
 
         return $this->renderResponse('CCDNMessageMessageBundle:User:Folder/show.html.', array(

@@ -45,36 +45,9 @@ class UserRepository extends BaseRepository implements RepositoryInterface
         $params = array(':userId' => $userId);
 
         $qb = $this->createSelectQuery(array('u'));
-
+		
         $qb
-            ->select('u')
-            ->from($this->entityClass, 'u')
             ->where('u.id = :userId')
-            ->setMaxResults(1)
-        ;
-
-        return $this->gateway->findUser($qb, $params);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  string                                              $username
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function findOneUserByUsername($username)
-    {
-        if (null == $username || ! is_string($username) || $username == 0) {
-            throw new \Exception('Username "' . $username . '" is invalid!');
-        }
-
-        $params = array(':username' => $username);
-
-        $qb = $this->createSelectQuery(array('u'));
-
-        $qb
-            ->where('u.username = :username')
-            ->setMaxResults(1)
         ;
 
         return $this->gateway->findUser($qb, $params);
@@ -89,7 +62,7 @@ class UserRepository extends BaseRepository implements RepositoryInterface
     public function findTheseUsersByUsername(array $usernames = array())
     {
         if (null == $usernames || count($usernames) < 1) {
-            throw new \Exception('Username "' . $userId . '" is invalid!');
+            throw new \Exception('Usernames array must be provided!');
         }
 
         $params = array();
@@ -97,9 +70,7 @@ class UserRepository extends BaseRepository implements RepositoryInterface
         $qb = $this->createSelectQuery(array('u'));
 
         $qb
-            ->where(
-                $qb->expr()->in('u.username', $usernames)
-            )
+            ->where($qb->expr()->in('u.username', $usernames))
         ;
 
         return $this->gateway->findUsers($qb, $params);

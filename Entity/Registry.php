@@ -38,7 +38,7 @@ class Registry extends RegistryModel
      *
      * @var integer $cachedUnreadMessageCount
      */
-    protected $cachedUnreadMessagesCount = 0;
+    protected $cachedUnreadMessageCount = 0;
 
     /**
      *
@@ -61,24 +61,24 @@ class Registry extends RegistryModel
     }
 
     /**
-     * Get cachedUnreadMessagesCount
+     * Get cachedUnreadMessageCount
      *
      * @return integer
      */
-    public function getCachedUnreadMessagesCount()
+    public function getCachedUnreadMessageCount()
     {
-        return $this->cachedUnreadMessagesCount;
+        return $this->cachedUnreadMessageCount;
     }
 
     /**
-     * Set cachedUnreadMessagesCount
+     * Set cachedUnreadMessageCount
      *
-     * @param  integer  $cachedUnreadMessagesCount
+     * @param  integer  $cachedUnreadMessageCount
      * @return Registry
      */
-    public function setCachedUnreadMessagesCount($cachedUnreadMessagesCount)
+    public function setCachedUnreadMessageCount($cachedUnreadMessageCount)
     {
-        $this->cachedUnreadMessagesCount = $cachedUnreadMessagesCount;
+        $this->cachedUnreadMessageCount = $cachedUnreadMessageCount;
 
         return $this;
     }

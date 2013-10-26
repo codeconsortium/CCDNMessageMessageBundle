@@ -46,8 +46,8 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //		//
 //		$registry = new Registry();
 //
-//		$registry->setOwnedBy($manager->merge($this->getReference('user-admin')));
-//		$registry->setCachedUnreadMessagesCount(1);
+//		$registry->setOwnedByUser($manager->merge($this->getReference('user-admin')));
+//		$registry->setCachedUnreadMessageCount(1);
 //
 //		$manager->persist($registry);
 //		$manager->flush();
@@ -60,7 +60,7 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //
 //        foreach ($folderNames as $key => $folderName) {
 //            $folder = new Folder();
-//            $folder->setOwnedBy($manager->merge($this->getReference('user-admin')));
+//            $folder->setOwnedByUser($manager->merge($this->getReference('user-admin')));
 //            $folder->setName($folderName);
 //            $folder->setSpecialType($key);
 //            $folder->setCachedReadCount(0);
@@ -81,7 +81,7 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //		$message = new Message();
 //
 //		$message->setFolder($inbox);
-//		$message->setOwnedBy($manager->merge($this->getReference('user-admin')));
+//		$message->setOwnedByUser($manager->merge($this->getReference('user-admin')));
 //		$message->setSentTo($manager->merge($this->getReference('user-admin')));
 //		$message->setSendTo($manager->merge($this->getReference('user-admin')));
 //		$message->setSentFrom($manager->merge($this->getReference('user-test')));

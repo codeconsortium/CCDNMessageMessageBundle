@@ -32,9 +32,9 @@ abstract class RegistryModel
 {
     /**
      *
-     * @var \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     * @var \Symfony\Component\Security\Core\User\UserInterface $ownedByUser
      */
-    protected $ownedBy = null;
+    protected $ownedByUser = null;
 
     /**
      *
@@ -50,20 +50,20 @@ abstract class RegistryModel
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function getOwnedBy()
+    public function getOwnedByUser()
     {
-        return $this->ownedBy;
+        return $this->ownedByUser;
     }
 
     /**
      * Set ownedBy
      *
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedBy
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $ownedByUser
      * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
-    public function setOwnedBy(UserInterface $ownedBy = null)
+    public function setOwnedByUser(UserInterface $ownedByUser = null)
     {
-        $this->ownedBy = $ownedBy;
+        $this->ownedByUser = $ownedByUser;
 
         return $this;
     }

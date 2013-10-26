@@ -77,7 +77,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
             return 0;
         }
 
-        return $unreadMessageCount->getCachedUnreadMessagesCount();
+        return $unreadMessageCount->getCachedUnreadMessageCount();
     }
 
     /**

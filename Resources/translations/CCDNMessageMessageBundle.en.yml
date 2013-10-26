@@ -29,12 +29,12 @@ sidebar:
 link:
     message:
         messages:            "Messages"
-        compose:             "Compose New"
+        compose:             "Compose"
         reply:               "Reply"
         forward:             "Forward"
         delete:              "Delete"
-        mark_as_read:        "Mark as Read"
-        mark_as_unread:      "Mark as Unread"
+        mark_as_read:        "Mark Read"
+        mark_as_unread:      "Mark Unread"
         move_to:             "Move to folder"
         send_draft:          "Send"
         select_none:         "None"

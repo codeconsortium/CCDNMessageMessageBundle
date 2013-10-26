@@ -47,8 +47,8 @@ class RegistryRepository extends BaseRepository implements RepositoryInterface
         $qb = $this->createSelectQuery(array('r', 'r_owned_by'));
 
         $qb
-            ->leftJoin('r.ownedBy', 'r_owned_by')
-            ->where('r.ownedBy = :userId')
+            ->leftJoin('r.ownedByUser', 'r_owned_by')
+            ->where('r.ownedByUser = :userId')
             ->setParameters($params)
             ->setMaxResults(1);
 

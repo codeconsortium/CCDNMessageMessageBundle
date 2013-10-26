@@ -36,8 +36,8 @@ class ThreadModel extends BaseModel implements ModelInterface
      * @param  int                                        $userId
      * @return \CCDNMessage\MessageBundle\Entity\Envelope
      */
-    public function findThreadWithAllEnvelopesByThreadIDAndUserId($threadId, $userId)
+    public function findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId)
     {
-		return $this->getRepository()->findThreadWithAllEnvelopesByThreadIDAndUserId($threadId, $userId);
+		return $this->getRepository()->findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId);
     }
 }
