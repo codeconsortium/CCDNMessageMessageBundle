@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
+use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
@@ -26,9 +26,9 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\RegistryModel $registryModel
+     * @var \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
      */
-    protected $registryModel;
+    protected $registryHelper;
 
     /**
      *
@@ -40,12 +40,12 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Model\Model\RegistryModel      $registryManager
-     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
+     * @param \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
+     * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
      */
-    public function __construct(ModelInterface $registryModel, SecurityContext $securityContext)
+    public function __construct($registryHelper, SecurityContext $securityContext)
     {
-        $this->registryModel = $registryModel;
+        $this->registryHelper = $registryHelper;
         $this->securityContext = $securityContext;
     }
 
@@ -71,7 +71,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
     {
         $user = $this->securityContext->getToken()->getUser();
 
-        $unreadMessageCount = $this->registryModel->findRegistryForUserById($user->getId());
+        $unreadMessageCount = $this->registryHelper->findOneRegistryForUserByIdId($user);
 
         if ($unreadMessageCount == null) {
             return 0;

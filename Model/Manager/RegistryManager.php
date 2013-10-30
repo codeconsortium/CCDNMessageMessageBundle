@@ -37,35 +37,23 @@ class RegistryManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     * @param \CCDNMessage\MessageBundle\Entity\Registry          $registry
-     * @param array                                               $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
      */
-    public function updateCacheUnreadMessagesForUser(UserInterface $user, Registry $registry = null, $folders = null)
+    public function setupDefaults(UserInterface $user)
     {
-        if (null == $registry) {
-            $registry = $this->findRegistryForUserById($user->getId());
+        if (! is_object($user) || ! $user instanceof UserInterface) {
+            throw new \Exception('User cannot be null and must implement UserInterface!');
         }
 
-        if (null == $registry) {
-            $registry = new Registry();
-            $registry->setOwnedByUser($user);
-        }
+        $registry = new Registry();
+        $registry->setOwnedByUser($user);
+        $registry->setCachedUnreadMessageCount(0);
 
-        //if (null == $folders) {
-        //    $folders = $this->managerBag->getFolderManager()->findAllFoldersForUserById($user->getId());
-        //}
-        //
-        //$totalMessageCount = 0;
-        //
-        //foreach ($folders as $key => $folder) {
-        //    $totalMessageCount += $folder->getCachedUnreadCount();
-        //}
-        //
-        //$registry->setCachedUnreadMessageCount($totalMessageCount);
-        //
-        //$this->persist($registry)->flush();
-
-        return $this;
+        $this->persist($registry);
+		$this->flush();
+		$this->refresh($registry);
+		
+		return $registry;
     }
 }

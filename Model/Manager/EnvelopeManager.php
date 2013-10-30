@@ -48,7 +48,11 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
 
 	public function saveEnvelope(Envelope $envelope)
 	{
-		return $this->persist($envelope)->flush();
+		$this->persist($envelope);
+		$this->flush();
+		$this->refresh($envelope);
+		
+		return $envelope;
 	}
 
     /**
@@ -60,13 +64,11 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      */
     public function markAsRead(Envelope $envelope, $folders)
     {
-        $envelope->setIsRead(true);
+        $envelope->setRead(true);
         $this
             ->persist($envelope)
             ->flush()
         ;
-
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
 
         return $this;
     }
@@ -76,20 +78,17 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      * @access public
      * @param  array                                                    $envelopes
      * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
      * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
-    public function bulkMarkAsRead($envelopes, $folders, UserInterface $user)
+    public function bulkMarkAsRead($envelopes, $folders)
     {
         foreach ($envelopes as $envelope) {
-            $envelope->setIsRead(true);
+            $envelope->setRead(true);
 
             $this->persist($envelope);
         }
 
         $this->flush();
-
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
 
         return $this;
     }
@@ -103,13 +102,11 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      */
     public function markAsUnread(Envelope $envelope, $folders)
     {
-        $envelope->setIsRead(false);
+        $envelope->setRead(false);
         $this
             ->persist($envelope)
             ->flush()
         ;
-
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
 
         return $this;
     }
@@ -119,19 +116,16 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      * @access public
      * @param  array                                                    $envelopes
      * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
      * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
-    public function bulkMarkAsUnread($envelopes, $folders, UserInterface $user)
+    public function bulkMarkAsUnread($envelopes, $folders)
     {
         foreach ($envelopes as $envelope) {
-            $envelope->setIsRead(false);
+            $envelope->setRead(false);
             $this->persist($envelope);
         }
 
         $this->flush();
-
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
 
         return $this;
     }
@@ -144,17 +138,17 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      */
     protected function hardDelete(Envelope $envelope)
     {
-        //$message = $this->managerBag->getMessageManager()->getAllEnvelopesForMessageById($envelope->getMessage()->getId());
-        //
-        //if (count($message->getEnvelopes()) < 2) {
-        //    if (count($message->getThread()->getMessages()) < 2) {
-        //        $this->remove($envelope->getThread());
-        //    }
-        //
-        //    $this->remove($envelope->getMessage());
-        //}
-        //
-        //$this->remove($envelope);
+        $message = $envelope->getMessage();
+        
+        if (count($message->getEnvelopes()) < 2) {
+            if (count($message->getThread()->getMessages()) < 2) {
+                $this->remove($envelope->getThread());
+            }
+        
+            $this->remove($envelope->getMessage());
+        }
+        
+        $this->remove($envelope);
     }
 
     /**
@@ -181,8 +175,6 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         }
         
         $this->flush();
-        
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($envelope->getOwnedByUser(), $folders)->flush();
         
         return $this;
     }
@@ -219,8 +211,6 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         
         $this->flush();
         
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
-        
         return $this;
     }
 
@@ -241,8 +231,6 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         }
         
         $this->flush();
-        
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($user, $folders)->flush();
         
         return $this;
     }

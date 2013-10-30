@@ -160,4 +160,30 @@ final class MessageEvents
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent instance.
      */
     const USER_MESSAGE_CREATE_FORWARD_FLOODED = 'ccdn_message.user.message.create_forward.flooded';
+
+    /**
+     *
+     * The USER_ENVELOPE_RECEIVE_COMPLETE event occurs when the envelope receiving process is completed after persisting.
+     *
+     * This event allows you to modify the request object and set a flash message.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent instance.
+     */
+	const USER_ENVELOPE_RECEIVE_COMPLETE = 'ccdn_message.user.envelope.receive.complete';
+
+    /**
+     *
+     * The USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL event occurs when the envelope receiving process fails due to users inbox being full.
+     *
+     * This event allows you to modify the request object and set a flash message.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedInboxFullEvent instance.
+     */
+	const USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL = 'ccdn_message.user.envelope.receive.failed.inbox_full';
+    /**
+     *
+     * The USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL event occurs when the envelope receiving process fails due to users outbox being full.
+     *
+     * This event allows you to modify the request object and set a flash message.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedOutboxFullEvent instance.
+     */
+	const USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL = 'ccdn_message.user.envelope.receive.failed.outbox_full';
 }

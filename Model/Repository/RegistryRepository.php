@@ -36,7 +36,7 @@ class RegistryRepository extends BaseRepository implements RepositoryInterface
      * @param  int                                        $userId
      * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
-    public function findRegistryForUserById($userId)
+    public function findOneRegistryForUserById($userId)
     {
         if (null == $userId || ! is_numeric($userId) || $userId == 0) {
             throw new \Exception('User id "' . $userId . '" is invalid!');

@@ -36,11 +36,6 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  */
 class EnvelopeModel extends BaseModel implements ModelInterface
 {
-	public function saveEnvelope(Envelope $envelope)
-	{
-		return $this->getManager()->saveEnvelope($envelope);
-	}
-
     /**
      *
      * @access public
@@ -113,6 +108,16 @@ class EnvelopeModel extends BaseModel implements ModelInterface
         self::MESSAGE_SAVE_DRAFT,
     );
 
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNMessage\MessageBundle\Entity\Envelope
+	 */
+	public function saveEnvelope(Envelope $envelope)
+	{
+		return $this->getManager()->saveEnvelope($envelope);
+	}
+
     /**
      *
      * @access public
@@ -130,12 +135,11 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      * @access public
      * @param  array                                                    $envelopes
      * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
      * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
-    public function bulkMarkAsRead($envelopes, $folders, UserInterface $user)
+    public function bulkMarkAsRead($envelopes, $folders)
     {
-		return $this->getManager()->bulkMarkAsRead($envelopes, $folders, $user);
+		return $this->getManager()->bulkMarkAsRead($envelopes, $folders);
     }
 
     /**
@@ -155,23 +159,11 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      * @access public
      * @param  array                                                    $envelopes
      * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterface      $user
      * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
-    public function bulkMarkAsUnread($envelopes, $folders, UserInterface $user)
+    public function bulkMarkAsUnread($envelopes, $folders)
     {
-		return $this->getManager()->bulkMarkAsUnread($envelopes, $folders, $user);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope
-     * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
-     */
-    protected function hardDelete(Envelope $envelope)
-    {
-		return $this->getManager()->hardDelete($envelope);
+		return $this->getManager()->bulkMarkAsUnread($envelopes, $folders);
     }
 
     /**

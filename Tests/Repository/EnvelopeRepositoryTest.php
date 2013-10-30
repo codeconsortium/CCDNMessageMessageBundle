@@ -71,8 +71,8 @@ class EnvelopeRepositoryTest extends TestBase
 		
 		$counter = $this->getEnvelopeModel()->getReadCounterForFolderById($folders[0]->getId(), $user->getId());
 		
-		$this->assertTrue(array_key_exists('readCount', $counter));
-		$this->assertSame('0', $counter['readCount']);
+		$this->assertTrue(array_key_exists('read', $counter));
+		$this->assertSame('0', $counter['read']);
     }
 
     public function testGetUnreadCounterForFolderById()
@@ -85,8 +85,8 @@ class EnvelopeRepositoryTest extends TestBase
 		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
 		
 		$counter = $this->getEnvelopeModel()->getUnreadCounterForFolderById($folders[0]->getId(), $user->getId());
-		//ldd($counter);
-		$this->assertTrue(array_key_exists('unreadCount', $counter));
-		$this->assertSame('3', $counter['unreadCount']);
+
+		$this->assertTrue(array_key_exists('unread', $counter));
+		$this->assertSame('3', $counter['unread']);
     }
 }

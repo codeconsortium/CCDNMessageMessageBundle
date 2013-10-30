@@ -107,9 +107,7 @@ class BaseFormHandler
                 if ($this->getSubmitAction() == 'post') {
                     $formData = $this->form->getData();
 
-                    $this->onSuccess($formData);
-
-                    return true;
+                    return $this->onSuccess($formData);
                 }
             }
         }

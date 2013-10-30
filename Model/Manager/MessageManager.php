@@ -35,6 +35,10 @@ class MessageManager extends BaseManager implements ManagerInterface
 {
 	public function saveMessage(Message $message)
 	{
-		return $this->persist($message)->flush();
+		$this->persist($message);
+		$this->flush();
+		$this->refresh($message);
+		
+		return $message;
 	}
 }

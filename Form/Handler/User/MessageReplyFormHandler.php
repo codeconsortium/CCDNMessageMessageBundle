@@ -177,15 +177,11 @@ class MessageReplyFormHandler extends BaseFormHandler
                 $isFlagged = $this->form->get('is_flagged')->getData();
 
                 if ($this->getSubmitAction($this->request) == 'save_draft') {
-                    $this->model->saveDraft($message, $isFlagged)->flush();
-
-                    return false;
+                    return $this->model->saveDraft($message, $isFlagged)->flush();
                 }
 
                 if ($this->getSubmitAction($this->request) == 'send') {
-                    $this->onSuccess($message, $isFlagged);
-
-                    return true;
+                    return $this->onSuccess($message, $isFlagged);
                 }
             }
         }
@@ -272,12 +268,6 @@ class MessageReplyFormHandler extends BaseFormHandler
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_REPLY_SUCCESS, new UserMessageEvent($this->request, $message));
-		
-		$this->messageServer->sendMessage($message, $isFlagged);
-		
-        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_REPLY_COMPLETE, new UserMessageEvent($this->request, $message));
-		
-		return $this->model;
+		return $this->messageServer->sendMessage($this->request, $message, $isFlagged);
     }
 }

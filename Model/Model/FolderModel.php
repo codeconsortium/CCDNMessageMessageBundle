@@ -44,6 +44,12 @@ class FolderModel extends BaseModel implements ModelInterface
 		return $this->getRepository()->findAllFoldersForUserById($userId);
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
+	 * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
+	 */
 	public function saveFolder(Folder $folder)
 	{
 		return $this->getManager()->saveFolder($folder);
@@ -58,28 +64,5 @@ class FolderModel extends BaseModel implements ModelInterface
     public function setupDefaults(UserInterface $user)
     {
         return $this->getManager()->setupDefaults($user);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
-     * @param  array                                                  $folders
-     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
-     */
-    public function updateAllFolderCachesForUser(UserInterface $user, $folders)
-    {
-        return $this->getManager()->updateAllFolderCachesForUser($user, $folders);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
-     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
-     */
-    public function updateFolderCounterCaches(Folder $folder)
-    {
-        return $this->getManager()->updateFolderCounterCaches($folder);
     }
 }

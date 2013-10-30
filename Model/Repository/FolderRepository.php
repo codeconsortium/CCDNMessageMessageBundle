@@ -50,14 +50,6 @@ class FolderRepository extends BaseRepository implements RepositoryInterface
             ->where('f.ownedByUser = :userId')
             ->orderBy('f.specialType', 'ASC');
 
-        $folders = $this->gateway->findFolders($qb, $params);
-
-        if (null == $folders || count($folders) < 1) {
-            $this->setupDefaults($userId)->flush();
-
-            $folders = $this->findAllFoldersForUserById($userId);
-        }
-
-        return $folders;
+        return $this->gateway->findFolders($qb, $params);
     }
 }

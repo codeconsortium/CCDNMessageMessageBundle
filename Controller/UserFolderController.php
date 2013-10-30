@@ -37,7 +37,7 @@ class UserFolderController extends UserFolderBaseController
     public function showFolderByNameAction($folderName)
     {
         $this->isAuthorised('ROLE_USER');
-        $folders = $this->getFolderModel()->findAllFoldersForUserById($this->getUser()->getId());
+        $folders = $this->getFolderHelper()->findAllFoldersForUserById($this->getUser());
         $this->isFound($currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $folderName));
         $messagesPager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($currentFolder->getId(), $this->getUser()->getId(), $this->getQuery('page', 1), 25);
 

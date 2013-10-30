@@ -13,6 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Component\Helper;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use CCDNMessage\MessageBundle\Model\Model\FolderModel;
 use CCDNMessage\MessageBundle\Entity\Folder;
 
 /**
@@ -28,6 +30,42 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderHelper
 {
+	/**
+	 * 
+	 * @access protected
+	 * @var \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+	 */
+	protected $folderModel;
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+	 */
+	public function __construct(FolderModel $folderModel)
+	{
+		$this->folderModel = $folderModel;
+	}
+
+    /**
+     *
+     * @access public
+	 * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllFoldersForUserById(UserInterface $user)
+    {
+		$folders = $this->folderModel->findAllFoldersForUserById($user->getId());
+		
+        if (null == $folders || count($folders) < 1) {
+            $this->folderModel->setupDefaults($user);
+        
+            $folders = $this->folderModel->findAllFoldersForUserById($user->getId());
+        }
+		
+		return $folders;
+    }
+
     /**
      *
      * @access public
@@ -44,7 +82,7 @@ class FolderHelper
 		
 		return null;
     }
-	
+
     /**
      *
      * @access public

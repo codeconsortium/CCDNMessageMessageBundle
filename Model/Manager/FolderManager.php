@@ -35,7 +35,11 @@ class FolderManager extends BaseManager implements ManagerInterface
 {
 	public function saveFolder(Folder $folder)
 	{
-		return $this->persist($folder)->flush();
+		$this->persist($folder);
+		$this->flush();
+		$this->refresh($folder);
+		
+		return $folder;
 	}
 
     /**
@@ -47,11 +51,11 @@ class FolderManager extends BaseManager implements ManagerInterface
     public function setupDefaults(UserInterface $user)
     {
         if (! is_object($user) || ! $user instanceof UserInterface) {
-            throw new \Exception('User id "' . $userId . '" is invalid!');
+            throw new \Exception('User cannot be null and must implement UserInterface!');
         }
 
-        $folderNames = Folder::$defaultSpecialTypes; //array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'junk', 5 => 'trash');
-
+        $folderNames = Folder::$defaultSpecialTypes;
+		
         foreach ($folderNames as $key => $folderName) {
             $folder = new Folder();
             $folder->setOwnedByUser($user);
@@ -64,50 +68,8 @@ class FolderManager extends BaseManager implements ManagerInterface
             $this->persist($folder);
         }
 
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
-     * @param  Array()                                                $folders
-     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
-     */
-    public function updateAllFolderCachesForUser(UserInterface $user, $folders)
-    {
-        foreach ($folders as $folder) {
-            $this->updateFolderCounterCaches($folder);
-        }
-
-        $this->flush();
-
-        //$this->managerBag->getRegistryManager()->updateCacheUnreadMessagesForUser($user, null, $folders)->flush();
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
-     * @return \CCDNMessage\MessageBundle\Model\Manager\FolderManager
-     */
-    public function updateFolderCounterCaches(Folder $folder)
-    {
-        $readCount = $this->getReadCounterForFolderById($folder->getId(), $folder->getOwnedByUser()->getId());
-        $readCount = $readCount['readCount'];
-        $unreadCount = $this->getUnreadCounterForFolderById($folder->getId(), $folder->getOwnedByUser()->getId());
-
-        $unreadCount = $unreadCount['unreadCount'];
-        $totalCount = ($readCount + $unreadCount);
-
-        $folder->setCachedReadCount($readCount);
-        $folder->setCachedUnreadCount($unreadCount);
-        $folder->setCachedTotalMessageCount($totalCount);
-
-        $this->persist($folder);
-
-        return $this;
+		$this->flush();
+		
+		return $this;
     }
 }

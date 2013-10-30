@@ -15,18 +15,21 @@ namespace CCDNMessage\MessageBundle\Tests\Repository;
 
 use CCDNMessage\MessageBundle\Tests\TestBase;
 
-class RegistryRepositoryTest extends TestBase
+class MessageManagerTest extends TestBase
 {
-    public function testFindRegistryForUserById()
+	public function testSaveMessage()
 	{
 		$this->purge();
 		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
-		$registry = $this->addNewRegistry($user);
+		$folders = $this->addFixturesForFolders(array($user));
 
-		$registryFound = $this->getRegistryModel()->findOneRegistryForUserById($user->getId());
+		$message = $this->addNewMessage('subject', 'message body', $user, false, false);
+		$this->getMessageModel()->saveMessage($message);
 
-		$this->assertNotNull($registryFound);
-		$this->assertInstanceOf('CCDNMessage\MessageBundle\Entity\Registry', $registryFound);
+		$envelopes = $this->addFixturesForEnvelopes(array($message), $folders, array($user));
+		$messageFound = $this->getMessageModel()->getAllEnvelopesForMessageById($message->getId());
+		
+		$this->assertNotNull($messageFound);
 	}
 }

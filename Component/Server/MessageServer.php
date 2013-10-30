@@ -17,8 +17,10 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
-use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveInboxFullEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveOutboxFullEvent;
 
 use CCDNMessage\MessageBundle\Component\Helper\QuotaHelper;
 use CCDNMessage\MessageBundle\Component\Helper\FolderHelper;
@@ -134,7 +136,7 @@ class MessageServer
 	 * @param  \CCDNMessage\MessageBundle\Entity\Message $message
 	 * @param  bool                                      $isFlagged
 	 */
-	public function sendMessage(Message $message, $isFlagged)
+	public function sendMessage($request, Message $message, $isFlagged)
 	{
         // Create a new Thread.
 		if (null == $message->getThread()) {
@@ -142,15 +144,24 @@ class MessageServer
 	        $message->setThread($thread);
 		}
 
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_SUCCESS, new UserMessageEvent($request, $message));
+
         $this->messageModel->saveMessage($message)->refresh($message);
 
-        $recipients = $this->getRecipients($message);
-        foreach ($recipients as $recipientKey => $recipient) {
-            $this->receiveMessage($message, $recipient, self::MESSAGE_SEND, $isFlagged);
-        }
-        
-        // Add Carbon Copy.
-        $this->receiveMessage($message, $message->getSentFromUser(), self::MESSAGE_SAVE_CARBON_COPY, $isFlagged);
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_COMPLETE, new UserMessageEvent($request, $message));
+
+        // Add Carbon Copy first.
+		if ($this->receiveMessage($request, $message, $message->getSentFromUser(), self::MESSAGE_SAVE_CARBON_COPY, $isFlagged)) {
+	        $recipients = $this->getRecipients($message);
+			
+	        foreach ($recipients as $recipientKey => $recipient) {
+	            $this->receiveMessage($request, $message, $recipient, self::MESSAGE_SEND, $isFlagged);
+	        }
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -159,9 +170,15 @@ class MessageServer
 	 * @param  \CCDNMessage\MessageBundle\Entity\Message $message
 	 * @param  bool                                      $isFlagged
 	 */
-	public function saveDraft(Message $message, $isFlagged)
+	public function saveDraft($request, Message $message, $isFlagged)
 	{
-	    $this->receiveMessage($message, $message->getSentFromUser(), self::MESSAGE_SAVE_DRAFT, $isFlagged);
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_SUCCESS, new UserMessageEvent($request, $message));
+
+        $this->messageModel->saveMessage($message)->refresh($message);
+
+        $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_COMPLETE, new UserMessageEvent($request, $message));
+		
+	    $this->receiveMessage($request, $message, $message->getSentFromUser(), self::MESSAGE_SAVE_DRAFT, $isFlagged);
 	}
 
 	/**
@@ -172,7 +189,7 @@ class MessageServer
 	 * @param  int                                                 $mode
 	 * @param  bool                                                $isFlagged
 	 */
-	public function receiveMessage(Message $message, UserInterface $recipient, $mode, $isFlagged = false)
+	public function receiveMessage($request, Message $message, UserInterface $recipient, $mode, $isFlagged = false)
 	{
 		if (! in_array($mode, $this->sendMode)) {
 			throw new \Exception('Message send mode not valid!');
@@ -182,13 +199,18 @@ class MessageServer
 		$envelope->setMessage($message);
 		$envelope->setThread($message->getThread());
 		$envelope->setOwnedByUser($recipient);
-		$envelope->setIsFlagged($isFlagged);
+		$envelope->setFlagged($isFlagged);
 		$envelope->setSentDate(new \Datetime('now'));
 
-		$folders = $this->folderModel->findAllFoldersForUserById($recipient->getId());
+		$folders = $this->folderHelper->findAllFoldersForUserById($recipient);
 		
 		if ($this->quotaHelper->isQuotaAllowanceFilled($folders)) {
-			// $this->dispatcher->dispatch();
+			if ($mode == self::MESSAGE_SAVE_CARBON_COPY) {
+		        $this->dispatcher->dispatch(MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL, new UserEnvelopeReceiveFailedOutboxFullEvent($request, $envelope, $recipient));
+			} else {
+		        $this->dispatcher->dispatch(MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL, new UserEnvelopeReceiveFailedInboxFullEvent($request, $envelope, $recipient));
+			}
+			
 			return false;
 		}
 		
@@ -200,21 +222,21 @@ class MessageServer
 				break;
 			case self::MESSAGE_SAVE_CARBON_COPY:
 				$envelope->setFolder($this->folderHelper->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_SENT));
-				$envelope->setIsRead(true);
+				$envelope->setRead(true);
 				break;
 			case self::MESSAGE_SAVE_DRAFT:
 				$envelope->setFolder($this->folderHelper->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_DRAFTS));
-				$envelope->setIsRead(true);
-				$envelope->setIsDraft(true);
+				$envelope->setRead(true);
+				$envelope->setDraft(true);
 				break;
 		}
 
 		$this->envelopeModel->saveEnvelope($envelope);
 		
         // Update recipients folders read/unread cache counts.
-        //$this->managerBag->getFolderManager()->updateAllFolderCachesForUser($ownedByUser, $folders)->flush();
+        $this->dispatcher->dispatch(MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE, new UserEnvelopeReceiveEvent($request, $envelope, $recipient, $folders));
 		
-		return $envelope;
+		return true;
 	}
 
     /**

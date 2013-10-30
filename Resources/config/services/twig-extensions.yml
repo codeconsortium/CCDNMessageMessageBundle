@@ -10,7 +10,7 @@ services:
     ccdn_message_message.component.twig_extension.unread_message_count:
         class: %ccdn_message_message.component.twig_extension.unread_message_count.class%
         arguments:
-            - @ccdn_message_message.model.registry
+            - @ccdn_message_message.component.helper.registry
             - @security.context
         tags:
             - { name: twig.extension }
@@ -18,7 +18,7 @@ services:
     ccdn_message_message.component.twig_extension.folder_list:
         class: %ccdn_message_message.component.twig_extension.folder_list.class%
         arguments:
-            - @ccdn_message_message.model.folder
+            - @ccdn_message_message.component.helper.folder
             - @security.context
         tags:
             - { name: twig.extension }

@@ -42,6 +42,12 @@ class MessageModel extends BaseModel implements ModelInterface
 		return $this->getRepository()->getAllEnvelopesForMessageById($messageId);
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
+	 * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
+	 */
 	public function saveMessage(Message $message)
 	{
 		return $this->getManager()->saveMessage($message);

@@ -53,7 +53,7 @@ class UserFolderBaseController extends BaseController
             return;
         }
 
-        $folders = $this->getFolderModel()->findAllFoldersForUserById($user->getId());
+        $folders = $this->getFolderHelper()->findAllFoldersForUserById($user);
 
         $submitAction = $this->getSubmitAction();
 
@@ -62,11 +62,11 @@ class UserFolderBaseController extends BaseController
         }
 
         if ($submitAction == 'mark_as_read') {
-            $this->getEnvelopeModel()->bulkMarkAsRead($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsRead($envelopes, $folders)->flush();
         }
 
         if ($submitAction == 'mark_as_unread') {
-            $this->getEnvelopeModel()->bulkMarkAsUnread($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsUnread($envelopes, $folders)->flush();
         }
 
         if ($submitAction == 'move_to') {

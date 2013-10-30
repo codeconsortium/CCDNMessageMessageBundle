@@ -106,7 +106,7 @@ class Envelope extends EnvelopeModel
      *
      * @return boolean
      */
-    public function getIsDraft()
+    public function isDraft()
     {
         return $this->isDraft;
     }
@@ -117,7 +117,7 @@ class Envelope extends EnvelopeModel
      * @param  boolean $isDraft
      * @return Message
      */
-    public function setIsDraft($isDraft)
+    public function setDraft($isDraft)
     {
         $this->isDraft = $isDraft;
 
@@ -129,7 +129,7 @@ class Envelope extends EnvelopeModel
      *
      * @return boolean
      */
-    public function getIsRead()
+    public function isRead()
     {
         return $this->isRead;
     }
@@ -140,7 +140,7 @@ class Envelope extends EnvelopeModel
      * @param  boolean $isRead
      * @return Message
      */
-    public function setIsRead($isRead)
+    public function setRead($isRead)
     {
         $this->isRead = $isRead;
 
@@ -152,7 +152,7 @@ class Envelope extends EnvelopeModel
      *
      * @return boolean
      */
-    public function getIsFlagged()
+    public function isFlagged()
     {
         return $this->isFlagged;
     }
@@ -163,7 +163,7 @@ class Envelope extends EnvelopeModel
      * @param  boolean $isFlagged
      * @return Message
      */
-    public function setIsFlagged($isFlagged)
+    public function setFlagged($isFlagged)
     {
         $this->isFlagged = $isFlagged;
 

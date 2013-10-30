@@ -26,7 +26,7 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\ModelInterface $folderModel
+     * @var \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
      */
     protected $folderModel;
 
@@ -40,12 +40,12 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface $folderManager
-     * @param \Symfony\Component\Security\Core\SecurityContext      $securityContext
+     * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
+     * @param  \Symfony\Component\Security\Core\SecurityContext         $securityContext
      */
-    public function __construct(ModelInterface $folderModel, SecurityContext $securityContext)
+    public function __construct($folderHelper, SecurityContext $securityContext)
     {
-        $this->folderModel = $folderModel;
+        $this->folderHelper = $folderHelper;
         $this->securityContext = $securityContext;
     }
 
@@ -69,9 +69,9 @@ class FolderListExtension extends \Twig_Extension
      */
     public function folderList()
     {
-        $userId = $this->securityContext->getToken()->getUser()->getId();
+        $user = $this->securityContext->getToken()->getUser();
 
-        if (null == $userId) {
+        if (null == $user) {
             return array(
                 'quota' => array(
                     'allowed' => '0',
@@ -86,7 +86,7 @@ class FolderListExtension extends \Twig_Extension
                 'allowed' => '0',
                 'used'    => '0',
             ),
-            'folders' => $this->folderModel->findAllFoldersForUserById($userId),
+            'folders' => $this->folderHelper->findAllFoldersForUserById($user),
         );
     }
 

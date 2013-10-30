@@ -90,9 +90,9 @@ class LoadMessageData extends AbstractFixture implements OrderedFixtureInterface
 //
 //		$message->setSubject('Welcome Message.');
 //		$message->setBody('Welcome to CodeConsortium! This is the private messaging system, use this to send and receive messages to other users.<br><br>Check back here from time to time to see if you have any new messages.');
-//		$message->setIsRead(false);
-//		$message->setIsFlagged(true);
-//		$message->setIsDraft(false);
+//		$message->setRead(false);
+//		$message->setFlagged(true);
+//		$message->setDraft(false);
 //
 //		$manager->persist($message);
 //		$manager->flush();

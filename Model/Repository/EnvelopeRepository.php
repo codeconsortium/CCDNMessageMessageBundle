@@ -159,7 +159,7 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 		$qb = $this->createSelectQuery(array('e'));
 		
         $qb
-            ->select('COUNT(DISTINCT e.id) AS readCount')
+            ->select('COUNT(DISTINCT e.id) AS read')
             ->where('e.folder = :folderId')
             ->andWhere('e.ownedByUser = :userId')
             ->andWhere('e.isRead = TRUE')
@@ -168,9 +168,9 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
         try {
             return $qb->getQuery()->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('readCount' => null);
+            return array('read' => null);
         } catch (\Exception $e) {
-            return array('readCount' => null);
+            return array('read' => null);
         }
     }
 
@@ -194,7 +194,7 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
 		$qb = $this->createSelectQuery(array('e'));
 
         $qb
-            ->select('COUNT(DISTINCT e.id) AS unreadCount')
+            ->select('COUNT(DISTINCT e.id) AS unread')
             ->where('e.folder = :folderId')
             ->andWhere('e.ownedByUser = :userId')
             ->andWhere('e.isRead = FALSE')
@@ -203,9 +203,9 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
         try {
             return $qb->getQuery()->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('unreadCount' => null);
+            return array('unread' => null);
         } catch (\Exception $e) {
-            return array('unreadCount' => null);
+            return array('unread' => null);
         }
     }
 }

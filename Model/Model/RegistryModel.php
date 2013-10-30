@@ -39,20 +39,19 @@ class RegistryModel extends BaseModel implements ModelInterface
      * @param  int                                        $userId
      * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
-    public function findRegistryForUserById($userId)
+    public function findOneRegistryForUserById($userId)
     {
-		return $this->getRepository()->findRegistryForUserById($userId);
+		return $this->getRepository()->findOneRegistryForUserById($userId);
     }
 
     /**
      *
      * @access public
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     * @param \CCDNMessage\MessageBundle\Entity\Registry
-     * @param array
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
-    public function updateCacheUnreadMessagesForUser(UserInterface $user, Registry $registry = null, $folders = null)
+    public function setupDefaults(UserInterface $user)
     {
-		return $this->getManager()->updateCacheUnreadMessagesForUser($user, $registry, $folders);
+        return $this->getManager()->setupDefaults($user);
     }
 }

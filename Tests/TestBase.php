@@ -75,7 +75,7 @@ class TestBase extends WebTestCase
         $executor->purge();
 	}
 
-	protected function addNewUser($username, $email, $password)
+	protected function addNewUser($username, $email, $password, $persist = true, $andFlush = true)
 	{
 		$user = new User();
 		
@@ -83,10 +83,14 @@ class TestBase extends WebTestCase
 		$user->setEmail($email);
 		$user->setPlainPassword($password);
 		
-		$this->em->persist($user);
-		$this->em->flush();
+		if ($persist) {
+			$this->em->persist($user);
 		
-		$this->em->refresh($user);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($user);
+			}
+		}
 		
 		return $user;
 	}
@@ -97,13 +101,15 @@ class TestBase extends WebTestCase
 		
 		$userNames = array('admin', 'tom', 'dick', 'harry');
 		foreach ($userNames as $username) {
-			$users[$username] = $this->addNewUser($username, $username . '@foobar.com', 'password');
+			$users[$username] = $this->addNewUser($username, $username . '@foobar.com', 'password', true, false);
 		}
+		
+		$this->em->flush();
 		
 		return $users;
 	}
 
-	protected function addNewFolder($folderName, $ownedByUser, $specialType)
+	protected function addNewFolder($folderName, $ownedByUser, $specialType, $persist = true, $andFlush = true)
 	{
 		$folder = new Folder();
 		
@@ -111,10 +117,14 @@ class TestBase extends WebTestCase
 		$folder->setOwnedByUser($ownedByUser);
 		$folder->setSpecialType($specialType);
 		
-		$this->em->persist($folder);
-		$this->em->flush();
-
-		$this->em->refresh($folder);
+		if ($persist) {
+			$this->em->persist($folder);
+		
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($folder);
+			}
+		}
 		
 		return $folder;
 	}
@@ -126,14 +136,16 @@ class TestBase extends WebTestCase
 		$folderNames = Folder::$defaultSpecialTypes;
 		foreach ($users as $ownedByUser) {
 			foreach ($folderNames as $folderSpecialType => $folderName) {
-				$folders[] = $this->addNewFolder($folderName, $ownedByUser, $folderSpecialType);
+				$folders[] = $this->addNewFolder($folderName, $ownedByUser, $folderSpecialType, true, false);
 			}
 		}
+		
+		$this->em->flush();
 		
 		return $folders;
 	}
 
-	protected function addNewMessage($messageSubject, $messageBody, $sentFromUser)
+	protected function addNewMessage($messageSubject, $messageBody, $sentFromUser, $persist = true, $andFlush = true)
 	{
 		$message = new Message();
 		
@@ -144,10 +156,14 @@ class TestBase extends WebTestCase
 		$message->setSendTo(' ');
 		$message->setThread(new Thread());
 		
-		$this->em->persist($message);
-		$this->em->flush();
+		if ($persist) {
+			$this->em->persist($message);
 		
-		$this->em->refresh($message);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($message);
+			}
+		}
 		
 		return $message;
 	}
@@ -159,14 +175,16 @@ class TestBase extends WebTestCase
 		$messageBodies = array('test_category_1', 'test_category_2', 'test_category_3');
 		foreach ($users as $sentFromUser) {
 			foreach ($messageBodies as $messageBody) {
-				$messages[] = $this->addNewMessage($messageBody, $messageBody, $sentFromUser);
+				$messages[] = $this->addNewMessage($messageBody, $messageBody, $sentFromUser, true, false);
 			}
 		}
+
+		$this->em->flush();
 
 		return $messages;
 	}
 
-	protected function addNewEnvelope($message, $folder, $ownedByUser, $sentToUser, $isDraft, $isRead, $isFlagged)
+	protected function addNewEnvelope($message, $folder, $ownedByUser, $sentToUser, $isDraft, $isRead, $isFlagged, $persist = true, $andFlush = true)
 	{
 		$envelope = new Envelope();
 		
@@ -178,14 +196,18 @@ class TestBase extends WebTestCase
 		$envelope->setOwnedByUser($ownedByUser);
 		$envelope->setSentToUser($sentToUser);
 		$envelope->setSentDate($message->getCreatedDate());
-		$envelope->setIsDraft($isDraft);
-		$envelope->setIsRead($isRead);
-		$envelope->setIsFlagged($isFlagged);
+		$envelope->setDraft($isDraft);
+		$envelope->setRead($isRead);
+		$envelope->setFlagged($isFlagged);
 		
-		$this->em->persist($envelope);
-		$this->em->flush();
-		
-		$this->em->refresh($envelope);
+		if ($persist) {
+			$this->em->persist($envelope);
+
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($envelope);
+			}
+		}
 		
 		return $envelope;
 	}
@@ -197,25 +219,31 @@ class TestBase extends WebTestCase
 		foreach ($users as $sentToUser) {
 			foreach ($folders as $folder) {
 				foreach ($messages as $message) {
-					$envelopes[] = $this->addNewEnvelope($message, $folder, $sentToUser, $sentToUser, false, false, false);
+					$envelopes[] = $this->addNewEnvelope($message, $folder, $sentToUser, $sentToUser, false, false, false, true, false);
 				}
 			}
 		}
 		
+		$this->em->flush();
+		
 		return $envelopes;
 	}
 
-	protected function addNewRegistry($user)
+	protected function addNewRegistry($user, $persist = true, $andFlush = true)
 	{
 		$registry = new Registry();
 		
 		$registry->setOwnedByUser($user);
 		$registry->setCachedUnreadMessageCount(0);
 
-		$this->em->persist($registry);
-		$this->em->flush();
+		if ($persist) {
+			$this->em->persist($registry);
 		
-		$this->em->refresh($registry);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($registry);
+			}
+		}
 		
 		return $registry;
 	}
@@ -225,8 +253,10 @@ class TestBase extends WebTestCase
 		$registries = array();
 		
 		foreach ($users as $user) {
-			$registries[] = $this->addNewRegistry($user);
+			$registries[] = $this->addNewRegistry($user, true, false);
 		}
+		
+		$this->em->flush();
 		
 		return $registries;
 	}
