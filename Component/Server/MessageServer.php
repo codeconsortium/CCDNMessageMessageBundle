@@ -146,7 +146,7 @@ class MessageServer
 
         $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_SUCCESS, new UserMessageEvent($request, $message));
 
-        $this->messageModel->saveMessage($message)->refresh($message);
+        $this->messageModel->saveMessage($message);
 
         $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_COMPLETE, new UserMessageEvent($request, $message));
 
