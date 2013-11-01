@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_message_message.folder.show.layout_template %}
 
-{% block title %}{{- truncDot('title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') |slice(0, ccdn_message_message.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -28,7 +28,6 @@
 						<tr>
 							<th style="width: 16px;"></th>
 							<th style="width: 16px;"><i class="glyphicon glyphicon-flag"></i></th>
-							{#<th style="width: 16px;"><i class="glyphicon glyphicon-file"></i></th>#}
 							<th style="width: 16px;"><i class="glyphicon glyphicon-inbox"></i></th>
 							<th style="width: 16px;"><i class="glyphicon glyphicon-eye-open"></i></th>
 							<th style="width: 60px;">{{- ((current_folder.name == 'sent') ? 'generic.thead.to' :'generic.thead.from') | trans({}, 'CCDNMessageMessageBundle') -}}</th>
@@ -56,19 +55,6 @@
 					</nav>
 				</div>
 			</form>
-
-			{#
-			<section class="well">
-				<ul style="list-style:none;">
-					<li><i class="icon-pencil"></i> Draft</li>
-					<li><i class="icon-repeat"></i> Sent to yourself</li>
-					<li><i class="icon-share-alt"></i> Sent Draft</li>
-					<li><i class="icon-flag"></i> Message Flagged as Important</li>
-					<li><i class="icon-file"></i> Attached File</li>
-					<li><i class="icon-envelope"></i> Unread</li>
-				<ul>
-			</section>
-			#}
 		</section>
 
 	{%- endspaceless -%}

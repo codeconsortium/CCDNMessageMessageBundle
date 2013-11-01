@@ -129,133 +129,63 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         return false;
     }
 
-    ///**
-    // *
-    // * @Given /^I should not see topic named "([^"]*)" on topic list$/
-    // */
-    //public function iShouldNotSeeTopicNamedOnTopicList($topicId)
-    //{
-    //    $this->iShouldNotSeeForTheQuery($topicId, 'table > tbody > tr > td');
-    //}
-    //
-    ///**
-    // * @Given /^I follow "([^"]*)" from the links on post "([^"]*)"$/
-    // */
-    //public function iFollowFromTheLinksOnPost($linkText, $postId)
-    //{
-    //    $link = null;
-    //    $items = $this->getPage()->findAll('css', '[id^=' . $postId . '] > header a');
-    //
-    //    $didFindIt = false;
-    //    $linkTextLower = strtolower($linkText);
-    //    $whatWeFound = array();
-    //    foreach ($items as $item) {
-    //        $attr = $this->getAttributesFromElement($item);
-    //        $whatWeFound[] = $attr;
-    //        if ($this->isSubstringInArray($attr, $linkTextLower)) {
-    //            $didFindIt = true;
-    //            $link = $item;
-    //            break;
-    //        }
-    //    }
-    //
-    //    WebTestCase::assertTrue($didFindIt, 'Could not find the link');
-    //    WebTestCase::assertNotNull($link, 'Could not find the link');
-    //
-    //    $link->click();
-    //}
-    //
-    ///**
-    // *
-    // * @Given /^I should see "([^"]*)" from the links on post "([^"]*)"$/
-    // */
-    //public function shouldSeeFromTheLinksOnPost($text, $postId)
-    //{
-    //    // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
-    //    $items = array_map(
-    //        function($element) { return strtolower($element->getText()); },
-    //        $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
-    //    );
-    //
-    //    $didFindIt = false;
-    //    $textLower = strtolower($text);
-    //    foreach ($items as $item) {
-    //        if (strpos($item, $textLower) !== false) {
-    //            $didFindIt = true;
-    //            break;
-    //        }
-    //    }
-    //
-    //    WebTestCase::assertTrue($didFindIt, "$text was not found.");
-    //}
-    //
-    ///**
-    // *
-    // * @Given /^I should not see "([^"]*)" from the links on post "([^"]*)"$/
-    // */
-    //public function shouldNotSeeFromTheLinksOnPost($text, $postId)
-    //{
-    //    // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
-    //    $items = array_map(
-    //        function ($element) { return strtolower($element->getText()); },
-    //        $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
-    //    );
-    //
-    //    $didFindIt = false;
-    //    $textLower = strtolower($text);
-    //    foreach ($items as $item) {
-    //        if (strpos($item, $textLower) !== false) {
-    //            $didFindIt = true;
-    //            break;
-    //        }
-    //    }
-    //
-    //    WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
-    //}
-    //
-    ///**
-    // * @Given /^I follow "([^"]*)" for the query "([^"]*)"$/
-    // */
-    //public function iFollowForTheQuery($linkText, $cssQuery)
-    //{
-    //    $items = $this->getPage()->findAll('css', $cssQuery);
-    //
-    //    $didFindIt = false;
-    //    $link = null;
-    //    $linkTextLower = strtolower($linkText);
-    //    $whatWeFound = array();
-    //    foreach ($items as $item) {
-    //        $attr = $this->getAttributesFromElement($item);
-    //        $whatWeFound[] = $attr;
-    //        if ($this->isSubstringInArray($attr, $linkTextLower)) {
-    //            $didFindIt = true;
-    //            $link = $item;
-    //            break;
-    //        }
-    //    }
-    //
-    //    WebTestCase::assertTrue($didFindIt, 'Could not find the link');
-    //    WebTestCase::assertNotNull($link, 'Could not find the link');
-    //
-    //    $link->click();
-    //}
-    //
-    ///**
-    // *
-    // * @Then /^"([^"]*)" should precede "([^"]*)" for the query "([^"]*)"$/
-    // */
-    //public function shouldPrecedeForTheQuery($textBefore, $textAfter, $cssQuery)
-    //{
-    //    // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
-    //    $items = array_map(
-    //        function ($element) { return $element->getText(); },
-    //        $this->getPage()->findAll('css', $cssQuery)
-    //    );
-    //
-    //    WebTestCase::assertTrue(in_array($textBefore, $items), 'The before text was not found!');
-    //    WebTestCase::assertTrue(in_array($textAfter,  $items), 'The after text was not found!');
-    //    WebTestCase::assertGreaterThan(array_search($textBefore, $items), array_search($textAfter, $items), "$textBefore does not proceed $textAfter");
-    //}
+    /**
+     * @Given /^I should see envelope "([^"]*)"$/
+     */
+    public function iShouldSeeEnvelope($messageSubject)
+    {
+	    $this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+    }
+
+    /**
+     * @Given /^I should not see envelope "([^"]*)"$/
+     */
+    public function iShouldNotSeeEnvelope($messageSubject)
+    {
+	    $this->iShouldNotSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+    }
+
+    /**
+     * @Given /^I should see envelope "([^"]*)" is unread$/
+     */
+    public function iShouldSeeEnvelopeIsUnread($messageSubject)
+    {
+	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+		$cssQuery = 'table > tbody > tr > td';
+        $elements = $this->getPage()->findAll('css', $cssQuery);
+
+        $didFindSubject = false;
+		$didFindIcon = false;
+        $textLower = strtolower($messageSubject);
+        foreach ($elements as $element) {
+			if ($element->has('css', 'i.glyphicon-envelope')) {
+				$didFindIcon = true;
+			}
+			
+            if (strpos(strtolower($element->getText()), $textLower) !== false) {
+                $didFindSubject = true;
+            }
+        }
+        
+        WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
+        WebTestCase::assertTrue($didFindIcon, "$messageSubject was is read but should be unread.");
+    }
+
+    /**
+     * @Given /^I should see message preview "([^"]*)"$/
+     */
+    public function iShouldSeeMessagePreview($messageSubject)
+    {
+	    $this->iShouldSeeForTheQuery($messageSubject, 'table.message-preview > tbody > tr > td');
+    }
+
+    /**
+     * @Given /^I should see message "([^"]*)"$/
+     */
+    public function iShouldSeeMessage($messageBody)
+    {
+	    $this->iShouldSeeForTheQuery($messageBody, 'table.message > tbody > tr > td > article');
+    }
 
     /**
      *
@@ -304,58 +234,4 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     
         WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
     }
-    //
-    ///**
-    // *
-    // * @Given /^I select from "([^"]*)" a date "([^"]*)"$/
-    // */
-    //public function iSelectFromADateDaysFromNow($cssQuery, $diff)
-    //{
-    //    $items = $this->getPage()->findAll('css', $cssQuery);
-    //
-    //    $fields = array();
-    //    foreach ($items as $item) {
-    //        $id = $item->getAttribute('id');
-    //
-    //        if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
-    //            $fields['year'] = $item;
-    //            continue;
-    //        }
-    //
-    //        if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
-    //            $fields['month'] = $item;
-    //            continue;
-    //        }
-    //
-    //        if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
-    //            $fields['day'] = $item;
-    //            continue;
-    //        }
-    //    }
-    //
-    //    WebTestCase::assertCount(3, $fields, 'Date fields could not be found!');
-    //    WebTestCase::assertArrayHasKey('year', $fields, 'The year field could not be found!');
-    //    WebTestCase::assertArrayHasKey('month', $fields, 'The month field could not be found!');
-    //    WebTestCase::assertArrayHasKey('day', $fields, 'The day field could not be found!');
-    //
-    //    $date = new \Datetime($diff);
-    //
-    //    $filterFunc = function($options, $has) {
-    //        foreach ($options as $option) {
-    //            if ($option->getText() == $has) {
-    //                return true;
-    //            }
-    //        }
-    //
-    //        return false;
-    //    };
-    //
-    //    WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['year']->findAll('css', 'option'), $date->format('Y'))));
-    //    WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['month']->findAll('css', 'option'), $date->format('M'))));
-    //    WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['day']->findAll('css', 'option'), $date->format('j'))));
-    //
-    //    $fields['year']->selectOption($date->format('Y'));
-    //    $fields['month']->selectOption($date->format('M'));
-    //    $fields['day']->selectOption($date->format('j'));
-    //}
 }

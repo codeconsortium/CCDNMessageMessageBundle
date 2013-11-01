@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\Manager;
 
-use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
@@ -73,19 +73,19 @@ abstract class BaseManager
     /**
      *
      * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      */
     protected $dispatcher;
 
     /**
      *
      * @access public
-     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Doctrine\Bundle\DoctrineBundle\Registry                                   $doctrine
      * @param \Symfony\Component\Security\Core\SecurityContext                           $securityContext
      * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface                  $gateway
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway)
+    public function __construct(ContainerAwareEventDispatcher  $dispatcher, Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway)
     {
 		$this->dispatcher = $dispatcher;
         $this->doctrine = $doctrine;

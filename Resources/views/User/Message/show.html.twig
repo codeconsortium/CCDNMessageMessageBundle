@@ -3,7 +3,7 @@
 {% set LayoutTemplate = ccdn_message_message.message.show.layout_template %}
 
 {% block title %}
-	{{- truncDot('title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle'), ccdn_message_message.seo.title_length) -}}
+	{{- 'title.message.show' |trans({'%message_subject%': envelope.getMessage().getSubject() }, 'CCDNMessageMessageBundle') |slice(0, ccdn_message_message.seo.title_length) -}}
 {% endblock %}
 
 

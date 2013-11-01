@@ -99,6 +99,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     protected $users = array();
+	protected $folders = array();
 
     /**
      *
@@ -176,13 +177,11 @@ class DataContext extends BehatContext implements KernelAwareInterface
 		$folderNames = Folder::$defaultSpecialTypes;
 		foreach ($users as $ownedByUser) {
 			foreach ($folderNames as $folderSpecialType => $folderName) {
-				$folders[] = $this->addNewFolder($folderName, $ownedByUser, $folderSpecialType, true, false);
+				$this->folders[] = $this->addNewFolder($folderName, $ownedByUser, $folderSpecialType, true, false);
 			}
 		}
 		
 		$this->getEntityManager()->flush();
-		
-		return $folders;
 	}
 
     protected $messages = array();
@@ -210,6 +209,30 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
     public function thereIsMessage($messageSubject, $messageBody, $sentFromUserName, $sentToUserName, $folderName, $persist = true, $andFlush = true)
     {
+		foreach ($this->users as $user) {
+			if ($user->getUsername() == $sentToUserName) {
+				$sentToUser = $user;
+
+				$recipientUsersFolders = array();
+				foreach ($this->folders as $folder) {
+					if ($folder->getOwnedByUser()->getId() == $sentToUser->getId()) {
+						$recipientUsersFolders[$folder->getName()] = $folder;
+					}
+				}
+			}
+			
+			if ($user->getUsername() == $sentFromUserName) {
+				$sentFromUser = $user;
+				
+				$sendersUsersFolders = array();
+				foreach ($this->folders as $folder) {
+					if ($folder->getOwnedByUser()->getId() == $sentFromUser->getId()) {
+						$sendersUsersFolders[$folder->getName()] = $folder;
+					}
+				}
+			}
+		}
+
 		$message = new Message();
 		
 		$message->setSentFromUser($sentFromUser);
@@ -228,32 +251,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
 			}
 		}
 		
-		foreach ($this->users as $user) {
-			if ($user->getUsername() == $sentToUserName) {
-				$sentToUser = $user;
-
-				$recipientUsersFolders = array();
-				foreach ($folders as $folder) {
-					if ($folder->getOwnedByUser()->getId() == $sentToUser->getId()) {
-						$recipientUsersFolders[$folder->getName()] = $folder;
-					}
-				}
-			}
-			
-			if ($user->getUsername() == $sentFromUserName) {
-				$sentFromUser = $user;
-				
-				$sendersUsersFolders = array();
-				foreach ($folders as $folder) {
-					if ($folder->getOwnedByUser()->getId() == $sentFromUser->getId()) {
-						$sendersUsersFolders[$folder->getName()] = $folder;
-					}
-				}
-			}
-		}
-		
 		$envelopes = array();
-		$envelopes[] = $this->addNewEnvelope($message, $recipientUsersFolders['inbox'], $sentToUser, $sentToUser, false, false, false, true, false);
+		$envelopes[] = $this->addNewEnvelope($message, $recipientUsersFolders[$folderName], $sentToUser, $sentToUser, false, false, false, true, false);
 		$envelopes[] = $this->addNewEnvelope($message, $sendersUsersFolders['sent'], $sentFromUser, $sentToUser, false, false, false, true, false);
 		
 		$this->getEntityManager()->flush();

@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Component\Server;
 
-use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
@@ -51,7 +51,7 @@ class MessageServer
 	/**
 	 * 
 	 * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
 	 */
 	protected $dispatcher;
 
@@ -110,7 +110,7 @@ class MessageServer
 	/**
 	 * 
 	 * @access public
-	 * @param  \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\FolderModel                         $folderModel
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\MessageModel                        $messageModel
 	 * @param  \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel                       $envelopeModel
@@ -118,7 +118,7 @@ class MessageServer
 	 * @param  \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper                    $quotaHelper
 	 * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper                   $folderHelper
 	 */
-	public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FolderModel $folderModel,
+	public function __construct(ContainerAwareEventDispatcher  $dispatcher, FolderModel $folderModel,
 	 MessageModel $messageModel, EnvelopeModel $envelopeModel, UserModel $userModel, QuotaHelper $quotaHelper, FolderHelper $folderHelper)
 	{
 		$this->dispatcher    = $dispatcher;

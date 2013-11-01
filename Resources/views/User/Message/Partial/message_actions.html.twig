@@ -1,11 +1,5 @@
 {%- spaceless -%}
 
-	{%- if envelope.isDraft -%}
-		<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_draft_send', {'envelopeId': envelope.id }) -}}">
-			{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}
-		</a>
-	{%- endif -%}
-
 	<a class="btn btn-primary" href="{{- path('ccdn_message_message_user_mail_compose_reply', {'envelopeId': envelope.id }) -}}">
 		{{- 'link.message.reply' |trans({}, 'CCDNMessageMessageBundle') -}}
 	</a>

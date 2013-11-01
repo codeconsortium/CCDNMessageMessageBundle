@@ -3,10 +3,6 @@
 		{{- 'link.message.compose' | trans({}, 'CCDNMessageMessageBundle') -}}
 	</a>
 
-	{%- if current_folder.getName == 'drafts' -%}
-		<input type="submit" name="submit[send]" class="btn btn-primary" value="{{- 'link.message.send_draft' |trans({}, 'CCDNMessageMessageBundle') -}}">
-	{%- endif -%}
-
 	<input type="submit" name="submit[delete]" class="btn btn-danger" value="{{- 'link.message.delete' |trans({}, 'CCDNMessageMessageBundle') -}}">
 
 	<input type="submit" name="submit[mark_as_read]" class="btn btn-default" value="{{- 'link.message.mark_as_read' |trans({}, 'CCDNMessageMessageBundle') -}}">

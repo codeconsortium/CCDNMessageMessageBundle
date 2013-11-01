@@ -17,7 +17,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 
 use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
 use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
@@ -94,14 +94,14 @@ class MessageForwardFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                       $factory
      * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                      $messageFormType
      * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface                     $model
      * @param |CCDNMessage\MessageBundle\Component\FloodControl                         $floodControl
      * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer                  $messageServer
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
+    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
     {
 		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -175,10 +175,6 @@ class MessageForwardFormHandler extends BaseFormHandler
                 $message->setSentFromUser($this->sender);
                 $message->setCreatedDate(new \DateTime());
                 $isFlagged = $this->form->get('is_flagged')->getData();
-
-                if ($this->getSubmitAction($this->request) == 'save_draft') {
-                    return $this->model->saveDraft($message, $isFlagged)->flush();
-                }
 
                 if ($this->getSubmitAction($this->request) == 'send') {
                     return $this->onSuccess($message, $isFlagged);

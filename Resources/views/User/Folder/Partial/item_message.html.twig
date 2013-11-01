@@ -1,7 +1,7 @@
 {%- spaceless -%}
 
-	{%- set sender = create_profile(message.getSentFromUser) -%}
-	{%- set recipient = create_profile(envelope.getSentToUser) -%}
+	{%- set sender = message.getSentFromUser -%}
+	{%- set recipient = envelope.getSentToUser -%}
 
 	<tr class="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- envelope.id -}}">
 		<td>
@@ -13,15 +13,11 @@
 				{%- set qualifiers = qualifiers|merge({1:'unread'}) -%}
 			{%- endif -%}
 			
-			{%- if envelope.isDraft -%}
-				{%- set qualifiers = qualifiers|merge({2:'draft'}) -%}
-			{%- endif -%}
-			
 			{%- if envelope.isFlagged -%}
 				{%- set qualifiers = qualifiers|merge({3:'flagged'}) -%}
 			{%- endif -%}
 			
-			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true" {#data-identifier="{{- current_folder.name -}}"#} 
+			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true" 
 				data-qualifiers='[
 					{%- for qualifier in qualifiers -%}
 						{%- if loop.last -%}"{{- qualifier -}}"{%- else -%}"{{- qualifier-}}", {% endif -%}
@@ -34,31 +30,12 @@
 				<i class="glyphicon glyphicon-flag"></i>
 			{%- endif -%}
 		</td>
-		{#
 		<td>
-			{%- if message.attachment -%}
-				<i class="icon-file"></i>
-			{%- endif -%}
-		</td>
-		#}
-		<td>
-			{%- if envelope.isDraft -%}
-				{%- if message.sentFromUser -%}
-					{%- if message.sentFromUser.getId == app.user.id -%}
-						<i class="glyphicon glyphicon-repeat"></i>
-					{%- else -%}
-						<i class="glyphicon glyphicon-share-alt"></i>
-					{%- endif -%}
+			{%- if message.sentFromUser -%}
+				{%- if message.sentFromUser.getId == app.user.id -%}
+					<i class="glyphicon glyphicon-repeat"></i>
 				{%- else -%}
-					<i class="glyphicon glyphicon-pencil"></i>
-				{%- endif -%}
-			{%- else -%}
-				{%- if message.sentFromUser -%}
-					{%- if message.sentFromUser.getId == app.user.id -%}
-						<i class="glyphicon glyphicon-repeat"></i>
-					{%- else -%}
-						<i class="glyphicon glyphicon-share-alt"></i>
-					{%- endif -%}
+					<i class="glyphicon glyphicon-share-alt"></i>
 				{%- endif -%}
 			{%- endif -%}
 		</td>
@@ -68,17 +45,17 @@
 		<td>
 			{%- if current_folder.name == "sent" -%}
 				{%- if message.getSendTo -%}
-					{{- truncDot(message.getSendTo |title, 50) -}}
+					{{- message.getSendTo |title |slice(0, 50) -}}
 				{%- else -%}
 					Guest
 				{%- endif -%}
 			{%- else -%}
-				{{- sender.getProfilePath() |raw -}}
+				{{- sender.username -}}
 			{%- endif -%}
 		</td>
 		<td>
 			<a href="{{- path('ccdn_message_message_user_mail_show_by_id', {'envelopeId': envelope.getId }) -}}#{{- envelope.id -}}" title="{{- message.getSubject -}}">
-				{{- truncDot(message.getSubject, ccdn_message_message.folder.show.subject_truncate) -}}
+				{{- message.getSubject |slice(0, ccdn_message_message.folder.show.subject_truncate) -}}
 			</a>
 		</td>
 		<td>
