@@ -146,6 +146,32 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^I should see envelope "([^"]*)" is read$/
+     */
+    public function iShouldSeeEnvelopeIsRead($messageSubject)
+    {
+	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+		$cssQuery = 'table > tbody > tr > td';
+        $elements = $this->getPage()->findAll('css', $cssQuery);
+
+        $didFindSubject = false;
+		$didFindIcon = false;
+        $textLower = strtolower($messageSubject);
+        foreach ($elements as $element) {
+			if ($element->has('css', 'i.glyphicon-envelope')) {
+				$didFindIcon = true;
+			}
+			
+            if (strpos(strtolower($element->getText()), $textLower) !== false) {
+                $didFindSubject = true;
+            }
+        }
+        
+        WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
+        WebTestCase::assertFalse($didFindIcon, "$messageSubject was is unread but should be read.");
+    }
+
+    /**
      * @Given /^I should see envelope "([^"]*)" is unread$/
      */
     public function iShouldSeeEnvelopeIsUnread($messageSubject)
@@ -169,6 +195,33 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
         WebTestCase::assertTrue($didFindIcon, "$messageSubject was is read but should be unread.");
+    }
+
+    /**
+     * @Given /^I check envelope "([^"]*)"$/
+     */
+    public function iCheckEnvelope($messageSubject)
+    {
+	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+		$cssQuery = 'table > tbody > tr > td';
+        $elements = $this->getPage()->findAll('css', $cssQuery);
+
+        $didFindSubject = false;
+		$didFindIcon = false;
+        $textLower = strtolower($messageSubject);
+        foreach ($elements as $element) {
+			if ($element->has('css', 'input[type="checkbox"]')) {
+				$element->check();
+				$didFindIcon = true;
+			}
+			
+            if (strpos(strtolower($element->getText()), $textLower) !== false) {
+                $didFindSubject = true;
+            }
+        }
+        
+        WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
+        WebTestCase::assertTrue($didFindIcon, "$messageSubject was not found and could not be checked.");
     }
 
     /**

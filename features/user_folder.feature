@@ -72,3 +72,49 @@ Feature: User Folder Traversal
 		And I should see envelope "subject_f1_t3_2"
 		And I should not see envelope "subject_f2_t3_2"
 		And I should not see envelope "subject_f3_t3_2"
+
+	Scenario: Mark messages as read filtered by inbox folder
+        Given I am on "/en/messages"
+		And I should see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+		And I check envelope "subject_f2_t1_1"
+		And I press "submit[mark_as_read]"
+		And I should see envelope "subject_f1_t1_1" is unread
+		And I should see envelope "subject_f2_t1_1" is read
+		And I should see envelope "subject_f3_t1_1" is unread
+
+	Scenario: Mark messages as unread filtered by inbox folder
+        Given I am on "/en/messages"
+		And I should see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+		And I check envelope "subject_f2_t1_1"
+		And I press "submit[mark_as_read]"
+		And I should see envelope "subject_f1_t1_1" is unread
+		And I should see envelope "subject_f2_t1_1" is read
+		And I should see envelope "subject_f3_t1_1" is unread
+		And I check envelope "subject_f2_t1_1"
+		And I press "submit[mark_as_unread]"
+		And I should see envelope "subject_f1_t1_1" is unread
+		And I should see envelope "subject_f2_t1_1" is unread
+		And I should see envelope "subject_f3_t1_1" is unread
+
+	Scenario: Move messages to another folder
+        Given I am on "/en/messages"
+		And I should see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+
+	Scenario: Delete messages
+        Given I am on "/en/messages"
+		And I should see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+
+	Scenario: Empty deleted messages
+        Given I am on "/en/messages"
+		And I should see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+	
