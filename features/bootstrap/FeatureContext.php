@@ -150,25 +150,24 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldSeeEnvelopeIsRead($messageSubject)
     {
-	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
-		$cssQuery = 'table > tbody > tr > td';
-        $elements = $this->getPage()->findAll('css', $cssQuery);
+        $elements = $this->getPage()->findAll('css', 'table > tbody > tr');
 
         $didFindSubject = false;
 		$didFindIcon = false;
         $textLower = strtolower($messageSubject);
         foreach ($elements as $element) {
-			if ($element->has('css', 'i.glyphicon-envelope')) {
-				$didFindIcon = true;
-			}
-			
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
+				
+				if ($element->has('css', 'i.glyphicon-envelope')) {
+					$didFindIcon = true;
+				}
+		        //ldd($element->getHtml());
             }
         }
-        
+
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
-        WebTestCase::assertFalse($didFindIcon, "$messageSubject was is unread but should be read.");
+        WebTestCase::assertFalse($didFindIcon, "$messageSubject is unread but should be read.");
     }
 
     /**
@@ -176,25 +175,23 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldSeeEnvelopeIsUnread($messageSubject)
     {
-	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
-		$cssQuery = 'table > tbody > tr > td';
-        $elements = $this->getPage()->findAll('css', $cssQuery);
+        $elements = $this->getPage()->findAll('css', 'table > tbody > tr');
 
         $didFindSubject = false;
 		$didFindIcon = false;
         $textLower = strtolower($messageSubject);
         foreach ($elements as $element) {
-			if ($element->has('css', 'i.glyphicon-envelope')) {
-				$didFindIcon = true;
-			}
-			
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
+				
+				if ($element->has('css', 'i.glyphicon-envelope')) {
+					$didFindIcon = true;
+				}
             }
         }
         
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
-        WebTestCase::assertTrue($didFindIcon, "$messageSubject was is read but should be unread.");
+        WebTestCase::assertTrue($didFindIcon, "$messageSubject is read but should be unread.");
     }
 
     /**
@@ -202,26 +199,27 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iCheckEnvelope($messageSubject)
     {
-	    //$this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
-		$cssQuery = 'table > tbody > tr > td';
-        $elements = $this->getPage()->findAll('css', $cssQuery);
+        $elements = $this->getPage()->findAll('css', 'table > tbody > tr');
 
-        $didFindSubject = false;
-		$didFindIcon = false;
         $textLower = strtolower($messageSubject);
+        $didFindSubject = false;
+		$didFindCheckbox = false;
+		$checkbox = null;
         foreach ($elements as $element) {
-			if ($element->has('css', 'input[type="checkbox"]')) {
-				$element->check();
-				$didFindIcon = true;
-			}
-			
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
+				
+				if ($element->has('css', 'input[type="checkbox"]')) {
+					$didFindCheckbox = true;
+					$checkbox = $element->find('css', 'input[type="checkbox"]');
+				}
             }
         }
         
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
-        WebTestCase::assertTrue($didFindIcon, "$messageSubject was not found and could not be checked.");
+        WebTestCase::assertTrue($didFindCheckbox, "$messageSubject was not found and could not be checked.");
+
+		$checkbox->check();
     }
 
     /**
