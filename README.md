@@ -1,27 +1,34 @@
 CCDNMessage MessageBundle README.
-=================================
+=============================
 
 
-## Notes:  
+## Notes: 
+
+This bundle is for the symfony framework and requires Symfony >= 2.1.x and PHP >= 5.3.2
   
-This bundle is for the symfony framework and requires Symfony 2.0.x and PHP 5.3.6
-  
-This project uses Doctrine 2.0.x and so does not require any specific database.
+This project uses Doctrine >= 2.1.x and so does not require any specific database.
   
 
-This file is part of the CCDNMessage MessageBundle
+&copy; CCDN &copy; [CodeConsortium](http://www.codeconsortium.com/)
 
-(c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
+Available on:
+* [Github](http://www.github.com/codeconsortium/CCDNMessageMessageBundle)
+* [Packagist](https://packagist.org/packages/codeconsortium/ccdn-message-bundle)
+* [KnpBundles](http://knpbundles.com/codeconsortium/CCDNMessageMessageBundle)
 
-Available on github <http://www.github.com/codeconsortium/>
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-
-Icons courtesy of http://pc.de/icons/ licensed under http://creativecommons.org/licenses/by/3.0/
 Theme and Sprite graphics courtesy of [twitter bootstrap](http://twitter.github.com/bootstrap/index.html) and [GLYPHICONS](http://glyphicons.com/).
 
 Other graphics are works of CodeConsortium.
+
+For the full copyright and license information, please view the [LICENSE](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/master/Resources/meta/LICENSE) file that was distributed with this source code.
+
+[![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNMessageMessageBundle.png)](https://travis-ci.org/codeconsortium/CCDNMessageMessageBundle) [![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle) [![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle)
+
+[![knpbundles.com](http://knpbundles.com/codeconsortium/CCDNMessageMessageBundle/badge-short)](http://knpbundles.com/codeconsortium/CCDNMessageMessageBundle) 
+
+## Description:
+
+This is a MessageBundle for Symfony (>= 2.1.x) for sending and receiving private message.
 
 ## Description:
 
@@ -36,13 +43,11 @@ MessageBundle Provides the following features:
 1. Folder organised mail management.
 2. Send / Receive messages.
 3. Supports preview before sending.
-4. Save drafts to send later.
-5. BBCode support in messages.
-6. Forwarding and quoted replying.
-7. Supports the attachment bundle for attaching files to messages.
-8. Messages can be flagged as important.
-9. Message notifier icon at top of page layout as part of CommonBundle.
-10. Utilises Twitter-Bootstrap interface by default.
+4. Forwarding and quoted replying.
+5. Supports the attachment bundle for attaching files to messages.
+6. Messages can be flagged as important.
+7. Message notifier icon at top of page layout as part of CommonBundle.
+8. Utilises Twitter-Bootstrap interface by default.
 
 Before installation of this bundle, you can download the [Sandbox](https://github.com/codeconsortium/CCDNSandBox) for testing/development and feature review, or alternatively see the product in use at [CodeConsortium](http://www.codeconsortium.com).
 
