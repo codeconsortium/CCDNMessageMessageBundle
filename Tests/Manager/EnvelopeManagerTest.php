@@ -158,7 +158,7 @@ class EnvelopeManagerTest extends TestBase
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
 		
-		$this->getEnvelopeModel()->bulkMoveToFolder($envelopes, $folders, $folders[2], $user);
+		$this->getEnvelopeModel()->bulkMoveToFolder($envelopes, $folders[2]);
 		
 		$ids = array();
 		foreach ($envelopes as $envelope) {
