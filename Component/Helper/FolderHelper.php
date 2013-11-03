@@ -99,4 +99,21 @@ class FolderHelper
 		
 		return null;
 	}
+
+    /**
+     *
+     * @access public
+     * @param  array $folders
+     * @return int
+     */
+    public function filterFolderById($folders, $id)
+    {
+		foreach ($folders as $folder) {
+			if ($folder->getId() == $id) {
+				return $folder;
+			}
+		}
+		
+		return null;
+	}
 }

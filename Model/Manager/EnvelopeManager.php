@@ -218,12 +218,10 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
      * @param  \CCDNMessage\MessageBundle\Entity\Folder                 $moveTo
-     * @param  \Symfony\Component\Core\User\UserInterface               $user
      * @return \CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
      */
-    public function bulkMoveToFolder($envelopes, $folders, Folder $moveTo, UserInterface $user)
+    public function bulkMoveToFolder($envelopes, Folder $moveTo)
     {
         foreach ($envelopes as $envelope) {
             $envelope->setFolder($moveTo);

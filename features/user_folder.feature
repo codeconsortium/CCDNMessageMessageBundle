@@ -105,7 +105,17 @@ Feature: User Folder Traversal
 		And I should see envelope "subject_f1_t1_1"
 		And I should see envelope "subject_f2_t1_1"
 		And I should see envelope "subject_f3_t1_1"
-
+		And I check envelope "subject_f2_t1_1"
+		And I select "Junk" from "select_move_to"
+		And I press "submit[move_to]"
+		And I should see envelope "subject_f1_t1_1"
+		And I should not see envelope "subject_f2_t1_1"
+		And I should see envelope "subject_f3_t1_1"
+        Given I am on "/en/messages/folder/junk"
+		And I should not see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should not see envelope "subject_f3_t1_1"
+		
 	Scenario: Delete messages
         Given I am on "/en/messages"
 		And I should see envelope "subject_f1_t1_1"
@@ -116,6 +126,10 @@ Feature: User Folder Traversal
 		And I should see envelope "subject_f1_t1_1"
 		And I should not see envelope "subject_f2_t1_1"
 		And I should see envelope "subject_f3_t1_1"
+		Given I am on "/en/messages/folder/trash"
+		And I should not see envelope "subject_f1_t1_1"
+		And I should see envelope "subject_f2_t1_1"
+		And I should not see envelope "subject_f3_t1_1"
 
 	Scenario: Empty deleted messages
         Given I am on "/en/messages"
