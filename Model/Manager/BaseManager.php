@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\Manager;
 
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
