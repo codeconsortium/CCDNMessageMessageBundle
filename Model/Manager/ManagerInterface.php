@@ -17,8 +17,8 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -42,6 +42,14 @@ interface ManagerInterface
      * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface                  $gateway
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway);
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNMessage\MessageBundle\Model\Model\ModelInterface           $model
+     * @return \CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface
+     */
+    public function setModel(ModelInterface $model);
 
     /**
      *

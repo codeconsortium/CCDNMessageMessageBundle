@@ -15,8 +15,8 @@ namespace CCDNMessage\MessageBundle\Model\Repository;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -45,7 +45,7 @@ interface RepositoryInterface
      * @param  \CCDNMessage\MessageBundle\Model\Model\ModelInterface           $model
      * @return \CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface
      */
-    public function setModel($model);
+    public function setModel(ModelInterface $model);
 
     /**
      *

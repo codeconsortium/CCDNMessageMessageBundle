@@ -24,6 +24,7 @@ For the full copyright and license information, please view the [LICENSE](http:/
 
 [![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNMessageMessageBundle.png)](https://travis-ci.org/codeconsortium/CCDNMessageMessageBundle) [![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle) [![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1cc3942c-57b7-4c6f-8e8b-f74bc4ebb234/big.png)](https://insight.sensiolabs.com/projects/1cc3942c-57b7-4c6f-8e8b-f74bc4ebb234)
 [![knpbundles.com](http://knpbundles.com/codeconsortium/CCDNMessageMessageBundle/badge-short)](http://knpbundles.com/codeconsortium/CCDNMessageMessageBundle) 
 
 ## Description:

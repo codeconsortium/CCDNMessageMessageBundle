@@ -17,8 +17,8 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
+use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -100,7 +100,7 @@ abstract class BaseManager
      * @param  \CCDNMessage\MessageBundle\Model\Model\ModelInterface           $model
      * @return \CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface
      */
-    public function setModel($model)
+    public function setModel(ModelInterface $model)
     {
         $this->model = $model;
 
