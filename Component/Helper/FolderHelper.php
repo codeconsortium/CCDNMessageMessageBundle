@@ -15,7 +15,6 @@ namespace CCDNMessage\MessageBundle\Component\Helper;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use CCDNMessage\MessageBundle\Model\Model\FolderModel;
-use CCDNMessage\MessageBundle\Entity\Folder;
 
 /**
  *

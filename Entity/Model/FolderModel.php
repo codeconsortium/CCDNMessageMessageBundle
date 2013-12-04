@@ -14,7 +14,6 @@
 namespace CCDNMessage\MessageBundle\Entity\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *

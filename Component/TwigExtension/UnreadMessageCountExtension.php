@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
 use Symfony\Component\Security\Core\SecurityContext;
+use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
 
 /**
  *
@@ -43,7 +43,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
      * @param \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
      * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
      */
-    public function __construct($registryHelper, SecurityContext $securityContext)
+    public function __construct(RegistryHelper $registryHelper, SecurityContext $securityContext)
     {
         $this->registryHelper = $registryHelper;
         $this->securityContext = $securityContext;

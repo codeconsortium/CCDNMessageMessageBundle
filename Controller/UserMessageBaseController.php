@@ -14,8 +14,6 @@
 namespace CCDNMessage\MessageBundle\Controller;
 
 use CCDNMessage\MessageBundle\Controller\BaseController;
-
-use CCDNMessage\MessageBundle\Entity\Message;
 use CCDNMessage\MessageBundle\Entity\Envelope;
 
 /**

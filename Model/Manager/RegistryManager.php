@@ -17,8 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
-
-use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Registry;
 
 /**

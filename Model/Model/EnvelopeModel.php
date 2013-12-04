@@ -20,8 +20,6 @@ use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Envelope;
-use CCDNMessage\MessageBundle\Entity\Message;
-use CCDNMessage\MessageBundle\Entity\Thread;
 
 /**
  *
@@ -36,6 +34,10 @@ use CCDNMessage\MessageBundle\Entity\Thread;
  */
 class EnvelopeModel extends BaseModel implements ModelInterface
 {
+    const MESSAGE_SEND = 0;
+    const MESSAGE_SAVE_CARBON_COPY = 1;
+    const MESSAGE_SAVE_DRAFT = 2;
+
     /**
      *
      * @access public
@@ -97,16 +99,6 @@ class EnvelopeModel extends BaseModel implements ModelInterface
     {
 		return $this->getRepository()->getUnreadCounterForFolderById($folderId, $userId);
     }
-
-    const MESSAGE_SEND = 0;
-    const MESSAGE_SAVE_CARBON_COPY = 1;
-    const MESSAGE_SAVE_DRAFT = 2;
-
-    private $sendMode = array(
-        self::MESSAGE_SEND,
-        self::MESSAGE_SAVE_CARBON_COPY,
-        self::MESSAGE_SAVE_DRAFT,
-    );
 
 	/**
 	 * 

@@ -14,11 +14,8 @@
 namespace CCDNMessage\MessageBundle\Model\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNMessage\MessageBundle\Model\Model\BaseModel;
 use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
-
-use CCDNMessage\MessageBundle\Entity\Registry;
 
 /**
  *

@@ -17,8 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -349,10 +347,10 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @access public
+     * @access protected
      * @return string
      */
-    public function getSubmitAction()
+    protected function getSubmitAction()
     {
         $request = $this->getRequest();
 
@@ -365,7 +363,7 @@ class BaseController extends ContainerAware
         return $action;
     }
 
-	public function getQuery($query, $default)
+	protected function getQuery($query, $default)
 	{
 		return $this->getRequest()->query->get($query, $default);
 	}
@@ -451,10 +449,10 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNMessage\MessageBundle\Model\Model\UserModel
      */
-    public function getUserModel()
+    protected function getUserModel()
     {
         if (null == $this->userModel) {
             $this->userModel = $this->container->get('ccdn_message_message.model.user');

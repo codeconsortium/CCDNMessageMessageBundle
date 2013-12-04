@@ -13,8 +13,6 @@
 
 namespace CCDNMessage\MessageBundle\Entity\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNMessage\MessageBundle\Entity\Envelope;
 use CCDNMessage\MessageBundle\Entity\Message;
 

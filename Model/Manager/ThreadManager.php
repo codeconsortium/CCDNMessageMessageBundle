@@ -16,9 +16,6 @@ namespace CCDNMessage\MessageBundle\Model\Manager;
 use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
-use CCDNMessage\MessageBundle\Entity\Thread;
-use CCDNMessage\MessageBundle\Entity\Envelope;
-
 /**
  *
  * @category CCDNMessage

@@ -13,7 +13,6 @@
 
 namespace CCDNMessage\MessageBundle\Model\Model;
 
-use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface;
 

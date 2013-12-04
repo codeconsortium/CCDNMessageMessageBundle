@@ -21,6 +21,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use CCDNMessage\MessageBundle\features\bootstrap\WebUser;
 
 /**
  *
@@ -105,30 +106,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $session->setBasicAuth($user . '@foo.com', 'root');
     }
 
-    private function getAttributesFromElement(NodeElement $element)
-    {
-        $attr = array();
-        $attr['id']    = strtolower($element->getAttribute('id'));
-        $attr['name']  = strtolower($element->getAttribute('name'));
-        $attr['label'] = strtolower($element->getAttribute('label'));
-        $attr['value'] = strtolower($element->getAttribute('value'));
-        $attr['text']  = strtolower($element->getText());
-        $attr['title'] = strtolower($element->getAttribute('title'));
-
-        return $attr;
-    }
-
-    private function isSubstringInArray($attributes, $searchStr)
-    {
-        foreach ($attributes as $attribute) {
-            if ($attribute == $searchStr) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * @Given /^I should see envelope "([^"]*)"$/
      */
@@ -162,7 +139,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 				if ($element->has('css', 'i.glyphicon-envelope')) {
 					$didFindIcon = true;
 				}
-		        //ldd($element->getHtml());
             }
         }
 

@@ -20,8 +20,6 @@ use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Envelope;
-use CCDNMessage\MessageBundle\Entity\Message;
-use CCDNMessage\MessageBundle\Entity\Thread;
 
 /**
  *
@@ -39,12 +37,6 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     const MESSAGE_SEND = 0;
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
-
-    private $sendMode = array(
-        self::MESSAGE_SEND,
-        self::MESSAGE_SAVE_CARBON_COPY,
-        self::MESSAGE_SAVE_DRAFT,
-    );
 
 	public function saveEnvelope(Envelope $envelope)
 	{

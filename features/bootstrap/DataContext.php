@@ -17,6 +17,7 @@ use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use CCDNMessage\MessageBundle\Tests\Functional\src\Entity\User;
 
@@ -24,7 +25,6 @@ use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Message;
 use CCDNMessage\MessageBundle\Entity\Envelope;
 use CCDNMessage\MessageBundle\Entity\Thread;
-use CCDNMessage\MessageBundle\Entity\Registry;
 
 /**
  *
@@ -163,7 +163,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
 		
 			if ($andFlush) {
 				$this->getEntityManager()->flush();
-				//$this->getEntityManager()->refresh($folder);
 			}
 		}
 		
@@ -172,8 +171,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
 	protected function addFixturesForFolders($users)
 	{
-		$folders = array();
-
 		$folderNames = Folder::$defaultSpecialTypes;
 		foreach ($users as $ownedByUser) {
 			foreach ($folderNames as $folderSpecialType => $folderName) {
@@ -260,7 +257,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 		return $message;
     }
 
-	protected function addNewEnvelope($message, $folder, $ownedByUser, $sentToUser, $isDraft, $isRead, $isFlagged, $persist = true, $andFlush = true)
+	protected function addNewEnvelope(Message $message, Folder $folder, UserInterface $ownedByUser, UserInterface $sentToUser, $isDraft, $isRead, $isFlagged, $persist = true, $andFlush = true)
 	{
 		$envelope = new Envelope();
 		
@@ -281,7 +278,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
 			if ($andFlush) {
 				$this->getEntityManager()->flush();
-				//$this->getEntityManager()->refresh($envelope);
 			}
 		}
 		

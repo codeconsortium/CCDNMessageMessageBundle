@@ -15,10 +15,7 @@ namespace CCDNMessage\MessageBundle\Model\Manager;
 
 use CCDNMessage\MessageBundle\Model\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Manager\BaseManager;
-
-use CCDNMessage\MessageBundle\Entity\Envelope;
 use CCDNMessage\MessageBundle\Entity\Message;
-use CCDNMessage\MessageBundle\Entity\Thread;
 
 /**
  *

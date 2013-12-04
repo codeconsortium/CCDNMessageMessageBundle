@@ -87,16 +87,16 @@ class FlashListener implements EventSubscriberInterface
         }
     }
 
-    public function onEnvelopeReceiveFailedInboxFull(UserEnvelopeReceiveFailedOutboxFullEvent $event)
+    public function onEnvelopeReceiveFailedInboxFull(UserEnvelopeReceiveFailedInboxFullEvent $event)
     {
-        if ($envelope = $event->getEnvelope()) {
+        if ($event->getEnvelope()) {
         	$this->session->setFlash('success', 'Message(s) could not be sent because your outbox is full.');
         }
     }
 
     public function onEnvelopeReceiveFailedOutboxFull(UserEnvelopeReceiveFailedOutboxFullEvent $event)
     {
-        if ($envelope = $event->getEnvelope()) {
+        if ($event->getEnvelope()) {
         	$this->session->setFlash('success', 'Message could not be delivered to  "' . $event->getRecipient()->getUsername() . '" because their inbox is full.');
         }
     }

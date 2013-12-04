@@ -19,8 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
-use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveInboxFullEvent;
-use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveOutboxFullEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedInboxFullEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedOutboxFullEvent;
 
 use CCDNMessage\MessageBundle\Component\Helper\QuotaHelper;
 use CCDNMessage\MessageBundle\Component\Helper\FolderHelper;

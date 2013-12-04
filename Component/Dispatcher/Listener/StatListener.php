@@ -15,7 +15,6 @@ namespace CCDNMessage\MessageBundle\Component\Dispatcher\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -23,9 +22,7 @@ use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
 
 use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
-use CCDNMessage\MessageBundle\Model\Model\FolderModel;
 use CCDNMessage\MessageBundle\Model\Model\EnvelopeModel;
-use CCDNMessage\MessageBundle\Model\Model\RegistryModel;
 
 /**
  *

@@ -15,9 +15,8 @@ namespace CCDNMessage\MessageBundle\Form\Handler\User;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 
 use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
 use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
@@ -27,7 +26,6 @@ use CCDNMessage\MessageBundle\Component\Server\MessageServer;
 use CCDNMessage\MessageBundle\Component\FloodControl;
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
-use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageEvent;
 
 /**
  *

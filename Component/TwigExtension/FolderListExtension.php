@@ -13,8 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
-use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
 use Symfony\Component\Security\Core\SecurityContext;
+use CCDNMessage\MessageBundle\Component\Helper\FolderHelper;
 
 /**
  *
@@ -43,7 +43,7 @@ class FolderListExtension extends \Twig_Extension
      * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
      * @param  \Symfony\Component\Security\Core\SecurityContext         $securityContext
      */
-    public function __construct($folderHelper, SecurityContext $securityContext)
+    public function __construct(FolderHelper $folderHelper, SecurityContext $securityContext)
     {
         $this->folderHelper = $folderHelper;
         $this->securityContext = $securityContext;
