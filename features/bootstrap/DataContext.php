@@ -244,7 +244,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
 		
 			if ($andFlush) {
 				$this->getEntityManager()->flush();
-				//$this->getEntityManager()->refresh($message);
 			}
 		}
 		
