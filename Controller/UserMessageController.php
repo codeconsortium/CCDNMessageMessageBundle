@@ -44,7 +44,6 @@ class UserMessageController extends UserMessageBaseController
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $thread = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIdAndUserId($envelope->getThread()->getId(), $user->getId());
         $folders = $this->getFolderHelper()->findAllFoldersForUserById($user);
-        //$currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
 
         return $this->renderResponse('CCDNMessageMessageBundle:User:Message/show.html.', array(
@@ -157,9 +156,11 @@ class UserMessageController extends UserMessageBaseController
             $this->setFlash('warning', $this->trans('flash.error.message.flood_control'));
         }
 
-        //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
+        $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent' )));
 
-        return $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent' )));
+        $this->dispatch(MessageEvents::USER_MESSAGE_DRAFT_SEND_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $message));
+		
+		return $response;
     }
 
     /**
@@ -177,9 +178,11 @@ class UserMessageController extends UserMessageBaseController
         $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
 
-        //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
-
-        return $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
+        $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
+		
+        $this->dispatch(MessageEvents::USER_MESSAGE_MARK_AS_READ_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
+		
+		return $response;
     }
 
     /**
@@ -197,9 +200,11 @@ class UserMessageController extends UserMessageBaseController
         $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->markAsUnread($envelope, $folders)->flush();
 
-        //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
+        $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
+		
+        $this->dispatch(MessageEvents::USER_MESSAGE_MARK_AS_UNREAD_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
 
-        return $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
+		return $response;
     }
 
     /**
@@ -217,8 +222,10 @@ class UserMessageController extends UserMessageBaseController
         $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
         $this->getEnvelopeModel()->delete($envelope, $folders)->flush();
 
-        //$this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
+        $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
 
-        return $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
+        $this->dispatch(MessageEvents::USER_MESSAGE_DELETE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
+
+		return $response;
     }
 }

@@ -22,6 +22,7 @@ use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageFloodEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedInboxFullEvent;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedOutboxFullEvent;
+use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent;
 
 /**
  *
@@ -66,6 +67,9 @@ class FlashListener implements EventSubscriberInterface
 			MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE           => 'onEnvelopeReceiveComplete',
 			MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL  => 'onEnvelopeReceiveFailedInboxFull',
 			MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL => 'onEnvelopeReceiveFailedOutboxFull',
+			MessageEvents::USER_MESSAGE_MARK_AS_READ_RESPONSE       => 'onMessageMarkAsRead',
+			MessageEvents::USER_MESSAGE_MARK_AS_UNREAD_RESPONSE     => 'onMessageMarkAsUnread',
+			MessageEvents::USER_MESSAGE_DELETE_RESPONSE             => 'onMessageDelete',
         );
     }
 
@@ -98,6 +102,27 @@ class FlashListener implements EventSubscriberInterface
     {
         if ($event->getEnvelope()) {
         	$this->session->setFlash('success', 'Message could not be delivered to  "' . $event->getRecipient()->getUsername() . '" because their inbox is full.');
+        }
+    }
+
+    public function onMessageMarkAsRead(UserMessageResponseEvent $event)
+    {
+        if ($event->getMessage()) {
+        	$this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '" as read.');
+        }
+    }
+
+    public function onMessageMarkAsUnread(UserMessageResponseEvent $event)
+    {
+        if ($event->getMessage()) {
+        	$this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '"  as unread.');
+        }
+    }
+
+    public function onMessageDelete(UserMessageResponseEvent $event)
+    {
+        if ($event->getMessage()) {
+        	$this->session->setFlash('success', 'Deleted message "' . $event->getMessage()->getSubject() . '".');
         }
     }
 }

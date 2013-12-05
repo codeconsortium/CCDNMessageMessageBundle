@@ -186,4 +186,40 @@ final class MessageEvents
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedOutboxFullEvent instance.
      */
 	const USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL = 'ccdn_message.user.envelope.receive.failed.outbox_full';
+
+    /**
+     *
+     * The USER_MESSAGE_DRAFT_SEND_RESPONSE event occurs when the Message draft sending process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
+     */
+	const USER_MESSAGE_DRAFT_SEND_RESPONSE = 'ccdn_message.user.message.draft_send.response';
+
+    /**
+     *
+     * The USER_MESSAGE_MARK_AS_READ_RESPONSE event occurs when the Message mark as read process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
+     */
+	const USER_MESSAGE_MARK_AS_READ_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
+
+    /**
+     *
+     * The USER_MESSAGE_MARK_AS_UNREAD_RESPONSE event occurs when the Message mark as unread process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
+     */
+	const USER_MESSAGE_MARK_AS_UNREAD_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
+
+    /**
+     *
+     * The USER_MESSAGE_DELETE_RESPONSE event occurs when the Message delete process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
+     */
+	const USER_MESSAGE_DELETE_RESPONSE = 'ccdn_message.user.message.delete.response';
 }

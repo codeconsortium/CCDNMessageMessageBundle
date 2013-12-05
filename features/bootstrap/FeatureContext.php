@@ -14,12 +14,9 @@
 namespace CCDNMessage\MessageBundle\features\bootstrap;
 
 use Behat\MinkExtension\Context\RawMinkContext;
-use Behat\Mink\Element\NodeElement;
-
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use CCDNMessage\MessageBundle\features\bootstrap\WebUser;
 
