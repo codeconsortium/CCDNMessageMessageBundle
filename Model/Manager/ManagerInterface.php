@@ -14,8 +14,6 @@
 namespace CCDNMessage\MessageBundle\Model\Manager;
 
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 use CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
@@ -36,12 +34,10 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                                   $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext                           $securityContext
-     * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface                  $gateway
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface        $gateway
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, Registry $doctrine, SecurityContext $securityContext, GatewayInterface $gateway);
+    public function __construct(ContainerAwareEventDispatcher  $dispatcher, GatewayInterface $gateway);
 
     /**
      *
@@ -50,21 +46,6 @@ interface ManagerInterface
      * @return \CCDNMessage\MessageBundle\Model\Repository\RepositoryInterface
      */
     public function setModel(ModelInterface $model);
-
-    /**
-     *
-     * @access public
-     * @param  string $role
-     * @return bool
-     */
-    public function isGranted($role);
-
-    /**
-     *
-     * @access public
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getUser();
 
     /**
      *
@@ -116,7 +97,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                                    $entity
      * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function persist($entity);
@@ -124,7 +105,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                                    $entity
      * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function remove($entity);
@@ -139,7 +120,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                                    $entity
      * @return \CCDNMessage\MessageBundle\Model\Manager\ManagerInterface
      */
     public function refresh($entity);

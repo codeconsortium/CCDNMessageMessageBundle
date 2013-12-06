@@ -208,11 +208,11 @@ abstract class BaseGateway
 
     /**
      *
-     * @access protected
-     * @param  $item
+     * @access public
+     * @param  Object                                                    $entity
      * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
-    protected function persist($item)
+    public function persist($item)
     {
         $this->em->persist($item);
 
@@ -221,11 +221,11 @@ abstract class BaseGateway
 
     /**
      *
-     * @access protected
-     * @param $item
+     * @access public
+     * @param  Object                                                    $entity
      * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
      */
-    protected function remove($item)
+    public function remove($item)
     {
         $this->em->remove($item);
 
@@ -240,6 +240,19 @@ abstract class BaseGateway
     public function flush()
     {
         $this->em->flush();
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Object                                                    $entity
+     * @return \CCDNMessage\MessageBundle\Model\Gateway\GatewayInterface
+     */
+    public function refresh($entity)
+    {
+        $this->em->refresh($entity);
 
         return $this;
     }
