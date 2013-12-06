@@ -1,0 +1,4 @@
+ccdn_message_message:
+    entity:
+        user:
+            class: CCDNMessage\MessageBundle\Tests\Functional\src\Entity\User

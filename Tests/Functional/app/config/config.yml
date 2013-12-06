@@ -1,3 +1,6 @@
+imports:
+    - { resource: ccdn/message-message.yml }
+
 framework:
     test: ~
     #esi:             ~
@@ -115,8 +118,3 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: CCDNMessage\MessageBundle\Tests\Functional\src\Entity\User
-
-ccdn_message_message:
-    entity:
-        user:
-            class: CCDNMessage\MessageBundle\Tests\Functional\src\Entity\User
