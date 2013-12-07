@@ -13,8 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Model\Gateway;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\Paginator;
 
 /**
  *
@@ -34,21 +35,7 @@ abstract class BaseGateway
     /**
      *
      * @access protected
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     */
-    protected $doctrine;
-
-    /**
-     *
-     * @access protected
-     * @var $paginator
-     */
-    protected $paginator;
-	
-    /**
-     *
-     * @access protected
-     * @var \Doctrine\ORM\EntityManager $em
+     * @var \Doctrine\Common\Persistence\ObjectManager $em
      */
     protected $em;
 
@@ -61,6 +48,13 @@ abstract class BaseGateway
 
     /**
      *
+     * @access protected
+     * @var $paginator
+     */
+    protected $paginator;
+
+    /**
+     *
      * @access private
      * @var string $pagerTheme
      */
@@ -69,21 +63,20 @@ abstract class BaseGateway
     /**
      *
      * @access public
-     * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param  string                                                     $entityClass
-     * @param  string                                                     $pagerTheme
+     * @param  \Doctrine\Common\Persistence\ObjectManager $em
+     * @param  string                                     $entityClass
+     * @param  \Knp\Component\Pager\Paginator             $paginator
+     * @param  string                                     $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, $entityClass, $pagerTheme)
+    public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null)
     {
-        $this->doctrine = $doctrine;
-		$this->paginator = $paginator;
-        $this->em = $doctrine->getEntityManager();
-
         if (null == $entityClass) {
             throw new \Exception('Entity class for gateway must be specified!');
         }
 
         $this->entityClass = $entityClass;
+        $this->em = $em;
+		$this->paginator = $paginator;
 		$this->pagerTheme = $pagerTheme;
     }
 

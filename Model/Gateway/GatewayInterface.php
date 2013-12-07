@@ -13,8 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Model\Gateway;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\Paginator;
 
 /**
  *
@@ -32,11 +33,12 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
-     * @param  string                                                     $entityClass
-     * @param  string                                                     $pagerTheme
+     * @param  \Doctrine\Common\Persistence\ObjectManager $em
+     * @param  string                                     $entityClass
+     * @param  \Knp\Component\Pager\Paginator             $paginator
+     * @param  string                                     $pagerTheme
      */
-    public function __construct(Registry $doctrine, $paginator, $entityClass, $pagerTheme);
+    public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null);
 
     /**
      *

@@ -11,47 +11,47 @@ services:
     ccdn_message_message.gateway.folder:
         class: %ccdn_message_message.gateway.folder.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.folder.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
 
     ccdn_message_message.gateway.envelope:
         class: %ccdn_message_message.gateway.envelope.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.envelope.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
 
     ccdn_message_message.gateway.message:
         class: %ccdn_message_message.gateway.message.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.message.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
 
     ccdn_message_message.gateway.thread:
         class: %ccdn_message_message.gateway.thread.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.thread.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
 
     ccdn_message_message.gateway.registry:
         class: %ccdn_message_message.gateway.registry.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.registry.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
 
     ccdn_message_message.gateway.user:
         class: %ccdn_message_message.gateway.user.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
+            - @doctrine.orm.entity_manager
             - %ccdn_message_message.entity.user.class%
+            - @knp_paginator
             - %ccdn_message_message.template.pager_theme%
