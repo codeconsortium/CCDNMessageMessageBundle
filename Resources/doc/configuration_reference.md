@@ -26,56 +26,56 @@ ccdn_message_message:             # Required
             class:                Acme\YourUserBundle\Entity\User # Required
     repository:
         folder:
-            class:                CCDNMessage\MessageBundle\Model\Repository\FolderRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\FolderRepository
         envelope:
-            class:                CCDNMessage\MessageBundle\Model\Repository\EnvelopeRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\EnvelopeRepository
         message:
-            class:                CCDNMessage\MessageBundle\Model\Repository\MessageRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\MessageRepository
         registry:
-            class:                CCDNMessage\MessageBundle\Model\Repository\RegistryRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\RegistryRepository
         thread:
-            class:                CCDNMessage\MessageBundle\Model\Repository\ThreadRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\ThreadRepository
         user:
-            class:                CCDNMessage\MessageBundle\Model\Repository\UserRepository
+            class:                CCDNMessage\MessageBundle\Model\Component\Repository\UserRepository
     gateway:
         folder:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\FolderGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\FolderGateway
         envelope:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\EnvelopeGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\EnvelopeGateway
         message:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\MessageGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\MessageGateway
         thread:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\ThreadGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\ThreadGateway
         registry:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\RegistryGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\RegistryGateway
         user:
-            class:                CCDNMessage\MessageBundle\Model\Gateway\UserGateway
+            class:                CCDNMessage\MessageBundle\Model\Component\Gateway\UserGateway
     manager:
         folder:
-            class:                CCDNMessage\MessageBundle\Model\Manager\FolderManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
         envelope:
-            class:                CCDNMessage\MessageBundle\Model\Manager\EnvelopeManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
         message:
-            class:                CCDNMessage\MessageBundle\Model\Manager\MessageManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\MessageManager
         thread:
-            class:                CCDNMessage\MessageBundle\Model\Manager\ThreadManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\ThreadManager
         registry:
-            class:                CCDNMessage\MessageBundle\Model\Manager\RegistryManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\RegistryManager
         user:
-            class:                CCDNMessage\MessageBundle\Model\Manager\UserManager
+            class:                CCDNMessage\MessageBundle\Model\Component\Manager\UserManager
     model:
         folder:
-            class:                CCDNMessage\MessageBundle\Model\Model\FolderModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\FolderModel
         envelope:
-            class:                CCDNMessage\MessageBundle\Model\Model\EnvelopeModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel
         message:
-            class:                CCDNMessage\MessageBundle\Model\Model\MessageModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\MessageModel
         thread:
-            class:                CCDNMessage\MessageBundle\Model\Model\ThreadModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\ThreadModel
         registry:
-            class:                CCDNMessage\MessageBundle\Model\Model\RegistryModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel
         user:
-            class:                CCDNMessage\MessageBundle\Model\Model\UserModel
+            class:                CCDNMessage\MessageBundle\Model\FrontModel\UserModel
     form:
         type:
             message:

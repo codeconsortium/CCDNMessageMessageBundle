@@ -22,7 +22,7 @@ use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
 
 use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
-use CCDNMessage\MessageBundle\Model\Model\EnvelopeModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel;
 
 /**
  *
@@ -40,7 +40,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access private
-     * @var \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel $envelopeModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
      */
     protected $envelopeModel;
 
@@ -61,7 +61,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel       $envelopeModel
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel       $envelopeModel
      * @param  \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
      * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
      */

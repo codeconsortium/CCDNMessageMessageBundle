@@ -14,7 +14,7 @@
 namespace CCDNMessage\MessageBundle\Component\Helper;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use CCDNMessage\MessageBundle\Model\Model\FolderModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\FolderModel;
 
 /**
  *
@@ -32,14 +32,14 @@ class FolderHelper
 	/**
 	 * 
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+	 * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
 	 */
 	protected $folderModel;
 
 	/**
 	 * 
 	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
 	 */
 	public function __construct(FolderModel $folderModel)
 	{

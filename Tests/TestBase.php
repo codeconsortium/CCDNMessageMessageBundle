@@ -263,44 +263,44 @@ class TestBase extends WebTestCase
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
      */
     private $folderModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\MessageModel $messageModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel $messageModel
      */
     private $messageModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel $envelopeModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
      */
     private $envelopeModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\ThreadModel $threadModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\ThreadModel $threadModel
      */
     private $threadModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\RegistryModel $registryModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
      */
     private $registryModel;
 
     /**
      *
-     * @var \CCDNMessage\MessageBundle\Model\Model\UserModel $userModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\UserModel $userModel
      */
     private $userModel;
 
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\FolderModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel
      */
     protected function getFolderModel()
     {
@@ -314,7 +314,7 @@ class TestBase extends WebTestCase
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\MessageModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel
      */
     protected function getMessageModel()
     {
@@ -328,7 +328,7 @@ class TestBase extends WebTestCase
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel
      */
     protected function getEnvelopeModel()
     {
@@ -342,7 +342,7 @@ class TestBase extends WebTestCase
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\ThreadModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\ThreadModel
      */
     protected function getThreadModel()
     {
@@ -356,7 +356,7 @@ class TestBase extends WebTestCase
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\RegistryModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel
      */
     protected function getRegistryModel()
     {
@@ -370,7 +370,7 @@ class TestBase extends WebTestCase
     /**
      *
      * @access protected
-     * @return \CCDNMessage\MessageBundle\Model\Model\UserModel
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\UserModel
      */
     protected function getUserModel()
     {

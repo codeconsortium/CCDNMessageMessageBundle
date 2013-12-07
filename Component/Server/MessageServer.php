@@ -25,10 +25,10 @@ use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFail
 use CCDNMessage\MessageBundle\Component\Helper\QuotaHelper;
 use CCDNMessage\MessageBundle\Component\Helper\FolderHelper;
 
-use CCDNMessage\MessageBundle\Model\Model\FolderModel;
-use CCDNMessage\MessageBundle\Model\Model\MessageModel;
-use CCDNMessage\MessageBundle\Model\Model\EnvelopeModel;
-use CCDNMessage\MessageBundle\Model\Model\UserModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\FolderModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\MessageModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\UserModel;
 
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Message;
@@ -58,28 +58,28 @@ class MessageServer
 	/**
 	 * 
 	 * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\FolderModel $folderModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
 	 */
 	protected $folderModel;
 
 	/**
 	 * 
 	 * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\MessageModel $messageModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel $messageModel
 	 */
 	protected $messageModel;
 
 	/**
 	 * 
 	 * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel $envelopeModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
 	 */
 	protected $envelopeModel;
 
 	/**
 	 * 
 	 * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\UserModel $userModel
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\UserModel $userModel
 	 */
 	protected $userModel;
 	
@@ -111,10 +111,10 @@ class MessageServer
 	 * 
 	 * @access public
 	 * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\FolderModel                         $folderModel
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\MessageModel                        $messageModel
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\EnvelopeModel                       $envelopeModel
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\UserModel                           $userModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel                         $folderModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel                        $messageModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel                       $envelopeModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\UserModel                           $userModel
 	 * @param  \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper                    $quotaHelper
 	 * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper                   $folderHelper
 	 */
@@ -243,7 +243,7 @@ class MessageServer
      *
      * @access public
      * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-     * @return \CCDNMessage\MessageBundle\Model\Manager\MessageManager
+     * @return \CCDNMessage\MessageBundle\Model\Component\Manager\MessageManager
      */
     public function getRecipients(Message $message)
     {

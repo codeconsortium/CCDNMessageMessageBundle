@@ -14,7 +14,7 @@
 namespace CCDNMessage\MessageBundle\Component\Helper;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use CCDNMessage\MessageBundle\Model\Model\RegistryModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel;
 
 /**
  *
@@ -32,14 +32,14 @@ class RegistryHelper
 	/**
 	 * 
 	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Model\Model\RegistryModel $registryModel
+	 * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
 	 */
 	protected $registryModel;
 
 	/**
 	 * 
 	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Model\Model\RegistryModel $registryModel
+	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
 	 */
 	public function __construct(RegistryModel $registryModel)
 	{

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 
 use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
-use CCDNMessage\MessageBundle\Model\Model\ModelInterface;
+use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
 use CCDNMessage\MessageBundle\Entity\Message;
 
 use CCDNMessage\MessageBundle\Component\Server\MessageServer;
@@ -50,7 +50,7 @@ class MessageReplyFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Model\Model\ModelInterface $model
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface $model
      */
     protected $model;
 
@@ -95,7 +95,7 @@ class MessageReplyFormHandler extends BaseFormHandler
      * @param Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                       $factory
      * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                      $messageFormType
-     * @param \CCDNMessage\MessageBundle\Model\Model\ModelInterface                     $model
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface                     $model
      * @param |CCDNMessage\MessageBundle\Component\FloodControl                         $floodControl
      * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer                  $messageServer
      */
@@ -258,7 +258,7 @@ class MessageReplyFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNMessage\MessageBundle\Entity\Message             $message
-     * @return \CCDNMessage\MessageBundle\Model\Model\ModelInterface
+     * @return \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
