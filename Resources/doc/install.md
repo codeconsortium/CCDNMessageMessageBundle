@@ -1,13 +1,9 @@
-Installing CCDNMessage MessageBundle 1.x
+Installing CCDNMessage MessageBundle 2.x
 ========================================
 
 ## Dependencies:
 
-1. [PagerFanta](https://github.com/whiteoctober/Pagerfanta).
-2. [PagerFantaBundle](http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle).
-3. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle/tree/v1.2).
-4. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle/tree/v1.2).
-5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle/tree/v1.2).
+> Note you will need a User Bundle so that you can map the UserInterface to your own User entity. You can use whatecer User Bundle you prefer. FOSUserBundle is highly rated.
 
 ## Installation:
 
@@ -16,7 +12,8 @@ Installation takes only 4 steps:
 1. Download and install dependencies via Composer.
 2. Register bundles with AppKernel.php.
 3. Update your app/config/routing.yml.
-4. Update your database schema.
+4. Update your app/config/config.yml.
+5. Update your database schema.
 
 ### Step 1: Download and install dependencies via Composer.
 
@@ -71,7 +68,21 @@ CCDNMessageMessageBundle:
 
 You can change the route of the standalone route to any route you like, it is included for convenience.
 
-### Step 4: Update your database schema.
+### Step 4: Update your app/config/config.yml.
+
+In your app/config/config.yml add:
+
+``` yml
+# app/config/config.yml
+ccdn_message_message: # Required
+    entity:           # Required
+        user:         # Required
+            class:    Acme\YourUserBundle\Entity\User # Required
+```
+
+Replace Acme\YourUserBundle\Entity\User with the user class of your chosen user bundle.
+
+### Step 5: Update your database schema.
 
 Make sure to add the MessageBundle to doctrines mapping configuration:
 
@@ -83,11 +94,10 @@ doctrine:
         default_entity_manager: default
         auto_generate_proxy_classes: "%kernel.debug%"
         resolve_target_entities:
-            Symfony\Component\Security\Core\User\UserInterface: FOS\UserBundle\Entity\User
+            Symfony\Component\Security\Core\User\UserInterface: Acme\YourUserBundle\Entity\User
         entity_managers:
             default:
                 mappings:
-                    FOSUserBundle: ~
                     CCDNMessageMessageBundle:
                         mapping:              true
                         type:                 yml
@@ -97,7 +107,7 @@ doctrine:
                         is_bundle:            true
 ```
 
-> FOSUserBundle is noted as an additional example, you can add multiple bundles here. You should however choose a UserBundle of your own and change the user entity that UserInterface will resolve to.
+Replace Acme\YourUserBundle\Entity\User with the user class of your chosen user bundle.
 
 From your projects root Symfony directory on the command line run:
 
@@ -125,7 +135,6 @@ framework:
 ## Next Steps.
 
 Change the layout template you wish to use for each page by changing the configs under the labelled section 'layout_templates'.
-
 
 Installation should now be complete!
 

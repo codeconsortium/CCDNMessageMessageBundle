@@ -49,6 +49,13 @@ class Configuration implements ConfigurationInterface
 
     /**
      *
+     * @access protected
+     * @var string $defaultValuePaginatorTheme
+     */
+    protected $defaultValuePaginatorTheme = 'CCDNMessageMessageBundle:Common:Paginator/twitter_bootstrap.html.twig';
+
+    /**
+     *
      * @access public
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
@@ -64,7 +71,7 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->scalarNode('engine')->defaultValue('twig')->end()
-                        ->scalarNode('pager_theme')->defaultValue('CCDNMessageMessageBundle:Common:Paginator/twitter_bootstrap.html.twig')->end()
+                        ->scalarNode('pager_theme')->defaultValue($this->defaultValuePaginatorTheme)->end()
                     ->end()
                 ->end()
             ->end();
@@ -96,11 +103,12 @@ class Configuration implements ConfigurationInterface
     private function addEntitySection(ArrayNodeDefinition $node)
     {
         $node
-            ->addDefaultsIfNotSet()
+            ->isRequired()
+            ->cannotBeEmpty()
             ->children()
                 ->arrayNode('entity')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
+                    ->isRequired()
+                    ->cannotBeEmpty()
                     ->children()
                         ->arrayNode('folder')
                             ->addDefaultsIfNotSet()
@@ -138,8 +146,13 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('user')
+		                    ->isRequired()
+		                    ->cannotBeEmpty()
                             ->children()
-                                ->scalarNode('class')->end()
+                                ->scalarNode('class')
+				                    ->isRequired()
+				                    ->cannotBeEmpty()
+								->end()
                             ->end()
                         ->end()
                     ->end()

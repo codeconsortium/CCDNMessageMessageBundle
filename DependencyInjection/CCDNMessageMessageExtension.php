@@ -55,9 +55,6 @@ class CCDNMessageMessageExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
-        $container->setParameter('ccdn_message_message.template.pager_theme', $config['template']['pager_theme']);
-
         // Class file namespaces.
         $this->getEntitySection($config, $container);
         $this->getRepositorySection($config, $container);
@@ -68,6 +65,9 @@ class CCDNMessageMessageExtension extends Extension
         $this->getComponentSection($config, $container);
 
         // Configuration stuff.
+        $container->setParameter('ccdn_message_message.template.engine', $config['template']['engine']);
+        $container->setParameter('ccdn_message_message.template.pager_theme', $config['template']['pager_theme']);
+
         $this->getQuotasSection($config, $container);
         $this->getSEOSection($config, $container);
         $this->getFolderSection($config, $container);
