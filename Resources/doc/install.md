@@ -61,6 +61,7 @@ public function registerBundles()
 In your app/config/routing.yml add:
 
 ``` yml
+# app/config/routing.yml
 CCDNMessageMessageBundle:
     resource: "@CCDNMessageMessageBundle/Resources/config/routing.yml"
     prefix: /
@@ -127,7 +128,6 @@ If you wish to use default texts provided in this bundle, you have to make sure 
 
 ``` yaml
 # app/config/config.yml
-
 framework:
     translator: ~
 ```
