@@ -29,6 +29,16 @@ use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
  */
 class ThreadModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Thread
+	 */
+	public function createThread()
+	{
+		return $this->getManager()->createThread();
+	}
+
     /**
      *
      * @access public

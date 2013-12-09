@@ -103,10 +103,10 @@ class FolderGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                $folder
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                            $folder
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistFolder(Folder $folder)
+    public function saveFolder(Folder $folder)
     {
         $this->persist($folder)->flush();
 
@@ -116,7 +116,7 @@ class FolderGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                  $folder
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                            $folder
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateFolder(Folder $folder)
@@ -129,7 +129,7 @@ class FolderGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                  $folder
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                            $folder
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteFolder(Folder $folder)
@@ -138,4 +138,14 @@ class FolderGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Folder
+	 */
+	public function createFolder()
+	{
+		return new $this->entityClass();
+	}
 }

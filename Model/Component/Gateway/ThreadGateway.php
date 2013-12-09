@@ -101,10 +101,10 @@ class ThreadGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                            $thread
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistThread(Thread $thread)
+    public function saveThread(Thread $thread)
     {
         $this->persist($thread)->flush();
 
@@ -114,7 +114,7 @@ class ThreadGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                            $thread
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateThread(Thread $thread)
@@ -127,7 +127,7 @@ class ThreadGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Thread                  $thread
+     * @param  \CCDNMessage\MessageBundle\Entity\Thread                            $thread
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteThread(Thread $thread)
@@ -136,4 +136,14 @@ class ThreadGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Thread
+	 */
+	public function createThread()
+	{
+		return new $this->entityClass();
+	}
 }

@@ -33,6 +33,16 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Folder
+	 */
+	public function createFolder()
+	{
+		return $this->gateway->createFolder();
+	}
+
 	public function saveFolder(Folder $folder)
 	{
 		$this->persist($folder);

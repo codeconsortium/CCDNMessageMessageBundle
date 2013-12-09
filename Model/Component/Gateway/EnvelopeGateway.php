@@ -105,10 +105,10 @@ class EnvelopeGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                          $envelope
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistEnvelope(Envelope $envelope)
+    public function saveEnvelope(Envelope $envelope)
     {
         $this->persist($envelope)->flush();
 
@@ -118,7 +118,7 @@ class EnvelopeGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                          $envelope
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateEnvelope(Envelope $envelope)
@@ -131,7 +131,7 @@ class EnvelopeGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                $envelope
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                          $envelope
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteEnvelope(Envelope $envelope)
@@ -140,4 +140,14 @@ class EnvelopeGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+	 */
+	public function createEnvelope()
+	{
+		return new $this->entityClass();
+	}
 }

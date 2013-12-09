@@ -38,6 +38,16 @@ class EnvelopeModel extends BaseModel implements ModelInterface
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
 
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
+	 */
+	public function createEnvelope()
+	{
+		return $this->getManager()->createEnvelope();
+	}
+
     /**
      *
      * @access public

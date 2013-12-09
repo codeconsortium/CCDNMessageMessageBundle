@@ -32,6 +32,16 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  */
 class RegistryManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Registry
+	 */
+	public function createRegistry()
+	{
+		return $this->gateway->createRegistry();
+	}
+
     /**
      *
      * @access public

@@ -103,10 +103,10 @@ class RegistryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                          $registry
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistRegistry(Registry $registry)
+    public function saveRegistry(Registry $registry)
     {
         $this->persist($registry)->flush();
 
@@ -116,7 +116,7 @@ class RegistryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                          $registry
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateRegistry(Registry $registry)
@@ -129,7 +129,7 @@ class RegistryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Registry                $registry
+     * @param  \CCDNMessage\MessageBundle\Entity\Registry                          $registry
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteRegistry(Registry $registry)
@@ -138,4 +138,14 @@ class RegistryGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Registry
+	 */
+	public function createRegistry()
+	{
+		return new $this->entityClass();
+	}
 }

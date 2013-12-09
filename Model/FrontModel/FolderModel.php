@@ -33,6 +33,16 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Folder
+	 */
+	public function createFolder()
+	{
+		return $this->getManager()->createFolder();
+	}
+
     /**
      *
      * @access public

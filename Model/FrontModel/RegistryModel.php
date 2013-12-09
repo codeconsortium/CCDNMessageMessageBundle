@@ -30,6 +30,16 @@ use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
  */
 class RegistryModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Registry
+	 */
+	public function createRegistry()
+	{
+		return $this->getManager()->createRegistry();
+	}
+
     /**
      *
      * @access public

@@ -31,6 +31,16 @@ use CCDNMessage\MessageBundle\Entity\Message;
  */
 class MessageModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Message
+	 */
+	public function createMessage()
+	{
+		return $this->getManager()->createMessage();
+	}
+
     /**
      *
      * @access public

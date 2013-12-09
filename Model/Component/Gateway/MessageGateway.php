@@ -106,10 +106,10 @@ class MessageGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                           $message
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistMessage(Message $message)
+    public function saveMessage(Message $message)
     {
         $this->persist($message)->flush();
 
@@ -119,7 +119,7 @@ class MessageGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                           $message
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateMessage(Message $message)
@@ -132,7 +132,7 @@ class MessageGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Message                 $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                           $message
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteMessage(Message $message)
@@ -141,4 +141,14 @@ class MessageGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Message
+	 */
+	public function createMessage()
+	{
+		return new $this->entityClass();
+	}
 }

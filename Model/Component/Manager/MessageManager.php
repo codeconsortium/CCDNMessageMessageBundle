@@ -30,6 +30,16 @@ use CCDNMessage\MessageBundle\Entity\Message;
  */
 class MessageManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNMessage\MessageBundle\Entity\Message
+	 */
+	public function createMessage()
+	{
+		return $this->gateway->createMessage();
+	}
+
 	public function saveMessage(Message $message)
 	{
 		$this->persist($message);
