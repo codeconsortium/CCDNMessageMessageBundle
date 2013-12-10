@@ -20,9 +20,9 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
-
-use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
+use CCDNMessage\MessageBundle\Model\FrontModel\FolderModel;
 use CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel;
+use CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel;
 
 /**
  *
@@ -40,6 +40,13 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access private
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
+     */
+    protected $folderModel;
+
+    /**
+     *
+     * @access private
      * @var \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
      */
     protected $envelopeModel;
@@ -47,29 +54,22 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access private
-     * @var \Doctrine\ORM\EntityManager $em
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
      */
-	protected $em;
-
-    /**
-     *
-     * @access private
-     * @var \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
-     */
-	protected $registryHelper;
+	protected $registryModel;
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel       $envelopeModel
-     * @param  \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
-     * @param  \Doctrine\Bundle\DoctrineBundle\Registry                   $doctrine
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel   $folderModel
      */
-    public function __construct(EnvelopeModel $envelopeModel, RegistryHelper $registryHelper, Registry $doctrine)
+    public function __construct(FolderModel $folderModel, EnvelopeModel $envelopeModel, RegistryModel $registryModel)
     {
+		$this->folderModel = $folderModel;
 		$this->envelopeModel = $envelopeModel;
-		$this->registryHelper = $registryHelper;
-		$this->em = $doctrine->getEntityManager();
+		$this->registryModel = $registryModel;
     }
 
     /**
@@ -95,13 +95,14 @@ class StatListener implements EventSubscriberInterface
 			$folder->setCachedUnreadCount($countUnread['unread']);
 			$folder->setCachedTotalMessageCount((int) ((int) $countRead['read'] + (int) $countUnread['unread']));
 			$totalUnread += (int) $countUnread['unread'];
-			$this->em->persist($folder);
+			$this->folderModel->updateFolder($folder);
 		}
 		
-		$registry = $this->registryHelper->findOneRegistryForUserById($recipient);
+		$registry = $this->registryModel->findOrCreateOneRegistryForUser($recipient);
 		$registry->setCachedUnreadMessageCount($totalUnread);
 
-		$this->em->persist($registry);
-		$this->em->flush();
+		//$this->em->persist($registry);
+		//$this->em->flush();
+		$this->registryModel->updateRegistry($registry);
     }
 }

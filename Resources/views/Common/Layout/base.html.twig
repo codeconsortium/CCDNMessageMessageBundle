@@ -29,19 +29,16 @@
 					<div class="row" style="padding:10px 0;">
 						<div class="col-md-2">
 							{% block sub_title %}
-								{#
-								{%- include 'CCDNMessageMessageBundle:Common:Layout/SubTitle/sub_title_default.html.twig' -%}
-								#}
 							{% endblock sub_title %}
 						</div>
 
 						<div class="col-md-10">
 							<div class="row">
-								{%- if crumbs is defined -%}
-									{%- block crumb_trail -%}
+								{%- block crumb_trail -%}
+									{%- if crumbs is defined -%}
 										{%- include 'CCDNMessageMessageBundle:Common:Layout/crumbs.html.twig' with {'crumbs': crumbs } -%}
-									{%- endblock crumb_trail -%}
-								{%- endif -%}
+									{%- endif -%}
+								{%- endblock crumb_trail -%}
 							</div>
 						</div>
 					</div>

@@ -14,21 +14,21 @@
 namespace CCDNMessage\MessageBundle\Component\TwigExtension;
 
 use Symfony\Component\Security\Core\SecurityContext;
-use CCDNMessage\MessageBundle\Component\Helper\RegistryHelper;
+use CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class UnreadMessageCountExtension extends \Twig_Extension
+class RegistryExtension extends \Twig_Extension
 {
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
      */
-    protected $registryHelper;
+    protected $registryModel;
 
     /**
      *
@@ -40,12 +40,12 @@ class UnreadMessageCountExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Component\Helper\RegistryHelper $registryHelper
-     * @param \Symfony\Component\Security\Core\SecurityContext           $securityContext
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryHelper
+     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
      */
-    public function __construct(RegistryHelper $registryHelper, SecurityContext $securityContext)
+    public function __construct(RegistryModel $registryModel, SecurityContext $securityContext)
     {
-        $this->registryHelper = $registryHelper;
+        $this->registryModel = $registryModel;
         $this->securityContext = $securityContext;
     }
 
@@ -57,7 +57,7 @@ class UnreadMessageCountExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'unreadMessageCount' => new \Twig_Function_Method($this, 'unreadMessageCount'),
+            'get_user_message_registry' => new \Twig_Function_Method($this, 'getUserMessageRegistry'),
         );
     }
 
@@ -67,17 +67,16 @@ class UnreadMessageCountExtension extends \Twig_Extension
      * @access public
      * @return int
      */
-    public function unreadMessageCount()
+    public function getUserMessageRegistry()
     {
-        $user = $this->securityContext->getToken()->getUser();
+		if ($this->securityContext->isGranted('ROLE_USER')) {
+	        $user = $this->securityContext->getToken()->getUser();
+	        $registry = $this->registryModel->findOrCreateOneRegistryForUser($user);
+			
+	        return $registry;
+		}
 
-        $unreadMessageCount = $this->registryHelper->findOneRegistryForUserByIdId($user);
-
-        if ($unreadMessageCount == null) {
-            return 0;
-        }
-
-        return $unreadMessageCount->getCachedUnreadMessageCount();
+		return null;
     }
 
     /**
@@ -87,6 +86,6 @@ class UnreadMessageCountExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'unreadMessageCount';
+        return 'get_user_message_registry';
     }
 }

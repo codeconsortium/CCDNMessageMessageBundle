@@ -7,7 +7,6 @@ parameters:
     ccdn_message_message.component.crumb_factory.class: CCDNMessage\MessageBundle\Component\Crumbs\Factory\CrumbFactory
     ccdn_message_message.component.helper.folder.class: CCDNMessage\MessageBundle\Component\Helper\FolderHelper
     ccdn_message_message.component.helper.quota.class:  CCDNMessage\MessageBundle\Component\Helper\QuotaHelper
-    ccdn_message_message.component.helper.registry.class: CCDNMessage\MessageBundle\Component\Helper\RegistryHelper
     ccdn_message_message.component.event_listener.flash.class: CCDNMessage\MessageBundle\Component\Dispatcher\Listener\FlashListener
     ccdn_message_message.component.event_listener.stats.class: CCDNMessage\MessageBundle\Component\Dispatcher\Listener\StatListener
 
@@ -28,11 +27,6 @@ services:
         class: %ccdn_message_message.component.helper.folder.class%
         arguments:
             - @ccdn_message_message.model.folder
-
-    ccdn_message_message.component.helper.registry:
-        class: %ccdn_message_message.component.helper.registry.class%
-        arguments:
-            - @ccdn_message_message.model.registry
 
     ccdn_message_message.component.helper.quota:
         class: %ccdn_message_message.component.helper.quota.class%
@@ -71,9 +65,9 @@ services:
     ccdn_message_message.component.event_listener.stats:
         class: %ccdn_message_message.component.event_listener.stats.class%
         arguments:
+            - @ccdn_message_message.model.folder
             - @ccdn_message_message.model.envelope
-            - @ccdn_message_message.component.helper.registry
-            - @doctrine
+            - @ccdn_message_message.model.registry
         tags:
             - { name: kernel.event_subscriber }
 

@@ -42,10 +42,17 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		return $this->gateway->createRegistry();
 	}
 
+	public function updateRegistry(Registry $registry)
+	{
+		$this->gateway->updateRegistry($registry);
+		
+		return $registry;
+	}
+
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @param  \Symfony\Component\Security\Core\User\UserInterface              $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
      */
     public function setupDefaults(UserInterface $user)
@@ -54,12 +61,11 @@ class RegistryManager extends BaseManager implements ManagerInterface
             throw new \Exception('User cannot be null and must implement UserInterface!');
         }
 
-        $registry = new Registry();
+        $registry = $this->createRegistry();
         $registry->setOwnedByUser($user);
         $registry->setCachedUnreadMessageCount(0);
 
-        $this->persist($registry);
-		$this->flush();
+		$this->gateway->saveRegistry($registry);
 		$this->refresh($registry);
 		
 		return $registry;

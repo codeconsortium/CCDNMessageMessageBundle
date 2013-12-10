@@ -7,10 +7,10 @@ services:
     #
     # Twig Extensions.
     #
-    ccdn_message_message.component.twig_extension.unread_message_count:
-        class: %ccdn_message_message.component.twig_extension.unread_message_count.class%
+    ccdn_message_message.component.twig_extension.registry:
+        class: %ccdn_message_message.component.twig_extension.registry.class%
         arguments:
-            - @ccdn_message_message.component.helper.registry
+            - @ccdn_message_message.model.registry
             - @security.context
         tags:
             - { name: twig.extension }

@@ -65,6 +65,17 @@ class FolderModel extends BaseModel implements ModelInterface
 		return $this->getManager()->saveFolder($folder);
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
+	 * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
+	 */
+	public function updateFolder(Folder $folder)
+	{
+		return $this->getManager()->updateFolder($folder);
+	}
+
     /**
      *
      * @access public

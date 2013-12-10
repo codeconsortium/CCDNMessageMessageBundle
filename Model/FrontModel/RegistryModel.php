@@ -16,6 +16,7 @@ namespace CCDNMessage\MessageBundle\Model\FrontModel;
 use Symfony\Component\Security\Core\User\UserInterface;
 use CCDNMessage\MessageBundle\Model\FrontModel\BaseModel;
 use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
+use CCDNMessage\MessageBundle\Entity\Registry;
 
 /**
  *
@@ -43,6 +44,23 @@ class RegistryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
+     */
+    public function findOrCreateOneRegistryForUser(UserInterface $user)
+	{
+		$registry = $this->findOneRegistryForUserById($user->getId());
+		
+		if (! $registry) {
+			$registry = $this->setupDefaults($user);
+		}
+		
+		return $registry;
+	}
+
+    /**
+     *
+     * @access public
      * @param  int                                        $userId
      * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
@@ -50,6 +68,16 @@ class RegistryModel extends BaseModel implements ModelInterface
     {
 		return $this->getRepository()->findOneRegistryForUserById($userId);
     }
+
+	public function updateRegistry(Registry $registry)
+	{
+		$this->getManager()->updateRegistry($registry);
+		//$this->persist($folder);
+		//$this->flush();
+		//$this->refresh($folder);
+		
+		return $registry;
+	}
 
     /**
      *

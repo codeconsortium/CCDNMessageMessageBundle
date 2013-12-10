@@ -214,7 +214,7 @@ class CCDNMessageMessageExtension extends Extension
     {
         $container->setParameter('ccdn_message_message.component.dashboard.integrator.class', $config['component']['dashboard']['integrator']['class']);
 
-        $container->setParameter('ccdn_message_message.component.twig_extension.unread_message_count.class', $config['component']['twig_extension']['unread_message_count']['class']);
+        $container->setParameter('ccdn_message_message.component.twig_extension.registry.class', $config['component']['twig_extension']['registry']['class']);
         $container->setParameter('ccdn_message_message.component.twig_extension.folder_list.class', $config['component']['twig_extension']['folder_list']['class']);
 
         $container->setParameter('ccdn_message_message.component.flood_control.class', $config['component']['flood_control']['class']);

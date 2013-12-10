@@ -45,9 +45,15 @@ class FolderManager extends BaseManager implements ManagerInterface
 
 	public function saveFolder(Folder $folder)
 	{
-		$this->persist($folder);
-		$this->flush();
+		$this->gateway->saveFolder($folder);
 		$this->refresh($folder);
+		
+		return $folder;
+	}
+
+	public function updateFolder(Folder $folder)
+	{
+		$this->gateway->updateFolder($folder);
 		
 		return $folder;
 	}
@@ -55,7 +61,7 @@ class FolderManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @param  \Symfony\Component\Security\Core\User\UserInterface              $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
      */
     public function setupDefaults(UserInterface $user)
