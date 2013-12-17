@@ -71,7 +71,7 @@ class UserFolderBaseController extends BaseController
 
         if ($submitAction == 'move_to') {
             $moveToFolderId = $this->request->get('select_move_to');
-			$moveToFolder = $this->getFolderHelper()->filterFolderById($folders, $moveToFolderId);
+            $moveToFolder = $this->getFolderHelper()->filterFolderById($folders, $moveToFolderId);
 
             if (! is_object($moveToFolder) || ! $moveToFolder instanceof Folder) {
                 throw new \Exception('Folder not found.');

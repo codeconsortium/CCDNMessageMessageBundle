@@ -63,10 +63,10 @@ abstract class BaseGateway
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Persistence\ObjectManager $em
-     * @param  string                                     $entityClass
-     * @param  \Knp\Component\Pager\Paginator             $paginator
-     * @param  string                                     $pagerTheme
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param string                                     $entityClass
+     * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
     public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null)
     {
@@ -76,8 +76,8 @@ abstract class BaseGateway
 
         $this->entityClass = $entityClass;
         $this->em = $em;
-		$this->paginator = $paginator;
-		$this->pagerTheme = $pagerTheme;
+        $this->paginator = $paginator;
+        $this->pagerTheme = $pagerTheme;
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class BaseGateway
 
         return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
     }
-	
+
     /**
      *
      * @access public
@@ -142,7 +142,7 @@ abstract class BaseGateway
 
         return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
     }
-	
+
     /**
      *
      * @access public
@@ -186,23 +186,23 @@ abstract class BaseGateway
     /**
      *
      * @access public
-     * @param  \Doctrine\ORM\QueryBuilder $qb
-     * @param  int                        $itemsPerPage
-     * @param  int                        $page
+     * @param  \Doctrine\ORM\QueryBuilder                               $qb
+     * @param  int                                                      $itemsPerPage
+     * @param  int                                                      $page
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
-		$pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
+        $pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
         $pager->setTemplate($this->pagerTheme);
-		
-		return $pager;
+
+        return $pager;
     }
 
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function persist($item)
@@ -215,7 +215,7 @@ abstract class BaseGateway
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function remove($item)
@@ -240,7 +240,7 @@ abstract class BaseGateway
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface
      */
     public function refresh($entity)

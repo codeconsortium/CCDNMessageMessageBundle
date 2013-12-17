@@ -40,8 +40,8 @@ class FolderListExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
-     * @param  \Symfony\Component\Security\Core\SecurityContext         $securityContext
+     * @param \CCDNMessage\MessageBundle\Component\Helper\FolderHelper $folderHelper
+     * @param \Symfony\Component\Security\Core\SecurityContext         $securityContext
      */
     public function __construct(FolderHelper $folderHelper, SecurityContext $securityContext)
     {

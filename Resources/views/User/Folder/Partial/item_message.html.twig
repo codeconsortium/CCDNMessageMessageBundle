@@ -6,18 +6,18 @@
 	<tr class="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" data-read="{{- (envelope.isRead ? 'marked_read': 'marked_unread') -}}" id="message_row_{{- envelope.id -}}">
 		<td>
 			{% set qualifiers = {0:'all'} %}
-			
+
 			{%- if envelope.isRead -%}
 				{%- set qualifiers = qualifiers|merge({1:'read'}) -%}
 			{%- else -%}
 				{%- set qualifiers = qualifiers|merge({1:'unread'}) -%}
 			{%- endif -%}
-			
+
 			{%- if envelope.isFlagged -%}
 				{%- set qualifiers = qualifiers|merge({3:'flagged'}) -%}
 			{%- endif -%}
-			
-			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true" 
+
+			<input type="checkbox" id="message[{{- envelope.id -}}]" name="envelope[{{- envelope.id -}}]" data-check-all-responds="true"
 				data-qualifiers='[
 					{%- for qualifier in qualifiers -%}
 						{%- if loop.last -%}"{{- qualifier -}}"{%- else -%}"{{- qualifier-}}", {% endif -%}

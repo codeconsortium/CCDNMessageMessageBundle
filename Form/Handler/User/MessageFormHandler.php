@@ -85,21 +85,21 @@ class MessageFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType                       $messageFormType
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface                      $model
-     * @param |CCDNMessage\MessageBundle\Component\FloodControl                          $floodControl
-     * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer                  $messageServer
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType             $messageFormType
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface       $model
+     * @param |CCDNMessage\MessageBundle\Component\FloodControl                $floodControl
+     * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer        $messageServer
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->messageFormType = $messageFormType;
         $this->model = $model;
-		$this->floodControl = $floodControl;
-		$this->messageServer = $messageServer;
+        $this->floodControl = $floodControl;
+        $this->messageServer = $messageServer;
     }
 
     /**
@@ -136,7 +136,7 @@ class MessageFormHandler extends BaseFormHandler
     public function process()
     {
         $this->getForm();
-		
+
         if ($this->floodControl->isFlooded()) {
             $this->dispatcher->dispatch(MessageEvents::USER_MESSAGE_CREATE_FLOODED, new UserMessageFloodEvent($this->request));
 
@@ -144,7 +144,7 @@ class MessageFormHandler extends BaseFormHandler
         }
 
         $this->floodControl->incrementCounter();
-		
+
         if ($this->request->getMethod() == 'POST') {
             $this->form->bindRequest($this->request);
 
@@ -186,11 +186,11 @@ class MessageFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNMessage\MessageBundle\Entity\Message           $message
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                $message
      * @return \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel
      */
     protected function onSuccess(Message $message, $isFlagged)
     {
-		return $this->messageServer->sendMessage($this->request, $message, $isFlagged);
+        return $this->messageServer->sendMessage($this->request, $message, $isFlagged);
     }
 }

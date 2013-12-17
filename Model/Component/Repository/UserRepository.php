@@ -45,7 +45,7 @@ class UserRepository extends BaseRepository implements RepositoryInterface
         $params = array(':userId' => $userId);
 
         $qb = $this->createSelectQuery(array('u'));
-		
+
         $qb
             ->where('u.id = :userId')
         ;

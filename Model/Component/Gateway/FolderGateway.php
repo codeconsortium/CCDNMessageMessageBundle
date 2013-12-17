@@ -139,13 +139,13 @@ class FolderGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Folder
-	 */
-	public function createFolder()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Folder
+     */
+    public function createFolder()
+    {
+        return new $this->entityClass();
+    }
 }

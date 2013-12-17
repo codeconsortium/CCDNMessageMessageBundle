@@ -13,7 +13,7 @@
 			<form method="POST" action="{{- path('ccdn_message_message_user_folder_mail_bulk_action', {'folderName': current_folder.getName()}) -}}" class="form-inline">
 				<div class="btn-toolbar">
 					<div class="span6">
-						
+
 						{%- include 'CCDNMessageMessageBundle:User:Folder/Partial/folder_actions.html.twig' -%}
 
 					</div>
@@ -48,7 +48,7 @@
 						{%- endfor -%}
 					</tbody>
 				</table>
-				
+
 				<div class="btn-toolbar">
 					<nav class="span12 btn-right paginate">
 						{{- knp_pagination_render(pager) -}}

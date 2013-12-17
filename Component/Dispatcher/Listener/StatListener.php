@@ -56,20 +56,20 @@ class StatListener implements EventSubscriberInterface
      * @access private
      * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
      */
-	protected $registryModel;
+    protected $registryModel;
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel   $folderModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel $envelopeModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel   $folderModel
      */
     public function __construct(FolderModel $folderModel, EnvelopeModel $envelopeModel, RegistryModel $registryModel)
     {
-		$this->folderModel = $folderModel;
-		$this->envelopeModel = $envelopeModel;
-		$this->registryModel = $registryModel;
+        $this->folderModel = $folderModel;
+        $this->envelopeModel = $envelopeModel;
+        $this->registryModel = $registryModel;
     }
 
     /**
@@ -79,30 +79,30 @@ class StatListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-			MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE => 'onEnvelopeReceiveComplete',
+            MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE => 'onEnvelopeReceiveComplete',
         );
     }
 
     public function onEnvelopeReceiveComplete(UserEnvelopeReceiveEvent $event)
     {
-		$folders = $event->getFolders();
-		$recipient = $event->getRecipient();
-		$totalUnread = 0;
-		foreach ($folders as $folder) {
-			$countRead   = $this->envelopeModel->getReadCounterForFolderById($folder->getId(), $recipient->getId());
-			$countUnread = $this->envelopeModel->getUnreadCounterForFolderById($folder->getId(), $recipient->getId());
-			$folder->setCachedReadCount($countRead['read']);
-			$folder->setCachedUnreadCount($countUnread['unread']);
-			$folder->setCachedTotalMessageCount((int) ((int) $countRead['read'] + (int) $countUnread['unread']));
-			$totalUnread += (int) $countUnread['unread'];
-			$this->folderModel->updateFolder($folder);
-		}
-		
-		$registry = $this->registryModel->findOrCreateOneRegistryForUser($recipient);
-		$registry->setCachedUnreadMessageCount($totalUnread);
+        $folders = $event->getFolders();
+        $recipient = $event->getRecipient();
+        $totalUnread = 0;
+        foreach ($folders as $folder) {
+            $countRead   = $this->envelopeModel->getReadCounterForFolderById($folder->getId(), $recipient->getId());
+            $countUnread = $this->envelopeModel->getUnreadCounterForFolderById($folder->getId(), $recipient->getId());
+            $folder->setCachedReadCount($countRead['read']);
+            $folder->setCachedUnreadCount($countUnread['unread']);
+            $folder->setCachedTotalMessageCount((int) ((int) $countRead['read'] + (int) $countUnread['unread']));
+            $totalUnread += (int) $countUnread['unread'];
+            $this->folderModel->updateFolder($folder);
+        }
 
-		//$this->em->persist($registry);
-		//$this->em->flush();
-		$this->registryModel->updateRegistry($registry);
+        $registry = $this->registryModel->findOrCreateOneRegistryForUser($recipient);
+        $registry->setCachedUnreadMessageCount($totalUnread);
+
+        //$this->em->persist($registry);
+        //$this->em->flush();
+        $this->registryModel->updateRegistry($registry);
     }
 }

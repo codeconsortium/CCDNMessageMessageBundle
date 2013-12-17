@@ -29,15 +29,15 @@ use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
  */
 class ThreadModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Thread
-	 */
-	public function createThread()
-	{
-		return $this->getManager()->createThread();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
+     */
+    public function createThread()
+    {
+        return $this->getManager()->createThread();
+    }
 
     /**
      *
@@ -48,6 +48,6 @@ class ThreadModel extends BaseModel implements ModelInterface
      */
     public function findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId)
     {
-		return $this->getRepository()->findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId);
+        return $this->getRepository()->findThreadWithAllEnvelopesByThreadIdAndUserId($threadId, $userId);
     }
 }

@@ -33,15 +33,15 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Folder
-	 */
-	public function createFolder()
-	{
-		return $this->getManager()->createFolder();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Folder
+     */
+    public function createFolder()
+    {
+        return $this->getManager()->createFolder();
+    }
 
     /**
      *
@@ -51,35 +51,35 @@ class FolderModel extends BaseModel implements ModelInterface
      */
     public function findAllFoldersForUserById($userId)
     {
-		return $this->getRepository()->findAllFoldersForUserById($userId);
+        return $this->getRepository()->findAllFoldersForUserById($userId);
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
-	 * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
-	 */
-	public function saveFolder(Folder $folder)
-	{
-		return $this->getManager()->saveFolder($folder);
-	}
-
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Entity\Folder               $folder
-	 * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
-	 */
-	public function updateFolder(Folder $folder)
-	{
-		return $this->getManager()->updateFolder($folder);
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface    $user
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                         $folder
+     * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
+     */
+    public function saveFolder(Folder $folder)
+    {
+        return $this->getManager()->saveFolder($folder);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                         $folder
+     * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
+     */
+    public function updateFolder(Folder $folder)
+    {
+        return $this->getManager()->updateFolder($folder);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface              $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\FolderManager
      */
     public function setupDefaults(UserInterface $user)

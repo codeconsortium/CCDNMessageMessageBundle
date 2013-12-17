@@ -137,13 +137,13 @@ class ThreadGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Thread
-	 */
-	public function createThread()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
+     */
+    public function createThread()
+    {
+        return new $this->entityClass();
+    }
 }

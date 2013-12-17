@@ -34,15 +34,15 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface        $gateway
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher    $dispatcher
+     * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface $gateway
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, GatewayInterface $gateway);
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface           $model
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface                $model
      * @return \CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface
      */
     public function setModel(ModelInterface $model);
@@ -97,7 +97,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function persist($entity);
@@ -105,7 +105,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function remove($entity);
@@ -120,7 +120,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function refresh($entity);

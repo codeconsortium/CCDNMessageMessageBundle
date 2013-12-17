@@ -61,15 +61,15 @@ class FlashListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-		    MessageEvents::USER_MESSAGE_CREATE_FLOODED              => 'onMessageCreateFlooded',
-		    MessageEvents::USER_MESSAGE_CREATE_REPLY_FLOODED        => 'onMessageCreateFlooded',
-		    MessageEvents::USER_MESSAGE_CREATE_FORWARD_FLOODED      => 'onMessageCreateFlooded',
-			MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE           => 'onEnvelopeReceiveComplete',
-			MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL  => 'onEnvelopeReceiveFailedInboxFull',
-			MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL => 'onEnvelopeReceiveFailedOutboxFull',
-			MessageEvents::USER_MESSAGE_MARK_AS_READ_RESPONSE       => 'onMessageMarkAsRead',
-			MessageEvents::USER_MESSAGE_MARK_AS_UNREAD_RESPONSE     => 'onMessageMarkAsUnread',
-			MessageEvents::USER_MESSAGE_DELETE_RESPONSE             => 'onMessageDelete',
+            MessageEvents::USER_MESSAGE_CREATE_FLOODED              => 'onMessageCreateFlooded',
+            MessageEvents::USER_MESSAGE_CREATE_REPLY_FLOODED        => 'onMessageCreateFlooded',
+            MessageEvents::USER_MESSAGE_CREATE_FORWARD_FLOODED      => 'onMessageCreateFlooded',
+            MessageEvents::USER_ENVELOPE_RECEIVE_COMPLETE           => 'onEnvelopeReceiveComplete',
+            MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL  => 'onEnvelopeReceiveFailedInboxFull',
+            MessageEvents::USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL => 'onEnvelopeReceiveFailedOutboxFull',
+            MessageEvents::USER_MESSAGE_MARK_AS_READ_RESPONSE       => 'onMessageMarkAsRead',
+            MessageEvents::USER_MESSAGE_MARK_AS_UNREAD_RESPONSE     => 'onMessageMarkAsUnread',
+            MessageEvents::USER_MESSAGE_DELETE_RESPONSE             => 'onMessageDelete',
         );
     }
 
@@ -85,44 +85,44 @@ class FlashListener implements EventSubscriberInterface
     public function onEnvelopeReceiveComplete(UserEnvelopeReceiveEvent $event)
     {
         if ($envelope = $event->getEnvelope()) {
-			if ($envelope->getId()) {
-	        	$this->session->setFlash('success', 'Message sent successfully to ' . $event->getRecipient()->getUsername() . '.');
-			}
+            if ($envelope->getId()) {
+                $this->session->setFlash('success', 'Message sent successfully to ' . $event->getRecipient()->getUsername() . '.');
+            }
         }
     }
 
     public function onEnvelopeReceiveFailedInboxFull(UserEnvelopeReceiveFailedInboxFullEvent $event)
     {
         if ($event->getEnvelope()) {
-        	$this->session->setFlash('success', 'Message(s) could not be sent because your outbox is full.');
+            $this->session->setFlash('success', 'Message(s) could not be sent because your outbox is full.');
         }
     }
 
     public function onEnvelopeReceiveFailedOutboxFull(UserEnvelopeReceiveFailedOutboxFullEvent $event)
     {
         if ($event->getEnvelope()) {
-        	$this->session->setFlash('success', 'Message could not be delivered to  "' . $event->getRecipient()->getUsername() . '" because their inbox is full.');
+            $this->session->setFlash('success', 'Message could not be delivered to  "' . $event->getRecipient()->getUsername() . '" because their inbox is full.');
         }
     }
 
     public function onMessageMarkAsRead(UserMessageResponseEvent $event)
     {
         if ($event->getMessage()) {
-        	$this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '" as read.');
+            $this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '" as read.');
         }
     }
 
     public function onMessageMarkAsUnread(UserMessageResponseEvent $event)
     {
         if ($event->getMessage()) {
-        	$this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '"  as unread.');
+            $this->session->setFlash('success', 'Marked message "' . $event->getMessage()->getSubject() . '"  as unread.');
         }
     }
 
     public function onMessageDelete(UserMessageResponseEvent $event)
     {
         if ($event->getMessage()) {
-        	$this->session->setFlash('success', 'Deleted message "' . $event->getMessage()->getSubject() . '".');
+            $this->session->setFlash('success', 'Deleted message "' . $event->getMessage()->getSubject() . '".');
         }
     }
 }

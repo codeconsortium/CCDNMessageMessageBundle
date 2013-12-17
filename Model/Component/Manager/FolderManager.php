@@ -33,30 +33,30 @@ use CCDNMessage\MessageBundle\Entity\Folder;
  */
 class FolderManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Folder
-	 */
-	public function createFolder()
-	{
-		return $this->gateway->createFolder();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Folder
+     */
+    public function createFolder()
+    {
+        return $this->gateway->createFolder();
+    }
 
-	public function saveFolder(Folder $folder)
-	{
-		$this->gateway->saveFolder($folder);
-		$this->refresh($folder);
-		
-		return $folder;
-	}
+    public function saveFolder(Folder $folder)
+    {
+        $this->gateway->saveFolder($folder);
+        $this->refresh($folder);
 
-	public function updateFolder(Folder $folder)
-	{
-		$this->gateway->updateFolder($folder);
-		
-		return $folder;
-	}
+        return $folder;
+    }
+
+    public function updateFolder(Folder $folder)
+    {
+        $this->gateway->updateFolder($folder);
+
+        return $folder;
+    }
 
     /**
      *
@@ -71,7 +71,7 @@ class FolderManager extends BaseManager implements ManagerInterface
         }
 
         $folderNames = Folder::$defaultSpecialTypes;
-		
+
         foreach ($folderNames as $key => $folderName) {
             $folder = new Folder();
             $folder->setOwnedByUser($user);
@@ -84,8 +84,8 @@ class FolderManager extends BaseManager implements ManagerInterface
             $this->persist($folder);
         }
 
-		$this->flush();
-		
-		return $this;
+        $this->flush();
+
+        return $this;
     }
 }

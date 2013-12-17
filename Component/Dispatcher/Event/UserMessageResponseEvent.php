@@ -43,7 +43,7 @@ class UserMessageResponseEvent extends UserMessageEvent
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \CCDNMessage\MessageBundle\Entity\Message      $message
+     * @param \CCDNMessage\MessageBundle\Entity\Message  $message
      */
     public function __construct(Request $request, Response $response, Message $message = null)
     {

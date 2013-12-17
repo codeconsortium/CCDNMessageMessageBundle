@@ -30,7 +30,7 @@ use CCDNMessage\MessageBundle\Entity\Envelope;
  * @link     https://github.com/codeconsortium/CCDNMessageMessageBundle
  *
  */
-class UserEnvelopeReceiveInboxFullEventEvent extends Event
+class UserEnvelopeReceiveFailedInboxFullEvent extends Event
 {
     /**
      *
@@ -64,7 +64,7 @@ class UserEnvelopeReceiveInboxFullEventEvent extends Event
     {
         $this->request = $request;
         $this->envelope = $envelope;
-		$this->user = $user;
+        $this->user = $user;
     }
 
     /**

@@ -168,7 +168,7 @@ final class MessageEvents
      * This event allows you to modify the request object and set a flash message.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent instance.
      */
-	const USER_ENVELOPE_RECEIVE_COMPLETE = 'ccdn_message.user.envelope.receive.complete';
+    const USER_ENVELOPE_RECEIVE_COMPLETE = 'ccdn_message.user.envelope.receive.complete';
 
     /**
      *
@@ -177,7 +177,7 @@ final class MessageEvents
      * This event allows you to modify the request object and set a flash message.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedInboxFullEvent instance.
      */
-	const USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL = 'ccdn_message.user.envelope.receive.failed.inbox_full';
+    const USER_ENVELOPE_RECEIVE_FAILED_INBOX_FULL = 'ccdn_message.user.envelope.receive.failed.inbox_full';
     /**
      *
      * The USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL event occurs when the envelope receiving process fails due to users outbox being full.
@@ -185,7 +185,7 @@ final class MessageEvents
      * This event allows you to modify the request object and set a flash message.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveFailedOutboxFullEvent instance.
      */
-	const USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL = 'ccdn_message.user.envelope.receive.failed.outbox_full';
+    const USER_ENVELOPE_RECEIVE_FAILED_OUTBOX_FULL = 'ccdn_message.user.envelope.receive.failed.outbox_full';
 
     /**
      *
@@ -194,7 +194,7 @@ final class MessageEvents
      * This event allows you to modify the default values of the response object returned from the controller action.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
      */
-	const USER_MESSAGE_DRAFT_SEND_RESPONSE = 'ccdn_message.user.message.draft_send.response';
+    const USER_MESSAGE_DRAFT_SEND_RESPONSE = 'ccdn_message.user.message.draft_send.response';
 
     /**
      *
@@ -203,7 +203,7 @@ final class MessageEvents
      * This event allows you to modify the default values of the response object returned from the controller action.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
      */
-	const USER_MESSAGE_MARK_AS_READ_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
+    const USER_MESSAGE_MARK_AS_READ_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
 
     /**
      *
@@ -212,7 +212,7 @@ final class MessageEvents
      * This event allows you to modify the default values of the response object returned from the controller action.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
      */
-	const USER_MESSAGE_MARK_AS_UNREAD_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
+    const USER_MESSAGE_MARK_AS_UNREAD_RESPONSE = 'ccdn_message.user.message.mark_as_unread.response';
 
     /**
      *
@@ -221,5 +221,5 @@ final class MessageEvents
      * This event allows you to modify the default values of the response object returned from the controller action.
      * The event listener method receives a CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserMessageResponseEvent instance.
      */
-	const USER_MESSAGE_DELETE_RESPONSE = 'ccdn_message.user.message.delete.response';
+    const USER_MESSAGE_DELETE_RESPONSE = 'ccdn_message.user.message.delete.response';
 }

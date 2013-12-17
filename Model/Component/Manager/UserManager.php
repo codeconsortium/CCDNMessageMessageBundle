@@ -29,5 +29,5 @@ use CCDNMessage\MessageBundle\Model\Component\Manager\BaseManager;
  */
 class UserManager extends BaseManager implements ManagerInterface
 {
-	
+
 }

@@ -68,18 +68,18 @@ class UserMessageController extends UserMessageBaseController
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $folders = $this->getFolderHelper()->findAllFoldersForUserById($this->getUser());
-			$currentFolder = $this->getFolderHelper()->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_DRAFTS);
-	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose.html.', array(
-	            'crumbs' => $this->getCrumbs()->addUserMessageCreate($currentFolder),
-	            'form' => $formHandler->getForm()->createView(),
-	            'preview' => $formHandler->getForm()->getData(),
-	        ));
+            $folders = $this->getFolderHelper()->findAllFoldersForUserById($this->getUser());
+            $currentFolder = $this->getFolderHelper()->filterFolderBySpecialType($folders, Folder::SPECIAL_TYPE_DRAFTS);
+            $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose.html.', array(
+                'crumbs' => $this->getCrumbs()->addUserMessageCreate($currentFolder),
+                'form' => $formHandler->getForm()->createView(),
+                'preview' => $formHandler->getForm()->getData(),
+            ));
         }
-		
+
         $this->dispatch(MessageEvents::USER_MESSAGE_CREATE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
-		
-		return $response;
+
+        return $response;
     }
 
     /**
@@ -97,17 +97,17 @@ class UserMessageController extends UserMessageBaseController
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_reply.html.', array(
-	            'crumbs' => $this->getCrumbs()->addUserMessageReply($envelope),
-	            'form' => $formHandler->getForm()->createView(),
-	            'preview' => $formHandler->getForm()->getData(),
-	            'envelope' => $envelope,
-			));
+            $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_reply.html.', array(
+                'crumbs' => $this->getCrumbs()->addUserMessageReply($envelope),
+                'form' => $formHandler->getForm()->createView(),
+                'preview' => $formHandler->getForm()->getData(),
+                'envelope' => $envelope,
+            ));
         }
-		
+
         $this->dispatch(MessageEvents::USER_MESSAGE_CREATE_REPLY_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
-		
-		return $response;
+
+        return $response;
     }
 
     /**
@@ -125,23 +125,23 @@ class UserMessageController extends UserMessageBaseController
         if ($formHandler->process()) {
             $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent')));
         } else {
-	        $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_forward.html.', array(
-	            'crumbs' => $this->getCrumbs()->addUserMessageForward($envelope),
-	            'form' => $formHandler->getForm()->createView(),
-	            'preview' => $formHandler->getForm()->getData(),
-	            'envelope' => $envelope,
-			));
+            $response = $this->renderResponse('CCDNMessageMessageBundle:User:Message/compose_forward.html.', array(
+                'crumbs' => $this->getCrumbs()->addUserMessageForward($envelope),
+                'form' => $formHandler->getForm()->createView(),
+                'preview' => $formHandler->getForm()->getData(),
+                'envelope' => $envelope,
+            ));
         }
 
         $this->dispatch(MessageEvents::USER_MESSAGE_CREATE_FORWARD_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
-		return $response;
+        return $response;
     }
 
     /**
-     * 
+     *
      * @access public
-     * @param int $messageId
+     * @param  int              $messageId
      * @return RedirectResponse
      */
     public function sendDraftAction($messageId)
@@ -159,8 +159,8 @@ class UserMessageController extends UserMessageBaseController
         $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => 'sent' )));
 
         $this->dispatch(MessageEvents::USER_MESSAGE_DRAFT_SEND_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $message));
-		
-		return $response;
+
+        return $response;
     }
 
     /**
@@ -179,10 +179,10 @@ class UserMessageController extends UserMessageBaseController
         $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
 
         $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
-		
+
         $this->dispatch(MessageEvents::USER_MESSAGE_MARK_AS_READ_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
-		
-		return $response;
+
+        return $response;
     }
 
     /**
@@ -201,10 +201,10 @@ class UserMessageController extends UserMessageBaseController
         $this->getEnvelopeModel()->markAsUnread($envelope, $folders)->flush();
 
         $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
-		
+
         $this->dispatch(MessageEvents::USER_MESSAGE_MARK_AS_UNREAD_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
 
-		return $response;
+        return $response;
     }
 
     /**
@@ -226,6 +226,6 @@ class UserMessageController extends UserMessageBaseController
 
         $this->dispatch(MessageEvents::USER_MESSAGE_DELETE_RESPONSE, new UserMessageResponseEvent($this->getRequest(), $response, $envelope->getMessage()));
 
-		return $response;
+        return $response;
     }
 }

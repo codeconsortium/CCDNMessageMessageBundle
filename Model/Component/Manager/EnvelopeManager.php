@@ -38,30 +38,30 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
-	 */
-	public function createEnvelope()
-	{
-		return $this->gateway->createEnvelope();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function createEnvelope()
+    {
+        return $this->gateway->createEnvelope();
+    }
 
-	public function saveEnvelope(Envelope $envelope)
-	{
-		$this->persist($envelope);
-		$this->flush();
-		$this->refresh($envelope);
-		
-		return $envelope;
-	}
+    public function saveEnvelope(Envelope $envelope)
+    {
+        $this->persist($envelope);
+        $this->flush();
+        $this->refresh($envelope);
+
+        return $envelope;
+    }
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope
-     * @param  array                                                    $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function markAsRead(Envelope $envelope, $folders)
@@ -78,8 +78,8 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMarkAsRead($envelopes, $folders)
@@ -98,8 +98,8 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  Envelope                                                 $envelope
-     * @param  array                                                    $folders
+     * @param  Envelope                                                           $envelope
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function markAsUnread(Envelope $envelope, $folders)
@@ -116,8 +116,8 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMarkAsUnread($envelopes, $folders)
@@ -135,29 +135,29 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope,
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope,
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     protected function hardDelete(Envelope $envelope)
     {
         $message = $envelope->getMessage();
-        
+
         if (count($message->getEnvelopes()) < 2) {
             if (count($message->getThread()->getMessages()) < 2) {
                 $this->remove($envelope->getThread());
             }
-        
+
             $this->remove($envelope->getMessage());
         }
-        
+
         $this->remove($envelope);
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope,
-     * @param  array                                                    $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope,
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function delete(Envelope $envelope, $folders)
@@ -168,25 +168,25 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             foreach ($folders as $folder) {
                 if ($folder->getName() == 'trash') {
                     $envelope->setFolder($folder);
-        
+
                     break;
                 }
             }
-        
+
             $this->persist($envelope);
         }
-        
+
         $this->flush();
-        
+
         return $this;
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterfaces     $user
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterfaces               $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkDelete($envelopes, $folders, UserInterface $user)
@@ -195,32 +195,32 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
         foreach ($folders as $folder) {
             if ($folder->getName() == 'trash') {
                 $trash = $folder;
-        
+
                 break;
             }
         }
-        
+
         // trash or remove each message
         foreach ($envelopes as $envelope) {
             if ($envelope->getFolder()->getName() == 'trash') {
                 $this->hardDelete($envelope);
             } else {
                 $envelope->setFolder($trash);
-        
+
                 $this->persist($envelope);
             }
         }
-        
+
         $this->flush();
-        
+
         return $this;
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                 $moveTo
+     * @param  array                                                              $envelopes
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                           $moveTo
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMoveToFolder($envelopes, Folder $moveTo)
@@ -229,9 +229,9 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
             $envelope->setFolder($moveTo);
             $this->persist($envelope);
         }
-        
+
         $this->flush();
-        
+
         return $this;
     }
 }

@@ -38,15 +38,15 @@ class EnvelopeModel extends BaseModel implements ModelInterface
     const MESSAGE_SAVE_CARBON_COPY = 1;
     const MESSAGE_SAVE_DRAFT = 2;
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
-	 */
-	public function createEnvelope()
-	{
-		return $this->getManager()->createEnvelope();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function createEnvelope()
+    {
+        return $this->getManager()->createEnvelope();
+    }
 
     /**
      *
@@ -57,7 +57,7 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      */
     public function findEnvelopeByIdForUser($envelopeId, $userId)
     {
-		return $this->getRepository()->findEnvelopeByIdForUser($envelopeId, $userId);
+        return $this->getRepository()->findEnvelopeByIdForUser($envelopeId, $userId);
     }
 
     /**
@@ -70,7 +70,7 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      */
     public function findAllEnvelopesForFolderByIdPaginated($folderId, $userId, $page, $itemsPerPage = 25)
     {
-		return $this->getRepository()->findAllEnvelopesForFolderByIdPaginated($folderId, $userId, $page, $itemsPerPage);
+        return $this->getRepository()->findAllEnvelopesForFolderByIdPaginated($folderId, $userId, $page, $itemsPerPage);
     }
 
     /**
@@ -83,125 +83,125 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      */
     public function findTheseEnvelopesByIdAndByUserId($envelopeIds, $userId)
     {
-		return $this->getRepository()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $userId);
-	}
+        return $this->getRepository()->findTheseEnvelopesByIdAndByUserId($envelopeIds, $userId);
+    }
 
     /**
      *
      * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
+     * @param  int   $folderId
+     * @param  int   $userId
      * @return array
      */
     public function getReadCounterForFolderById($folderId, $userId)
     {
-		return $this->getRepository()->getReadCounterForFolderById($folderId, $userId);
+        return $this->getRepository()->getReadCounterForFolderById($folderId, $userId);
     }
 
     /**
      *
      * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
+     * @param  int   $folderId
+     * @param  int   $userId
      * @return array
      */
     public function getUnreadCounterForFolderById($folderId, $userId)
     {
-		return $this->getRepository()->getUnreadCounterForFolderById($folderId, $userId);
+        return $this->getRepository()->getUnreadCounterForFolderById($folderId, $userId);
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Entity\Envelope
-	 */
-	public function saveEnvelope(Envelope $envelope)
-	{
-		return $this->getManager()->saveEnvelope($envelope);
-	}
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope
-     * @param  array                                                    $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function saveEnvelope(Envelope $envelope)
+    {
+        return $this->getManager()->saveEnvelope($envelope);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function markAsRead(Envelope $envelope, $folders)
     {
-		return $this->getManager()->markAsRead($envelope, $folders);
+        return $this->getManager()->markAsRead($envelope, $folders);
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMarkAsRead($envelopes, $folders)
     {
-		return $this->getManager()->bulkMarkAsRead($envelopes, $folders);
+        return $this->getManager()->bulkMarkAsRead($envelopes, $folders);
     }
 
     /**
      *
      * @access public
-     * @param  Envelope                                                 $envelope
-     * @param  array                                                    $folders
+     * @param  Envelope                                                           $envelope
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function markAsUnread(Envelope $envelope, $folders)
     {
-		return $this->getManager()->markAsUnread($envelope, $folders);
+        return $this->getManager()->markAsUnread($envelope, $folders);
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMarkAsUnread($envelopes, $folders)
     {
-		return $this->getManager()->bulkMarkAsUnread($envelopes, $folders);
+        return $this->getManager()->bulkMarkAsUnread($envelopes, $folders);
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Entity\Envelope               $envelope
-     * @param  array                                                    $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
+     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function delete(Envelope $envelope, $folders)
     {
-		return $this->getManager()->delete($envelope, $folders);
+        return $this->getManager()->delete($envelope, $folders);
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  array                                                    $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterfaces     $user
+     * @param  array                                                              $envelopes
+     * @param  array                                                              $folders
+     * @param  \Symfony\Component\Security\Core\User\UserInterfaces               $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkDelete($envelopes, $folders, UserInterface $user)
     {
-		return $this->getManager()->bulkDelete($envelopes, $folders, $user);
+        return $this->getManager()->bulkDelete($envelopes, $folders, $user);
     }
 
     /**
      *
      * @access public
-     * @param  array                                                    $envelopes
-     * @param  \CCDNMessage\MessageBundle\Entity\Folder                 $moveTo
+     * @param  array                                                              $envelopes
+     * @param  \CCDNMessage\MessageBundle\Entity\Folder                           $moveTo
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
     public function bulkMoveToFolder($envelopes, Folder $moveTo)
     {
-		return $this->getManager()->bulkMoveToFolder($envelopes, $moveTo);
+        return $this->getManager()->bulkMoveToFolder($envelopes, $moveTo);
     }
 }

@@ -1,9 +1,8 @@
-ccdn_message_message:
-    dashboard:
-        pages:
-            account:         "Account"
-        categories:
-            account:         "Account"
+dashboard:
+    pages:
+        account:         "Account"
+    categories:
+        account:         "Account"
 
 title:
     folder:

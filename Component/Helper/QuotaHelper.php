@@ -26,13 +26,13 @@ namespace CCDNMessage\MessageBundle\Component\Helper;
  */
 class QuotaHelper
 {
-	protected $quota;
-	
-	public function __construct($quota)
-	{
-		$this->quota = $quota;
-	}
-	
+    protected $quota;
+
+    public function __construct($quota)
+    {
+        $this->quota = $quota;
+    }
+
     /**
      *
      * @access public
@@ -41,13 +41,13 @@ class QuotaHelper
      */
     public function isQuotaAllowanceFilled($folders)
     {
-		$used = $this->getUsedAllowance($folders, $this->quota);
-		
-		if ($used['used_allowance'] < 101) {
-			return false;
-		} else {
-			return true;
-		}
+        $used = $this->getUsedAllowance($folders, $this->quota);
+
+        if ($used['used_allowance'] < 101) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

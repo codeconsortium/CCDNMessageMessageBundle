@@ -37,21 +37,21 @@ class CrumbBuilder extends BaseCrumbBuilder
      */
     public function addUserFolderShow(Folder $folder)
     {
-		if ($folder->getSpecialType() < 1) {
+        if ($folder->getSpecialType() < 1) {
             $pathParams = array(
                 'route' => 'ccdn_message_message_user_folder_show_by_id',
                 'params' => array(
                     'FolderId' => $folder->getId()
                 )
             );
-		} else {
+        } else {
             $pathParams = array(
                 'route' => 'ccdn_message_message_user_index',
                 'params' => array(
                     'FolderName' => $folder->getName()
                 )
             );
-		}
+        }
 
         return $this->createCrumbTrail()
             ->add(

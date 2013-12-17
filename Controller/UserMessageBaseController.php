@@ -38,10 +38,10 @@ class UserMessageBaseController extends BaseController
     protected function getFormHandlerToSendMessage($userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message');
-		$formHandler->setRequest($this->getRequest());
+        $formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
-		
+
         // Are we sending this to someone who's 'send message' button we clicked?
         if (null != $userId) {
             $sendToUser = $this->getUserModel()->findOneUserById($userId);
@@ -56,13 +56,13 @@ class UserMessageBaseController extends BaseController
      *
      * @access protected
      * @param \CCDNMessage\MessageBundle\Entity\Envelope
-     * @param int $userId
+     * @param  int                                                             $userId
      * @return \CCDNMessage\MessageBundle\Form\Handler\MessageReplyFormHandler
      */
     protected function getFormHandlerToReplyToMessage(Envelope $inResponseEnvelope, $userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message_reply');
-		$formHandler->setRequest($this->getRequest());
+        $formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
 
@@ -82,13 +82,13 @@ class UserMessageBaseController extends BaseController
      *
      * @access protected
      * @param \CCDNMessage\MessageBundle\Entity\Envelope
-     * @param int $userId
+     * @param  int                                                               $userId
      * @return \CCDNMessage\MessageBundle\Form\Handler\MessageForwardFormHandler
      */
     protected function getFormHandlerToForwardMessage(Envelope $envelopeToForward, $userId = null)
     {
         $formHandler = $this->container->get('ccdn_message_message.form.handler.message_forward');
-		$formHandler->setRequest($this->getRequest());
+        $formHandler->setRequest($this->getRequest());
 
         $formHandler->setSender($this->getUser());
 

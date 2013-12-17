@@ -35,9 +35,9 @@ class CCDNMessageMessageBundle extends Bundle
     public function boot()
     {
         $twig = $this->container->get('twig');
-		
+
         $twig->addGlobal(
-			'ccdn_message_message',
+            'ccdn_message_message',
             array(
                 'seo' => array(
                     'title_length' => $this->container->getParameter('ccdn_message_message.seo.title_length'),

@@ -31,15 +31,15 @@ use CCDNMessage\MessageBundle\Entity\Message;
  */
 class MessageModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Message
-	 */
-	public function createMessage()
-	{
-		return $this->getManager()->createMessage();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Message
+     */
+    public function createMessage()
+    {
+        return $this->getManager()->createMessage();
+    }
 
     /**
      *
@@ -49,17 +49,17 @@ class MessageModel extends BaseModel implements ModelInterface
      */
     public function getAllEnvelopesForMessageById($messageId)
     {
-		return $this->getRepository()->getAllEnvelopesForMessageById($messageId);
+        return $this->getRepository()->getAllEnvelopesForMessageById($messageId);
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Entity\Message               $message
-	 * @return \CCDNMessage\MessageBundle\Model\Component\Manager\MessageManager
-	 */
-	public function saveMessage(Message $message)
-	{
-		return $this->getManager()->saveMessage($message);
-	}
+    /**
+     *
+     * @access public
+     * @param  \CCDNMessage\MessageBundle\Entity\Message                         $message
+     * @return \CCDNMessage\MessageBundle\Model\Component\Manager\MessageManager
+     */
+    public function saveMessage(Message $message)
+    {
+        return $this->getManager()->saveMessage($message);
+    }
 }

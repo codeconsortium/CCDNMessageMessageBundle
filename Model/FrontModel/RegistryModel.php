@@ -31,15 +31,15 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  */
 class RegistryModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Registry
-	 */
-	public function createRegistry()
-	{
-		return $this->getManager()->createRegistry();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
+     */
+    public function createRegistry()
+    {
+        return $this->getManager()->createRegistry();
+    }
 
     /**
      *
@@ -48,15 +48,15 @@ class RegistryModel extends BaseModel implements ModelInterface
      * @return \CCDNMessage\MessageBundle\Entity\Registry
      */
     public function findOrCreateOneRegistryForUser(UserInterface $user)
-	{
-		$registry = $this->findOneRegistryForUserById($user->getId());
-		
-		if (! $registry) {
-			$registry = $this->setupDefaults($user);
-		}
-		
-		return $registry;
-	}
+    {
+        $registry = $this->findOneRegistryForUserById($user->getId());
+
+        if (! $registry) {
+            $registry = $this->setupDefaults($user);
+        }
+
+        return $registry;
+    }
 
     /**
      *
@@ -66,18 +66,17 @@ class RegistryModel extends BaseModel implements ModelInterface
      */
     public function findOneRegistryForUserById($userId)
     {
-		return $this->getRepository()->findOneRegistryForUserById($userId);
+        return $this->getRepository()->findOneRegistryForUserById($userId);
     }
 
-	public function updateRegistry(Registry $registry)
-	{
-		$this->getManager()->updateRegistry($registry);
-		//$this->persist($folder);
-		//$this->flush();
-		//$this->refresh($folder);
-		
-		return $registry;
-	}
+    public function updateRegistry(Registry $registry)
+    {
+        $this->getManager()->updateRegistry($registry);
+        //$this->persist($folder);
+        //$this->flush();
+        //$this->refresh($folder);
+        return $registry;
+    }
 
     /**
      *

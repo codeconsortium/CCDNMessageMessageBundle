@@ -57,19 +57,19 @@ abstract class BaseManager
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface        $gateway
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher    $dispatcher
+     * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface $gateway
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, GatewayInterface $gateway)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->gateway = $gateway;
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface           $model
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface                $model
      * @return \CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface
      */
     public function setModel(ModelInterface $model)
@@ -147,7 +147,7 @@ abstract class BaseManager
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function persist($entity)
@@ -160,7 +160,7 @@ abstract class BaseManager
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function remove($entity)
@@ -185,7 +185,7 @@ abstract class BaseManager
     /**
      *
      * @access public
-     * @param  Object                                                    $entity
+     * @param  Object                                                              $entity
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface
      */
     public function refresh($entity)

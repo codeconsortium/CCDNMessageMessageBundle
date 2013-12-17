@@ -29,40 +29,40 @@ use CCDNMessage\MessageBundle\Model\FrontModel\FolderModel;
  */
 class FolderHelper
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
-	 */
-	protected $folderModel;
-
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
-	 */
-	public function __construct(FolderModel $folderModel)
-	{
-		$this->folderModel = $folderModel;
-	}
+    /**
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
+     */
+    protected $folderModel;
 
     /**
      *
      * @access public
-	 * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel $folderModel
+     */
+    public function __construct(FolderModel $folderModel)
+    {
+        $this->folderModel = $folderModel;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findAllFoldersForUserById(UserInterface $user)
     {
-		$folders = $this->folderModel->findAllFoldersForUserById($user->getId());
-		
+        $folders = $this->folderModel->findAllFoldersForUserById($user->getId());
+
         if (null == $folders || count($folders) < 1) {
             $this->folderModel->setupDefaults($user);
-        
+
             $folders = $this->folderModel->findAllFoldersForUserById($user->getId());
         }
-		
-		return $folders;
+
+        return $folders;
     }
 
     /**
@@ -73,13 +73,13 @@ class FolderHelper
      */
     public function filterFolderBySpecialType($folders, $specialType)
     {
-		foreach ($folders as $folder) {
-			if ($folder->isSpecialType($specialType)) {
-				return $folder;
-			}
-		}
-		
-		return null;
+        foreach ($folders as $folder) {
+            if ($folder->isSpecialType($specialType)) {
+                return $folder;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -90,14 +90,14 @@ class FolderHelper
      */
     public function filterFolderByName($folders, $name)
     {
-		foreach ($folders as $folder) {
-			if ($folder->getName() == $name) {
-				return $folder;
-			}
-		}
-		
-		return null;
-	}
+        foreach ($folders as $folder) {
+            if ($folder->getName() == $name) {
+                return $folder;
+            }
+        }
+
+        return null;
+    }
 
     /**
      *
@@ -107,12 +107,12 @@ class FolderHelper
      */
     public function filterFolderById($folders, $id)
     {
-		foreach ($folders as $folder) {
-			if ($folder->getId() == $id) {
-				return $folder;
-			}
-		}
-		
-		return null;
-	}
+        foreach ($folders as $folder) {
+            if ($folder->getId() == $id) {
+                return $folder;
+            }
+        }
+
+        return null;
+    }
 }

@@ -141,13 +141,13 @@ class EnvelopeGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Envelope
-	 */
-	public function createEnvelope()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Envelope
+     */
+    public function createEnvelope()
+    {
+        return new $this->entityClass();
+    }
 }

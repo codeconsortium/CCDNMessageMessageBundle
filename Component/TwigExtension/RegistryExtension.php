@@ -69,14 +69,14 @@ class RegistryExtension extends \Twig_Extension
      */
     public function getUserMessageRegistry()
     {
-		if ($this->securityContext->isGranted('ROLE_USER')) {
-	        $user = $this->securityContext->getToken()->getUser();
-	        $registry = $this->registryModel->findOrCreateOneRegistryForUser($user);
-			
-	        return $registry;
-		}
+        if ($this->securityContext->isGranted('ROLE_USER')) {
+            $user = $this->securityContext->getToken()->getUser();
+            $registry = $this->registryModel->findOrCreateOneRegistryForUser($user);
 
-		return null;
+            return $registry;
+        }
+
+        return null;
     }
 
     /**

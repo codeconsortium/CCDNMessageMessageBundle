@@ -67,7 +67,7 @@ class BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  \Symfony\Component\Security\Core\User\UserInterface     $user
      * @return \CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler
      */
     public function setUser(UserInterface $user)
@@ -80,7 +80,7 @@ class BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request           $request
+     * @param  \Symfony\Component\HttpFoundation\Request               $request
      * @return \CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler
      */
     public function setRequest(Request $request)

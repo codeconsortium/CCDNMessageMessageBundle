@@ -29,14 +29,14 @@ use CCDNMessage\MessageBundle\Model\Component\Manager\BaseManager;
  */
 class ThreadManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Thread
-	 */
-	public function createThread()
-	{
-		return $this->gateway->createThread();
-	}
-	
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Thread
+     */
+    public function createThread()
+    {
+        return $this->gateway->createThread();
+    }
+
 }

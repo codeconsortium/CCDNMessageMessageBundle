@@ -29,39 +29,39 @@ use CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel;
  */
 class RegistryHelper
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
-	 */
-	protected $registryModel;
-
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
-	 */
-	public function __construct(RegistryModel $registryModel)
-	{
-		$this->registryModel = $registryModel;
-	}
+    /**
+     *
+     * @access protected
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
+     */
+    protected $registryModel;
 
     /**
      *
      * @access public
-	 * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel $registryModel
+     */
+    public function __construct(RegistryModel $registryModel)
+    {
+        $this->registryModel = $registryModel;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findOneRegistryForUserById(UserInterface $user)
     {
-		$registry = $this->registryModel->findOneRegistryForUserById($user->getId());
-		
+        $registry = $this->registryModel->findOneRegistryForUserById($user->getId());
+
         if (null == $registry) {
             $this->registryModel->setupDefaults($user);
-        
+
             $registry = $this->registryModel->findOneRegistryForUserById($user->getId());
         }
-		
-		return $registry;
+
+        return $registry;
     }
 }

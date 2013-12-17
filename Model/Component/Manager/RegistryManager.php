@@ -32,22 +32,22 @@ use CCDNMessage\MessageBundle\Entity\Registry;
  */
 class RegistryManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNMessage\MessageBundle\Entity\Registry
-	 */
-	public function createRegistry()
-	{
-		return $this->gateway->createRegistry();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNMessage\MessageBundle\Entity\Registry
+     */
+    public function createRegistry()
+    {
+        return $this->gateway->createRegistry();
+    }
 
-	public function updateRegistry(Registry $registry)
-	{
-		$this->gateway->updateRegistry($registry);
-		
-		return $registry;
-	}
+    public function updateRegistry(Registry $registry)
+    {
+        $this->gateway->updateRegistry($registry);
+
+        return $registry;
+    }
 
     /**
      *
@@ -65,9 +65,9 @@ class RegistryManager extends BaseManager implements ManagerInterface
         $registry->setOwnedByUser($user);
         $registry->setCachedUnreadMessageCount(0);
 
-		$this->gateway->saveRegistry($registry);
-		$this->refresh($registry);
-		
-		return $registry;
+        $this->gateway->saveRegistry($registry);
+        $this->refresh($registry);
+
+        return $registry;
     }
 }

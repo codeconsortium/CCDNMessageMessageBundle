@@ -33,10 +33,10 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Persistence\ObjectManager $em
-     * @param  string                                     $entityClass
-     * @param  \Knp\Component\Pager\Paginator             $paginator
-     * @param  string                                     $pagerTheme
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param string                                     $entityClass
+     * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
     public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null);
 
@@ -61,7 +61,7 @@ interface GatewayInterface
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function createSelectQuery(Array $aliases = null);
-	
+
     /**
      *
      * @access public
@@ -70,7 +70,7 @@ interface GatewayInterface
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function createCountQuery($column = null, Array $aliases = null);
-	
+
     /**
      *
      * @access public
@@ -92,9 +92,9 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\ORM\QueryBuilder $qb
-     * @param  int                        $itemsPerPage
-     * @param  int                        $page
+     * @param  \Doctrine\ORM\QueryBuilder                               $qb
+     * @param  int                                                      $itemsPerPage
+     * @param  int                                                      $page
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page);

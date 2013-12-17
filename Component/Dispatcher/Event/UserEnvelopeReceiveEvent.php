@@ -53,12 +53,12 @@ class UserEnvelopeReceiveEvent extends Event
      */
     protected $recipient;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var array
-	 */
-	protected $folders;
+    /**
+     *
+     * @access protected
+     * @var array
+     */
+    protected $folders;
 
     /**
      *
@@ -72,8 +72,8 @@ class UserEnvelopeReceiveEvent extends Event
     {
         $this->request = $request;
         $this->envelope = $envelope;
-		$this->recipient = $recipient;
-		$this->folders = $folders;
+        $this->recipient = $recipient;
+        $this->folders = $folders;
     }
 
     /**

@@ -142,8 +142,8 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
     /**
      *
      * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
+     * @param  int   $folderId
+     * @param  int   $userId
      * @return array
      */
     public function getReadCounterForFolderById($folderId, $userId)
@@ -156,8 +156,8 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
-		$qb = $this->createSelectQuery(array('e'));
-		
+        $qb = $this->createSelectQuery(array('e'));
+
         $qb
             ->select('COUNT(DISTINCT e.id) AS read')
             ->where('e.folder = :folderId')
@@ -177,8 +177,8 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
     /**
      *
      * @access public
-     * @param  int     $folderId
-     * @param  int     $userId
+     * @param  int   $folderId
+     * @param  int   $userId
      * @return array
      */
     public function getUnreadCounterForFolderById($folderId, $userId)
@@ -191,7 +191,7 @@ class EnvelopeRepository extends BaseRepository implements RepositoryInterface
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
-		$qb = $this->createSelectQuery(array('e'));
+        $qb = $this->createSelectQuery(array('e'));
 
         $qb
             ->select('COUNT(DISTINCT e.id) AS unread')

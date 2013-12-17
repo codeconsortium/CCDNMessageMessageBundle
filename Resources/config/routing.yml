@@ -6,4 +6,3 @@ CCDNMessageMessageBundle-User-Folder:
 CCDNMessageMessageBundle-User-Message:
     resource: "@CCDNMessageMessageBundle/Resources/config/routing/user-message.yml"
     prefix: /{_locale}/messages
-

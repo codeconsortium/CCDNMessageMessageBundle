@@ -59,7 +59,7 @@ abstract class BaseRepository
     /**
      *
      * @access public
-     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface           $model
+     * @param  \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface                $model
      * @return \CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface
      */
     public function setModel(ModelInterface $model)

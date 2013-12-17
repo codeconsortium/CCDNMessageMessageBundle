@@ -108,7 +108,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldSeeEnvelope($messageSubject)
     {
-	    $this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+        $this->iShouldSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
     }
 
     /**
@@ -116,7 +116,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldNotSeeEnvelope($messageSubject)
     {
-	    $this->iShouldNotSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
+        $this->iShouldNotSeeForTheQuery($messageSubject, 'table > tbody > tr > td');
     }
 
     /**
@@ -127,15 +127,15 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $elements = $this->getPage()->findAll('css', 'table > tbody > tr');
 
         $didFindSubject = false;
-		$didFindIcon = false;
+        $didFindIcon = false;
         $textLower = strtolower($messageSubject);
         foreach ($elements as $element) {
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
-				
-				if ($element->has('css', 'i.glyphicon-envelope')) {
-					$didFindIcon = true;
-				}
+
+                if ($element->has('css', 'i.glyphicon-envelope')) {
+                    $didFindIcon = true;
+                }
             }
         }
 
@@ -151,18 +151,18 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $elements = $this->getPage()->findAll('css', 'table > tbody > tr');
 
         $didFindSubject = false;
-		$didFindIcon = false;
+        $didFindIcon = false;
         $textLower = strtolower($messageSubject);
         foreach ($elements as $element) {
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
-				
-				if ($element->has('css', 'i.glyphicon-envelope')) {
-					$didFindIcon = true;
-				}
+
+                if ($element->has('css', 'i.glyphicon-envelope')) {
+                    $didFindIcon = true;
+                }
             }
         }
-        
+
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
         WebTestCase::assertTrue($didFindIcon, "$messageSubject is read but should be unread.");
     }
@@ -176,23 +176,23 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
         $textLower = strtolower($messageSubject);
         $didFindSubject = false;
-		$didFindCheckbox = false;
-		$checkbox = null;
+        $didFindCheckbox = false;
+        $checkbox = null;
         foreach ($elements as $element) {
             if (strpos(strtolower($element->getText()), $textLower) !== false) {
                 $didFindSubject = true;
-				
-				if ($element->has('css', 'input[type="checkbox"]')) {
-					$didFindCheckbox = true;
-					$checkbox = $element->find('css', 'input[type="checkbox"]');
-				}
+
+                if ($element->has('css', 'input[type="checkbox"]')) {
+                    $didFindCheckbox = true;
+                    $checkbox = $element->find('css', 'input[type="checkbox"]');
+                }
             }
         }
-        
+
         WebTestCase::assertTrue($didFindSubject, "$messageSubject was not found.");
         WebTestCase::assertTrue($didFindCheckbox, "$messageSubject was not found and could not be checked.");
 
-		$checkbox->check();
+        $checkbox->check();
     }
 
     /**
@@ -200,7 +200,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldSeeMessagePreview($messageSubject)
     {
-	    $this->iShouldSeeForTheQuery($messageSubject, 'table.message-preview > tbody > tr > td');
+        $this->iShouldSeeForTheQuery($messageSubject, 'table.message-preview > tbody > tr > td');
     }
 
     /**
@@ -208,7 +208,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iShouldSeeMessage($messageBody)
     {
-	    $this->iShouldSeeForTheQuery($messageBody, 'table.message > tbody > tr > td > article');
+        $this->iShouldSeeForTheQuery($messageBody, 'table.message > tbody > tr > td > article');
     }
 
     /**
@@ -222,7 +222,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             function($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
-    
+
         $didFindIt = false;
         $textLower = strtolower($text);
         foreach ($items as $item) {
@@ -231,7 +231,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
                 break;
             }
         }
-    
+
         WebTestCase::assertTrue($didFindIt, "$text was not found.");
     }
 
@@ -246,7 +246,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             function ($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
-    
+
         $didFindIt = false;
         $textLower = strtolower($text);
         foreach ($items as $item) {
@@ -255,7 +255,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
                 break;
             }
         }
-    
+
         WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
     }
 }

@@ -64,7 +64,7 @@ class UserEnvelopeReceiveFailedOutboxFullEvent extends Event
     {
         $this->request = $request;
         $this->envelope = $envelope;
-		$this->user = $user;
+        $this->user = $user;
     }
 
     /**

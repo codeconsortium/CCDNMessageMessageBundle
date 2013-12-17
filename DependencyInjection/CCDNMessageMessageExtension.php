@@ -60,7 +60,7 @@ class CCDNMessageMessageExtension extends Extension
         $this->getRepositorySection($config, $container);
         $this->getGatewaySection($config, $container);
         $this->getManagerSection($config, $container);
-		$this->getModelSection($config, $container);
+        $this->getModelSection($config, $container);
         $this->getFormSection($config, $container);
         $this->getComponentSection($config, $container);
 
@@ -77,7 +77,7 @@ class CCDNMessageMessageExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('services/model.yml');
-		$loader->load('services/model-gateway.yml');
+        $loader->load('services/model-gateway.yml');
         $loader->load('services/model-manager.yml');
         $loader->load('services/model-repository.yml');
         $loader->load('services/forms-message.yml');

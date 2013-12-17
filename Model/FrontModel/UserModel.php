@@ -37,7 +37,7 @@ class UserModel extends BaseModel implements ModelInterface
      */
     public function findOneUserById($userId)
     {
-		return $this->getRepository()->findOneUserById($userId);
+        return $this->getRepository()->findOneUserById($userId);
     }
 
     /**
@@ -48,6 +48,6 @@ class UserModel extends BaseModel implements ModelInterface
      */
     public function findTheseUsersByUsername(array $usernames = array())
     {
-		return $this->getRepository()->findTheseUsersByUsername($usernames);
+        return $this->getRepository()->findTheseUsersByUsername($usernames);
     }
 }
