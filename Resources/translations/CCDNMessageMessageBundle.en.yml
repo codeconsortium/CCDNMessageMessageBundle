@@ -1,8 +1,8 @@
 dashboard:
     pages:
-        account:         "Account"
+        account:             "Account"
     categories:
-        account:         "Account"
+        account:             "Account"
 
 title:
     folder:
@@ -16,9 +16,9 @@ crumbs:
     user:
         message:
             compose:
-                new:             "Compose New Message"
-                reply:           "Compose Reply"
-                forward:         "Forward Message"
+                new:         "Compose New Message"
+                reply:       "Compose Reply"
+                forward:     "Forward Message"
 
 sidebar:
     header:

@@ -54,11 +54,11 @@
 		{% if folders['quota'] is defined -%}
 			<li class="divider"></li>
 			<li style="text-align:center;padding:5px;">
-				<div class="span3">
+				<div class="col-md-3">
 					<i class="glyphicon glyphicon-hdd"></i>
 					{{- folders['quota']['allowed'] -}}&#37;&nbsp;
 				</div>
-				<div class="span9">
+				<div class="col-md-9">
 					<div class="progress progress-danger">
 						<div class="bar" style="width:{{- folders['quota']['used'] -}}%;"></div>
 					</div>
