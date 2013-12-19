@@ -15,9 +15,6 @@ namespace CCDNMessage\MessageBundle\Component\Dispatcher\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use Doctrine\Bundle\DoctrineBundle\Registry;
-
 use CCDNMessage\MessageBundle\Component\Dispatcher\MessageEvents;
 use CCDNMessage\MessageBundle\Component\Dispatcher\Event\UserEnvelopeReceiveEvent;
 use CCDNMessage\MessageBundle\Model\FrontModel\FolderModel;
@@ -101,8 +98,6 @@ class StatListener implements EventSubscriberInterface
         $registry = $this->registryModel->findOrCreateOneRegistryForUser($recipient);
         $registry->setCachedUnreadMessageCount($totalUnread);
 
-        //$this->em->persist($registry);
-        //$this->em->flush();
         $this->registryModel->updateRegistry($registry);
     }
 }

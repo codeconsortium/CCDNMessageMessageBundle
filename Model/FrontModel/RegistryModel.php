@@ -72,9 +72,7 @@ class RegistryModel extends BaseModel implements ModelInterface
     public function updateRegistry(Registry $registry)
     {
         $this->getManager()->updateRegistry($registry);
-        //$this->persist($folder);
-        //$this->flush();
-        //$this->refresh($folder);
+
         return $registry;
     }
 
