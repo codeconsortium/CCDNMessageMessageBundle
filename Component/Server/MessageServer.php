@@ -154,7 +154,7 @@ class MessageServer
         if ($this->receiveMessage($request, $message, $message->getSentFromUser(), self::MESSAGE_SAVE_CARBON_COPY, $isFlagged)) {
             $recipients = $this->getRecipients($message);
 
-            foreach ($recipients as $recipientKey => $recipient) {
+            foreach ($recipients as $recipient) {
                 $this->receiveMessage($request, $message, $recipient, self::MESSAGE_SEND, $isFlagged);
             }
 

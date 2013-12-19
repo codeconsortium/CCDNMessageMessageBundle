@@ -20,14 +20,11 @@ class RegistryManagerTest extends TestBase
     public function testSetupDefaults()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
-		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-		
+		$this->addFixturesForEnvelopes($messages, $folders, array($user));
 		$this->getRegistryModel()->setupDefaults($user);
-		
 		$registry = $this->getRegistryModel()->findOneRegistryForUserById($user->getId());
 		
 		$this->assertNotNull($registry);

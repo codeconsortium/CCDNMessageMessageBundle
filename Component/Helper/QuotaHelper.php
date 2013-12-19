@@ -61,7 +61,7 @@ class QuotaHelper
     {
         $totalMessageCount = 0;
 
-        foreach ($folders as $key => $folder) {
+        foreach ($folders as $folder) {
             $totalMessageCount += $folder->getCachedTotalMessageCount();
         }
 

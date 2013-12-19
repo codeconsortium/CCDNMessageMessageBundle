@@ -74,7 +74,7 @@ class SendToValidator extends ConstraintValidator
             return;
         }
 
-        foreach ($recipients as $recipientKey => $recipient) {
+        foreach ($recipients as $recipient) {
             if (! $this->recipientExists($recipient, $usersFound)) {
                 $this->context->addViolation($constraint->message, array('%username%' => $recipient));
             }

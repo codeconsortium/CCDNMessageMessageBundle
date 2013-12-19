@@ -20,12 +20,10 @@ class ThreadRepositoryTest extends TestBase
     public function testFindThreadWithAllEnvelopesByThreadIdAndUserId()
 	{
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
-		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-
+		$this->addFixturesForEnvelopes($messages, $folders, array($user));
 		$threadFound = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIdAndUserId($messages[0]->getThread()->getId(), $user->getId());
 
 		$this->assertNotNull($threadFound);

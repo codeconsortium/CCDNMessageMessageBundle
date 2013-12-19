@@ -20,12 +20,10 @@ class MessageRepositoryTest extends TestBase
     public function testGetAllEnvelopesForMessageById()
 	{
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$message = $this->addNewMessage('subject', 'body', $user);
-		$envelopes = $this->addFixturesForEnvelopes(array($message), $folders, array($user));
-
+		$this->addFixturesForEnvelopes(array($message), $folders, array($user));
 		$messageFound = $this->getMessageModel()->getAllEnvelopesForMessageById($message->getId());
 		
 		$this->assertNotNull($messageFound);

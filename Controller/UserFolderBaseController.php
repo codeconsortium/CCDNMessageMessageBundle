@@ -58,15 +58,15 @@ class UserFolderBaseController extends BaseController
         $submitAction = $this->getSubmitAction();
 
         if ($submitAction == 'delete') {
-            $this->getEnvelopeModel()->bulkDelete($envelopes, $folders, $user)->flush();
+            $this->getEnvelopeModel()->bulkDelete($envelopes, $folders, $user);
         }
 
         if ($submitAction == 'mark_as_read') {
-            $this->getEnvelopeModel()->bulkMarkAsRead($envelopes, $folders)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsRead($envelopes);
         }
 
         if ($submitAction == 'mark_as_unread') {
-            $this->getEnvelopeModel()->bulkMarkAsUnread($envelopes, $folders)->flush();
+            $this->getEnvelopeModel()->bulkMarkAsUnread($envelopes);
         }
 
         if ($submitAction == 'move_to') {
@@ -81,7 +81,7 @@ class UserFolderBaseController extends BaseController
         }
 
         if ($submitAction == 'send') {
-            $this->getMessageModel()->bulkSendDraft($envelopes)->flush();
+            $this->getMessageModel()->bulkSendDraft($envelopes);
         }
     }
 }

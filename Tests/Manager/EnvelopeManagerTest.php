@@ -43,7 +43,7 @@ class EnvelopeManagerTest extends TestBase
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes(array($messages[0]), $folders, array($user));
 		
-		$this->getEnvelopeModel()->markAsRead($envelopes[0], $folders);
+		$this->getEnvelopeModel()->markAsRead($envelopes[0]);
 		
 		$envelopeFound = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopes[0]->getId(), $user->getId());
 		
@@ -59,7 +59,7 @@ class EnvelopeManagerTest extends TestBase
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes(array($messages[0]), $folders, array($user));
 		
-		$this->getEnvelopeModel()->bulkMarkAsRead($envelopes, $folders);
+		$this->getEnvelopeModel()->bulkMarkAsRead($envelopes);
 		
 		$ids = array();
 		foreach ($envelopes as $envelope) {
@@ -82,7 +82,7 @@ class EnvelopeManagerTest extends TestBase
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes(array($messages[0]), $folders, array($user));
 		
-		$this->getEnvelopeModel()->markAsUnread($envelopes[0], $folders);
+		$this->getEnvelopeModel()->markAsUnread($envelopes[0]);
 		
 		$envelopeFound = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopes[0]->getId(), $user->getId());
 		
@@ -98,7 +98,7 @@ class EnvelopeManagerTest extends TestBase
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes(array($messages[0]), $folders, array($user));
 		
-		$this->getEnvelopeModel()->bulkMarkAsUnread($envelopes, $folders);
+		$this->getEnvelopeModel()->bulkMarkAsUnread($envelopes);
 		
 		$ids = array();
 		foreach ($envelopes as $envelope) {

@@ -44,7 +44,7 @@ class UserMessageController extends UserMessageBaseController
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $thread = $this->getThreadModel()->findThreadWithAllEnvelopesByThreadIdAndUserId($envelope->getThread()->getId(), $user->getId());
         $folders = $this->getFolderHelper()->findAllFoldersForUserById($user);
-        $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
+        $this->getEnvelopeModel()->markAsRead($envelope);
 
         return $this->renderResponse('CCDNMessageMessageBundle:User:Message/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserMessageShow($envelope),
@@ -176,7 +176,7 @@ class UserMessageController extends UserMessageBaseController
         $this->isFound($envelope = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopeId, $user->getId()));
         $folders = $this->getFolderHelper()->findAllFoldersForUserById($user);
         $currentFolder = $this->getFolderHelper()->filterFolderByName($folders, $envelope->getFolder()->getName());
-        $this->getEnvelopeModel()->markAsRead($envelope, $folders)->flush();
+        $this->getEnvelopeModel()->markAsRead($envelope);
 
         $response = $this->redirectResponse($this->path('ccdn_message_message_user_folder_show', array('folderName' => $currentFolder->getName() )));
 

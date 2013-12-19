@@ -20,10 +20,8 @@ class FolderRepositoryTest extends TestBase
     public function testFindAllFoldersForUserById()
 	{
 		$this->purge();
-		
 		$users = $this->addFixturesForUsers();
-		$folders = $this->addFixturesForFolders($users);
-
+		$this->addFixturesForFolders($users);
 		$foldersFound = $this->getFolderModel()->findAllFoldersForUserById($users['harry']->getId());
 		
 		$this->assertCount(5, $foldersFound);

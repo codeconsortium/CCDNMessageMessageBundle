@@ -61,10 +61,9 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function markAsRead(Envelope $envelope, $folders)
+    public function markAsRead(Envelope $envelope)
     {
         $envelope->setRead(true);
         $this
@@ -79,14 +78,12 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param  array                                                              $envelopes
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function bulkMarkAsRead($envelopes, $folders)
+    public function bulkMarkAsRead($envelopes)
     {
         foreach ($envelopes as $envelope) {
             $envelope->setRead(true);
-
             $this->persist($envelope);
         }
 
@@ -98,11 +95,10 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  Envelope                                                           $envelope
-     * @param  array                                                              $folders
+     * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function markAsUnread(Envelope $envelope, $folders)
+    public function markAsUnread(Envelope $envelope)
     {
         $envelope->setRead(false);
         $this
@@ -117,10 +113,9 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param  array                                                              $envelopes
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function bulkMarkAsUnread($envelopes, $folders)
+    public function bulkMarkAsUnread($envelopes)
     {
         foreach ($envelopes as $envelope) {
             $envelope->setRead(false);
@@ -186,10 +181,9 @@ class EnvelopeManager extends BaseManager implements ManagerInterface
      * @access public
      * @param  array                                                              $envelopes
      * @param  array                                                              $folders
-     * @param  \Symfony\Component\Security\Core\User\UserInterfaces               $user
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function bulkDelete($envelopes, $folders, UserInterface $user)
+    public function bulkDelete($envelopes, $folders)
     {
         // find the trash folder
         foreach ($folders as $folder) {

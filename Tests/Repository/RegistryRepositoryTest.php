@@ -20,10 +20,8 @@ class RegistryRepositoryTest extends TestBase
     public function testFindRegistryForUserById()
 	{
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
-		$registry = $this->addNewRegistry($user);
-
+		$this->addNewRegistry($user);
 		$registryFound = $this->getRegistryModel()->findOneRegistryForUserById($user->getId());
 
 		$this->assertNotNull($registryFound);

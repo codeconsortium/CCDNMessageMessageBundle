@@ -124,48 +124,44 @@ class EnvelopeModel extends BaseModel implements ModelInterface
      *
      * @access public
      * @param  \CCDNMessage\MessageBundle\Entity\Envelope                         $envelope
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function markAsRead(Envelope $envelope, $folders)
+    public function markAsRead(Envelope $envelope)
     {
-        return $this->getManager()->markAsRead($envelope, $folders);
+        return $this->getManager()->markAsRead($envelope);
     }
 
     /**
      *
      * @access public
      * @param  array                                                              $envelopes
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function bulkMarkAsRead($envelopes, $folders)
+    public function bulkMarkAsRead($envelopes)
     {
-        return $this->getManager()->bulkMarkAsRead($envelopes, $folders);
+        return $this->getManager()->bulkMarkAsRead($envelopes);
     }
 
     /**
      *
      * @access public
      * @param  Envelope                                                           $envelope
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function markAsUnread(Envelope $envelope, $folders)
+    public function markAsUnread(Envelope $envelope)
     {
-        return $this->getManager()->markAsUnread($envelope, $folders);
+        return $this->getManager()->markAsUnread($envelope);
     }
 
     /**
      *
      * @access public
      * @param  array                                                              $envelopes
-     * @param  array                                                              $folders
      * @return \CCDNMessage\MessageBundle\Model\Component\Manager\EnvelopeManager
      */
-    public function bulkMarkAsUnread($envelopes, $folders)
+    public function bulkMarkAsUnread($envelopes)
     {
-        return $this->getManager()->bulkMarkAsUnread($envelopes, $folders);
+        return $this->getManager()->bulkMarkAsUnread($envelopes);
     }
 
     /**

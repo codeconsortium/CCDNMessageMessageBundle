@@ -20,12 +20,10 @@ class EnvelopeRepositoryTest extends TestBase
     public function testFindEnvelopeByIdForUser()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
 		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-		
 		$envelopeFound = $this->getEnvelopeModel()->findEnvelopeByIdForUser($envelopes[0]->getId(), $user->getId());
 		
 		$this->assertNotNull($envelopeFound);
@@ -35,12 +33,10 @@ class EnvelopeRepositoryTest extends TestBase
     public function testFindAllEnvelopesForFolderByIdPaginated()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
-		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-		
+		$this->addFixturesForEnvelopes($messages, $folders, array($user));
 		$pager = $this->getEnvelopeModel()->findAllEnvelopesForFolderByIdPaginated($folders[0]->getId(), $user->getId(), 1, 25);
 		
 		$envelopesFound = $pager->getItems();
@@ -50,7 +46,6 @@ class EnvelopeRepositoryTest extends TestBase
     public function testFindTheseEnvelopesByIdAndByUserId()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
@@ -63,12 +58,10 @@ class EnvelopeRepositoryTest extends TestBase
     public function testGetReadCounterForFolderById()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
-		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-		
+		$this->addFixturesForEnvelopes($messages, $folders, array($user));
 		$counter = $this->getEnvelopeModel()->getReadCounterForFolderById($folders[0]->getId(), $user->getId());
 		
 		$this->assertTrue(array_key_exists('read', $counter));
@@ -78,12 +71,10 @@ class EnvelopeRepositoryTest extends TestBase
     public function testGetUnreadCounterForFolderById()
     {
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
 		$messages = $this->addFixturesForMessages(array($user));
-		$envelopes = $this->addFixturesForEnvelopes($messages, $folders, array($user));
-		
+		$this->addFixturesForEnvelopes($messages, $folders, array($user));
 		$counter = $this->getEnvelopeModel()->getUnreadCounterForFolderById($folders[0]->getId(), $user->getId());
 
 		$this->assertTrue(array_key_exists('unread', $counter));

@@ -20,14 +20,11 @@ class MessageManagerTest extends TestBase
 	public function testSaveMessage()
 	{
 		$this->purge();
-		
 		$user = $this->addNewUser('bob', 'bob@foo.com', 'root');
 		$folders = $this->addFixturesForFolders(array($user));
-
 		$message = $this->addNewMessage('subject', 'message body', $user, false, false);
 		$this->getMessageModel()->saveMessage($message);
-
-		$envelopes = $this->addFixturesForEnvelopes(array($message), $folders, array($user));
+		$this->addFixturesForEnvelopes(array($message), $folders, array($user));
 		$messageFound = $this->getMessageModel()->getAllEnvelopesForMessageById($message->getId());
 		
 		$this->assertNotNull($messageFound);
