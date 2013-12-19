@@ -13,11 +13,8 @@
 
 namespace CCDNMessage\MessageBundle\Model\Component\Manager;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Component\Manager\BaseManager;
-
 use CCDNMessage\MessageBundle\Entity\Folder;
 use CCDNMessage\MessageBundle\Entity\Envelope;
 
