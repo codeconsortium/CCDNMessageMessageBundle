@@ -45,6 +45,6 @@ services:
     ccdn_message_message.form.validator.send_to:
         class: %ccdn_message_message.form.validator.send_to.class%
         arguments:
-            - @ccdn_message_message.manager.user
+            - @ccdn_message_message.model.user
         tags:
             - { name: validator.constraint_validator, alias: SendToValidator }

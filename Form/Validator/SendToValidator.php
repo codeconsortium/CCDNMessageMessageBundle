@@ -15,7 +15,7 @@ namespace CCDNMessage\MessageBundle\Form\Validator;
 
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraint;
-use CCDNMessage\MessageBundle\Manager\BaseManagerInterface;
+use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
 
 /**
  *
@@ -35,18 +35,18 @@ class SendToValidator extends ConstraintValidator
     /**
      *
      * @access protected
-     * @var \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
+     * @var \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface $userModel
      */
-    protected $userManager;
+    protected $userModel;
 
     /**
      *
      * @access public
-     * @param \CCDNMessage\MessageBundle\Manager\BaseManagerInterface $userManager
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface $userModel
      */
-    public function __construct(BaseManagerInterface $userManager)
+    public function __construct(ModelInterface $userModel)
     {
-        $this->userManager = $userManager;
+        $this->userModel = $userModel;
     }
 
     /**
@@ -67,7 +67,7 @@ class SendToValidator extends ConstraintValidator
         $recipients = $this->getRecipients($value);
 
         if (count($recipients) > 0) {
-            $usersFound = $this->userManager->findTheseUsersByUsername($recipients);
+            $usersFound = $this->userModel->findTheseUsersByUsername($recipients);
         } else {
             $this->context->addViolation($constraint->message, array('%username%' => $value));
 
