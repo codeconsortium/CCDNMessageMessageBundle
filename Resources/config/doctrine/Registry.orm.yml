@@ -1,7 +1,6 @@
 CCDNMessage\MessageBundle\Entity\Registry:
     type: entity
     table: cc_message_registry
-    repositoryClass: CCDNMessage\MessageBundle\Repository\RegistryRepository
     id:
         id:
             type: integer

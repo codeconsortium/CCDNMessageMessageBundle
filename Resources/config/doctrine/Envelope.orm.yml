@@ -1,7 +1,6 @@
 CCDNMessage\MessageBundle\Entity\Envelope:
     type: entity
     table: cc_message_envelope
-    repositoryClass: CCDNMessage\MessageBundle\Repository\EnvelopeRepository
     id:
         id:
             type: integer

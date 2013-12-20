@@ -1,7 +1,6 @@
 CCDNMessage\MessageBundle\Entity\Thread:
     type: entity
     table: cc_message_thread
-    repositoryClass: CCDNMessage\MessageBundle\Repository\ThreadRepository
     id:
         id:
             type: integer
