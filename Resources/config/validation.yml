@@ -1,7 +1,9 @@
 #namespaces:
 #    CCDNMessageMessageBundle: CCDNMessage\MessageBundle\Form\Validator\Constraints\
 #
-%ccdn_message_message.entity.message.class%:
+
+#%ccdn_message_message.entity.message.class%:
+CCDNMessage\MessageBundle\Entity\Message:
     properties:
         sendTo:
             - Type: { type: string, groups: [message_send] }
