@@ -5,7 +5,7 @@
 		<tbody>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>{{- 'ccdn_message_message.item_message.sent.from' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
+					<b>{{- 'message.sent-from-label' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left">
 					{{- sender.username -}}
@@ -13,7 +13,7 @@
 			</tr>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>{{- 'ccdn_message_message.item_message.send.to' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
+					<b>{{- 'message.send-to-label' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left" colspan="3">
 					{{- message.getSendto |title -}}
@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>{{- 'ccdn_message_message.item_message.subject' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
+					<b>{{- 'message.subject-label' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left" colspan="3">
 					{{- message.getSubject -}}
@@ -29,7 +29,7 @@
 			</tr>
 			<tr>
 				<td class="right" style="width: 80px;">
-					<b>{{- 'ccdn_message_message.item_message.sent_datetime' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
+					<b>{{- 'message.sent-datetime-label' |trans({}, 'CCDNMessageMessageBundle') -}}</b>
 				</td>
 				<td class="left">
 					{{- message.getCreatedDate |date(ccdn_message_message.message.show.sent_datetime_format) -}}

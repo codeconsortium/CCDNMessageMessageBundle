@@ -57,6 +57,12 @@ form:
         save_draft:          "Save Draft"
         cancel:              "Cancel"
 
+message:
+    sent-from-label:         "From: "
+    send-to-label:           "To: "
+    subject-label:           "Subject: "
+    sent-datetime-label:     "Sent: "
+
 generic:
     thead:
         from:                "From"
