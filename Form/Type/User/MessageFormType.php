@@ -13,10 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Form\Type\User;
 
-use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
@@ -81,7 +80,6 @@ class MessageFormType extends AbstractType
                 array(
                     'required'           => false,
                     'mapped'             => false,
-                    'property_path'      => false,
                     'label'              => 'form.label.flagged',
                     'translation_domain' => 'CCDNMessageMessageBundle',
                 )
@@ -89,15 +87,14 @@ class MessageFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param  array $options
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'         => $this->messageClass,
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
@@ -107,7 +104,7 @@ class MessageFormType extends AbstractType
             'send_to'            => '',
             'subject'            => '',
             'body'               => '',
-        );
+        ));
     }
 
     /**
