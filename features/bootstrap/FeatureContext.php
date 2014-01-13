@@ -219,7 +219,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function($element) { return strtolower($element->getText()); },
+            function ($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
