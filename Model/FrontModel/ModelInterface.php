@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\FrontModel;
 
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface;
 use CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface;
 
@@ -33,11 +33,11 @@ interface ModelInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher          $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface          $dispatcher
      * @param \CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface $repository
      * @param \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface       $manager
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, RepositoryInterface $repository, ManagerInterface $manager);
+    public function __construct(EventDispatcherInterface $dispatcher, RepositoryInterface $repository, ManagerInterface $manager);
 
     /**
      *

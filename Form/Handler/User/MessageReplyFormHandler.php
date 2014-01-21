@@ -16,7 +16,7 @@ namespace CCDNMessage\MessageBundle\Form\Handler\User;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNMessage\MessageBundle\Form\Handler\BaseFormHandler;
 use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
@@ -92,14 +92,14 @@ class MessageReplyFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                             $factory
      * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType            $messageFormType
      * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface      $model
      * @param |CCDNMessage\MessageBundle\Component\FloodControl               $floodControl
      * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer       $messageServer
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
+    public function __construct(EventDispatcherInterface  $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

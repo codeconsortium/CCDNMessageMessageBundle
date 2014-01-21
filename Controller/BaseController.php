@@ -58,7 +58,7 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher;
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface  $dispatcher;
      */
     protected $dispatcher;
 

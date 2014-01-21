@@ -13,7 +13,7 @@
 
 namespace CCDNMessage\MessageBundle\Model\Component\Manager;
 
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\QueryBuilder;
 use CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface;
 use CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface;
@@ -50,17 +50,17 @@ abstract class BaseManager
     /**
      *
      * @access protected
-     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface  $dispatcher
      */
     protected $dispatcher;
 
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher    $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface    $dispatcher
      * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, GatewayInterface $gateway)
+    public function __construct(EventDispatcherInterface  $dispatcher, GatewayInterface $gateway)
     {
         $this->dispatcher = $dispatcher;
         $this->gateway = $gateway;
