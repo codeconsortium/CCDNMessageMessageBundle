@@ -49,7 +49,9 @@ services:
     ccdn_message_message.component.flood_control:
         class: %ccdn_message_message.component.flood_control.class%
         arguments:
+            - @security.context
             - @session
+            - %kernel.environment%
             - %ccdn_message_message.message.flood_control.send_limit%
             - %ccdn_message_message.message.flood_control.block_for_minutes%
 

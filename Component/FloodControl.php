@@ -13,6 +13,9 @@
 
 namespace CCDNMessage\MessageBundle\Component;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  *
  * @category CCDNMessage
@@ -29,9 +32,23 @@ class FloodControl
     /**
      *
      * @access protected
-     * @var $session
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     */
+    protected $securityContext;
+
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Session\Session $session
      */
     protected $session;
+
+    /**
+     *
+     * @access protected
+     * @var string $kernelEnv
+     */
+    protected $kernelEnv;
 
     /**
      *
@@ -50,19 +67,24 @@ class FloodControl
     /**
      *
      * @access public
-     * @param $session
+     * @param  \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param  \Symfony\Component\HttpFoundation\Session\Session         $session
+     * @param  string                                                    $kernelEnv
+     * @param  int                                                       $sendLimit
+     * @param  int                                                       $blockForMinutes
      */
-    public function __construct($session, $sendLimit, $blockForMinutes)
+    public function __construct(SecurityContextInterface $securityContext, Session $session, $kernelEnv, $sendLimit, $blockForMinutes)
     {
+        $this->securityContext = $securityContext;
         $this->session = $session;
-
-        $this->sendLimit = $sendLimit;
-
-        $this->blockForMinutes = $blockForMinutes;
+        $this->kernelEnv = $kernelEnv;
 
         if ( ! $this->session->has('flood_control_message_send_count')) {
             $this->session->set('flood_control_message_send_count', array());
         }
+
+        $this->sendLimit = $sendLimit;
+        $this->blockForMinutes = $blockForMinutes;
     }
 
     /**
@@ -71,11 +93,13 @@ class FloodControl
      */
     public function incrementCounter()
     {
-        $sendCount = $this->session->get('flood_control_message_send_count');
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
+	        $sendCount = $this->session->get('flood_control_message_send_count');
 
-        $sendCount[] = new \DateTime('now');
+	        $sendCount[] = new \DateTime('now');
 
-        $this->session->set('flood_control_message_send_count', $sendCount);
+	        $this->session->set('flood_control_message_send_count', $sendCount);
+		}
     }
 
     /**
@@ -85,7 +109,9 @@ class FloodControl
      */
     public function isFlooded()
     {
-        $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
+        if ($this->sendLimit < 1 || ! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
+			return false;
+		}
 
         if ($this->session->has('flood_control_message_send_count')) {
             $attempts = $this->session->get('flood_control_message_send_count');
@@ -93,6 +119,7 @@ class FloodControl
             // Iterate over attempts and only reveal attempts that fall within the $timeLimit.
             $freshenedAttempts = array();
 
+	        $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
             $limit = $timeLimit->getTimestamp();
 
             foreach ($attempts as $attempt) {
