@@ -36,6 +36,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "suggest": {
+        "codeconsortium/ccdn-component-common-bundle": "2.0.*@dev",
         "codeconsortium/ccdn-component-bb-code-bundle": "2.0.*@dev",
         "reecefowell/jquery-timestamper": "dev-master",
         "reecefowell/jquery-checkboxes": "dev-master"
