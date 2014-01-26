@@ -55,7 +55,7 @@ abstract class BaseModel
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface          $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface               $dispatcher
      * @param \CCDNMessage\MessageBundle\Model\Component\Repository\RepositoryInterface $repository
      * @param \CCDNMessage\MessageBundle\Model\Component\Manager\ManagerInterface       $manager
      */

@@ -111,12 +111,12 @@ class MessageServer
      *
      * @access public
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel          $folderModel
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel         $messageModel
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel        $envelopeModel
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\UserModel            $userModel
-     * @param \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper          $quotaHelper
-     * @param \CCDNMessage\MessageBundle\Component\Helper\FolderHelper         $folderHelper
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\FolderModel     $folderModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\MessageModel    $messageModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\EnvelopeModel   $envelopeModel
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\UserModel       $userModel
+     * @param \CCDNMessage\MessageBundle\Component\Helper\QuotaHelper     $quotaHelper
+     * @param \CCDNMessage\MessageBundle\Component\Helper\FolderHelper    $folderHelper
      */
     public function __construct(EventDispatcherInterface  $dispatcher, FolderModel $folderModel,
      MessageModel $messageModel, EnvelopeModel $envelopeModel, UserModel $userModel, QuotaHelper $quotaHelper, FolderHelper $folderHelper)

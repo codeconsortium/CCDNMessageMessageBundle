@@ -194,10 +194,10 @@ abstract class BaseGateway
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
         $pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
-        
-		if ($this->pagerTheme) {
-			$pager->setTemplate($this->pagerTheme);
-		}
+
+        if ($this->pagerTheme) {
+            $pager->setTemplate($this->pagerTheme);
+        }
 
         return $pager;
     }

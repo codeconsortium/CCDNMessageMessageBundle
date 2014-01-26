@@ -34,7 +34,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface    $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface         $dispatcher
      * @param \CCDNMessage\MessageBundle\Model\Component\Gateway\GatewayInterface $gateway
      */
     public function __construct(EventDispatcherInterface  $dispatcher, GatewayInterface $gateway);

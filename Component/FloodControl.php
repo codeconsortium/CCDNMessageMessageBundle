@@ -67,11 +67,11 @@ class FloodControl
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-     * @param  \Symfony\Component\HttpFoundation\Session\Session         $session
-     * @param  string                                                    $kernelEnv
-     * @param  int                                                       $sendLimit
-     * @param  int                                                       $blockForMinutes
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param \Symfony\Component\HttpFoundation\Session\Session         $session
+     * @param string                                                    $kernelEnv
+     * @param int                                                       $sendLimit
+     * @param int                                                       $blockForMinutes
      */
     public function __construct(SecurityContextInterface $securityContext, Session $session, $kernelEnv, $sendLimit, $blockForMinutes)
     {
@@ -94,12 +94,12 @@ class FloodControl
     public function incrementCounter()
     {
         if (! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
-	        $sendCount = $this->session->get('flood_control_message_send_count');
+            $sendCount = $this->session->get('flood_control_message_send_count');
 
-	        $sendCount[] = new \DateTime('now');
+            $sendCount[] = new \DateTime('now');
 
-	        $this->session->set('flood_control_message_send_count', $sendCount);
-		}
+            $this->session->set('flood_control_message_send_count', $sendCount);
+        }
     }
 
     /**
@@ -110,8 +110,8 @@ class FloodControl
     public function isFlooded()
     {
         if ($this->sendLimit < 1 || ! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
-			return false;
-		}
+            return false;
+        }
 
         if ($this->session->has('flood_control_message_send_count')) {
             $attempts = $this->session->get('flood_control_message_send_count');
@@ -119,7 +119,7 @@ class FloodControl
             // Iterate over attempts and only reveal attempts that fall within the $timeLimit.
             $freshenedAttempts = array();
 
-	        $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
+            $timeLimit = new \DateTime('-' . $this->blockForMinutes . ' minutes');
             $limit = $timeLimit->getTimestamp();
 
             foreach ($attempts as $attempt) {

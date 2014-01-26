@@ -93,11 +93,11 @@ class MessageReplyFormHandler extends BaseFormHandler
      *
      * @access public
      * @param Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                             $factory
-     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType            $messageFormType
-     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface      $model
-     * @param |CCDNMessage\MessageBundle\Component\FloodControl               $floodControl
-     * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer       $messageServer
+     * @param \Symfony\Component\Form\FormFactory                        $factory
+     * @param \CCDNMessage\MessageBundle\Form\Type\MessageFormType       $messageFormType
+     * @param \CCDNMessage\MessageBundle\Model\FrontModel\ModelInterface $model
+     * @param |CCDNMessage\MessageBundle\Component\FloodControl          $floodControl
+     * @param \CCDNMessage\MessageBundle\Component\Server\MessageServer  $messageServer
      */
     public function __construct(EventDispatcherInterface  $dispatcher, FormFactory $factory, $messageFormType, ModelInterface $model, FloodControl $floodControl, MessageServer $messageServer)
     {
