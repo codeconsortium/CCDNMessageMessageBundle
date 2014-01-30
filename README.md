@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/codeconsortium/ccdnmessagemessagebundle.png?label=ready)](https://waffle.io/codeconsortium/ccdnmessagemessagebundle)
 CCDNMessage MessageBundle README.
 =============================
 
