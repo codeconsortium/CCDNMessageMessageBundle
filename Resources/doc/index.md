@@ -1,10 +1,6 @@
 CCDNMessage MessageBundle Documentation.
 ========================================
 
-## Prerequisites
-
-This version of the bundle requires Symfony 2.0.11. 
-
 ### Translations
 
 If you wish to use default texts provided in this bundle, you have to make sure you have translator enabled in your config.
@@ -20,5 +16,5 @@ For more information about translations, check [Symfony documentation](http://sy
 
 ## Installation Documentation:
 
-- [Installing CCDNMessage MessageBundle for Symfony 2.0.11](install.md).
+- [Installing CCDNMessage MessageBundle for Symfony](install.md).
 - [Configuration Reference](configuration_reference.md).

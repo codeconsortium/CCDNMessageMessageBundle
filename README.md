@@ -1,14 +1,13 @@
 CCDNMessage MessageBundle README.
-=============================
+=================================
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1cc3942c-57b7-4c6f-8e8b-f74bc4ebb234/mini.png)](https://insight.sensiolabs.com/projects/1cc3942c-57b7-4c6f-8e8b-f74bc4ebb234) [![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNMessageMessageBundle.png)](https://travis-ci.org/codeconsortium/CCDNMessageMessageBundle) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/codeconsortium/CCDNMessageMessageBundle/badges/quality-score.png?s=5fe7a2cc2e7dbee7a4e9eb7ddae6944553d400b3)](https://scrutinizer-ci.com/g/codeconsortium/CCDNMessageMessageBundle/) [![Code Coverage](https://scrutinizer-ci.com/g/codeconsortium/CCDNMessageMessageBundle/badges/coverage.png?s=23ddc79daf881c195bca0f0d23bcc183148d1a7f)](https://scrutinizer-ci.com/g/codeconsortium/CCDNMessageMessageBundle/) [![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle) [![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-message-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-message-bundle) [![Stories in Ready](https://badge.waffle.io/codeconsortium/ccdnmessagemessagebundle.png?label=ready)](https://waffle.io/codeconsortium/ccdnmessagemessagebundle)
 
 ## Notes: 
 
-This bundle is for the symfony framework and requires Symfony >= 2.1.x and PHP >= 5.3.2
+This bundle is for the symfony framework and requires Symfony ~2.4 and PHP >= 5.3.2
   
 This project uses Doctrine >= 2.1.x and so does not require any specific database.
-  
 
 &copy; CCDN &copy; [CodeConsortium](http://www.codeconsortium.com/)
 
@@ -28,11 +27,7 @@ For the full copyright and license information, please view the [LICENSE](http:/
 
 ## Description:
 
-This is a MessageBundle for Symfony (>= 2.1.x) for sending and receiving private message.
-
-## Description:
-
-This is a private messaging system as a bundle for Symfony (2.0.11).
+This is a private messaging system as a bundle for use in a Symfony2 project for sending and receiving private message.
 
 Send and receive private messages as part of a symfony2 powered website.
 
@@ -67,8 +62,6 @@ All the installation instructions are located in [documentation](http://github.c
 
 > Do NOT use the CLI doctrine/symfony console utility to force an update, data will be lost if you do!
 > Manually run the sql update in the upgrading docs. Always backup your database before updating.
-
-To upgrade to version 1.1.2 please read the [upgrading to version 1.1.3 guide](http://github.com/codeconsortium/CCDNMessageMessageBundle/blob/v1.1.3/Resources/doc/upgrading_to_1_1_3.md).
 
 ## License.
 

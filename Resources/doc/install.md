@@ -1,5 +1,5 @@
-Installing CCDNMessage MessageBundle 2.x
-========================================
+Installing CCDNMessage MessageBundle
+====================================
 
 ## Dependencies:
 
@@ -50,11 +50,14 @@ register the new bundle:
 public function registerBundles()
 {
     $bundles = array(
-		new CCDNMessage\MessageBundle\CCDNMessageMessageBundle(),
-		...
-	);
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        new CCDNMessage\MessageBundle\CCDNMessageMessageBundle(),
+        // ...
+    );
 }
 ```
+
+Notice this include KNP Paginator, which is an important dependency.
 
 ### Step 3: Update your app/config/routing.yml.
 
