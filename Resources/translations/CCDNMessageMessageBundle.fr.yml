@@ -1,0 +1,85 @@
+dashboard:
+    pages:
+        account:             "Compte"
+    categories:
+        account:             "Compte"
+
+title:
+    folder:
+        index:               "Message boîte de réception"
+        show:                "Messages - %folderName%"
+    message:
+        show:                "Message : %message_subject%"
+        compose:             "Écrire un message"
+
+crumbs:
+    user:
+        message:
+            compose:
+                new:         "Écrire un message"
+                reply:       "Répondre"
+                forward:     "Transférer le message"
+
+sidebar:
+    header:
+        tools:               "Outils"
+        folders:             "Dossiers"
+
+link:
+    message:
+        messages:            "Messages"
+        compose:             "Écrire"
+        reply:               "Répondre"
+        forward:             "Transférer"
+        delete:              "Supprimer"
+        mark_as_read:        "Marquer comme lu"
+        mark_as_unread:      "Marquer comme non-lu"
+        move_to:             "Mettre à la corbeille"
+        send_draft:          "Envoyer"
+        select_none:         "Aucun"
+        select_all:          "Tous"
+        select_all_read:     "Lu"
+        select_all_unread:   "Non-ly"
+        select_all_flagged:  "Surveillé"
+        select_all_attached: "Attaché"
+        select_all_draft:    "Brouillons"
+
+form:
+    required:                "Ce champ doit être rempli."
+    label:
+        to:                  "À"
+        subject:             "Sujet"
+        body:                "Message"
+        flagged:             "Marquer comme important"
+    button:
+        send:                "Envoyer le message"
+        preview:             "Prévisualiser"
+        save_draft:          "Sauvegarder dans les brouillons"
+        cancel:              "Annuler"
+
+message:
+    sent-from-label:         "À : "
+    send-to-label:           "Destinataire : "
+    subject-label:           "Sujet : "
+    sent-datetime-label:     "Envoyé le : "
+
+generic:
+    thead:
+        from:                "Depuis"
+        to:                  "Vers"
+        subject:             "Sujet"
+        sent:                "Envoyé"
+    message:
+        inbox_status:        "Vous avez %message_count% messages"
+        none:                "Vous n'avez pas de messages dans ce dossier."
+
+flash:
+    success:
+        message:
+            sent:            "Le message a été envoyé avec succès à %user%."
+        draft:
+            saved:           "Message sauvegardé dans les brouillons."
+    error:
+        message:
+            inbox_full:      "La messagerie de %user% est pleine ; il ne pourra donc pas recevoir votre message."
+            flood_control:   "Alerte flood - Vous avez envoyé trop de messages, attendez un peu avant d'en envoyer de nouveau."
