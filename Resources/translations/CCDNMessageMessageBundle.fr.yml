@@ -69,7 +69,7 @@ generic:
         from:                "Expéditeur"
         to:                  "Destinataire"
         subject:             "Sujet"
-        sent:                "Envoyé"
+        sent:                "Envoyé le"
     message:
         inbox_status:        "Vous avez %message_count% messages"
         none:                "Vous n'avez pas de messages dans ce dossier."
