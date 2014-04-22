@@ -66,8 +66,8 @@ message:
 
 generic:
     thead:
-        from:                "Depuis"
-        to:                  "Vers"
+        from:                "Expéditeur"
+        to:                  "Destinataire"
         subject:             "Sujet"
         sent:                "Envoyé"
     message:
