@@ -11,6 +11,7 @@ title:
     message:
         show:                "Message : %message_subject%"
         compose:             "Écrire un message"
+        index:               "Boîte de réception"
 
 crumbs:
     user:
@@ -65,10 +66,10 @@ message:
 
 generic:
     thead:
-        from:                "Depuis"
-        to:                  "Vers"
+        from:                "Expéditeur"
+        to:                  "Destinataire"
         subject:             "Sujet"
-        sent:                "Envoyé"
+        sent:                "Envoyé le"
     message:
         inbox_status:        "Vous avez %message_count% messages"
         none:                "Vous n'avez pas de messages dans ce dossier."
