@@ -3,3 +3,8 @@ parameters:
     # Service Parameters defined in app/config
 
 services:
+    ccdnmessagemessage.registry:
+        class: CCDNMessage\MessageBundle\Component\TwigExtension\RegistryExtension
+        arguments: ["\CCDNMessage\MessageBundle\Model\FrontModel\RegistryModel", "@security.context"]
+        tags:
+            - { name: twig.extension }
