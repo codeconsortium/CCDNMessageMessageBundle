@@ -57,6 +57,8 @@ form:
         preview:             "Preview"
         save_draft:          "Save Draft"
         cancel:              "Cancel"
+    error:
+        user:                "The user "%username%" were not found."
 
 message:
     sent-from-label:         "From: "
