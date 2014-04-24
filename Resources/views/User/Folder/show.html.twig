@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_message_message.folder.show.layout_template %}
 
-{% block title %}{{- 'title.message.index' |trans({'%folder_name%': current_folder.getName |title }, 'CCDNMessageMessageBundle') |slice(0, ccdn_message_message.seo.title_length) -}}{% endblock %}
+{% block title %}{{ 'link.sidebar.folder.' ~ folder.name, ({}, 'CCDNMessageMessageBundle') }}{% endblock %}
 
 
 {% block body_content %}
