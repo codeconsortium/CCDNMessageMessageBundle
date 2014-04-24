@@ -14,6 +14,7 @@
 namespace CCDNMessage\MessageBundle\Form\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Translation\Translator;
 
 /**
  *
@@ -31,10 +32,24 @@ use Symfony\Component\Validator\Constraint;
 class SendTo extends Constraint
 {
     /**
+     * @object Translator
+     */
+    private $translator;
+    
+    /**
+     * Constructor
+     * Initialize $translator
+     */
+    public function __construct()
+    {
+        $translator = new Translator;
+    }
+    
+    /**
      *
      * @access public
      */
-    public $message = 'The user "%username%" were not found.';
+    public $message = $this->translator->trans('form.error.user');
 
     /**
      *
