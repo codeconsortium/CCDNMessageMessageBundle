@@ -7,6 +7,10 @@ dashboard:
 title:
     folder:
         index:               "Message boîte de réception"
+        inbox:               "Boîte de réception"
+        draft:               "Brouillons"
+        trash:               "Corbeille"
+        current:             "Dossier courant"
         show:                "Messages - %folderName%"
     message:
         show:                "Message : %message_subject%"
