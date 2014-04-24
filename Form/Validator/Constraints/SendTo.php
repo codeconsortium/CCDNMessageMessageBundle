@@ -49,7 +49,7 @@ class SendTo extends Constraint
      *
      * @access public
      */
-    public $message = $this->translator->trans('form.error.user', array(), 'CCDNMessageMessageBundle');
+    public $message = $this->translator->trans('form.error.user', array('username' => '%username%'), 'CCDNMessageMessageBundle');
 
     /**
      *
