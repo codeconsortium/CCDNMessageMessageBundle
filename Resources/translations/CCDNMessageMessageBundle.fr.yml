@@ -6,7 +6,7 @@ dashboard:
 
 title:
     folder:
-        index:               "Message boîte de réception"
+        index:               "Messages"
         inbox:               "Boîte de réception"
         draft:               "Brouillons"
         trash:               "Corbeille"
