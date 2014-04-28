@@ -6,7 +6,11 @@ dashboard:
 
 title:
     folder:
-        index:               "Message boîte de réception"
+        index:               "Messages"
+        inbox:               "Boîte de réception"
+        draft:               "Brouillons"
+        trash:               "Corbeille"
+        current:             "Dossier courant"
         show:                "Messages - %folderName%"
     message:
         show:                "Message : %message_subject%"
@@ -57,6 +61,8 @@ form:
         preview:             "Prévisualiser"
         save_draft:          "Sauvegarder dans les brouillons"
         cancel:              "Annuler"
+    error:
+        user:                "Le destinataire "%username%" n'est pas enregistré."
 
 message:
     sent-from-label:         "À : "

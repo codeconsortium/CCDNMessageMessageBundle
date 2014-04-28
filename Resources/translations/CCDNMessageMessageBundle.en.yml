@@ -7,6 +7,10 @@ dashboard:
 title:
     folder:
         index:               "Message Inbox"
+        inbox:               "Inbox"
+        draft:               "Drafts"
+        trash:               "Trash"
+        current:             "Current folder"
         show:                "Messages - %folderName%"
     message:
         show:                "Message: %message_subject%"
