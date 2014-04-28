@@ -9,21 +9,25 @@
 
 				{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 					{%- set icon = "-inbox" -%}
+					{%- set folder_trans = 'title.folder.inbox' -%}
 				{%- else -%}
 					{%- if folder.name == 'drafts' -%}
 						{%- set icon = "-share-alt" -%}
+						{%- set folder_trans = 'title.folder.draft' -%}
 					{%- else -%}
 						{%- if folder.name == 'trash' -%}
 							{%- set icon = "-trash" -%}
+							{%- set folder_trans = 'title.folder.trash' -%}
 						{%- else -%}
 							{%- set icon = "-folder-close" -%}
+							{%- set folder_trans = 'title.folder.current' -%}
 						{%- endif -%}
 					{%- endif -%}
 				{%- endif -%}
 
 				<i class="glyphicon glyphicon{{- icon -}}"></i>
 
-				{{- folder.getName|title -}}
+				{{- folder_trans|title| trans({}, 'CCDNMessageMessageBundle') -}}
 			</a>
 		</li>
 	{%- endmacro -%}
@@ -49,21 +53,25 @@
 
 				{%- if folder.name == 'inbox' or folder.name == 'sent' -%}
 					{%- set icon = "-inbox" -%}
+					{%- set folder_trans = 'title.folder.inbox' -%}
 				{%- else -%}
 					{%- if folder.name == 'drafts' -%}
 						{%- set icon = "-share-alt" -%}
+						{%- set folder_trans = 'title.folder.draft' -%}
 					{%- else -%}
 						{%- if folder.name == 'trash' -%}
 							{%- set icon = "-trash" -%}
+							{%- set folder_trans = 'title.folder.trash' -%}
 						{%- else -%}
 							{%- set icon = "-folder-close" -%}
+							{%- set folder_trans = 'title.folder.current' -%}
 						{%- endif -%}
 					{%- endif -%}
 				{%- endif -%}
 
 				<i class="glyphicon glyphicon{{- icon -}}"></i>
 
-				{{- folder.getName|title -}}
+				{{- folder_trans|title| trans({}, 'CCDNMessageMessageBundle') -}}
 			</a>
 		</li>
 	{%- endmacro -%}
